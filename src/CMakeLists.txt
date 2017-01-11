@@ -1,0 +1,6 @@
+FILE(GLOB_RECURSE SOURCE_FILES *)
+
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
+add_executable(Projet ${SOURCE_FILES})
+
+target_link_libraries(Projet ${SFML_LIB_DEBUG})

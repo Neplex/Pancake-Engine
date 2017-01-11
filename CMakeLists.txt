@@ -3,5 +3,7 @@ project(Projet)
 
 set(CMAKE_CXX_STANDARD 11)
 
-set(SOURCE_FILES src/main.cpp)
-add_executable(Projet ${SOURCE_FILES})
+include(CmakeConfig.cmake)
+include_directories(${SFML_PATH}/include)
+
+add_subdirectory(src)
