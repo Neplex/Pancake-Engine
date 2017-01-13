@@ -1,6 +1,6 @@
 FILE(GLOB_RECURSE SOURCE_FILES *)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
-add_executable(Projet ${SOURCE_FILES})
+add_executable(Pancake ${SOURCE_FILES} ../include/Component.hpp ../include/GameObject.hpp ../include/Transform.hpp ../include/Scene.hpp ../include/SceneManager.hpp ../include/Time.hpp)
 
-target_link_libraries(Projet ${SFML_LIB_DEBUG})
+target_link_libraries(Pancake ${SFML_LIB_DEBUG})
