@@ -11,11 +11,20 @@
 class Scene {
 public:
     string name;
-    //vector<GameObject> gameObjects;
+    vector<GameObject *> gameObjects;
 
     Scene(string name);
 
-    void addGameObject(GameObject go);
+    /**
+     * Add the given game object to the scene (after the others).
+     * @param go The game object to add.
+     */
+    void addGameObject(GameObject * go);
+
+    /**
+     * Awake is used to initialize any variables or game state before the game starts.
+     */
+     void awake();
 
     /**
      * Called just before the first Update call.
