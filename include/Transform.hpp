@@ -6,10 +6,30 @@
 #define PANCAKE_TRANSFORM_HPP
 
 #include "Component.hpp"
+#include <SFML/Graphics.hpp>
 
 class Transform : public Component{
 public:
+    Transform();
+    /**
+     * Called at GameObject creation.
+     */
+    void awake();
+    /**
+     * Called just before the first update call.
+     */
+    void start();
+    /**
+     * Called at each frame before physics.
+     */
+    void update();
+    /**
+     * Called at each frame after physics.
+     */
+    void lateUpdate();
 
+private:
+    sf::Transformable transform;
 };
 
 

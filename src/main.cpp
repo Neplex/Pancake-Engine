@@ -2,13 +2,14 @@
 #include "../include/Scene.hpp"
 
 int main() {
-    /*Scene s = Scene("TestScene");
+    Scene s = Scene("TestScene");
     GameObject go = GameObject("Bajiru");
-    s.addGameObject(go);
-
+    s.addGameObject(&go);
+    s.awake();
     s.start();
 
-    while (true) {
+    s.update();
+    /*while (true) {
         s.update();
         // box2D.updateWorld(time)
         s.lateUpdate();
