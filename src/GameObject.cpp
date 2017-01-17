@@ -6,9 +6,9 @@
 
 GameObject::GameObject(string n) {
     name = n;
-    transform = Transform();
+    transform = new Transform();
     components = vector<Component *> ();
-    components.push_back(&transform);
+    components.push_back(transform);
 }
 
 GameObject::~GameObject() {

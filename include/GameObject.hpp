@@ -15,7 +15,7 @@ using namespace std;
 class GameObject {
 public:
     string name;
-    Transform transform;
+    Transform * transform;
 
     GameObject(string name);
     ~GameObject();
