@@ -23,7 +23,7 @@ public:
     /**
      * Return the first component of the type T in the game object.
      * @tparam T The type of the component.
-     * @return The first component of the type T.
+     * @return The first component of the type T, NULL if no component of the type T.
      */
     template <typename T>
     T* getComponent() {
@@ -36,7 +36,15 @@ public:
     }
 
     template <typename T>
-    const std::vector<T&> getComponents();
+    const std::vector<T> getComponents() {
+        std::vector<T> cs = std::vector<T>();
+        T* component;
+        for (int i = 0; i < components.size(); ++i) {
+            if(component = dynamic_cast<T*>(components[i]))
+                cs.push_back(*component);
+        }
+        return cs;
+    };
 
     /**
      * Add the given component after the others on the game object.

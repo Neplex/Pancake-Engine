@@ -1,5 +1,4 @@
 #include <SFML/Graphics.hpp>
-#include <iostream>
 #include "../include/Scene.hpp"
 #include "../include/SpriteRenderer.hpp"
 
