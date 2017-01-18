@@ -5,24 +5,29 @@
 #ifndef PANCAKE_COMPONENT_HPP
 #define PANCAKE_COMPONENT_HPP
 
+#include "GameObject.hpp"
+class GameObject;
+
 class Component {
 public:
+    GameObject * gameObject;
+    virtual ~Component();
     /**
      * Called at GameObject creation.
      */
-    virtual void awake() = 0;
+    virtual void awake() {};
     /**
      * Called just before the first update call.
      */
-    virtual void start() = 0;
+    virtual void start() {};
     /**
      * Called at each frame before physics.
      */
-    virtual void update() = 0;
+    virtual void update() {};
     /**
      * Called at each frame after physics.
      */
-    virtual void lateUpdate() = 0;
+    virtual void lateUpdate() {};
 
 };
 

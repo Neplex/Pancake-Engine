@@ -6,8 +6,11 @@
 #define PANCAKE_SPRITERENDERER_HPP
 
 #include "Component.hpp"
+#include <SFML/Graphics.hpp>
 
 class SpriteRenderer : public Component {
+public:
+    sf::Sprite sprite;
 
 };
 

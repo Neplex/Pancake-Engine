@@ -11,7 +11,8 @@
 #include <string>
 
 using namespace std;
-
+class Transform;
+class Component;
 class GameObject {
 public:
     string name;
@@ -61,6 +62,5 @@ public:
 private:
     vector<Component *> components;
 };
-
 
 #endif //PANCAKE_GAMEOBJECT_HPP
