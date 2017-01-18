@@ -8,7 +8,7 @@ GameObject::GameObject(string n) {
     name = n;
     transform = new Transform();
     components = vector<Component *> ();
-    components.push_back(transform);
+    components.push_back((Component *&&) transform);
 }
 
 GameObject::~GameObject() {
