@@ -3,7 +3,6 @@
 //
 
 #include "../include/Transform.hpp"
-#include <iostream>
 
 Transform::Transform() {
     transform.setPosition(0, 0);

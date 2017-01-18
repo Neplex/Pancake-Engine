@@ -10,10 +10,10 @@
 
 class Scene {
 public:
-    string name;
-    vector<GameObject *> gameObjects;
+    std::string name;
+    std::vector<GameObject *> gameObjects;
 
-    Scene(string name);
+    Scene(std::string name);
 
     /**
      * Add the given game object to the scene (after the others).

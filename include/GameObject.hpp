@@ -10,15 +10,14 @@
 #include <vector>
 #include <string>
 
-using namespace std;
 class Transform;
 class Component;
 class GameObject {
 public:
-    string name;
+    std::string name;
     Transform * transform;
 
-    GameObject(string name);
+    GameObject(std::string name);
     ~GameObject();
 
     /**
@@ -27,10 +26,17 @@ public:
      * @return The first component of the type T.
      */
     template <typename T>
-    const Component& getComponent();
+    T* getComponent() {
+        T* component;
+        for (int i = 0; i < components.size(); ++i) {
+            if(component = dynamic_cast<T*>(components[i]))
+                return component;
+        }
+        return NULL;
+    }
 
     template <typename T>
-    const vector<Component&> getComponents();
+    const std::vector<T&> getComponents();
 
     /**
      * Add the given component after the others on the game object.
@@ -60,7 +66,7 @@ public:
     void lateUpdate();
 
 private:
-    vector<Component *> components;
+    std::vector<Component *> components;
 };
 
 #endif //PANCAKE_GAMEOBJECT_HPP

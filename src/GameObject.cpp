@@ -4,10 +4,10 @@
 
 #include "../include/GameObject.hpp"
 
-GameObject::GameObject(string n) {
+GameObject::GameObject(std::string n) {
     name = n;
     transform = new Transform();
-    components = vector<Component *> ();
+    components = std::vector<Component *> ();
     components.push_back((Component *&&) transform);
 }
 
@@ -39,4 +39,8 @@ void GameObject::lateUpdate() {
     for (int i = 0; i < components.size(); ++i) {
         components[i]->lateUpdate();
     }
+}
+
+void GameObject::addComponent(Component& c) {
+    components.push_back(&c);
 }

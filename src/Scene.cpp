@@ -4,7 +4,7 @@
 
 #include "../include/Scene.hpp"
 
-Scene::Scene(string n) {
+Scene::Scene(std::string n) {
     name = n;
 }
 

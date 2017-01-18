@@ -11,7 +11,7 @@ class GameObject;
 class Component {
 public:
     GameObject * gameObject;
-    virtual ~Component();
+    virtual ~Component() {};
     /**
      * Called at GameObject creation.
      */
