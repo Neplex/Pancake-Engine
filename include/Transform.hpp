@@ -28,7 +28,21 @@ public:
      */
     void lateUpdate();
 
+    /**
+     * Get the position of the transform.
+     * @return The position of the transform.
+     */
+    sf::Vector2f getPosition() const {
+        return transform.getPosition();
+    }
 
+    /**
+     * Set the position of the transform.
+     * @param newPos The new position.
+     */
+    void setPosition(const sf::Vector2f newPos) {
+        transform.setPosition(newPos);
+    }
 private:
     sf::Transformable transform;
 };
