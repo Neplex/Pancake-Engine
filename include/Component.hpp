@@ -5,7 +5,7 @@
 #ifndef PANCAKE_COMPONENT_HPP
 #define PANCAKE_COMPONENT_HPP
 
-#include "GameObject.hpp"
+//#include "GameObject.hpp"
 class GameObject;
 
 class Component {

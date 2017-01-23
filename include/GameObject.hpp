@@ -26,7 +26,7 @@ public:
      * @return The first component of the type T, NULL if no component of the type T.
      */
     template <typename T>
-    T* getComponent() {
+    T* getComponent() const {
         T* component;
         for (int i = 0; i < components.size(); ++i) {
             if(component = dynamic_cast<T*>(components[i]))
@@ -36,7 +36,7 @@ public:
     }
 
     template <typename T>
-    const std::vector<T> getComponents() {
+    const std::vector<T> getComponents() const {
         std::vector<T> cs = std::vector<T>();
         T* component;
         for (int i = 0; i < components.size(); ++i) {

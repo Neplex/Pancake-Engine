@@ -1,57 +1,24 @@
-#include <SFML/Graphics.hpp>
 #include "../include/Scene.hpp"
 #include "../include/SpriteRenderer.hpp"
+#include "../include/InputHandler.hpp"
+#include "../include/Window.hpp"
 
 int main() {
-    Scene s = Scene("TestScene");
-    GameObject * go = new GameObject("Bajiru");
-    SpriteRenderer spriteRenderer1 = SpriteRenderer();
-    go->addComponent(spriteRenderer1);
-    s.addGameObject(go);
-    s.awake();
-    s.start();
+    GameObject * go1 = new GameObject("");
+    GameObject * go2 = new GameObject("");
+    SpriteRenderer sr(32, 32);
+    go1->addComponent(sr);
 
-    sf::RenderWindow window(sf::VideoMode(1280, 720), s.name);
-    window.setVerticalSyncEnabled(true);
+    Scene scene("TestScene");
+    scene.addGameObject(go1);
+    scene.addGameObject(go2);
+    scene.awake();
+    scene.start();
 
-    while (window.isOpen()) {
-        sf::Event event;
-        while (window.pollEvent(event)) {
-            switch (event.type) {
-                case sf::Event::Closed:
-                    window.close();
-                    break;
+    InputHandler inputHandler = InputHandler();
 
-                case sf::Event::GainedFocus:
-                    break;
-
-                case sf::Event::LostFocus:
-                    break;
-
-                case sf::Event::KeyPressed:
-                    break;
-
-                case sf::Event::MouseMoved:
-                    break;
-
-                case sf::Event::MouseButtonPressed:
-                    break;
-
-                default:
-                    break;
-            }
-        }
-
-        s.update();
-        s.lateUpdate();
-        for (int i = 0; i < s.gameObjects.size(); ++i) {
-            const SpriteRenderer * spriteRenderer = s.gameObjects[i]->getComponent<SpriteRenderer>();
-            if (spriteRenderer != NULL)
-                window.draw(spriteRenderer->sprite);
-        }
-        window.clear();
-        window.display();
-    }
+    Window window(scene, inputHandler);
+    window.run();
 
     return EXIT_SUCCESS;
 }

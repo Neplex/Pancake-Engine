@@ -8,10 +8,17 @@
 #include "Component.hpp"
 #include <SFML/Graphics.hpp>
 
+
 class SpriteRenderer : public Component {
 public:
     sf::Sprite sprite;
 
+    /**
+     * Create sprite with default texture
+     * @param width
+     * @param height
+     */
+    SpriteRenderer(unsigned int width, unsigned int height);
 };
 
 #endif //PANCAKE_SPRITERENDERER_HPP
