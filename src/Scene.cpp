@@ -4,10 +4,6 @@
 
 #include "../include/Scene.hpp"
 
-Scene::Scene(std::string n) {
-    name = n;
-}
-
 void Scene::awake() {
     for (int i = 0; i < gameObjects.size(); ++i) {
         gameObjects[i]->awake();

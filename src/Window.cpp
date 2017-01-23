@@ -5,15 +5,15 @@
 #include "../include/Window.hpp"
 #include "../include/SpriteRenderer.hpp"
 
-Window::Window(Scene& s, InputHandler& ih) : scene(s), inputHandler(ih), window(sf::VideoMode::getDesktopMode(), s.name, sf::Style::Fullscreen) {
+Window::Window(SceneManager& s, InputHandler& ih) : scenes(s), inputHandler(ih), window(sf::VideoMode::getDesktopMode(), "", sf::Style::Fullscreen) {
     window.setVerticalSyncEnabled(true);
     window.setActive(false);
 }
 
 void Window::run() {
     while (window.isOpen()) {
-        scene.update();
-        scene.lateUpdate();
+        scenes.getCurrentScene()->update();
+        scenes.getCurrentScene()->lateUpdate();
         handleEvent();
         drawScene();
     }
@@ -21,9 +21,9 @@ void Window::run() {
 
 void Window::drawScene() {
     window.clear();
-    for (int i = 0; i < scene.gameObjects.size(); ++i) {
+    for (int i = 0; i < scenes.getCurrentScene()->gameObjects.size(); ++i) {
         // Get first spriteRenderer
-        const SpriteRenderer *spriteRenderer = scene.gameObjects[i]->getComponent<SpriteRenderer>();
+        const SpriteRenderer *spriteRenderer = scenes.getCurrentScene()->gameObjects[i]->getComponent<SpriteRenderer>();
         if (spriteRenderer != NULL)
             window.draw(spriteRenderer->sprite);
     }

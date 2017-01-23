@@ -2,6 +2,7 @@
 #include "../include/SpriteRenderer.hpp"
 #include "../include/InputHandler.hpp"
 #include "../include/Window.hpp"
+#include "../include/SceneManager.hpp"
 
 int main() {
     GameObject * go1 = new GameObject("");
@@ -15,9 +16,12 @@ int main() {
     scene.awake();
     scene.start();
 
+    SceneManager sceneManager = SceneManager();
+    sceneManager.addScene(&scene);
+
     InputHandler inputHandler = InputHandler();
 
-    Window window(scene, inputHandler);
+    Window window(sceneManager, inputHandler);
     window.run();
 
     return EXIT_SUCCESS;

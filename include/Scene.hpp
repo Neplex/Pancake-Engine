@@ -13,7 +13,7 @@ public:
     std::string name;
     std::vector<GameObject *> gameObjects;
 
-    Scene(std::string name);
+    Scene(std::string name) : name(name) {}
 
     /**
      * Add the given game object to the scene (after the others).

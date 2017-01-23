@@ -6,15 +6,15 @@
 #define PANCAKE_WINDOW_HPP
 
 #include <SFML/Graphics/RenderWindow.hpp>
-#include "Scene.hpp"
 #include "InputHandler.hpp"
+#include "SceneManager.hpp"
 
 /**
  * Window and render loop
  */
 class Window {
 public:
-    Window(Scene& s, InputHandler& ih);
+    Window(SceneManager& s, InputHandler& ih);
 
     /**
      * Start the render loop
@@ -22,7 +22,7 @@ public:
     void run();
 
 private:
-    Scene& scene;
+    SceneManager& scenes;
     InputHandler& inputHandler;
     sf::RenderWindow window;
 
