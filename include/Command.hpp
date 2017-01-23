@@ -1,4 +1,4 @@
-Call when a position is update//
+//
 // Created by nicolas on 22/01/17.
 //
 
