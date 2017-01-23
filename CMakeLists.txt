@@ -5,6 +5,8 @@ project(Pancake)
 set(CMAKE_CXX_STANDARD 11)
 
 include(CmakeConfig.cmake)
+
+include_directories(./libs/)
 include_directories(${SFML_PATH}/include)
 
 add_subdirectory(src)
