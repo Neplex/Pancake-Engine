@@ -28,6 +28,7 @@ public:
      */
     void lateUpdate();
 
+
 private:
     sf::Transformable transform;
 };
