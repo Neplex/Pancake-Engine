@@ -22,6 +22,7 @@ void Window::run() {
 void Window::drawScene() {
     window.clear();
     for (int i = 0; i < scene.gameObjects.size(); ++i) {
+        // Get first spriteRenderer
         const SpriteRenderer *spriteRenderer = scene.gameObjects[i]->getComponent<SpriteRenderer>();
         if (spriteRenderer != NULL)
             window.draw(spriteRenderer->sprite);
@@ -33,6 +34,7 @@ void Window::handleEvent() {
     sf::Event event;
     while (window.pollEvent(event)) {
         switch (event.type) {
+
             case sf::Event::Closed:
                 window.close();
                 break;

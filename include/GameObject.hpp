@@ -22,6 +22,7 @@ public:
 
     /**
      * Return the first component of the type T in the game object.
+     * Use of dynamic_cast
      * @tparam T The type of the component.
      * @return The first component of the type T, NULL if no component of the type T.
      */
@@ -35,6 +36,12 @@ public:
         return NULL;
     }
 
+    /**
+     * Return the list of components of the type T in the game object.
+     * Use of dynamic_cast
+     * @tparam T The type of the component.
+     * @return The vector of all component of the type T.
+     */
     template <typename T>
     const std::vector<T> getComponents() const {
         std::vector<T> cs = std::vector<T>();
