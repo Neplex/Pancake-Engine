@@ -7,5 +7,5 @@
 
 void Collider::awake() {
     Component::awake();
-    PhysicsEngine::getInstance().addStaticBodyToPhysicsWorld(*this);
+    //PhysicsEngine::getInstance().addStaticBodyToPhysicsWorld(*this);
 }

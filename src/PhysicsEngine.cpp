@@ -4,17 +4,16 @@
 
 #include "../include/PhysicsEngine.hpp"
 
-PhysicsEngine* PhysicsEngine::instance = NULL;
-
 PhysicsEngine::PhysicsEngine() {
     world = new b2World(b2Vec2(0, -10));
 }
 
-PhysicsEngine& PhysicsEngine::getInstance() {
-    if (instance == NULL) {
-        instance = new PhysicsEngine();
-    }
-    return *instance;
+PhysicsEngine::~PhysicsEngine() {
+    delete world;
+}
+
+void PhysicsEngine::update(float dt) {
+
 }
 
 void PhysicsEngine::addStaticBodyToPhysicsWorld(Collider& c) {

@@ -22,8 +22,8 @@ void InputHandler::clearCommand(sf::Keyboard::Key key) {
 
 // Mouse
 void InputHandler::handleMouse(int x, int y) {
-    if (mouseCommand != NULL)
-        mouseCommand->execute(x, y);
+    //if (mouseCommand != NULL)
+        //mouseCommand->execute(x, y);
 }
 
 void InputHandler::handleInput(sf::Mouse::Button button) {

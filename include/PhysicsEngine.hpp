@@ -19,6 +19,8 @@ public:
     static const int velocityIterations = 8; // how strongly to correct velocity
     static const int positionIterations = 3; // how strongly to correct position
 
+    PhysicsEngine();
+    ~PhysicsEngine();
     /**
      * Simulate physics for the given time.
      * @param dt The length of time passed to simulate (seconds).
@@ -26,12 +28,6 @@ public:
     static void update(float dt);
 
 private:
-    friend class Collider;
-    friend class Engine;
-    PhysicsEngine();
-    ~PhysicsEngine();
-    static PhysicsEngine* instance;
-    static PhysicsEngine& getInstance();
     void addStaticBodyToPhysicsWorld(Collider& c);
     b2World* world;
 };
