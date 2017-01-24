@@ -43,12 +43,12 @@ public:
      * @return The vector of all component of the type T.
      */
     template <typename T>
-    const std::vector<T> getComponents() const {
-        std::vector<T> cs = std::vector<T>();
+    const std::vector<T*> getComponents() const {
+        std::vector<T*> cs = std::vector<T*>();
         T* component;
         for (int i = 0; i < components.size(); ++i) {
             if(component = dynamic_cast<T*>(components[i]))
-                cs.push_back(*component);
+                cs.push_back(component);
         }
         return cs;
     };

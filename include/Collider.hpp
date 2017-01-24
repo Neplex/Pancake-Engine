@@ -9,6 +9,8 @@
 #include <SFML/System/Vector2.hpp>
 #include "Component.hpp"
 
+class PhysicsEngine;
+
 class Collider : public Component {
 
 public:
@@ -23,7 +25,9 @@ public:
     float friction;
     // The local offset of the collider
     sf::Vector2f offset;
-
+private:
+    friend class Engine;
+    static PhysicsEngine * physicsEngine;
 };
 
 
