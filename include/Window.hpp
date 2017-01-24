@@ -6,8 +6,9 @@
 #define PANCAKE_WINDOW_HPP
 
 #include <SFML/Graphics/RenderWindow.hpp>
-#include "InputHandler.hpp"
 #include "SceneManager.hpp"
+#include "InputHandler.hpp"
+#include "BoxCollider.hpp"
 
 /**
  * Window and render loop
@@ -17,23 +18,36 @@ public:
     Window(SceneManager& s, InputHandler& ih);
 
     /**
-     * Start the render loop
+     * Render one frame
      */
-    void run();
-
-private:
-    SceneManager& scenes;
-    InputHandler& inputHandler;
-    sf::RenderWindow window;
-
+    void render();
     /**
      * Handle the events received by the window (keyboard, mouse, joystick)
      */
     void handleEvent();
     /**
+     * Set debug display to True or False
+     * Display colider
+     * @param val
+     */
+    void setDebug(bool val = true);
+
+private:
+    SceneManager& scenes;
+    InputHandler& inputHandler;
+    sf::RenderWindow window;
+    bool debug;
+
+    /**
      * Draw all elements (SpriteRenderer) of the current scene
      */
     void drawScene();
+    /**
+     * Draw debug elements
+     */
+    void drawDebug();
+
+    void draw(const BoxCollider * boxCollider);
 };
 
 #endif //PANCAKE_WINDOW_HPP

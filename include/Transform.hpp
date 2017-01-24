@@ -43,6 +43,23 @@ public:
     void setPosition(const sf::Vector2f newPos) {
         transform.setPosition(newPos);
     }
+
+    /**
+     * Apply rotation with angle 'angle'
+     * @param angle
+     */
+    void setRotation(float angle) {
+        transform.setRotation(angle);
+    }
+
+    /**
+     * Get the transform matrix
+     * @return the transform matrix
+     */
+    sf::Transform getTransformMatrix() {
+        return transform.getTransform();
+    }
+
 private:
     sf::Transformable transform;
 };

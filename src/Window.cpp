@@ -10,24 +10,30 @@ Window::Window(SceneManager& s, InputHandler& ih) : scenes(s), inputHandler(ih),
     window.setActive(false);
 }
 
-void Window::run() {
-    while (window.isOpen()) {
-        scenes.getCurrentScene()->update();
-        scenes.getCurrentScene()->lateUpdate();
-        handleEvent();
+void Window::render() {
+    if (window.isOpen()) {
+        window.clear();
         drawScene();
+        if (debug) drawDebug();
+        window.display();
     }
 }
 
+void Window::setDebug(bool val) {
+    debug = val;
+}
+
 void Window::drawScene() {
-    window.clear();
     for (int i = 0; i < scenes.getCurrentScene()->gameObjects.size(); ++i) {
         // Get first spriteRenderer
-        const SpriteRenderer *spriteRenderer = scenes.getCurrentScene()->gameObjects[i]->getComponent<SpriteRenderer>();
-        if (spriteRenderer != NULL)
-            window.draw(spriteRenderer->sprite);
+        const GameObject * gameObject = scenes.getCurrentScene()->gameObjects[i];
+        const SpriteRenderer * spriteRenderer = gameObject->getComponent<SpriteRenderer>();
+        if (spriteRenderer != NULL) {
+            sf::RenderStates renderStates;
+            renderStates.transform = gameObject->transform->getTransformMatrix() * spriteRenderer->sprite.getTransform();
+            window.draw(spriteRenderer->sprite, renderStates);
+        }
     }
-    window.display();
 }
 
 void Window::handleEvent() {
@@ -64,4 +70,28 @@ void Window::handleEvent() {
                 break;
         }
     }
+}
+
+void Window::drawDebug() {
+    for (int i = 0; i < scenes.getCurrentScene()->gameObjects.size(); ++i) {
+        // Box collider
+        const BoxCollider * boxCollider = scenes.getCurrentScene()->gameObjects[i]->getComponent<BoxCollider>();
+        if (boxCollider != NULL) draw(boxCollider);
+    }
+}
+
+void Window::draw(const BoxCollider * boxCollider) {
+    sf::Vertex vertices[6] = {
+            sf::Vertex(sf::Vector2f(0, 0)),
+            sf::Vertex(sf::Vector2f(boxCollider->width, 0)),
+            sf::Vertex(sf::Vector2f(boxCollider->width, boxCollider->height)),
+            sf::Vertex(sf::Vector2f(0, 0)),
+            sf::Vertex(sf::Vector2f(0, boxCollider->height)),
+            sf::Vertex(sf::Vector2f(boxCollider->width, boxCollider->height))
+    };
+    sf::Transform transform = boxCollider->gameObject->transform->getTransformMatrix();
+    sf::RenderStates renderStates;
+    renderStates.transform = boxCollider->gameObject->transform->getTransformMatrix();
+    renderStates.transform.translate(boxCollider->offset);
+    window.draw(vertices, 6, sf::LinesStrip, renderStates);
 }
