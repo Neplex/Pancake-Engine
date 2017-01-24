@@ -6,7 +6,7 @@
 #include "../include/SpriteRenderer.hpp"
 #include "../include/Camera.hpp"
 
-Window::Window(SceneManager& s, InputHandler& ih) : scenes(s), inputHandler(ih), window(sf::VideoMode::getDesktopMode(), "", sf::Style::Default) {
+Window::Window(SceneManager& s, InputHandler& ih) : scenes(s), inputHandler(ih), window(sf::VideoMode::getDesktopMode(), "", sf::Style::Close) {
     window.setVerticalSyncEnabled(true);
     window.setActive(false);
 }

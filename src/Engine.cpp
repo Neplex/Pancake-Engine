@@ -5,14 +5,14 @@
 #include "../include/Engine.hpp"
 #include "../include/SpriteRenderer.hpp"
 #include "../include/Camera.hpp"
-#include <SFML/Graphics.hpp>
 
 Engine::Engine() : sceneManager(), inputHandler(), window(sceneManager, inputHandler),
                    physicsEngine(), toShutdown(false) {
     GameObject * go1 = new GameObject("");
     GameObject * go2 = new GameObject("");
     SpriteRenderer * sr = new SpriteRenderer(32, 32);
-    Camera * cm = new Camera(sf::FloatRect(0, 0, 1280, 720));
+    Camera * cm = new Camera();
+    cm->zoom(.6);
     BoxCollider * bc = new BoxCollider();
     bc->width = 32; bc->height = 32;
     bc->offset = sf::Vector2f(25, 25);

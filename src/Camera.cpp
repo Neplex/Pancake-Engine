@@ -6,7 +6,8 @@
 
 Camera * Camera::mainCamera = NULL;
 
-Camera::Camera(sf::FloatRect floatRect) : view(floatRect) {
+Camera::Camera()  {
+    view = sf::View(sf::FloatRect(0, 0, sf::VideoMode::getDesktopMode().width, sf::VideoMode::getDesktopMode().height));
     if (Camera::mainCamera == NULL) mainCamera = this;
 }
 

@@ -14,7 +14,7 @@
  */
 class Camera : public Component {
 public:
-    Camera(sf::FloatRect floatRect);
+    Camera();
 
     /**
      * Zoom view with factor
