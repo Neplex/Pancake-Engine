@@ -52,7 +52,6 @@ void Window::handleEvent() {
     sf::Event event;
     while (window.pollEvent(event)) {
         switch (event.type) {
-
             case sf::Event::Closed:
                 window.close();
                 break;

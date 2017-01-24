@@ -7,7 +7,8 @@
 #include "../include/Camera.hpp"
 #include <SFML/Graphics.hpp>
 
-Engine::Engine() : sceneManager(), inputHandler(), window(sceneManager, inputHandler), physicsEngine() {
+Engine::Engine() : sceneManager(), inputHandler(), window(sceneManager, inputHandler),
+                   physicsEngine(), toShutdown(false) {
     GameObject * go1 = new GameObject("");
     GameObject * go2 = new GameObject("");
     SpriteRenderer * sr = new SpriteRenderer(32, 32);
@@ -40,7 +41,7 @@ void Engine::update(float dt) {
 void Engine::run() {
     double lag = 0.0;
     sf::Clock clock;
-    while (true)
+    while (!window.isClosed())
     {
         clock.restart();
         lag += clock.getElapsedTime().asMilliseconds();

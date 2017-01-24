@@ -14,12 +14,14 @@
 class Engine {
 
 public:
-    static constexpr float MS_PER_UPDATE = 18.288f;
+    static constexpr float MS_PER_UPDATE = 16.666f;
 
     Engine();
     void run();
 
 private:
+    bool toShutdown;
+
     SceneManager sceneManager;
     InputHandler inputHandler;
     Window window;

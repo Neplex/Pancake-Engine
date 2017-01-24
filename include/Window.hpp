@@ -17,6 +17,8 @@ class Window {
 public:
     Window(SceneManager& s, InputHandler& ih);
 
+    bool isClosed() { return !window.isOpen(); }
+
     /**
      * Render one frame
      */
