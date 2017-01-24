@@ -4,6 +4,7 @@
 
 #include "../include/Window.hpp"
 #include "../include/SpriteRenderer.hpp"
+#include "../include/Camera.hpp"
 
 Window::Window(SceneManager& s, InputHandler& ih) : scenes(s), inputHandler(ih), window(sf::VideoMode::getDesktopMode(), "", sf::Style::Fullscreen) {
     window.setVerticalSyncEnabled(true);
@@ -24,9 +25,20 @@ void Window::setDebug(bool val) {
 }
 
 void Window::drawScene() {
+    // Set view
+    if (Camera::mainCamera != NULL) {
+        sf::View view = Camera::mainCamera->view;
+        view.setCenter(Camera::mainCamera->gameObject->transform->getPosition());
+        view.setRotation(Camera::mainCamera->gameObject->transform->getRotation());
+        window.setView(view);
+    } else {
+        window.setView(window.getDefaultView());
+    }
+
     for (int i = 0; i < scenes.getCurrentScene()->gameObjects.size(); ++i) {
-        // Get first spriteRenderer
         const GameObject * gameObject = scenes.getCurrentScene()->gameObjects[i];
+
+        // Get spriteRenderer
         const SpriteRenderer * spriteRenderer = gameObject->getComponent<SpriteRenderer>();
         if (spriteRenderer != NULL) {
             sf::RenderStates renderStates;
@@ -74,6 +86,7 @@ void Window::handleEvent() {
 
 void Window::drawDebug() {
     for (int i = 0; i < scenes.getCurrentScene()->gameObjects.size(); ++i) {
+
         // Box collider
         const BoxCollider * boxCollider = scenes.getCurrentScene()->gameObjects[i]->getComponent<BoxCollider>();
         if (boxCollider != NULL) draw(boxCollider);

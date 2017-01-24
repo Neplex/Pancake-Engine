@@ -7,13 +7,3 @@
 Transform::Transform() {
     transform.setPosition(0, 0);
 }
-
-void Transform::awake() {}
-
-void Transform::start() {}
-
-void Transform::update() {}
-
-void Transform::lateUpdate() {}
-
-
