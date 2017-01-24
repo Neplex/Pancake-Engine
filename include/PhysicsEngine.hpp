@@ -30,7 +30,7 @@ public:
         bodyDef.type = b2_staticBody;
         bodyDef.position.Set(c.gameObject->transform->getPosition().x + c.offset.x,
                              c.gameObject->transform->getPosition().y + c.offset.y);
-        b2Body* body = world.CreateBody(&bodyDef);
+        b2Body* body = world->CreateBody(&bodyDef);
         b2PolygonShape shape;
         if(dynamic_cast<BoxCollider*>(&c) != NULL) {
             BoxCollider * bc = (BoxCollider *)&c;
@@ -47,8 +47,7 @@ public:
     ~PhysicsEngine();
 
 private:
-    static b2Vec2 gravity;
-    static b2World world;
+    b2World* world;
 };
 
 
