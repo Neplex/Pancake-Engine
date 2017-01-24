@@ -6,9 +6,11 @@
 #define PANCAKE_PHYSICSENGINE_HPP
 
 #include <Box2D/Box2D.h>
-#include "Collider.hpp"
 #include "GameObject.hpp"
 #include "BoxCollider.hpp"
+
+class Collider;
+class Rigidbody;
 
 /**
  * Provide an interface to interact with the box2D physics engine.
@@ -25,10 +27,23 @@ public:
      * Simulate physics for the given time.
      * @param dt The length of time passed to simulate (seconds).
      */
-    static void update(float dt);
+    void update(float dt);
+
+    /**
+     * Add a static body to the physics world according to a given collider.
+     * That allows to have other gameobject with rigidbody to collide this object.
+     * @param c The collider of the object to create in the world.
+     */
+    void addStaticBodyToPhysicsWorld(Collider& c);
+
+    /**
+     * Add a rigidbody to the physics world.
+     * It can be dynamic or kinematic.
+     * @param rb
+     */
+    void addRigidBodyToPhysicsWorld(Rigidbody& rb);
 
 private:
-    void addStaticBodyToPhysicsWorld(Collider& c);
     b2World* world;
 };
 
