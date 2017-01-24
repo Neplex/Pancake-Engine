@@ -1,5 +1,6 @@
 #include "../include/SpriteRenderer.hpp"
 #include "../include/Window.hpp"
+#include "../include/PhysicsEngine.hpp"
 
 int main() {
     GameObject * go1 = new GameObject("");

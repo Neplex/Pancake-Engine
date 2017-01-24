@@ -12,6 +12,7 @@
 class Collider : public Component {
 
 public:
+    void awake();
     // Is this collider configured as a trigger?
     bool isTrigger;
     // Get the bounciness used by the collider.

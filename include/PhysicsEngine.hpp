@@ -16,39 +16,26 @@
 class PhysicsEngine {
 
 public:
-    const int velocityIterations = 8; // how strongly to correct velocity
-    const int positionIterations = 3; // how strongly to correct position
+    static const int velocityIterations = 8; // how strongly to correct velocity
+    static const int positionIterations = 3; // how strongly to correct position
 
-    PhysicsEngine();
     /**
      * Simulate physics for the given time.
      * @param dt The length of time passed to simulate (seconds).
      */
-    void update(float dt);
-    void addStaticBodyToPhysicsWorld(Collider c) {
-        b2BodyDef bodyDef;
-        bodyDef.type = b2_staticBody;
-        bodyDef.position.Set(c.gameObject->transform->getPosition().x + c.offset.x,
-                             c.gameObject->transform->getPosition().y + c.offset.y);
-        b2Body* body = world->CreateBody(&bodyDef);
-        b2PolygonShape shape;
-        if(dynamic_cast<BoxCollider*>(&c) != NULL) {
-            BoxCollider * bc = (BoxCollider *)&c;
-            shape.SetAsBox(bc->width, bc->height);
-        } else {
-            assert(false);
-        }
-        b2FixtureDef fixtureDef;
-        fixtureDef.shape = &shape;
-        fixtureDef.density = c.density;
-        fixtureDef.friction = c.friction;
-        body->CreateFixture(&fixtureDef);
-    }
-    ~PhysicsEngine();
+    static void update(float dt);
 
 private:
+    friend class Collider;
+    friend class Engine;
+    PhysicsEngine();
+    ~PhysicsEngine();
+    static PhysicsEngine* instance;
+    static PhysicsEngine& getInstance();
+    void addStaticBodyToPhysicsWorld(Collider& c);
     b2World* world;
 };
+
 
 
 #endif //PANCAKE_PHYSICSENGINE_HPP
