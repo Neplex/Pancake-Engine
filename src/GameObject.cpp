@@ -43,4 +43,5 @@ void GameObject::lateUpdate() {
 
 void GameObject::addComponent(Component& c) {
     components.push_back(&c);
+    c.gameObject = this;
 }

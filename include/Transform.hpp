@@ -11,22 +11,6 @@
 class Transform : public Component{
 public:
     Transform();
-    /**
-     * Called at GameObject creation.
-     */
-    void awake();
-    /**
-     * Called just before the first update call.
-     */
-    void start();
-    /**
-     * Called at each frame before physics.
-     */
-    void update();
-    /**
-     * Called at each frame after physics.
-     */
-    void lateUpdate();
 
     /**
      * Get the position of the transform.
@@ -50,6 +34,14 @@ public:
      */
     void setRotation(float angle) {
         transform.setRotation(angle);
+    }
+
+    /**
+     * Get current rotation
+     * @return current rotation
+     */
+    float getRotation() {
+        return transform.getRotation();
     }
 
     /**
