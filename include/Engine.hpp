@@ -10,7 +10,7 @@ class Engine {
 
 public:
     Engine();
-    void update();
+    void run();
 };
 
 

@@ -3,3 +3,11 @@
 //
 
 #include "../include/Engine.hpp"
+
+Engine::Engine() {
+
+}
+
+void Engine::run() {
+
+}
