@@ -27,7 +27,7 @@ public:
      * @param i the column index
      * @param j the row index
      */
-    SpriteRenderer(SpriteSheet sheet, int i, int j);
+    SpriteRenderer(SpriteSheet& sheet, unsigned int i, unsigned int j);
 };
 
 #endif //PANCAKE_SPRITERENDERER_HPP

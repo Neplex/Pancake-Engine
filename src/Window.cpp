@@ -92,10 +92,9 @@ void Window::drawDebug() {
     }
 }
 
-
-void Window::draw(const BoxCollider * boxCollider) {
+sf::Color Window::getColor(const Collider * collider) {
     sf::Color color;
-    switch (boxCollider->getBodyType()) {
+    switch (collider->getBodyType()) {
 
         case Rigidbody::bodyType::staticBody:
             color = sf::Color(255, 0, 0);
@@ -114,6 +113,10 @@ void Window::draw(const BoxCollider * boxCollider) {
             break;
 
     }
+    return color;
+}
+
+void Window::draw(const BoxCollider * boxCollider) {
     // To draw from center
     sf::Vertex vertices[6] = {
             sf::Vertex(sf::Vector2f(-boxCollider->width/2, -boxCollider->height/2)),
@@ -124,6 +127,7 @@ void Window::draw(const BoxCollider * boxCollider) {
             sf::Vertex(sf::Vector2f(boxCollider->width/2, boxCollider->height/2))
     };
     // Color for type
+    sf::Color color = getColor(boxCollider);
     for (int i = 0; i < 6; ++i) {
         vertices[i].color = color;
     }

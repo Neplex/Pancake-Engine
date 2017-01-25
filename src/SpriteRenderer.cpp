@@ -16,10 +16,10 @@ SpriteRenderer::SpriteRenderer(unsigned int width, unsigned int height) {
     sprite.setOrigin(width/2, height/2);
 }
 
-SpriteRenderer::SpriteRenderer(SpriteSheet sheet, int i, int j) {
+SpriteRenderer::SpriteRenderer(SpriteSheet& sheet, unsigned int i, unsigned int j) {
     sprite.setTexture(sheet.texture);
     sprite.setTextureRect(sf::IntRect(
-            sheet.tile_width * i,
+            sheet.tile_width  * i,
             sheet.tile_height * j,
             sheet.tile_width,
             sheet.tile_height

@@ -6,7 +6,6 @@
 #include "../include/Engine.hpp"
 #include "../include/SpriteRenderer.hpp"
 #include "../include/Camera.hpp"
-#include "../include/Rigidbody.hpp"
 
 Engine::Engine() : sceneManager(), inputHandler(), window(sceneManager, inputHandler), physicsEngine() {
 
@@ -18,16 +17,16 @@ Engine::Engine() : sceneManager(), inputHandler(), window(sceneManager, inputHan
     GameObject * groudingBox = new GameObject("GroundinBox");
     BoxCollider * bcGroundingBox = new BoxCollider();
     bcGroundingBox->height = 64;
-    bcGroundingBox->width = 8 * 32;
-    bcGroundingBox->offset = sf::Vector2f(0, 0);
+    bcGroundingBox->width = 10 * 32;
     groudingBox->transform->setPosition(sf::Vector2f(200, 100));
     groudingBox->addComponent(*bcGroundingBox);
     // Box
     GameObject * go1 = new GameObject("");
-    SpriteRenderer * sr = new SpriteRenderer(32, 32);
+    SpriteSheet * ss = new SpriteSheet("../resources/tiles_spritesheet.png", 72, 72);
+    SpriteRenderer * sr = new SpriteRenderer(*ss, 0, 11);
     BoxCollider * bc = new BoxCollider();
     Rigidbody * rb = new Rigidbody();
-    bc->width = 32; bc->height = 32;
+    bc->width = 70; bc->height = 70;
     go1->transform->setPosition(sf::Vector2f(100, -100));
     go1->transform->setRotation(0);
     go1->addComponent(*sr);
@@ -36,7 +35,7 @@ Engine::Engine() : sceneManager(), inputHandler(), window(sceneManager, inputHan
     // Camera
     GameObject * go2 = new GameObject("");
     Camera * cm = new Camera();
-    cm->zoom(.6);
+    cm->zoom(1.2);
     go2->addComponent(*cm);
 
     Scene* scene = new Scene("TestScene");
