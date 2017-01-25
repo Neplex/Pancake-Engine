@@ -37,7 +37,7 @@ void PhysicsEngine::addStaticBodyToPhysicsWorld(Collider& c) {
     b2PolygonShape shape;
     if(dynamic_cast<BoxCollider*>(&c) != NULL) {
         BoxCollider * bc = (BoxCollider *)&c;
-        shape.SetAsBox(bc->width, bc->height, b2Vec2(c.offset.x,c.offset.y), c.gameObject->transform->getRotation());
+        shape.SetAsBox(bc->width/2, bc->height/2, b2Vec2(c.offset.x,c.offset.y), c.gameObject->transform->getRotation());
     } else {
         assert(false);
     }
@@ -79,7 +79,7 @@ void PhysicsEngine::addRigidBodyToPhysicsWorld(Rigidbody &rb) {
             b2PolygonShape shape;
             if (dynamic_cast<BoxCollider *>(&c) != NULL) {
                 BoxCollider *bc = (BoxCollider *) &c;
-                shape.SetAsBox(bc->width, bc->height, b2Vec2(c.offset.x,c.offset.y), c.gameObject->transform->getRotation());
+                shape.SetAsBox(bc->width/2, bc->height/2, b2Vec2(c.offset.x,c.offset.y), c.gameObject->transform->getRotation());
             } else {
                 assert(false);
             }

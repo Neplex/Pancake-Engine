@@ -93,13 +93,25 @@ void Window::drawDebug() {
 }
 
 void Window::draw(const BoxCollider * boxCollider) {
-    sf::Vertex vertices[6] = {
+    /*
+     * To draw from the upper left corner
+     * sf::Vertex vertices[6] = {
             sf::Vertex(sf::Vector2f(0, 0)),
             sf::Vertex(sf::Vector2f(boxCollider->width, 0)),
             sf::Vertex(sf::Vector2f(boxCollider->width, boxCollider->height)),
             sf::Vertex(sf::Vector2f(0, 0)),
             sf::Vertex(sf::Vector2f(0, boxCollider->height)),
             sf::Vertex(sf::Vector2f(boxCollider->width, boxCollider->height))
+    };*/
+
+    // To draw from center
+    sf::Vertex vertices[6] = {
+            sf::Vertex(sf::Vector2f(-boxCollider->width/2, -boxCollider->height/2)),
+            sf::Vertex(sf::Vector2f(boxCollider->width/2, -boxCollider->height/2)),
+            sf::Vertex(sf::Vector2f(boxCollider->width/2, boxCollider->height/2)),
+            sf::Vertex(sf::Vector2f(-boxCollider->width/2, -boxCollider->height/2)),
+            sf::Vertex(sf::Vector2f(-boxCollider->width/2, boxCollider->height/2)),
+            sf::Vertex(sf::Vector2f(boxCollider->width/2, boxCollider->height/2))
     };
     sf::Transform transform = boxCollider->gameObject->transform->getTransformMatrix();
     sf::RenderStates renderStates;

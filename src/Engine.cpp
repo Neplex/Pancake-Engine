@@ -30,7 +30,7 @@ Engine::Engine() : sceneManager(), inputHandler(), window(sceneManager, inputHan
     BoxCollider * bc = new BoxCollider();
     Rigidbody * rb = new Rigidbody();
     bc->width = 32; bc->height = 32;
-    bc->offset = sf::Vector2f(0, 100);
+    bc->offset = sf::Vector2f(0, 0);
     go1->transform->setPosition(sf::Vector2f(100, -100));
     go1->transform->setRotation(0);
     go1->addComponent(*sr);
