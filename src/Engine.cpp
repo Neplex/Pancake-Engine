@@ -8,14 +8,13 @@
 #include "../include/Camera.hpp"
 #include "../include/Rigidbody.hpp"
 
-Engine::Engine() : sceneManager(), inputHandler(), window(sceneManager, inputHandler),
-                   physicsEngine() {
+Engine::Engine() : sceneManager(), inputHandler(), window(sceneManager, inputHandler), physicsEngine() {
 
     Collider::physicsEngine = &physicsEngine;
     Rigidbody::physicsEngine = &physicsEngine;
+
     // TEST //
-    GameObject * go1 = new GameObject("");
-    GameObject * go2 = new GameObject("");
+    // Ground
     GameObject * groudingBox = new GameObject("GroundinBox");
     BoxCollider * bcGroundingBox = new BoxCollider();
     bcGroundingBox->height = 64;
@@ -23,19 +22,21 @@ Engine::Engine() : sceneManager(), inputHandler(), window(sceneManager, inputHan
     bcGroundingBox->offset = sf::Vector2f(0, 0);
     groudingBox->transform->setPosition(sf::Vector2f(200, 100));
     groudingBox->addComponent(*bcGroundingBox);
-
+    // Box
+    GameObject * go1 = new GameObject("");
     SpriteRenderer * sr = new SpriteRenderer(32, 32);
-    Camera * cm = new Camera();
-    cm->zoom(.6);
     BoxCollider * bc = new BoxCollider();
     Rigidbody * rb = new Rigidbody();
     bc->width = 32; bc->height = 32;
-    bc->offset = sf::Vector2f(0, 0);
     go1->transform->setPosition(sf::Vector2f(100, -100));
     go1->transform->setRotation(0);
     go1->addComponent(*sr);
     go1->addComponent(*bc);
     go1->addComponent(*rb);
+    // Camera
+    GameObject * go2 = new GameObject("");
+    Camera * cm = new Camera();
+    cm->zoom(.6);
     go2->addComponent(*cm);
 
     Scene* scene = new Scene("TestScene");

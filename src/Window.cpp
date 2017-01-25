@@ -42,8 +42,7 @@ void Window::drawScene() {
         const SpriteRenderer * spriteRenderer = gameObject->getComponent<SpriteRenderer>();
         if (spriteRenderer != NULL) {
             sf::RenderStates renderStates;
-            renderStates.transform = gameObject->transform->getTransformMatrix() * spriteRenderer->sprite.getTransform();
-            renderStates.transform.translate(-spriteRenderer->sprite.getLocalBounds().width/2, -spriteRenderer->sprite.getLocalBounds().height/2);
+            renderStates.transform = gameObject->transform->getTransformMatrix();
             window.draw(spriteRenderer->sprite, renderStates);
         }
     }
