@@ -34,7 +34,7 @@ public:
      * Otherwise the body type of the collider is the bodyType of the rigibody.
      * @return The bodytype of the collider.
      */
-    Rigidbody::bodyType getBodyType() {
+    const Rigidbody::bodyType getBodyType() const {
         if (attachedRigidbody != NULL) {
             return attachedRigidbody->type;
         }

@@ -92,6 +92,7 @@ void Window::drawDebug() {
     }
 }
 
+
 void Window::draw(const BoxCollider * boxCollider) {
     /*
      * To draw from the upper left corner
@@ -104,6 +105,26 @@ void Window::draw(const BoxCollider * boxCollider) {
             sf::Vertex(sf::Vector2f(boxCollider->width, boxCollider->height))
     };*/
 
+    sf::Color color;
+    switch (boxCollider->getBodyType()) {
+
+        case Rigidbody::bodyType::staticBody:
+            color = sf::Color(255, 0, 0);
+            break;
+
+        case Rigidbody::bodyType::dynamicBody:
+            color = sf::Color(0, 255, 0);
+            break;
+
+        case Rigidbody::bodyType::kinematicBody:
+            color = sf::Color(0, 0, 255);
+            break;
+
+        default:
+            color = sf::Color(255, 255, 255);
+            break;
+
+    }
     // To draw from center
     sf::Vertex vertices[6] = {
             sf::Vertex(sf::Vector2f(-boxCollider->width/2, -boxCollider->height/2)),
@@ -113,6 +134,11 @@ void Window::draw(const BoxCollider * boxCollider) {
             sf::Vertex(sf::Vector2f(-boxCollider->width/2, boxCollider->height/2)),
             sf::Vertex(sf::Vector2f(boxCollider->width/2, boxCollider->height/2))
     };
+    // Color for type
+    for (int i = 0; i < 6; ++i) {
+        vertices[i].color = color;
+    }
+    // Transform
     sf::Transform transform = boxCollider->gameObject->transform->getTransformMatrix();
     sf::RenderStates renderStates;
     renderStates.transform = boxCollider->gameObject->transform->getTransformMatrix();
