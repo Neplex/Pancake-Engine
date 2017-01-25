@@ -10,6 +10,7 @@
 #include "InputHandler.hpp"
 #include "Window.hpp"
 #include "PhysicsEngine.hpp"
+#include "Time.hpp"
 
 class Engine {
 
@@ -25,8 +26,12 @@ private:
     InputHandler inputHandler;
     Window window;
     PhysicsEngine physicsEngine;
+    Time time;
 
-    void update(float dt);
+    /*
+     * Update the engine (physics and logic) with a constant time.
+     */
+    void update();
 };
 
 

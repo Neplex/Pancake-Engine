@@ -9,10 +9,11 @@
 #include "../include/Rigidbody.hpp"
 
 Engine::Engine() : sceneManager(), inputHandler(), window(sceneManager, inputHandler),
-                   physicsEngine() {
+                   physicsEngine(), time() {
 
     Collider::physicsEngine = &physicsEngine;
     Rigidbody::physicsEngine = &physicsEngine;
+    time.deltaTime = MS_PER_UPDATE / 1000;
     // TEST //
     GameObject * go1 = new GameObject("");
     GameObject * go2 = new GameObject("");
@@ -50,8 +51,8 @@ Engine::Engine() : sceneManager(), inputHandler(), window(sceneManager, inputHan
     // TEST //
 }
 
-void Engine::update(float dt) {
-    physicsEngine.update(dt);
+void Engine::update() {
+    physicsEngine.update(MS_PER_UPDATE);
     sceneManager.getCurrentScene()->update();
     sceneManager.getCurrentScene()->lateUpdate();
 }
@@ -62,13 +63,14 @@ void Engine::run() {
     while (!window.isClosed())
     {
         lag += clock.getElapsedTime().asMilliseconds();
+
         clock.restart();
 
         window.handleEvent();
 
         while (lag >= MS_PER_UPDATE)
         {
-            update(MS_PER_UPDATE);
+            update();
             lag -= MS_PER_UPDATE;
         }
 
