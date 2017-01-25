@@ -5,19 +5,19 @@
 #ifndef PANCAKE_TIME_HPP
 #define PANCAKE_TIME_HPP
 
-
 class Time {
 public:
     /**
      * The time in seconds it took to complete the last frame.
      * @return The time in seconds it took to complete the last frame.
      */
-    static float getDeltaTime();
-    Time() : deltaTime(0) {
-
+    static float getDeltaTime() {
+        return Time::deltaTime;
     }
-    float deltaTime;
-};
 
+private:
+    friend class Engine;
+    static float deltaTime;
+};
 
 #endif //PANCAKE_TIME_HPP
