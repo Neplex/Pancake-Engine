@@ -11,6 +11,7 @@ Engine::Engine() : sceneManager(), inputHandler(), window(sceneManager, inputHan
 
     Collider::physicsEngine = &physicsEngine;
     Rigidbody::physicsEngine = &physicsEngine;
+    time.deltaTime = MS_PER_UPDATE / 1000;
 
     // TEST //
     // Ground
@@ -50,8 +51,8 @@ Engine::Engine() : sceneManager(), inputHandler(), window(sceneManager, inputHan
     // TEST //
 }
 
-void Engine::update(float dt) {
-    physicsEngine.update(dt);
+void Engine::update() {
+    physicsEngine.update(MS_PER_UPDATE);
     sceneManager.getCurrentScene()->update();
     sceneManager.getCurrentScene()->lateUpdate();
 }
@@ -68,7 +69,7 @@ void Engine::run() {
 
         while (lag >= MS_PER_UPDATE)
         {
-            update(MS_PER_UPDATE);
+            update();
             lag -= MS_PER_UPDATE;
         }
 
