@@ -7,11 +7,11 @@
 #include "../include/SpriteRenderer.hpp"
 #include "../include/Camera.hpp"
 
-Engine::Engine() : sceneManager(), inputHandler(), window(sceneManager, inputHandler), physicsEngine() {
+Engine::Engine() : sceneManager(), inputHandler(), window(sceneManager, inputHandler), physicsEngine(), time() {
 
     Collider::physicsEngine = &physicsEngine;
     Rigidbody::physicsEngine = &physicsEngine;
-    time.deltaTime = MS_PER_UPDATE / 1000;
+    Time::deltaTime = MS_PER_UPDATE / 1000;
 
     // TEST //
     // Ground
