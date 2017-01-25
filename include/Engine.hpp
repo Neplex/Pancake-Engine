@@ -15,7 +15,7 @@
 class Engine {
 
 public:
-    static constexpr double MS_PER_UPDATE = 100 / 6;
+    const double SECONDS_PER_UPDATE = 1.0 / 120.0;
 
     Engine();
     void run();

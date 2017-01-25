@@ -11,7 +11,7 @@ Engine::Engine() : sceneManager(), inputHandler(), window(sceneManager, inputHan
 
     Collider::physicsEngine = &physicsEngine;
     Rigidbody::physicsEngine = &physicsEngine;
-    Time::deltaTime = MS_PER_UPDATE / 1000;
+    Time::deltaTime = SECONDS_PER_UPDATE;
 
     // TEST //
     // Ground
@@ -57,28 +57,36 @@ Engine::Engine() : sceneManager(), inputHandler(), window(sceneManager, inputHan
 }
 
 void Engine::update() {
-    physicsEngine.update(Time::deltaTime);
+    physicsEngine.update(SECONDS_PER_UPDATE);
     sceneManager.getCurrentScene()->update();
     sceneManager.getCurrentScene()->lateUpdate();
 }
 
 void Engine::run() {
-    double lag = 0.0;
     sf::Clock clock;
-    while (!window.isClosed())
+    double lag = 0.0;
+    double previous = clock.getElapsedTime().asSeconds();
+
+    while(!window.isClosed())
     {
-        lag += clock.getElapsedTime().asMilliseconds();
+        double current = clock.getElapsedTime().asSeconds();
+        double elapsed = current - previous;
+        previous = current;
 
+        lag += elapsed;
+
+        // Processing inputs
         window.handleEvent();
-        Time::deltaTime = clock.getElapsedTime().asSeconds();
-        clock.restart();
-        update ();
-        /*while (lag >= MS_PER_UPDATE)
+        while(lag >= SECONDS_PER_UPDATE)
         {
-            update();
-            lag -= MS_PER_UPDATE;
-        }*/
+            // Updating
 
+            update();
+            // Retrieve elapsed time
+            lag -= SECONDS_PER_UPDATE;
+        }
+        // Rendering
         window.render();
+        //m_graphicEngine.render(lag / SECONDS_PER_UPDATE);
     }
 }

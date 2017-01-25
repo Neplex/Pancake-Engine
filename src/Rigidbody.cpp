@@ -32,7 +32,7 @@ void Rigidbody::start() {
 
 void Rigidbody::update() {
     Component::update();
-    applyForce(sf::Vector2f(10, 10));
+    applyForce(sf::Vector2f(5, 10));
     //applyForce(sf::Vector2f(10500, 0));
     //std::cout << physicsBody->GetPosition().x << std::endl;
     //applyForce(sf::Vector2f(5, 0));
