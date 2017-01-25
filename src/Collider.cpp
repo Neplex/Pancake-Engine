@@ -15,7 +15,6 @@ void Collider::awake() {
     if (physicsEngine != NULL) {
         Rigidbody *rb = gameObject->getComponent<Rigidbody>();
         if (rb == NULL) {
-            std::cout << "no rigibody" << std::endl;
             Collider::physicsEngine->addStaticBodyToPhysicsWorld(*this);
         }
     } else {

@@ -16,6 +16,10 @@ void Rigidbody::awake() {
         assert(false);
         // Should have an engine
     }
+    std::vector<Collider *> v = gameObject->getComponents<Collider>();
+    for (int i = 0; i < v.size(); ++i) {
+        v[i]->attachedRigidbody = this;
+    }
 }
 
 Rigidbody::Rigidbody() : type(bodyType::dynamicBody), angularDrag(0.05f), drag(0),

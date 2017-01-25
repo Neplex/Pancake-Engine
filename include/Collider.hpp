@@ -8,6 +8,7 @@
 
 #include <SFML/System/Vector2.hpp>
 #include "Component.hpp"
+#include "Rigidbody.hpp"
 
 class PhysicsEngine;
 
@@ -15,6 +16,7 @@ class Collider : public Component {
 
 public:
     void awake();
+    Rigidbody * attachedRigidbody;
     // Is this collider configured as a trigger?
     bool isTrigger;
     // Get the bounciness used by the collider.
@@ -25,6 +27,19 @@ public:
     float friction;
     // The local offset of the collider
     sf::Vector2f offset;
+
+    /**
+     * Return the body type of this collider.
+     * If the collider has not rigidbody, it is a static body.
+     * Otherwise the body type of the collider is the bodyType of the rigibody.
+     * @return The bodytype of the collider.
+     */
+    Rigidbody::bodyType getBodyType() {
+        if (attachedRigidbody != NULL) {
+            return attachedRigidbody->type;
+        }
+        return Rigidbody::bodyType::staticBody;
+    }
 private:
     friend class Engine;
     static PhysicsEngine * physicsEngine;

@@ -50,7 +50,6 @@ void PhysicsEngine::addStaticBodyToPhysicsWorld(Collider& c) {
 }
 
 void PhysicsEngine::addRigidBodyToPhysicsWorld(Rigidbody &rb) {
-    std::cout << "Added object ot the world" << std::endl;
     b2BodyDef bodyDef;
     switch (rb.type) {
         case Rigidbody::bodyType::dynamicBody:
@@ -73,7 +72,6 @@ void PhysicsEngine::addRigidBodyToPhysicsWorld(Rigidbody &rb) {
 
     // Create a fixture for each collider
     std::vector<Collider *> v = rb.gameObject->getComponents<Collider>();
-    if (v.size() > 0) {
         for (int i = 0; i < v.size(); ++i) {
             Collider & c = *v[i];
             b2PolygonShape shape;
@@ -91,7 +89,6 @@ void PhysicsEngine::addRigidBodyToPhysicsWorld(Rigidbody &rb) {
             fixtureDef.userData = (void *) &c;
             body->CreateFixture(&fixtureDef);
         }
-    }
 }
 
 
