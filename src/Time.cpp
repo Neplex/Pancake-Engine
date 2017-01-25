@@ -4,4 +4,4 @@
 
 #include "../include/Time.hpp"
 
-float Time::deltaTime = 0;
+double Time::deltaTime = 0;

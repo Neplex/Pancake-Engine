@@ -17,7 +17,7 @@ public:
 
 private:
     friend class Engine;
-    static float deltaTime;
+    static double deltaTime;
 };
 
 #endif //PANCAKE_TIME_HPP

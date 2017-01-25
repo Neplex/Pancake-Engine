@@ -34,5 +34,4 @@ private:
     void update();
 };
 
-
 #endif //PANCAKE_ENGINE_HPP

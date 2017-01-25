@@ -17,9 +17,9 @@ Engine::Engine() : sceneManager(), inputHandler(), window(sceneManager, inputHan
     // Ground
     GameObject * groudingBox = new GameObject("GroundinBox");
     BoxCollider * bcGroundingBox = new BoxCollider();
-    bcGroundingBox->height = 64;
-    bcGroundingBox->width = 10 * 32;
-    groudingBox->transform->setPosition(sf::Vector2f(200, 100));
+    bcGroundingBox->height = 1;
+    bcGroundingBox->width = 300;
+    groudingBox->transform->setPosition(sf::Vector2f(200, 300));
     groudingBox->addComponent(*bcGroundingBox);
     // Box
     GameObject * go1 = new GameObject("");
@@ -32,7 +32,7 @@ Engine::Engine() : sceneManager(), inputHandler(), window(sceneManager, inputHan
     ar->play();
     BoxCollider * bc = new BoxCollider();
     Rigidbody * rb = new Rigidbody();
-    bc->width = 70; bc->height = 70;
+    bc->width = 1; bc->height = 1;
     go1->transform->setPosition(sf::Vector2f(100, -100));
     go1->transform->setRotation(0);
     go1->addComponent(*ar);
@@ -57,7 +57,7 @@ Engine::Engine() : sceneManager(), inputHandler(), window(sceneManager, inputHan
 }
 
 void Engine::update() {
-    physicsEngine.update(MS_PER_UPDATE);
+    physicsEngine.update(Time::deltaTime);
     sceneManager.getCurrentScene()->update();
     sceneManager.getCurrentScene()->lateUpdate();
 }
@@ -68,15 +68,16 @@ void Engine::run() {
     while (!window.isClosed())
     {
         lag += clock.getElapsedTime().asMilliseconds();
-        clock.restart();
 
         window.handleEvent();
-
-        while (lag >= MS_PER_UPDATE)
+        Time::deltaTime = clock.getElapsedTime().asSeconds();
+        clock.restart();
+        update ();
+        /*while (lag >= MS_PER_UPDATE)
         {
             update();
             lag -= MS_PER_UPDATE;
-        }
+        }*/
 
         window.render();
     }

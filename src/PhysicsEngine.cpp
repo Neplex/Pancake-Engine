@@ -17,14 +17,17 @@ PhysicsEngine::~PhysicsEngine() {
 }
 
 void PhysicsEngine::update(float dt) {
+    //world->Step(1/30,10,10);
     world->Step(dt, velocityIterations, positionIterations);
     for ( b2Body* b = world->GetBodyList(); b; b = b->GetNext())
     {
         if (b->GetType() != b2_staticBody) {
             Rigidbody * rb = static_cast<Rigidbody*>(b->GetUserData());
             rb->gameObject->transform->setPosition(sf::Vector2f(b->GetPosition().x, b->GetPosition().y));
+            rb->gameObject->transform->setRotation(b->GetAngle());
         }
     }
+    //world->ClearForces();
 }
 
 void PhysicsEngine::addStaticBodyToPhysicsWorld(Collider& c) {
@@ -43,9 +46,11 @@ void PhysicsEngine::addStaticBodyToPhysicsWorld(Collider& c) {
     }
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &shape;
-    fixtureDef.density = c.density;
+    fixtureDef.density =1;
+    fixtureDef.restitution = 0;
+    /*fixtureDef.density = c.density;
     fixtureDef.friction = c.friction;
-    fixtureDef.restitution = c.bounciness;
+    fixtureDef.restitution = c.bounciness;*/
     body->CreateFixture(&fixtureDef);
 }
 
@@ -68,9 +73,13 @@ void PhysicsEngine::addRigidBodyToPhysicsWorld(Rigidbody &rb) {
     bodyDef.position.Set(rb.gameObject->transform->getPosition().x,
                          rb.gameObject->transform->getPosition().y);
     bodyDef.userData = (void *) &rb;
+    /*bodyDef.angularVelocity = rb.angularVelocity;
+    bodyDef.angularDamping = rb.angularDrag;
+    bodyDef.fixedRotation = rb.freezeRotation;*/
     b2Body *body = world->CreateBody(&bodyDef);
+    rb.physicsBody = body;
 
-    // Create a fixture for each collider
+            // Create a fixture for each collider
     std::vector<Collider *> v = rb.gameObject->getComponents<Collider>();
         for (int i = 0; i < v.size(); ++i) {
             Collider & c = *v[i];
@@ -83,10 +92,12 @@ void PhysicsEngine::addRigidBodyToPhysicsWorld(Rigidbody &rb) {
             }
             b2FixtureDef fixtureDef;
             fixtureDef.shape = &shape;
-            fixtureDef.density = c.density;
-            fixtureDef.friction = c.friction;
-            fixtureDef.restitution = c.bounciness;
-            fixtureDef.userData = (void *) &c;
+            fixtureDef.density =1;
+            fixtureDef.restitution = 0;
+                    /*fixtureDef.density = c.density;
+                    fixtureDef.friction = c.friction;
+                    fixtureDef.restitution = c.bounciness;
+                    fixtureDef.userData = (void *) &c;*/
             body->CreateFixture(&fixtureDef);
         }
 }
