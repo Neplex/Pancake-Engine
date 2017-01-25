@@ -23,6 +23,8 @@ public:
     }
 
 private:
+    friend class Animation;
+    friend class AnimationRenderer;
     friend class SpriteRenderer;
 
     sf::Texture texture;

@@ -4,8 +4,8 @@
 
 #include <iostream>
 #include "../include/Engine.hpp"
-#include "../include/SpriteRenderer.hpp"
 #include "../include/Camera.hpp"
+#include "../include/AnimationRenderer.hpp"
 
 Engine::Engine() : sceneManager(), inputHandler(), window(sceneManager, inputHandler), physicsEngine() {
 
@@ -24,13 +24,18 @@ Engine::Engine() : sceneManager(), inputHandler(), window(sceneManager, inputHan
     // Box
     GameObject * go1 = new GameObject("");
     SpriteSheet * ss = new SpriteSheet("../resources/tiles_spritesheet.png", 72, 72);
-    SpriteRenderer * sr = new SpriteRenderer(*ss, 0, 11);
+    Animation * a = new Animation(*ss);
+    a->addFrame(0, 3, 200);
+    a->addFrame(0, 4, 200);
+    a->addFrame(0, 5, 200);
+    AnimationRenderer * ar = new AnimationRenderer(*a);
+    ar->play();
     BoxCollider * bc = new BoxCollider();
     Rigidbody * rb = new Rigidbody();
     bc->width = 70; bc->height = 70;
     go1->transform->setPosition(sf::Vector2f(100, -100));
     go1->transform->setRotation(0);
-    go1->addComponent(*sr);
+    go1->addComponent(*ar);
     go1->addComponent(*bc);
     go1->addComponent(*rb);
     // Camera

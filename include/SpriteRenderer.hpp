@@ -12,8 +12,6 @@
 
 class SpriteRenderer : public Component {
 public:
-    sf::Sprite sprite;
-
     /**
      * Create sprite with default texture
      * @param width
@@ -28,6 +26,11 @@ public:
      * @param j the row index
      */
     SpriteRenderer(SpriteSheet& sheet, unsigned int i, unsigned int j);
+
+private:
+    friend class Window;
+
+    sf::Sprite sprite;
 };
 
 #endif //PANCAKE_SPRITERENDERER_HPP
