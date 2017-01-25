@@ -10,6 +10,17 @@ SpriteRenderer::SpriteRenderer(unsigned int width, unsigned int height) {
         exit(EXIT_FAILURE);
     }
     texture->setRepeated(true);
+    texture->setSmooth(true);
     sprite.setTexture(*texture);
     sprite.setTextureRect(sf::IntRect(0, 0, width, height));
+}
+
+SpriteRenderer::SpriteRenderer(SpriteSheet sheet, int i, int j) {
+    sprite.setTexture(sheet.texture);
+    sprite.setTextureRect(sf::IntRect(
+            sheet.tile_width * i,
+            sheet.tile_height * j,
+            sheet.tile_width,
+            sheet.tile_height
+    ));
 }

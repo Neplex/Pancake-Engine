@@ -95,17 +95,6 @@ void Window::drawDebug() {
 
 
 void Window::draw(const BoxCollider * boxCollider) {
-    /*
-     * To draw from the upper left corner
-     * sf::Vertex vertices[6] = {
-            sf::Vertex(sf::Vector2f(0, 0)),
-            sf::Vertex(sf::Vector2f(boxCollider->width, 0)),
-            sf::Vertex(sf::Vector2f(boxCollider->width, boxCollider->height)),
-            sf::Vertex(sf::Vector2f(0, 0)),
-            sf::Vertex(sf::Vector2f(0, boxCollider->height)),
-            sf::Vertex(sf::Vector2f(boxCollider->width, boxCollider->height))
-    };*/
-
     sf::Color color;
     switch (boxCollider->getBodyType()) {
 
