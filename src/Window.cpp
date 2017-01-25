@@ -5,6 +5,7 @@
 #include "../include/Window.hpp"
 #include "../include/SpriteRenderer.hpp"
 #include "../include/Camera.hpp"
+#include "../include/AnimationRenderer.hpp"
 
 Window::Window(SceneManager& s, InputHandler& ih) : scenes(s), inputHandler(ih), window(sf::VideoMode::getDesktopMode(), "", sf::Style::Close) {
     window.setVerticalSyncEnabled(true);
@@ -38,12 +39,20 @@ void Window::drawScene() {
     for (int i = 0; i < scenes.getCurrentScene()->gameObjects.size(); ++i) {
         const GameObject * gameObject = scenes.getCurrentScene()->gameObjects[i];
 
-        // Get spriteRenderer
+        // Get SpriteRenderer
         const SpriteRenderer * spriteRenderer = gameObject->getComponent<SpriteRenderer>();
         if (spriteRenderer != NULL) {
             sf::RenderStates renderStates;
             renderStates.transform = gameObject->transform->getTransformMatrix();
             window.draw(spriteRenderer->sprite, renderStates);
+        }
+
+        // Get AnimationRenderer
+        const AnimationRenderer * animationRenderer = gameObject->getComponent<AnimationRenderer>();
+        if (animationRenderer != NULL) {
+            sf::RenderStates renderStates;
+            renderStates.transform = gameObject->transform->getTransformMatrix();
+            window.draw(animationRenderer->sprite, renderStates);
         }
     }
 }

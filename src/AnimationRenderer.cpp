@@ -13,7 +13,7 @@ AnimationRenderer::AnimationRenderer(Animation& a) : animation(a), isRun(false),
 
 void AnimationRenderer::update() {
     if (isRun) {
-        currentTime += Time::getDeltaTime();
+        currentTime += Time::getDeltaTime() * 1000;
         if (currentTime > animation.frames[currentFrame].time) {
             currentTime -= animation.frames[currentFrame].time;
             currentFrame = (currentFrame+1)%animation.frames.size();

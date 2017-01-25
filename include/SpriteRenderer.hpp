@@ -9,7 +9,7 @@
 #include "SpriteSheet.hpp"
 #include <SFML/Graphics.hpp>
 
-
+class SpriteSheet;
 class SpriteRenderer : public Component {
 public:
     /**
