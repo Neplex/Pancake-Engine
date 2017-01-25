@@ -17,14 +17,17 @@ public:
      * @param tile_w the tile width
      * @param tile_h the tile height
      */
-    SpriteSheet(std::string uri, int tile_w, int tile_h);
+    SpriteSheet(std::string uri, unsigned int tile_w, unsigned int tile_h) : tile_width(tile_w), tile_height(tile_h) {
+        if (!texture.loadFromFile(uri)) exit(EXIT_FAILURE);
+        texture.setSmooth(true);
+    }
 
 private:
     friend class SpriteRenderer;
 
     sf::Texture texture;
-    int tile_width;
-    int tile_height;
+    unsigned int tile_width;
+    unsigned int tile_height;
 };
 
 

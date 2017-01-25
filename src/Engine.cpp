@@ -6,37 +6,36 @@
 #include "../include/Engine.hpp"
 #include "../include/SpriteRenderer.hpp"
 #include "../include/Camera.hpp"
-#include "../include/Rigidbody.hpp"
 
-Engine::Engine() : sceneManager(), inputHandler(), window(sceneManager, inputHandler),
-                   physicsEngine(), time() {
+Engine::Engine() : sceneManager(), inputHandler(), window(sceneManager, inputHandler), physicsEngine() {
 
     Collider::physicsEngine = &physicsEngine;
     Rigidbody::physicsEngine = &physicsEngine;
-    time.deltaTime = MS_PER_UPDATE / 1000;
+
     // TEST //
-    GameObject * go1 = new GameObject("");
-    GameObject * go2 = new GameObject("");
+    // Ground
     GameObject * groudingBox = new GameObject("GroundinBox");
     BoxCollider * bcGroundingBox = new BoxCollider();
     bcGroundingBox->height = 64;
-    bcGroundingBox->width = 8 * 32;
-    bcGroundingBox->offset = sf::Vector2f(0, 0);
+    bcGroundingBox->width = 10 * 32;
     groudingBox->transform->setPosition(sf::Vector2f(200, 100));
     groudingBox->addComponent(*bcGroundingBox);
-
-    SpriteRenderer * sr = new SpriteRenderer(32, 32);
-    Camera * cm = new Camera();
-    cm->zoom(.6);
+    // Box
+    GameObject * go1 = new GameObject("");
+    SpriteSheet * ss = new SpriteSheet("../resources/tiles_spritesheet.png", 72, 72);
+    SpriteRenderer * sr = new SpriteRenderer(*ss, 0, 11);
     BoxCollider * bc = new BoxCollider();
     Rigidbody * rb = new Rigidbody();
-    bc->width = 32; bc->height = 32;
-    bc->offset = sf::Vector2f(0, 0);
+    bc->width = 70; bc->height = 70;
     go1->transform->setPosition(sf::Vector2f(100, -100));
     go1->transform->setRotation(0);
     go1->addComponent(*sr);
     go1->addComponent(*bc);
     go1->addComponent(*rb);
+    // Camera
+    GameObject * go2 = new GameObject("");
+    Camera * cm = new Camera();
+    cm->zoom(1.2);
     go2->addComponent(*cm);
 
     Scene* scene = new Scene("TestScene");
@@ -51,8 +50,8 @@ Engine::Engine() : sceneManager(), inputHandler(), window(sceneManager, inputHan
     // TEST //
 }
 
-void Engine::update() {
-    physicsEngine.update(MS_PER_UPDATE);
+void Engine::update(float dt) {
+    physicsEngine.update(dt);
     sceneManager.getCurrentScene()->update();
     sceneManager.getCurrentScene()->lateUpdate();
 }
@@ -63,14 +62,13 @@ void Engine::run() {
     while (!window.isClosed())
     {
         lag += clock.getElapsedTime().asMilliseconds();
-
         clock.restart();
 
         window.handleEvent();
 
         while (lag >= MS_PER_UPDATE)
         {
-            update();
+            update(MS_PER_UPDATE);
             lag -= MS_PER_UPDATE;
         }
 

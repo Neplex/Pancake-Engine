@@ -48,8 +48,8 @@ private:
      * Draw debug elements
      */
     void drawDebug();
-
     void draw(const BoxCollider * boxCollider);
+    sf::Color getColor(const Collider * collider);
 };
 
 #endif //PANCAKE_WINDOW_HPP
