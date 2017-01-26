@@ -18,6 +18,8 @@ public:
     void pause();
     void stop();
 
+    void loop(bool b = true);
+
     void update();
 
 private:
@@ -26,6 +28,7 @@ private:
     sf::Sprite sprite;
     Animation& animation;
     bool isRun;
+    bool isLoop;
     double currentTime;
     unsigned int currentFrame;
 
