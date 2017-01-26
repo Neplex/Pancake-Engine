@@ -19,14 +19,13 @@ public:
 
     Engine();
     void run();
-
-private:
-
     SceneManager sceneManager;
     InputHandler inputHandler;
     Window window;
     PhysicsEngine physicsEngine;
     Time time;
+
+private:
 
     /*
      * Update the engine (physics and logic) with a constant time.

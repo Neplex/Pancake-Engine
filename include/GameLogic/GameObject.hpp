@@ -7,6 +7,7 @@
 
 #include <vector>
 #include <string>
+#include "../GameLogic/Components/Transform.hpp"
 
 class Transform;
 class Component;
@@ -16,7 +17,7 @@ public:
     Transform * transform;
 
     GameObject(std::string name);
-    ~GameObject();
+    virtual ~GameObject();
 
     /**
      * Return the first component of the type T in the game object.
