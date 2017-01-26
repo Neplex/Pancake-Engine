@@ -2,8 +2,8 @@
 // Created by nicolas on 25/01/17.
 //
 
-#include "../include/AnimationRenderer.hpp"
-#include "../include/Time.hpp"
+#include "../../../include/GameLogic/Components/AnimationRenderer.hpp"
+#include "../../../include/Time.hpp"
 
 AnimationRenderer::AnimationRenderer(Animation& a) : animation(a), isRun(false), currentTime(0), currentFrame(0) {
     sprite.setTexture(animation.spriteSheet.texture);

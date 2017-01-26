@@ -7,8 +7,7 @@
 
 
 #include "Component.hpp"
-#include "Animation.hpp"
-#include "Window.hpp"
+#include "../../Graphics/Animation.hpp"
 
 class AnimationRenderer : public Component {
 public:

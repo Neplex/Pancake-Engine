@@ -3,8 +3,7 @@
 //
 
 #include "../include/PhysicsEngine.hpp"
-#include <vector>
-#include "../include/Rigidbody.hpp"
+#include "../include/GameLogic/Components/Transform.hpp"
 #include <iostream>
 
 int PhysicsEngine::numberPixelsPerMeter = 72; // TODO to change with the scene

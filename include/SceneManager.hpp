@@ -8,7 +8,7 @@
 
 
 #include <vector>
-#include "Scene.hpp"
+#include "GameLogic/Scene.hpp"
 
 class SceneManager {
 public:

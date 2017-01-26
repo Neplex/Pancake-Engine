@@ -5,8 +5,6 @@
 #ifndef PANCAKE_GAMEOBJECT_HPP
 #define PANCAKE_GAMEOBJECT_HPP
 
-#include "Component.hpp"
-#include "Transform.hpp"
 #include <vector>
 #include <string>
 

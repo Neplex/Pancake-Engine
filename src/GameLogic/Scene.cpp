@@ -2,7 +2,7 @@
 // Created by Darenn on 17/01/2017.
 //
 
-#include "../include/Scene.hpp"
+#include "../../include/GameLogic/Scene.hpp"
 
 void Scene::awake() {
     for (int i = 0; i < gameObjects.size(); ++i) {

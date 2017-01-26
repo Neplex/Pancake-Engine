@@ -2,10 +2,11 @@
 // Created by nicolas on 22/01/17.
 //
 
-#include "../include/Window.hpp"
-#include "../include/SpriteRenderer.hpp"
-#include "../include/Camera.hpp"
-#include "../include/AnimationRenderer.hpp"
+#include "../../include/Graphics/Window.hpp"
+#include "../../include/GameLogic/Components/SpriteRenderer.hpp"
+#include "../../include/GameLogic/Components/Camera.hpp"
+#include "../../include/GameLogic/Components/AnimationRenderer.hpp"
+#include "../include/GameLogic/Components/Transform.hpp"
 
 Window::Window(SceneManager& s, InputHandler& ih) : scenes(s), inputHandler(ih), window(sf::VideoMode::getDesktopMode(), "", sf::Style::Close) {
     window.setVerticalSyncEnabled(true);

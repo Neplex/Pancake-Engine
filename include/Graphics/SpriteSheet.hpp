@@ -7,7 +7,7 @@
 
 
 #include <SFML/Graphics/Texture.hpp>
-#include "SpriteRenderer.hpp"
+#include "../GameLogic/Components/SpriteRenderer.hpp"
 
 class SpriteSheet {
 public:

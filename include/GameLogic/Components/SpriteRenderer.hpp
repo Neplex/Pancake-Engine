@@ -6,7 +6,7 @@
 #define PANCAKE_SPRITERENDERER_HPP
 
 #include "Component.hpp"
-#include "SpriteSheet.hpp"
+#include "../../Graphics/SpriteSheet.hpp"
 #include <SFML/Graphics.hpp>
 
 class SpriteSheet;

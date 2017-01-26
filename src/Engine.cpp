@@ -4,8 +4,9 @@
 
 #include <iostream>
 #include "../include/Engine.hpp"
-#include "../include/Camera.hpp"
-#include "../include/AnimationRenderer.hpp"
+#include "../include/GameLogic/Components/Camera.hpp"
+#include "../include/GameLogic/Components/AnimationRenderer.hpp"
+#include "../include/GameLogic/Components/Transform.hpp"
 
 Engine::Engine() : sceneManager(), inputHandler(), window(sceneManager, inputHandler), physicsEngine(), time() {
 

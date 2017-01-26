@@ -2,7 +2,7 @@
 // Created by nicolas on 25/01/17.
 //
 
-#include "../include/Animation.hpp"
+#include "../../include/Graphics/Animation.hpp"
 
 void Animation::addFrame(unsigned int i, unsigned int j, unsigned int time) {
     Frame frame;

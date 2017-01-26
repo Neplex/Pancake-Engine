@@ -7,7 +7,7 @@
 
 #include <SFML/Graphics/View.hpp>
 #include "Component.hpp"
-#include "Window.hpp"
+#include "../../Graphics/Window.hpp"
 
 /**
  * Attach camera on a game object

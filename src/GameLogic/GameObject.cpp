@@ -2,7 +2,8 @@
 // Created by Darenn on 17/01/2017.
 //
 
-#include "../include/GameObject.hpp"
+#include "../../include/GameLogic/GameObject.hpp"
+#include "../../include/GameLogic/Components/Transform.hpp"
 
 GameObject::GameObject(std::string n) {
     name = n;

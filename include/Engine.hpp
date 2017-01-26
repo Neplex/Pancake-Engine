@@ -8,7 +8,7 @@
 
 #include "SceneManager.hpp"
 #include "InputHandler.hpp"
-#include "Window.hpp"
+#include "Graphics/Window.hpp"
 #include "PhysicsEngine.hpp"
 #include "Time.hpp"
 

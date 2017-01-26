@@ -6,9 +6,9 @@
 #define PANCAKE_WINDOW_HPP
 
 #include <SFML/Graphics/RenderWindow.hpp>
-#include "SceneManager.hpp"
-#include "InputHandler.hpp"
-#include "BoxCollider.hpp"
+#include "../SceneManager.hpp"
+#include "../InputHandler.hpp"
+#include "../GameLogic/Components/BoxCollider.hpp"
 
 /**
  * Window and render loop

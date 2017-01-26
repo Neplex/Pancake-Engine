@@ -2,7 +2,7 @@
 // Created by nicolas on 24/01/17.
 //
 
-#include "../include/Camera.hpp"
+#include "../../../include/GameLogic/Components/Camera.hpp"
 
 Camera * Camera::mainCamera = NULL;
 

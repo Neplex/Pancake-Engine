@@ -3,9 +3,9 @@
 //
 
 #include <iostream>
-#include "../include/Rigidbody.hpp"
-#include "../include/Collider.hpp"
-#include "../include/PhysicsEngine.hpp"
+#include "../../../include/GameLogic/Components/Rigidbody.hpp"
+#include "../../../include/GameLogic/Components/Collider.hpp"
+#include "../../../include/PhysicsEngine.hpp"
 
 PhysicsEngine * Rigidbody::physicsEngine = NULL;
 

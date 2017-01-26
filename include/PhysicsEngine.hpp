@@ -6,8 +6,8 @@
 #define PANCAKE_PHYSICSENGINE_HPP
 
 #include <Box2D/Box2D.h>
-#include "GameObject.hpp"
-#include "BoxCollider.hpp"
+#include "GameLogic/GameObject.hpp"
+#include "GameLogic/Components/BoxCollider.hpp"
 
 class Collider;
 class Rigidbody;

@@ -2,7 +2,7 @@
 // Created by nicolas on 19/01/17.
 //
 
-#include "../include/SpriteRenderer.hpp"
+#include "../../../include/GameLogic/Components/SpriteRenderer.hpp"
 
 SpriteRenderer::SpriteRenderer(unsigned int width, unsigned int height) {
     sf::Texture* texture = new sf::Texture();
