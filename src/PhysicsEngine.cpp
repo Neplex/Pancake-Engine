@@ -7,6 +7,7 @@
 #include "../include/Rigidbody.hpp"
 #include <iostream>
 
+int PhysicsEngine::numberPixelsPerMeter = 72; // TODO to change with the scene
 
 PhysicsEngine::PhysicsEngine() {
     world = new b2World(b2Vec2(0, 10));
@@ -17,40 +18,40 @@ PhysicsEngine::~PhysicsEngine() {
 }
 
 void PhysicsEngine::update(float dt) {
-    //world->Step(1/30,10,10);
     world->Step(dt, velocityIterations, positionIterations);
     for ( b2Body* b = world->GetBodyList(); b; b = b->GetNext())
     {
         if (b->GetType() != b2_staticBody) {
             Rigidbody * rb = static_cast<Rigidbody*>(b->GetUserData());
-            rb->gameObject->transform->setPosition(sf::Vector2f(b->GetPosition().x, b->GetPosition().y));
+            rb->gameObject->transform->setPosition((sf::Vector2f(b->GetPosition().x * numberPixelsPerMeter,
+                                                                 b->GetPosition().y * numberPixelsPerMeter)));
             rb->gameObject->transform->setRotation(b->GetAngle());
         }
     }
-    //world->ClearForces();
 }
 
 void PhysicsEngine::addStaticBodyToPhysicsWorld(Collider& c) {
     b2BodyDef bodyDef;
     bodyDef.type = b2_staticBody;
-    bodyDef.position.Set(c.gameObject->transform->getPosition().x + c.offset.x,
-                         c.gameObject->transform->getPosition().y + c.offset.y);
+
+    bodyDef.position.Set((c.gameObject->transform->getPosition().x)/numberPixelsPerMeter,
+                         (c.gameObject->transform->getPosition().y)/numberPixelsPerMeter);
     bodyDef.userData = (void *) &c;
     b2Body* body = world->CreateBody(&bodyDef);
     b2PolygonShape shape;
-    if(dynamic_cast<BoxCollider*>(&c) != NULL) {
-        BoxCollider * bc = (BoxCollider *)&c;
-        shape.SetAsBox(bc->width/2, bc->height/2, b2Vec2(c.offset.x,c.offset.y), c.gameObject->transform->getRotation());
+    if (dynamic_cast<BoxCollider *>(&c) != NULL) {
+        BoxCollider *bc = (BoxCollider *) &c;
+        shape.SetAsBox((bc->width/2)/numberPixelsPerMeter, (bc->height/2)/numberPixelsPerMeter,
+                       (b2Vec2(c.offset.x/numberPixelsPerMeter,c.offset.y/numberPixelsPerMeter)),
+                       c.gameObject->transform->getRotation());
     } else {
         assert(false);
     }
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &shape;
-    fixtureDef.density =1;
-    fixtureDef.restitution = 0;
-    /*fixtureDef.density = c.density;
+    fixtureDef.density = c.density;
     fixtureDef.friction = c.friction;
-    fixtureDef.restitution = c.bounciness;*/
+    fixtureDef.restitution = c.bounciness;
     body->CreateFixture(&fixtureDef);
 }
 
@@ -70,12 +71,12 @@ void PhysicsEngine::addRigidBodyToPhysicsWorld(Rigidbody &rb) {
             assert(false);
     }
 
-    bodyDef.position.Set(rb.gameObject->transform->getPosition().x,
-                         rb.gameObject->transform->getPosition().y);
+    bodyDef.position.Set((rb.gameObject->transform->getPosition().x)/numberPixelsPerMeter,
+                         (rb.gameObject->transform->getPosition().y)/numberPixelsPerMeter);
     bodyDef.userData = (void *) &rb;
-    /*bodyDef.angularVelocity = rb.angularVelocity;
+    bodyDef.angularVelocity = rb.angularVelocity;
     bodyDef.angularDamping = rb.angularDrag;
-    bodyDef.fixedRotation = rb.freezeRotation;*/
+    bodyDef.fixedRotation = rb.freezeRotation;
     b2Body *body = world->CreateBody(&bodyDef);
     rb.physicsBody = body;
 
@@ -86,18 +87,18 @@ void PhysicsEngine::addRigidBodyToPhysicsWorld(Rigidbody &rb) {
             b2PolygonShape shape;
             if (dynamic_cast<BoxCollider *>(&c) != NULL) {
                 BoxCollider *bc = (BoxCollider *) &c;
-                shape.SetAsBox(bc->width/2, bc->height/2, b2Vec2(c.offset.x,c.offset.y), c.gameObject->transform->getRotation());
+                shape.SetAsBox((bc->width/2)/numberPixelsPerMeter, (bc->height/2)/numberPixelsPerMeter,
+                               (b2Vec2(c.offset.x/numberPixelsPerMeter,c.offset.y/numberPixelsPerMeter)),
+                               c.gameObject->transform->getRotation());
             } else {
                 assert(false);
             }
             b2FixtureDef fixtureDef;
             fixtureDef.shape = &shape;
-            fixtureDef.density =1;
-            fixtureDef.restitution = 0;
-                    /*fixtureDef.density = c.density;
-                    fixtureDef.friction = c.friction;
-                    fixtureDef.restitution = c.bounciness;
-                    fixtureDef.userData = (void *) &c;*/
+            fixtureDef.density = c.density;
+            fixtureDef.friction = c.friction;
+            fixtureDef.restitution = c.bounciness;
+            fixtureDef.userData = (void *) &c;
             body->CreateFixture(&fixtureDef);
         }
 }

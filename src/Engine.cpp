@@ -17,8 +17,8 @@ Engine::Engine() : sceneManager(), inputHandler(), window(sceneManager, inputHan
     // Ground
     GameObject * groudingBox = new GameObject("GroundinBox");
     BoxCollider * bcGroundingBox = new BoxCollider();
-    bcGroundingBox->height = 1;
-    bcGroundingBox->width = 300;
+    bcGroundingBox->height = 72;
+    bcGroundingBox->width = 72 * 8;
     groudingBox->transform->setPosition(sf::Vector2f(200, 300));
     groudingBox->addComponent(*bcGroundingBox);
     // Box
@@ -32,7 +32,7 @@ Engine::Engine() : sceneManager(), inputHandler(), window(sceneManager, inputHan
     ar->play();
     BoxCollider * bc = new BoxCollider();
     Rigidbody * rb = new Rigidbody();
-    bc->width = 1; bc->height = 1;
+    bc->width = 72; bc->height = 72;
     go1->transform->setPosition(sf::Vector2f(100, -100));
     go1->transform->setRotation(0);
     go1->addComponent(*ar);

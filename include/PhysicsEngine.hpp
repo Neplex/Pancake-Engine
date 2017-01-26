@@ -20,6 +20,7 @@ class PhysicsEngine {
 public:
     static const int velocityIterations = 8; // how strongly to correct velocity
     static const int positionIterations = 3; // how strongly to correct position
+    static int numberPixelsPerMeter;
 
     PhysicsEngine();
     ~PhysicsEngine();

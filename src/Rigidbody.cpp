@@ -26,13 +26,13 @@ void Rigidbody::awake() {
 void Rigidbody::start() {
     Component::start();
     std::cout << physicsBody->GetLinearVelocity().x << std::endl;
-    applyLinearImpulse(sf::Vector2f(5000, 90000));
+    //applyTorque(1000000);
     std::cout << physicsBody->GetLinearVelocity().x << std::endl;
 }
 
 void Rigidbody::update() {
     Component::update();
-    applyForce(sf::Vector2f(5, 10));
+    applyForce(sf::Vector2f(3, 0));
     //applyForce(sf::Vector2f(10500, 0));
     //std::cout << physicsBody->GetPosition().x << std::endl;
     //applyForce(sf::Vector2f(5, 0));
