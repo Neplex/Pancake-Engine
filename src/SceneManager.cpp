@@ -23,3 +23,9 @@ void SceneManager::setCurrentScene(std::string name) {
 void SceneManager::nextScene() {
     currentScene = (currentScene++)%scenes.size();
 }
+
+void SceneManager::loadScene()
+{
+    getCurrentScene()->awake();
+    getCurrentScene()->start();
+}

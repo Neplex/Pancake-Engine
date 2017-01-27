@@ -33,6 +33,8 @@ public:
      */
     void nextScene();
 
+    void loadScene();
+
 private:
     std::vector<Scene *> scenes;
     unsigned int currentScene;

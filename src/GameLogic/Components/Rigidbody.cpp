@@ -25,17 +25,10 @@ void Rigidbody::awake() {
 
 void Rigidbody::start() {
     Component::start();
-    std::cout << physicsBody->GetLinearVelocity().x << std::endl;
-    //applyTorque(1000000);
-    std::cout << physicsBody->GetLinearVelocity().x << std::endl;
 }
 
 void Rigidbody::update() {
     Component::update();
-    applyForce(sf::Vector2f(3, 0));
-    //applyForce(sf::Vector2f(10500, 0));
-    //std::cout << physicsBody->GetPosition().x << std::endl;
-    //applyForce(sf::Vector2f(5, 0));
 }
 
 Rigidbody::Rigidbody() : type(bodyType::dynamicBody), angularDrag(0.05f), drag(0),

@@ -16,10 +16,9 @@ int main() {
     scene->addGameObject(ground);
     scene->addGameObject(box);
     scene->addGameObject(mainCamera);
-    scene->awake();
-    scene->start();
 
     engine->sceneManager.addScene(scene);
+    engine->sceneManager.loadScene();
     engine->window.setDebug();
     // TEST //
     engine->run();
