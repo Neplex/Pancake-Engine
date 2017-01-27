@@ -2,6 +2,7 @@
 #include "../include/User/Ground.hpp"
 #include "../include/User/Box.hpp"
 #include "../include/User/MainCamera.hpp"
+#include "../include/Inputs/InputManager.hpp"
 
 int main() {
     Engine * engine = new Engine();
@@ -20,6 +21,9 @@ int main() {
     engine->sceneManager.addScene(scene);
     engine->sceneManager.loadScene();
     engine->window.setDebug();
+
+    InputManager::createButton("Jump", std::vector<sf::Keyboard::Key> ({sf::Keyboard::Key::Space}));
+
     // TEST //
     engine->run();
     delete engine;

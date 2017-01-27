@@ -73,7 +73,7 @@ void PhysicsEngine::addRigidBodyToPhysicsWorld(Rigidbody &rb) {
     bodyDef.position.Set((rb.gameObject->transform->getPosition().x)/numberPixelsPerMeter,
                          (rb.gameObject->transform->getPosition().y)/numberPixelsPerMeter);
     bodyDef.userData = (void *) &rb;
-    bodyDef.angularVelocity = rb.angularVelocity;
+    //bodyDef.angularVelocity = rb.angularVelocity;
     bodyDef.angularDamping = rb.angularDrag;
     bodyDef.fixedRotation = rb.freezeRotation;
     b2Body *body = world->CreateBody(&bodyDef);

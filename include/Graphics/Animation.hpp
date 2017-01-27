@@ -27,7 +27,6 @@ public:
 
 private:
     friend class AnimationRenderer;
-
     SpriteSheet spriteSheet;
     std::vector<Frame> frames;
 };

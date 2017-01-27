@@ -35,6 +35,7 @@ public:
     void setDebug(bool val = true);
 
 private:
+    friend class Engine;
     SceneManager& scenes;
     InputHandler& inputHandler;
     sf::RenderWindow window;

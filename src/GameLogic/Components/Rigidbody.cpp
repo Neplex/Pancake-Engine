@@ -6,6 +6,7 @@
 #include "../../../include/GameLogic/Components/Rigidbody.hpp"
 #include "../../../include/GameLogic/Components/Collider.hpp"
 #include "../../../include/PhysicsEngine.hpp"
+#include "../../../include/Inputs/Input.hpp"
 
 PhysicsEngine * Rigidbody::physicsEngine = NULL;
 
@@ -29,6 +30,10 @@ void Rigidbody::start() {
 
 void Rigidbody::update() {
     Component::update();
+    if (Input::getButtonDown("Jump")) {
+        std::cout << "Jump!";
+       this->applyForce(sf::Vector2f(0, -20));
+    }
 }
 
 Rigidbody::Rigidbody() : type(bodyType::dynamicBody), angularDrag(0.05f), drag(0),

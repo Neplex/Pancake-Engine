@@ -2,20 +2,15 @@
 // Created by Darenn on 24/01/2017.
 //
 
-#include <iostream>
 #include "../include/Engine.hpp"
-#include "../include/GameLogic/Components/Camera.hpp"
-#include "../include/GameLogic/Components/AnimationRenderer.hpp"
-#include "../include/GameLogic/Components/Transform.hpp"
-#include "../include/User/Box.hpp"
-#include "../include/User/MainCamera.hpp"
-#include "../include/User/Ground.hpp"
+#include "../include/Inputs/InputManager.hpp"
 
 Engine::Engine() : sceneManager(), inputHandler(), window(sceneManager, inputHandler), physicsEngine(), time() {
 
     Collider::physicsEngine = &physicsEngine;
     Rigidbody::physicsEngine = &physicsEngine;
     Time::deltaTime = SECONDS_PER_UPDATE;
+    InputManager::window = &window.window;
 }
 
 void Engine::update() {
@@ -38,7 +33,7 @@ void Engine::run() {
         lag += elapsed;
 
         // Processing inputs
-        window.handleEvent();
+        InputManager::handleInputs();
         while(lag >= SECONDS_PER_UPDATE)
         {
             // Updating
