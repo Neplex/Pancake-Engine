@@ -5,6 +5,8 @@
 #include <vector>
 #include "../include/Engine.hpp"
 #include "../include/Inputs/InputManager.hpp"
+#include "../include/imgui/imgui-SFML.h"
+#include "../include/Debug.hpp"
 
 Engine::Engine() : sceneManager(), window(sceneManager), physicsEngine(), time() {
 
@@ -12,6 +14,9 @@ Engine::Engine() : sceneManager(), window(sceneManager), physicsEngine(), time()
     Rigidbody::physicsEngine = &physicsEngine;
     Time::deltaTime = SECONDS_PER_UPDATE;
     InputManager::window = &window.window;
+#ifdef PANCAKE_DEBUG
+    Debug::init(window.window);
+#endif
     window.window.setKeyRepeatEnabled(false); // todo remove that ;)
 }
 
@@ -36,14 +41,14 @@ void Engine::run() {
         lag += elapsed;
 
         InputManager::handleInputs();
-        if (lag >= 2.0 * SECONDS_PER_UPDATE)
-            std::cout << "[WARNING] Depassement du temps par update" << std::endl;
+
         while(lag >= SECONDS_PER_UPDATE)
         {
             update();
             lag -= SECONDS_PER_UPDATE;
         }
-
+        Debug::update(); // should be called only once per frame
        window.render();
     }
+    Debug::shutDown();
 }

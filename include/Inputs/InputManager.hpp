@@ -15,6 +15,7 @@
 #include <cassert>
 #include "Button.hpp"
 #include "Input.hpp"
+#include "../Debug.hpp"
 
 class InputManager {
 public:
@@ -46,6 +47,7 @@ public:
     static void handleInputs() {
         sf::Event event;
         while (window->pollEvent(event)) {
+            Debug::processEvent(event);
             switch (event.type) {
             case sf::Event::Closed:
                 window->close();

@@ -7,6 +7,7 @@
 #include "../../include/GameLogic/Components/Camera.hpp"
 #include "../../include/GameLogic/Components/AnimationRenderer.hpp"
 #include "../include/GameLogic/Components/Transform.hpp"
+#include "../../include/Debug.hpp"
 
 Window::Window(SceneManager& s) : scenes(s), window(sf::VideoMode::getDesktopMode(), "", sf::Style::Close) {
     FPS = 60.0;
@@ -22,7 +23,10 @@ void Window::render()
         if (window.isOpen()) {
             window.clear();
             drawScene();
-            if (debug) drawDebug();
+            if (debug) {
+                drawDebug();
+            }
+            Debug::render();
             window.display();
         }
     }
