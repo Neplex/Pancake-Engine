@@ -7,10 +7,13 @@
 #include "../include/Debug.hpp"
 #include "../include/imgui/imgui.h"
 #include "../include/imgui/imgui_internal.h"
+#include "../include/imgui/Widgets/AppLog.hpp"
+#include "../include/Debug/MainDebugMenu.hpp"
 
 bool Debug::initialized = false;
 sf::RenderWindow * Debug::renderWindow = nullptr;
 sf::Clock Debug::clock = sf::Clock();
+MainDebugMenu Debug::mainDebugMenu;
 
 void Debug::init(sf::RenderWindow& window) {
     ImGui::SFML::Init(window);
@@ -27,10 +30,13 @@ void Debug::update()
 void Debug::render()
 {
     assert(initialized);
-    ImGui::Begin("Hello, world!");
-    if (ImGui::Button("Look at this pretty button")) {
-    }
-    ImGui::End();
+    //ImGui::ShowTestWindow();
+    mainDebugMenu.draw();
+
+    /*static AppLog log;
+    bool * p_open; ///< will be set to true when the windows is close (i think)
+    log.Draw("Example: Log", p_open);
+    log.AddLog("Salut Vincent j'ai log ça pour toi ! :D\n");*/
     ImGui::Render();
 }
 
@@ -45,3 +51,4 @@ void Debug::processEvent(sf::Event event)
     if (initialized)
         ImGui::SFML::ProcessEvent(event);
 }
+

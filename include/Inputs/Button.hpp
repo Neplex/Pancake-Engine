@@ -9,6 +9,7 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include "../Debug.hpp"
 
 /**
  * Represent a virtual button. Buttons are created by the engine user via the InputManager class.
@@ -78,6 +79,7 @@ private:
      */
     void press() {
         if (!isDown) {
+            Debug::log("Inputs", "Button " + name + " has been pressed.");
             isDown = true;
             isPressed = true;
             isUp = false;
@@ -90,6 +92,7 @@ private:
      * Change the state of the button as if it was just released (or just up)
      */
     void release() {
+        Debug::log("Inputs", "Button " + name + " has been released.");
         isDown = false;
         isHeld = false;
         isPressed = false;

@@ -7,14 +7,25 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include "imgui/imgui-SFML.h"
+#include "Debug/MainDebugMenu.hpp"
 
 class Debug {
 public:
+
+    static void log(std::string loggerName, std::string message) {
+        mainDebugMenu.logLogger(loggerName, message + "\n");
+    }
+
+    static void addLogger(std::string name) {
+        mainDebugMenu.addLogger(name);
+    }
 
 private:
     friend class Engine;
     friend class InputManager;
     friend class Window;
+
+    static MainDebugMenu mainDebugMenu;
 
     static sf::RenderWindow * renderWindow; ///< The window where ImGui is drawing
     static bool initialized; ///< Set to true if debug was initialized

@@ -16,6 +16,9 @@ Engine::Engine() : sceneManager(), window(sceneManager), physicsEngine(), time()
     InputManager::window = &window.window;
 #ifdef PANCAKE_DEBUG
     Debug::init(window.window);
+
+    // Add some loggers
+    Debug::addLogger("Inputs");
 #endif
 }
 
