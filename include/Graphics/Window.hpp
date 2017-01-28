@@ -40,6 +40,8 @@ private:
     InputHandler& inputHandler;
     sf::RenderWindow window;
     bool debug;
+    double FPS;
+    sf::Clock clock; ///< Used to limit the FPS
 
     /**
      * Draw all elements (SpriteRenderer) of the current scene

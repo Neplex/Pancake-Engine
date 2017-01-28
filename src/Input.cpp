@@ -7,8 +7,8 @@
 
 std::map<std::string, Button *> Input::buttons = std::map<std::string, Button *>();
 
-bool Input::getButtonDown(const std::string& buttonName)
+bool Input::getButtonPressed(const std::string& buttonName)
 {
-    assert(buttons.find(buttonName) != buttons.end());
-    return buttons[buttonName]->isButtonDown();
+    assert(buttons.find(buttonName) != buttons.end()); // button should be in the map (created)
+    return buttons[buttonName]->isButtonPressed();
 }

@@ -12,6 +12,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
 #include <iostream>
+#include <cassert>
 #include "Button.hpp"
 #include "Input.hpp"
 
@@ -30,6 +31,15 @@ public:
         Input::buttons[buttons.back().name] = &buttons.back();
         for (int i = 0; i < keys.size(); ++i) {
             keyToButtons[keys[i]].push_back(&buttons.back());
+        }
+    }
+
+    /**
+     * Update the buttons. (To let know if a button was pressed just for one update)
+     */
+    static void update() {
+        for (Button & bu : buttons) {
+            bu.update();
         }
     }
 

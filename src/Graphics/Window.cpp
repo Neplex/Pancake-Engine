@@ -9,16 +9,22 @@
 #include "../include/GameLogic/Components/Transform.hpp"
 
 Window::Window(SceneManager& s, InputHandler& ih) : scenes(s), inputHandler(ih), window(sf::VideoMode::getDesktopMode(), "", sf::Style::Close) {
-    window.setVerticalSyncEnabled(true);
-    window.setActive(false);
+    FPS = 60.0;
+    clock = sf::Clock();
+    window.setVerticalSyncEnabled(false);
+    window.setActive(false); // TODO Why ?
 }
 
-void Window::render() {
-    if (window.isOpen()) {
-        window.clear();
-        drawScene();
-        if (debug) drawDebug();
-        window.display();
+void Window::render()
+{
+    if (clock.getElapsedTime().asSeconds() >= 1.0/FPS) {
+        clock.restart();
+        if (window.isOpen()) {
+            window.clear();
+            drawScene();
+            if (debug) drawDebug();
+            window.display();
+        }
     }
 }
 

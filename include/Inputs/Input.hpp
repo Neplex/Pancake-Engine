@@ -16,7 +16,7 @@ public:
      * @param buttonName The name of the virtual button.
      * @return true during the frame the user pressed down the virtual button identified by buttonName.
      */
-    static bool getButtonDown(const std::string& buttonName);
+    static bool getButtonPressed(const std::string& buttonName);
 
 private:
     friend class InputManager;

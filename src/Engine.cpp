@@ -2,6 +2,7 @@
 // Created by Darenn on 24/01/2017.
 //
 
+#include <vector>
 #include "../include/Engine.hpp"
 #include "../include/Inputs/InputManager.hpp"
 
@@ -11,12 +12,14 @@ Engine::Engine() : sceneManager(), inputHandler(), window(sceneManager, inputHan
     Rigidbody::physicsEngine = &physicsEngine;
     Time::deltaTime = SECONDS_PER_UPDATE;
     InputManager::window = &window.window;
+    window.window.setKeyRepeatEnabled(false); // todo remove that ;)
 }
 
 void Engine::update() {
     physicsEngine.update(SECONDS_PER_UPDATE);
     sceneManager.getCurrentScene()->update();
     sceneManager.getCurrentScene()->lateUpdate();
+    InputManager::update();
 }
 
 void Engine::run() {
@@ -32,18 +35,15 @@ void Engine::run() {
 
         lag += elapsed;
 
-        // Processing inputs
         InputManager::handleInputs();
+        if (lag >= 2.0 * SECONDS_PER_UPDATE)
+            std::cout << "[WARNING] Depassement du temps par update" << std::endl;
         while(lag >= SECONDS_PER_UPDATE)
         {
-            // Updating
-
             update();
-            // Retrieve elapsed time
             lag -= SECONDS_PER_UPDATE;
         }
-        // Rendering
-        window.render();
-        //m_graphicEngine.render(lag / SECONDS_PER_UPDATE);
+
+       window.render();
     }
 }

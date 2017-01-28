@@ -8,6 +8,7 @@
 #include <SFML/Window/Keyboard.hpp>
 #include <vector>
 #include <string>
+#include <iostream>
 
 /**
  * Represent a virtual button. Buttons are created by the engine user via the InputManager class.
@@ -34,34 +35,53 @@ public:
      * Returns true if the button was pressed during this update.
      * @return true if the button was pressed during this update.
      */
+    bool isButtonPressed() const { return isPressed; }
+
+    /**
+     * Returns true if the button was released during this update.
+     * @return true if the button was released during this update.
+     */
+    bool isButtonReleased() const { return isReleased; }
+
+
+    /**
+     * Returns true if the button is down (pressed).
+     * @return true if the button is down (pressed).
+     */
     bool isButtonDown() const { return isDown; }
 
     /**
-     * Returns true if the button is released.
-     * @return true if the button is released.
+     * Returns true if the button is up (released).
+     * @return true if the button is up (released).
      */
     bool isButtonUp() const { return isUp; }
 
     /**
-    * Returns true if the button is pressed.
+    * Returns true if the button is held.
+    * Returns false during the update the button was pressed,
+    * and true on following updates, until the button is released.
     * @return true if the button is pressed.
     */
-    bool isButtonHeld() const;
+    bool isButtonHeld() const { return isHeld; }
 
 private:
     friend class InputManager;
 
-    void update() {
-
-    }
+    /**
+     * Called before each update of handleInput() in order
+     * to change the state of isPressed and isReleased the next update they were true.
+     */
+    void update();
 
     /**
      * Change the state of the button as if it was just pressed (or held)
      */
     void press() {
-        isDown = !(isDown || isHeld);
-        isHeld = true;
+        isDown = true;
+        isPressed = true;
         isUp = false;
+        isReleased = false;
+        isHeld = false;
     }
 
     /**
@@ -70,12 +90,18 @@ private:
     void release() {
         isDown = false;
         isHeld = false;
+        isPressed = false;
         isUp = true;
+        isReleased = true;
     }
 
-    bool isDown; ///< True at the frame the button is pressed
+    bool isPressed; ///< True at the update the button is pressed
+    bool isReleased; ///< True at the update the button is released
     bool isHeld; ///< True while the button is pressed
-    bool isUp; ///< True while the button is up
+    bool isDown; ///< True while the button is down (pressed)
+    bool isUp; ///< True while the button is up (released)
+
+    static int numButtons;
 };
 
 #endif //PANCAKE_BUTTON_HPP

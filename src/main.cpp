@@ -10,13 +10,16 @@ int main() {
     // Ground
     Ground * ground = new Ground("Ground");
     // Box
-    Box * box = new Box("Box1");
     // Camera
     MainCamera * mainCamera = new MainCamera("MainCamera");
     Scene* scene = new Scene("TestScene");
     scene->addGameObject(ground);
-    scene->addGameObject(box);
     scene->addGameObject(mainCamera);
+
+    for (int i = 0; i < 100 ; ++i) {
+        Box * box = new Box("Box" + i);
+        scene->addGameObject(box);
+    }
 
     engine->sceneManager.addScene(scene);
     engine->sceneManager.loadScene();

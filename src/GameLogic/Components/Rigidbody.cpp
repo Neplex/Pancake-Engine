@@ -30,9 +30,8 @@ void Rigidbody::start() {
 
 void Rigidbody::update() {
     Component::update();
-    if (Input::getButtonDown("Jump")) {
-        std::cout << "Jump!";
-       this->applyForce(sf::Vector2f(0, -20));
+    if (Input::getButtonPressed("Jump")) {
+       this->applyLinearImpulse(sf::Vector2f(0, -10));
     }
 }
 

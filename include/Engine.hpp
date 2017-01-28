@@ -15,7 +15,7 @@
 class Engine {
 
 public:
-    const double SECONDS_PER_UPDATE = 1.0 / 120.0;
+    const double SECONDS_PER_UPDATE = 1.0 / 100.0;
 
     Engine();
     void run();
