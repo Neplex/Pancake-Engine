@@ -36,16 +36,15 @@ public:
      * Set the framerate. (FPS: frames per second)
      * @param framerate The new framerate in FPS.
      */
-    void setFrameRate(double framerate) {
-        FPS = framerate;
-    }
+    void setFrameRate(float framerate);
 
 private:
     friend class Engine;
     SceneManager& scenes;
     sf::RenderWindow window;
     bool debug;
-    double FPS;
+    float FPS;
+    sf::Time timeBetweenTwoFrames;
     sf::Clock clock; ///< Used to limit the FPS
 
     /**

@@ -10,15 +10,16 @@
 #include "../../include/Debug.hpp"
 
 Window::Window(SceneManager& s) : scenes(s), window(sf::VideoMode::getDesktopMode(), "", sf::Style::Close) {
-    FPS = 60.0;
+    FPS = 60.0f;
+    timeBetweenTwoFrames = sf::seconds((1.0f/FPS));
     clock = sf::Clock();
-    window.setVerticalSyncEnabled(false);
+    window.setVerticalSyncEnabled(false); ///< Don't activate it ! It does not fit with our type of game loop
     window.setActive(false); // TODO Why ?
 }
 
 void Window::render()
 {
-    if (clock.getElapsedTime().asSeconds() >= 1.0/FPS) {
+    if (clock.getElapsedTime() >= timeBetweenTwoFrames) {
         clock.restart();
         if (window.isOpen()) {
             window.clear();
@@ -35,6 +36,11 @@ void Window::render()
 
 void Window::setDebug(bool val) {
     debug = val;
+}
+
+void Window::setFrameRate(float framerate) {
+    FPS = framerate;
+    timeBetweenTwoFrames = sf::seconds((float) (1.0/FPS));
 }
 
 void Window::drawScene() {
