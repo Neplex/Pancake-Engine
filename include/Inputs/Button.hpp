@@ -77,11 +77,13 @@ private:
      * Change the state of the button as if it was just pressed (or held)
      */
     void press() {
-        isDown = true;
-        isPressed = true;
-        isUp = false;
-        isReleased = false;
-        isHeld = false;
+        if (!isDown) {
+            isDown = true;
+            isPressed = true;
+            isUp = false;
+            isReleased = false;
+            isHeld = false;
+        }
     }
 
     /**

@@ -17,7 +17,6 @@ Engine::Engine() : sceneManager(), window(sceneManager), physicsEngine(), time()
 #ifdef PANCAKE_DEBUG
     Debug::init(window.window);
 #endif
-    window.window.setKeyRepeatEnabled(false); // todo remove that ;)
 }
 
 void Engine::update() {
