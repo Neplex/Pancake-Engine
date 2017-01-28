@@ -7,7 +7,6 @@
 
 
 #include "SceneManager.hpp"
-#include "InputHandler.hpp"
 #include "Graphics/Window.hpp"
 #include "PhysicsEngine.hpp"
 #include "Time.hpp"
@@ -20,7 +19,6 @@ public:
     Engine();
     void run();
     SceneManager sceneManager;
-    InputHandler inputHandler;
     Window window;
     PhysicsEngine physicsEngine;
     Time time;

@@ -8,7 +8,7 @@
 #include "../../include/GameLogic/Components/AnimationRenderer.hpp"
 #include "../include/GameLogic/Components/Transform.hpp"
 
-Window::Window(SceneManager& s, InputHandler& ih) : scenes(s), inputHandler(ih), window(sf::VideoMode::getDesktopMode(), "", sf::Style::Close) {
+Window::Window(SceneManager& s) : scenes(s), window(sf::VideoMode::getDesktopMode(), "", sf::Style::Close) {
     FPS = 60.0;
     clock = sf::Clock();
     window.setVerticalSyncEnabled(false);
@@ -60,41 +60,6 @@ void Window::drawScene() {
             sf::RenderStates renderStates;
             renderStates.transform = gameObject->transform->getTransformMatrix();
             window.draw(animationRenderer->sprite, renderStates);
-        }
-    }
-}
-
-void Window::handleEvent() {
-    sf::Event event;
-    while (window.pollEvent(event)) {
-        switch (event.type) {
-            case sf::Event::Closed:
-                window.close();
-                break;
-
-            case sf::Event::GainedFocus:
-                break;
-
-            case sf::Event::LostFocus:
-                break;
-
-            case sf::Event::KeyPressed:
-                if (event.key.code == sf::Keyboard::Key::Escape)
-                    window.close();
-                else
-                    inputHandler.handleInput(event.key.code);
-                break;
-
-            case sf::Event::MouseMoved:
-                inputHandler.handleMouse(event.mouseMove.x, event.mouseMove.y);
-                break;
-
-            case sf::Event::MouseButtonPressed:
-                inputHandler.handleInput(event.mouseButton.button);
-                break;
-
-            default:
-                break;
         }
     }
 }

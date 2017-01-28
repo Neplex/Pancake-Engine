@@ -7,7 +7,6 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include "../SceneManager.hpp"
-#include "../InputHandler.hpp"
 #include "../GameLogic/Components/BoxCollider.hpp"
 
 /**
@@ -15,7 +14,7 @@
  */
 class Window {
 public:
-    Window(SceneManager& s, InputHandler& ih);
+    Window(SceneManager& s);
 
     bool isClosed() { return !window.isOpen(); }
 
@@ -33,11 +32,17 @@ public:
      * @param val
      */
     void setDebug(bool val = true);
+    /**
+     * Set the framerate. (FPS: frames per second)
+     * @param framerate The new framerate in FPS.
+     */
+    void setFrameRate(double framerate) {
+        FPS = framerate;
+    }
 
 private:
     friend class Engine;
     SceneManager& scenes;
-    InputHandler& inputHandler;
     sf::RenderWindow window;
     bool debug;
     double FPS;

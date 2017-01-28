@@ -2,7 +2,7 @@
 // Created by kelle on 27/01/2017.
 //
 
-#include "../include/Inputs/Button.hpp"
+#include "../../include/Inputs/Button.hpp"
 
 int Button::numButtons = 0;
 

@@ -6,7 +6,7 @@
 #include "../include/Engine.hpp"
 #include "../include/Inputs/InputManager.hpp"
 
-Engine::Engine() : sceneManager(), inputHandler(), window(sceneManager, inputHandler), physicsEngine(), time() {
+Engine::Engine() : sceneManager(), window(sceneManager), physicsEngine(), time() {
 
     Collider::physicsEngine = &physicsEngine;
     Rigidbody::physicsEngine = &physicsEngine;

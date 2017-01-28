@@ -3,7 +3,7 @@
 //
 
 #include <cassert>
-#include "../include/Inputs/Input.hpp"
+#include "../../include/Inputs/Input.hpp"
 
 std::map<std::string, Button *> Input::buttons = std::map<std::string, Button *>();
 
