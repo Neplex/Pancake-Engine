@@ -29,7 +29,6 @@ void Debug::render()
     assert(initialized);
     ImGui::Begin("Hello, world!");
     if (ImGui::Button("Look at this pretty button")) {
-        std::cout << "ahah";
     }
     ImGui::End();
     ImGui::Render();

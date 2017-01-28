@@ -46,8 +46,7 @@ void Engine::run() {
             update();
             lag -= SECONDS_PER_UPDATE;
         }
-        Debug::update(); // should be called only once per frame
-       window.render();
+        window.render();
     }
     Debug::shutDown();
 }

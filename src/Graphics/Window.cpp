@@ -26,6 +26,7 @@ void Window::render()
             if (debug) {
                 drawDebug();
             }
+            Debug::update(); // should be called only once per frame
             Debug::render();
             window.display();
         }
