@@ -7,7 +7,7 @@
 
 #include <map>
 #include "../imgui/imgui.h"
-#include "../include/imgui/Widgets/AppLog.hpp"
+#include "Widgets/AppLog.hpp"
 
 class MainDebugMenu {
 public:

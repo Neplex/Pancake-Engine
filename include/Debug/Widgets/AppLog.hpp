@@ -5,12 +5,18 @@
 #ifndef PANCAKE_APPLOG_HPP
 #define PANCAKE_APPLOG_HPP
 
-#include "../imgui.h"
+#include "../../imgui/imgui.h"
 
-// Usage:
-//  static AppLog my_log;
-//  my_log.AddLog("Hello %d world\n", 123);
-//  my_log.Draw("title");
+/**
+ * @struct AppLog Represents a logger used in debug.
+ * It uses the ImGui library and is based on the examples of @file imgui_demo.cpp .
+ * Use the draw function in between ImGui update and render to draw the logger.
+ * Add a log with the AddLog function.
+ * Usage:
+ * static AppLog my_log;
+ * my_log.AddLog("Hello %d world\n", 123);
+ * my_log.Draw("title");
+ */
 struct AppLog
 {
     ImGuiTextBuffer     Buf;
@@ -19,15 +25,22 @@ struct AppLog
     bool                ScrollToBottom;
 
     AppLog() : Buf(), Filter(), LineOffsets(), ScrollToBottom(){
-
     }
 
-    void    Clear()     {
+    /**
+     * Clear the logger from logs.
+     */
+    void Clear()     {
         Buf.clear();
         LineOffsets.clear();
     }
 
-    void    AddLog(const char* fmt, ...) IM_PRINTFARGS(2)
+    /**
+     * Add a log to the logger.
+     * @param fmt The message formated.
+     * @param ... Args
+     */
+    void AddLog(const char* fmt, ...) IM_PRINTFARGS(2)
     {
         int old_size = Buf.size();
         va_list args;
@@ -40,6 +53,12 @@ struct AppLog
         ScrollToBottom = true;
     }
 
+    /**
+     * Draw the logger.
+     * Should be called between ImGui update and render to draw the logger.
+     * @param title The title of the logger
+     * @param p_open A pointer to the boolean that indicates if the logger should be drawn or not.
+     */
     void    Draw(const char* title, bool* p_open = NULL)
     {
         ImGui::SetNextWindowSize(ImVec2(500,400), ImGuiSetCond_FirstUseEver);

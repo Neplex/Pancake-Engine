@@ -6,7 +6,7 @@
 #include "../include/Engine.hpp"
 #include "../include/Inputs/InputManager.hpp"
 #include "../include/imgui/imgui-SFML.h"
-#include "../include/Debug.hpp"
+#include "../include/Debug/Debug.hpp"
 
 Engine::Engine() : sceneManager(), window(sceneManager), physicsEngine(), time() {
 

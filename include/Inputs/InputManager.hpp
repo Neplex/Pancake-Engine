@@ -15,7 +15,7 @@
 #include <cassert>
 #include "Button.hpp"
 #include "Input.hpp"
-#include "../Debug.hpp"
+#include "../Debug/Debug.hpp"
 
 class InputManager {
 public:

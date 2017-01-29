@@ -9,7 +9,7 @@
 #include <vector>
 #include <string>
 #include <iostream>
-#include "../Debug.hpp"
+#include "../Debug/Debug.hpp"
 
 /**
  * Represent a virtual button. Buttons are created by the engine user via the InputManager class.
