@@ -5,7 +5,6 @@
 #include "../../include/Inputs/Button.hpp"
 
 int Button::numButtons = 0;
-void (*Button::pressedCallback)() = nullptr;
 
 Button::Button(const std::string& name, const std::vector<sf::Keyboard::Key>& keys)
 {
@@ -16,6 +15,7 @@ Button::Button(const std::string& name, const std::vector<sf::Keyboard::Key>& ke
     this->isHeld = false;
     this->isPressed = false;
     this->isReleased = false;
+    this->pressedCallback = nullptr;
     numButtons++;
 }
 

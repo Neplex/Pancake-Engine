@@ -79,7 +79,7 @@ private:
      */
     void press() {
         if (!isDown) {
-            // TODO bug here
+            // TODO bug here at runtime without debugger the name is chelou sometimes
             Debug::log("Inputs", "Button " + name + " has been pressed.");
             if (pressedCallback != nullptr)
             {
@@ -97,7 +97,7 @@ private:
      * Change the state of the button as if it was just released (or just up)
      */
     void release() {
-        //Debug::log("Inputs", "Button " + name + " has been released.");
+        Debug::log("Inputs", "Button " + name + " has been released.");
         isDown = false;
         isHeld = false;
         isPressed = false;
@@ -112,7 +112,7 @@ private:
     bool isUp; ///< True while the button is up (released)
 
     static int numButtons;
-    static void (*pressedCallback)(); ///< Called when the button is pressed.
+    void (*pressedCallback)(); ///< Called when the button is pressed.
 };
 
 #endif //PANCAKE_BUTTON_HPP

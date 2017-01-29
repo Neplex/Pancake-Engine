@@ -25,8 +25,9 @@ void Debug::init(sf::RenderWindow& window) {
 
 void Debug::update()
 {
-    if (initialized)
+    if (initialized) {
         ImGui::SFML::Update(*renderWindow, clock.restart());
+    }
 }
 
 void Debug::render()
@@ -38,11 +39,6 @@ void Debug::render()
         mainDebugMenu.draw();
         fixedOverlayDebug.draw(nullptr);
     }
-
-    /*static AppLog log;
-    bool * p_open; ///< will be set to true when the windows is close (i think)
-    log.Draw("Example: Log", p_open);
-    log.AddLog("Salut Vincent j'ai log ça pour toi ! :D\n");*/
     ImGui::Render();
 }
 

@@ -23,16 +23,20 @@ public:
      * Create a virtual Button that will be pressed or released when the given keys are.
      * @param name The name of the button. (ex: "Jump")
      * @param keys The keys that will be pressed or released.
-     * @param callback A callback function that will be called when the button is pressed.
+     * @param callback A callback function that will be called when the button is pressed, you should use Input class instead.
+     * @see Input
      * @pre The name of the button should be unique.
      * @post The button is associated with the keys.
      */
-    static void createButton(const std::string& name, const std::vector<sf::Keyboard::Key>& keys, void (*callback)() = nullptr) {
+    static void createButton(const std::string& name, const std::vector<sf::Keyboard::Key>& keys,
+            void (*callback)() = nullptr) {
         // TODO assert that the button is not here already
-        buttons.push_back(Button(name, keys));
-        Input::buttons[buttons.back().name] = &buttons.back();
+        Button* b = new Button(name, keys);
+        b->pressedCallback = callback;
+        buttons.push_back(b);
+        Input::buttons[b->name] = b;
         for (int i = 0; i < keys.size(); ++i) {
-            keyToButtons[keys[i]].push_back(&buttons.back());
+            keyToButtons[keys[i]].push_back(b);
         }
     }
 
@@ -40,12 +44,13 @@ public:
      * Update the buttons. (To let know if a button was pressed just for one update)
      */
     static void update() {
-        for (Button & bu : buttons) {
-            bu.update();
+        for (Button * bu : buttons) {
+            bu->update();
         }
     }
 
     static void handleInputs() {
+
         sf::Event event;
         while (window->pollEvent(event)) {
             Debug::processEvent(event);
@@ -74,7 +79,7 @@ public:
 private:
     friend class Engine;
     static sf::RenderWindow* window;
-    static std::vector<Button> buttons;
+    static std::vector<Button*> buttons;
     static std::map<sf::Keyboard::Key, std::vector<Button *>> keyToButtons;
 };
 

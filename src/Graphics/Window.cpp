@@ -2,6 +2,7 @@
 // Created by nicolas on 22/01/17.
 //
 
+#include <iostream>
 #include "../../include/Graphics/Window.hpp"
 #include "../../include/GameLogic/Components/SpriteRenderer.hpp"
 #include "../../include/GameLogic/Components/Camera.hpp"
@@ -56,7 +57,6 @@ void Window::drawScene() {
 
     for (int i = 0; i < scenes.getCurrentScene()->gameObjects.size(); ++i) {
          const GameObject * gameObject = scenes.getCurrentScene()->gameObjects[i];
-        // TODO seg fault here when spaming space at the start
 
         // Get SpriteRenderer
         const SpriteRenderer * spriteRenderer = gameObject->getComponent<SpriteRenderer>();

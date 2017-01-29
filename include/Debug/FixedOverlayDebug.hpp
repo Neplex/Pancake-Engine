@@ -17,6 +17,9 @@ public:
             return;
         }
         ImGui::Text("FPS : %.0f", ImGui::GetIO().Framerate);
+        ImGui::Text("Display Size : %.0fx%.0f", ImGui::GetIO().DisplaySize.x, ImGui::GetIO().DisplaySize.y);
+        ImGui::Text("Active Allocations : %d", ImGui::GetIO().MetricsAllocs);
+        ImGui::Text("Vertices Rendered : %d", ImGui::GetIO().MetricsRenderVertices);
         ImGui::Separator();
         ImGui::Text("Mouse Position: (%.0f,%.0f)", ImGui::GetIO().MousePos.x, ImGui::GetIO().MousePos.y);
         ImGui::End();
