@@ -9,6 +9,7 @@
 #include "../../include/GameLogic/Components/AnimationRenderer.hpp"
 #include "../include/GameLogic/Components/Transform.hpp"
 #include "../../include/Debug.hpp"
+#include "../../include/GameLogic/Components/Animator.hpp"
 
 Window::Window(SceneManager& s) : scenes(s), window(sf::VideoMode::getDesktopMode(), "", sf::Style::Close) {
     FPS = 60.0f;
@@ -66,9 +67,9 @@ void Window::drawScene() {
         const AnimationRenderer * animationRenderer = gameObject->getComponent<AnimationRenderer>();
         if (animationRenderer != NULL) window.draw(animationRenderer->sprite, renderStates);
 
-        // Get AnimatorRenderer
-        //const AnimatorRenderer * animatorRenderer = gameObject->getComponent<AnimatorRenderer>();
-        //if (animatorRenderer != NULL) window.draw(animatorRenderer->animationRenderer.sprite, renderStates);
+        // Get Animator
+        const Animator * animator = gameObject->getComponent<Animator>();
+        if (animator != NULL) window.draw(animator->getCurrentAnimation()->sprite, renderStates);
 
         // Debug elements
         if (debug) {
@@ -107,11 +108,11 @@ void Window::draw(const BoxCollider * boxCollider) {
     // To draw from center
     sf::Vertex vertices[6] = {
             sf::Vertex(sf::Vector2f(-boxCollider->width/2, -boxCollider->height/2)),
-            sf::Vertex(sf::Vector2f(boxCollider->width/2, -boxCollider->height/2)),
-            sf::Vertex(sf::Vector2f(boxCollider->width/2, boxCollider->height/2)),
+            sf::Vertex(sf::Vector2f( boxCollider->width/2, -boxCollider->height/2)),
+            sf::Vertex(sf::Vector2f( boxCollider->width/2,  boxCollider->height/2)),
             sf::Vertex(sf::Vector2f(-boxCollider->width/2, -boxCollider->height/2)),
-            sf::Vertex(sf::Vector2f(-boxCollider->width/2, boxCollider->height/2)),
-            sf::Vertex(sf::Vector2f(boxCollider->width/2, boxCollider->height/2))
+            sf::Vertex(sf::Vector2f(-boxCollider->width/2,  boxCollider->height/2)),
+            sf::Vertex(sf::Vector2f( boxCollider->width/2,  boxCollider->height/2))
     };
     // Color for type
     sf::Color color = getColor(boxCollider);
