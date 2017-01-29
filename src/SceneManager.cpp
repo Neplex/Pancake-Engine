@@ -14,7 +14,7 @@ Scene* SceneManager::getCurrentScene() {
 }
 
 void SceneManager::setCurrentScene(std::string name) {
-    for (int i = 0; i < scenes.size(); ++i) {
+    for (unsigned int i = 0; i < scenes.size(); ++i) {
         if (scenes[i]->name == name)
             currentScene = i;
             return;
