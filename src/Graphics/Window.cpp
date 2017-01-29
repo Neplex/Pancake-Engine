@@ -7,8 +7,7 @@
 #include "../../include/GameLogic/Components/SpriteRenderer.hpp"
 #include "../../include/GameLogic/Components/Camera.hpp"
 #include "../../include/GameLogic/Components/AnimationRenderer.hpp"
-#include "../include/GameLogic/Components/Transform.hpp"
-#include "../../include/Debug.hpp"
+#include "../../include/Debug/Debug.hpp"
 #include "../../include/GameLogic/Components/Animator.hpp"
 
 Window::Window(SceneManager& s) : scenes(s), window(sf::VideoMode::getDesktopMode(), "", sf::Style::Close) {
