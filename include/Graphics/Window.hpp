@@ -23,10 +23,6 @@ public:
      */
     void render();
     /**
-     * Handle the events received by the window (keyboard, mouse, joystick)
-     */
-    void handleEvent();
-    /**
      * Set debug display to True or False
      * Display colider
      * @param val
@@ -48,13 +44,11 @@ private:
     sf::Clock clock; ///< Used to limit the FPS
 
     /**
-     * Draw all elements (SpriteRenderer) of the current scene
+     * Draw all elements (SpriteRenderer, AnimationRenderer) of the current scene
      */
     void drawScene();
-    /**
-     * Draw debug elements
-     */
-    void drawDebug();
+
+    // Debug
     void draw(const BoxCollider * boxCollider);
     sf::Color getColor(const Collider * collider);
 };

@@ -109,5 +109,5 @@ fabric.properties
 
 cmake-build-debug
 CmakeConfig.cmake
-bin/Pancake
+bin/*
 .idea/*.iml

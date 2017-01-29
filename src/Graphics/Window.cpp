@@ -7,8 +7,8 @@
 #include "../../include/GameLogic/Components/SpriteRenderer.hpp"
 #include "../../include/GameLogic/Components/Camera.hpp"
 #include "../../include/GameLogic/Components/AnimationRenderer.hpp"
-#include "../include/GameLogic/Components/Transform.hpp"
 #include "../../include/Debug/Debug.hpp"
+#include "../../include/GameLogic/Components/Animator.hpp"
 
 Window::Window(SceneManager& s) : scenes(s), window(sf::VideoMode::getDesktopMode(), "", sf::Style::Close) {
     FPS = 60.0f;
@@ -25,9 +25,6 @@ void Window::render()
         if (window.isOpen()) {
             window.clear();
             drawScene();
-            if (debug) {
-                drawDebug();
-            }
             Debug::update(); // should be called only once per frame
             Debug::render();
             window.display();
@@ -55,33 +52,30 @@ void Window::drawScene() {
         window.setView(window.getDefaultView());
     }
 
+    // Draw elements
+    sf::RenderStates renderStates;
     for (int i = 0; i < scenes.getCurrentScene()->gameObjects.size(); ++i) {
-         const GameObject * gameObject = scenes.getCurrentScene()->gameObjects[i];
+        const GameObject * gameObject = scenes.getCurrentScene()->gameObjects[i];
+        renderStates.transform = gameObject->transform->getTransformMatrix();
 
         // Get SpriteRenderer
         const SpriteRenderer * spriteRenderer = gameObject->getComponent<SpriteRenderer>();
-        if (spriteRenderer != NULL) {
-            sf::RenderStates renderStates;
-            renderStates.transform = gameObject->transform->getTransformMatrix();
-            window.draw(spriteRenderer->sprite, renderStates);
-        }
+        if (spriteRenderer != NULL) window.draw(spriteRenderer->sprite, renderStates);
 
         // Get AnimationRenderer
         const AnimationRenderer * animationRenderer = gameObject->getComponent<AnimationRenderer>();
-        if (animationRenderer != NULL) {
-            sf::RenderStates renderStates;
-            renderStates.transform = gameObject->transform->getTransformMatrix();
-            window.draw(animationRenderer->sprite, renderStates);
+        if (animationRenderer != NULL) window.draw(animationRenderer->sprite, renderStates);
+
+        // Get Animator
+        const Animator * animator = gameObject->getComponent<Animator>();
+        if (animator != NULL) window.draw(animator->getCurrentAnimation()->sprite, renderStates);
+
+        // Debug elements
+        if (debug) {
+            // Box collider
+            const std::vector<BoxCollider *> boxColliders = scenes.getCurrentScene()->gameObjects[i]->getComponents<BoxCollider>();
+            for (BoxCollider *bc : boxColliders) draw(bc);
         }
-    }
-}
-
-void Window::drawDebug() {
-    for (int i = 0; i < scenes.getCurrentScene()->gameObjects.size(); ++i) {
-
-        // Box collider
-        const BoxCollider * boxCollider = scenes.getCurrentScene()->gameObjects[i]->getComponent<BoxCollider>();
-        if (boxCollider != NULL) draw(boxCollider);
     }
 }
 
@@ -113,11 +107,11 @@ void Window::draw(const BoxCollider * boxCollider) {
     // To draw from center
     sf::Vertex vertices[6] = {
             sf::Vertex(sf::Vector2f(-boxCollider->width/2, -boxCollider->height/2)),
-            sf::Vertex(sf::Vector2f(boxCollider->width/2, -boxCollider->height/2)),
-            sf::Vertex(sf::Vector2f(boxCollider->width/2, boxCollider->height/2)),
+            sf::Vertex(sf::Vector2f( boxCollider->width/2, -boxCollider->height/2)),
+            sf::Vertex(sf::Vector2f( boxCollider->width/2,  boxCollider->height/2)),
             sf::Vertex(sf::Vector2f(-boxCollider->width/2, -boxCollider->height/2)),
-            sf::Vertex(sf::Vector2f(-boxCollider->width/2, boxCollider->height/2)),
-            sf::Vertex(sf::Vector2f(boxCollider->width/2, boxCollider->height/2))
+            sf::Vertex(sf::Vector2f(-boxCollider->width/2,  boxCollider->height/2)),
+            sf::Vertex(sf::Vector2f( boxCollider->width/2,  boxCollider->height/2))
     };
     // Color for type
     sf::Color color = getColor(boxCollider);
@@ -125,7 +119,6 @@ void Window::draw(const BoxCollider * boxCollider) {
         vertices[i].color = color;
     }
     // Transform
-    sf::Transform transform = boxCollider->gameObject->transform->getTransformMatrix();
     sf::RenderStates renderStates;
     renderStates.transform = boxCollider->gameObject->transform->getTransformMatrix();
     renderStates.transform.translate(boxCollider->offset);
