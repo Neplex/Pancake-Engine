@@ -9,6 +9,7 @@
 #include "../imgui/imgui.h"
 #include "Widgets/AppLog.hpp"
 
+
 class MainDebugMenu {
 public:
 
@@ -17,7 +18,6 @@ public:
     }
 
     void draw() {
-
         // Draw the main bar
         if (ImGui::BeginMainMenuBar()) {
             if (ImGui::BeginMenu("Loggers"))

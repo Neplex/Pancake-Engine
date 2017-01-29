@@ -27,6 +27,8 @@ public:
      * @see Input
      * @pre The name of the button should be unique.
      * @post The button is associated with the keys.
+     * @exemple
+     * InputManager::createButton("Jump", std::vector<sf::Keyboard::Key> ({sf::Keyboard::Key::Space}));
      */
     static void createButton(const std::string& name, const std::vector<sf::Keyboard::Key>& keys,
             void (*callback)() = nullptr) {
@@ -49,6 +51,9 @@ public:
         }
     }
 
+    /*!
+     *
+     */
     static void handleInputs() {
 
         sf::Event event;
