@@ -23,11 +23,12 @@ public:
      * Create a virtual Button that will be pressed or released when the given keys are.
      * @param name The name of the button. (ex: "Jump")
      * @param keys The keys that will be pressed or released.
+     * @param callback A callback function that will be called when the button is pressed.
      * @pre The name of the button should be unique.
      * @post The button is associated with the keys.
      */
-    static void createButton(const std::string& name, const std::vector<sf::Keyboard::Key>& keys) {
-        // TODO assert
+    static void createButton(const std::string& name, const std::vector<sf::Keyboard::Key>& keys, void (*callback)() = nullptr) {
+        // TODO assert that the button is not here already
         buttons.push_back(Button(name, keys));
         Input::buttons[buttons.back().name] = &buttons.back();
         for (int i = 0; i < keys.size(); ++i) {

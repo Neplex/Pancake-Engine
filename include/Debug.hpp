@@ -8,16 +8,29 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include "imgui/imgui-SFML.h"
 #include "Debug/MainDebugMenu.hpp"
+#include "Debug/FixedOverlayDebug.hpp"
 
 class Debug {
 public:
 
     static void log(std::string loggerName, std::string message) {
-        mainDebugMenu.logLogger(loggerName, message + "\n");
+        if (initialized)
+            mainDebugMenu.logLogger(loggerName, message + "\n");
     }
 
     static void addLogger(std::string name) {
-        mainDebugMenu.addLogger(name);
+        if (initialized)
+            mainDebugMenu.addLogger(name);
+    }
+
+    static void setEnableDebugGUI(bool activate) {
+        if (initialized)
+            displayDebug = activate;
+    }
+
+    static void switchEnableDebugGUI() {
+        if (initialized)
+            displayDebug = !displayDebug;
     }
 
 private:
@@ -26,6 +39,8 @@ private:
     friend class Window;
 
     static MainDebugMenu mainDebugMenu;
+    static FixedOverlayDebug fixedOverlayDebug;
+    static bool displayDebug;
 
     static sf::RenderWindow * renderWindow; ///< The window where ImGui is drawing
     static bool initialized; ///< Set to true if debug was initialized

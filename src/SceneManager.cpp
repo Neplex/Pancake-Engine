@@ -5,11 +5,12 @@
 #include "../include/SceneManager.hpp"
 
 void SceneManager::addScene(Scene *scene) {
-    scenes.push_back(scene);
+    //scenes.push_back(scene);
 }
 
 Scene* SceneManager::getCurrentScene() {
-    return scenes[currentScene];
+    //return scenes[currentScene];
+    return scene;
 }
 
 void SceneManager::setCurrentScene(std::string name) {
@@ -24,8 +25,9 @@ void SceneManager::nextScene() {
     currentScene = (currentScene++)%scenes.size();
 }
 
-void SceneManager::loadScene()
+void SceneManager::loadScene(Scene *scene)
 {
+    this->scene = scene;
     getCurrentScene()->awake();
     getCurrentScene()->start();
 }

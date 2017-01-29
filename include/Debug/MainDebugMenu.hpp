@@ -12,10 +12,12 @@
 class MainDebugMenu {
 public:
 
-    MainDebugMenu() : loggers() {
+    MainDebugMenu() : loggers(), loggersToggled() {
+
     }
 
     void draw() {
+
         // Draw the main bar
         if (ImGui::BeginMainMenuBar()) {
             if (ImGui::BeginMenu("Loggers"))
@@ -45,13 +47,13 @@ public:
     }
 
     void addLogger(const std::string & name) {
-        struct AppLog logger;
-        loggers.emplace(name, std::move(logger));
+        AppLog logger;
+        loggers.emplace(name, logger);
         loggersToggled.emplace(name, false);
     }
 
 private:
-    std::map<const std::string, struct AppLog> loggers; ///< The name of the logger associated to the logger
+    std::map<const std::string, AppLog> loggers; ///< The name of the logger associated to the logger
     std::map<const std::string, bool> loggersToggled; ///< Associate a bool to each logger, if the menu item  of a logger is toggled, set the associated bool to true;
 };
 

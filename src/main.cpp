@@ -17,15 +17,17 @@ int main() {
     scene->addGameObject(mainCamera);
 
     for (int i = 0; i < 20; ++i) {
-        Box * box = new Box("Box" + i);
+        Box * box = new Box("Box");
         scene->addGameObject(box);
     }
 
-    engine->sceneManager.addScene(scene);
-    engine->sceneManager.loadScene();
+    //engine->sceneManager.addScene(scene);
+    engine->sceneManager.loadScene(scene);
     engine->window.setDebug();
 
     InputManager::createButton("Jump", std::vector<sf::Keyboard::Key> ({sf::Keyboard::Key::Space}));
+    /*InputManager::createButton("High", std::vector<sf::Keyboard::Key> ({sf::Keyboard::Key::Up}));
+    InputManager::createButton("ShowDebugInfo", std::vector<sf::Keyboard::Key> ({sf::Keyboard::Key::A}), &Debug::switchEnableDebugGUI);*/
 
     // TEST //
     engine->run();

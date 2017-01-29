@@ -28,6 +28,7 @@ void Scene::lateUpdate() {
     }
 }
 
+// TODO should create game object only with this method
 void Scene::addGameObject(GameObject * go) {
     gameObjects.push_back(go);
 }

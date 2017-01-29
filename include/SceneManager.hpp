@@ -12,6 +12,9 @@
 
 class SceneManager {
 public:
+    SceneManager() : currentScene(0) {
+
+    }
     /**
      * Add the 'scene' to the manager
      * @param scene
@@ -33,9 +36,10 @@ public:
      */
     void nextScene();
 
-    void loadScene();
+    void loadScene(Scene* scene);
 
 private:
+    Scene* scene;
     std::vector<Scene *> scenes;
     unsigned int currentScene;
 };

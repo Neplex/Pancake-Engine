@@ -14,6 +14,8 @@ bool Debug::initialized = false;
 sf::RenderWindow * Debug::renderWindow = nullptr;
 sf::Clock Debug::clock = sf::Clock();
 MainDebugMenu Debug::mainDebugMenu;
+FixedOverlayDebug Debug::fixedOverlayDebug;
+bool Debug::displayDebug = false;
 
 void Debug::init(sf::RenderWindow& window) {
     ImGui::SFML::Init(window);
@@ -23,15 +25,19 @@ void Debug::init(sf::RenderWindow& window) {
 
 void Debug::update()
 {
-    assert(initialized);
-    ImGui::SFML::Update(*renderWindow, clock.restart());
+    if (initialized)
+        ImGui::SFML::Update(*renderWindow, clock.restart());
 }
 
 void Debug::render()
 {
-    assert(initialized);
+    if (!initialized)
+        return;
     //ImGui::ShowTestWindow();
-    mainDebugMenu.draw();
+    if (displayDebug) {
+        mainDebugMenu.draw();
+        fixedOverlayDebug.draw(nullptr);
+    }
 
     /*static AppLog log;
     bool * p_open; ///< will be set to true when the windows is close (i think)

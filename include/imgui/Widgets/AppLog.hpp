@@ -18,6 +18,10 @@ struct AppLog
     ImVector<int>       LineOffsets;        // Index to lines offset
     bool                ScrollToBottom;
 
+    AppLog() : Buf(), Filter(), LineOffsets(), ScrollToBottom(){
+
+    }
+
     void    Clear()     {
         Buf.clear();
         LineOffsets.clear();
