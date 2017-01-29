@@ -5,4 +5,10 @@ add_executable(Pancake ${SOURCE_FILES})
 
 add_definitions(-D PANCAKE_DEBUG)
 
-target_link_libraries(Pancake ${SFML_LIB_DEBUG} opengl32)
+if(WIN32)
+    set(LIB opengl32)
+elseif(UNIX)
+    set(LIB GL)
+endif()
+
+target_link_libraries(Pancake ${SFML_LIB_DEBUG} ${LIB})
