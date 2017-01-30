@@ -17,7 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 External libraries used by Pancake Engine
 -------------------------------
 
-* SFML is under the BSD licence
+* SFML is under the zlib/libpng License
 * OpenAL-Soft is under the LGPL license
 * libjpeg is public domain
 * stb_image and stb_image_write are public domain
