@@ -6,20 +6,12 @@
 
 using namespace PancakeEngine;
 
-int Button::numButtons = 0;
-
-Button::Button(const std::string& name, const std::vector<sf::Keyboard::Key>& keys)
-{
-    this->name = name;
-    this->keys = keys;
-    this->isUp = true;
-    this->isDown = false;
-    this->isHeld = false;
-    this->isPressed = false;
-    this->isReleased = false;
-    this->pressedCallback = nullptr;
-    numButtons++;
-}
+Button::Button(const std::string& name, const std::vector<sf::Keyboard::Key>& keys) : name(name), keys(keys),
+                                                                                      isUp(true), isDown(false),
+                                                                                      isHeld(false), isPressed(false),
+                                                                                      isReleased(false),
+                                                                                      pressedCallback(nullptr)
+{ }
 
 void Button::update() {
     if (isPressed) {
@@ -28,7 +20,6 @@ void Button::update() {
         isDown = true;
         isReleased = false;
         isUp = false;
-
     } else if (isReleased){
         isReleased = false;
         isHeld = false;
@@ -36,4 +27,30 @@ void Button::update() {
         isPressed = false;
         isUp = true;
     }
+}
+
+void Button::press()
+{
+    if (!isDown) {
+        // TODO bug here at runtime without debugger the name is chelou sometimes
+        Debug::log("Inputs", "Button "+name+" has been pressed.");
+        if (pressedCallback!=nullptr) {
+            pressedCallback();
+        }
+        isDown = true;
+        isPressed = true;
+        isUp = false;
+        isReleased = false;
+        isHeld = false;
+    }
+}
+
+void Button::release()
+{
+    Debug::log("Inputs", "Button "+name+" has been released.");
+    isDown = false;
+    isHeld = false;
+    isPressed = false;
+    isUp = true;
+    isReleased = true;
 }
