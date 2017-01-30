@@ -9,30 +9,34 @@
 #include "Component.hpp"
 #include "../../Graphics/Animation.hpp"
 
-class AnimationRenderer : public Component {
-public:
-    AnimationRenderer(Animation& a);
+namespace PancakeEngine {
 
-    void play();
-    void pause();
-    void stop();
+    class AnimationRenderer : public Component {
+    public:
+        AnimationRenderer(Animation& a);
 
-    void loop(bool b = true);
+        void play();
 
-    void update();
+        void pause();
 
-private:
-    friend class Window;
+        void stop();
 
-    sf::Sprite sprite;
-    Animation& animation;
-    bool isRun;
-    bool isLoop;
-    double currentTime;
-    unsigned int currentFrame;
+        void loop(bool b = true);
 
-    void reset();
-};
+        void update();
 
+    private:
+        friend class Window;
+
+        sf::Sprite sprite;
+        Animation& animation;
+        bool isRun;
+        bool isLoop;
+        double currentTime;
+        unsigned int currentFrame;
+
+        void reset();
+    };
+}
 
 #endif //PANCAKE_ANIMATIONRENDERER_HPP

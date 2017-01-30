@@ -4,4 +4,6 @@
 
 #include "../include/Time.hpp"
 
+using namespace PancakeEngine;
+
 double Time::deltaTime = 0;

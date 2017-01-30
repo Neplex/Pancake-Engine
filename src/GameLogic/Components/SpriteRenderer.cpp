@@ -4,6 +4,9 @@
 
 #include "../../../include/GameLogic/Components/SpriteRenderer.hpp"
 
+
+using namespace PancakeEngine;
+
 SpriteRenderer::SpriteRenderer(unsigned int width, unsigned int height) {
     sf::Texture* texture = new sf::Texture();
     if (!texture->loadFromFile("../resources/default.png")) {

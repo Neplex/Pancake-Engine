@@ -5,6 +5,8 @@
 #include "../../../include/GameLogic/Components/AnimationRenderer.hpp"
 #include "../../../include/Time.hpp"
 
+using namespace PancakeEngine;
+
 AnimationRenderer::AnimationRenderer(Animation& a) : animation(a), isRun(false), isLoop(false), currentTime(0), currentFrame(0) {
     sprite.setTexture(animation.spriteSheet.texture);
     sprite.setTextureRect(animation.frames[currentFrame].rect);

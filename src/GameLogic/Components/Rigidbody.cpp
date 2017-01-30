@@ -8,6 +8,8 @@
 #include "../../../include/PhysicsEngine.hpp"
 #include "../../../include/Inputs/Input.hpp"
 
+using namespace PancakeEngine;
+
 PhysicsEngine * Rigidbody::physicsEngine = NULL;
 
 void Rigidbody::awake() {

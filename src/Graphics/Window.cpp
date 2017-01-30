@@ -10,6 +10,8 @@
 #include "../../include/Debug/Debug.hpp"
 #include "../../include/GameLogic/Components/Animator.hpp"
 
+using namespace PancakeEngine;
+
 Window::Window(SceneManager& s) : scenes(s), window(sf::VideoMode::getDesktopMode(), "", sf::Style::Close) {
     FPS = 60.0f;
     timeBetweenTwoFrames = sf::seconds((1.0f/FPS));

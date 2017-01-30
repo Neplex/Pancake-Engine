@@ -8,6 +8,8 @@
 #include "../include/imgui/imgui-SFML.h"
 #include "../include/Debug/Debug.hpp"
 
+using namespace PancakeEngine;
+
 Engine::Engine() : sceneManager(), window(sceneManager), physicsEngine(), time() {
 
     Collider::physicsEngine = &physicsEngine;

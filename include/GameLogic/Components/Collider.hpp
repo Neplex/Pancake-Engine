@@ -10,40 +10,46 @@
 #include "Component.hpp"
 #include "Rigidbody.hpp"
 
-class PhysicsEngine;
+namespace PancakeEngine {
 
-class Collider : public Component {
+    class PhysicsEngine;
 
-public:
-    void awake();
-    Rigidbody * attachedRigidbody;
-    // Is this collider configured as a trigger?
-    bool isTrigger;
-    // Get the bounciness used by the collider.
-    float bounciness;
-    // The density of the collider used to calculate its mass.
-    float density;
-    // Get the friction used by the collider.
-    float friction;
-    // The local offset of the collider
-    sf::Vector2f offset;
+    class Collider : public Component {
 
-    /**
-     * Return the body type of this collider.
-     * If the collider has not rigidbody, it is a static body.
-     * Otherwise the body type of the collider is the bodyType of the rigibody.
-     * @return The bodytype of the collider.
-     */
-    const Rigidbody::bodyType getBodyType() const {
-        if (attachedRigidbody != NULL) {
-            return attachedRigidbody->type;
+    public:
+        void awake();
+
+        Rigidbody* attachedRigidbody;
+        // Is this collider configured as a trigger?
+        bool isTrigger;
+        // Get the bounciness used by the collider.
+        float bounciness;
+        // The density of the collider used to calculate its mass.
+        float density;
+        // Get the friction used by the collider.
+        float friction;
+        // The local offset of the collider
+        sf::Vector2f offset;
+
+        /**
+         * Return the body type of this collider.
+         * If the collider has not rigidbody, it is a static body.
+         * Otherwise the body type of the collider is the bodyType of the rigibody.
+         * @return The bodytype of the collider.
+         */
+        const Rigidbody::bodyType getBodyType() const
+        {
+            if (attachedRigidbody!=NULL) {
+                return attachedRigidbody->type;
+            }
+            return Rigidbody::bodyType::staticBody;
         }
-        return Rigidbody::bodyType::staticBody;
-    }
-private:
-    friend class Engine;
-    static PhysicsEngine * physicsEngine;
-};
 
+    private:
+        friend class Engine;
+
+        static PhysicsEngine* physicsEngine;
+    };
+}
 
 #endif //PANCAKE_COLLIDER_HPP

@@ -9,24 +9,26 @@
 #include "Component.hpp"
 #include "../../Graphics/Window.hpp"
 
+namespace PancakeEngine {
+
 /**
  * Attach camera on a game object
  */
-class Camera : public Component {
-public:
-    Camera();
+    class Camera : public Component {
+    public:
+        Camera();
 
-    /**
-     * Zoom view with factor
-     * @param factor
-     */
-    void zoom(float factor);
+        /**
+         * Zoom view with factor
+         * @param factor
+         */
+        void zoom(float factor);
 
-private:
-    friend class Window;
+    private:
+        friend class Window;
 
-    sf::View view;
-    static Camera * mainCamera;
-};
-
+        sf::View view;
+        static Camera* mainCamera;
+    };
+}
 #endif //PANCAKE_CAMERA_HPP

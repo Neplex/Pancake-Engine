@@ -3,3 +3,5 @@
 //
 
 #include "../../../include/GameLogic/Components/BoxCollider.hpp"
+
+using namespace PancakeEngine;

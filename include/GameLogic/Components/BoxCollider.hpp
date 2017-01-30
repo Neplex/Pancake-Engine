@@ -9,14 +9,15 @@
 #include <SFML/System.hpp>
 #include "Collider.hpp"
 
-class BoxCollider : public Collider {
+namespace PancakeEngine {
 
-public:
-    // The total height of the collider
-    float height;
-    // The total width of the collider
-    float width;
-};
+    class BoxCollider : public Collider {
 
-
+    public:
+        // The total height of the collider
+        float height;
+        // The total width of the collider
+        float width;
+    };
+}
 #endif //PANCAKE_BOXCOLLIDER_HPP

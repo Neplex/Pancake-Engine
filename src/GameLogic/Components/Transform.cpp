@@ -4,6 +4,8 @@
 
 #include "../../../include/GameLogic/Components/Transform.hpp"
 
+using namespace PancakeEngine;
+
 Transform::Transform() {
     transform.setPosition(0, 0);
 }

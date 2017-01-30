@@ -4,6 +4,8 @@
 
 #include "../../../include/GameLogic/Components/Animator.hpp"
 
+using namespace PancakeEngine;
+
 void Animator::addAnimation(std::string name, Animation animation, std::string (*handler)()) {
     State state;
     state.animation = new AnimationRenderer(animation);

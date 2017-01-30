@@ -8,53 +8,60 @@
 #include "Component.hpp"
 #include <SFML/Graphics.hpp>
 
-class Transform : public Component{
-public:
-    Transform();
+namespace PancakeEngine {
 
-    /**
-     * Get the position of the transform.
-     * @return The position of the transform.
-     */
-    sf::Vector2f getPosition() const {
-        return transform.getPosition();
-    }
+    class Transform : public Component {
+    public:
+        Transform();
 
-    /**
-     * Set the position of the transform.
-     * @param newPos The new position.
-     */
-    void setPosition(const sf::Vector2f newPos) {
-        transform.setPosition(newPos);
-    }
+        /**
+         * Get the position of the transform.
+         * @return The position of the transform.
+         */
+        sf::Vector2f getPosition() const
+        {
+            return transform.getPosition();
+        }
 
-    /**
-     * Apply rotation with angle 'angle'
-     * @param angle
-     */
-    void setRotation(float angle) {
-        transform.setRotation(angle);
-    }
+        /**
+         * Set the position of the transform.
+         * @param newPos The new position.
+         */
+        void setPosition(const sf::Vector2f newPos)
+        {
+            transform.setPosition(newPos);
+        }
 
-    /**
-     * Get current rotation
-     * @return current rotation
-     */
-    float getRotation() {
-        return transform.getRotation();
-    }
+        /**
+         * Apply rotation with angle 'angle'
+         * @param angle
+         */
+        void setRotation(float angle)
+        {
+            transform.setRotation(angle);
+        }
 
-    /**
-     * Get the transform matrix
-     * @return the transform matrix
-     */
-    sf::Transform getTransformMatrix() {
-        return transform.getTransform();
-    }
+        /**
+         * Get current rotation
+         * @return current rotation
+         */
+        float getRotation()
+        {
+            return transform.getRotation();
+        }
 
-private:
-    sf::Transformable transform;
-};
+        /**
+         * Get the transform matrix
+         * @return the transform matrix
+         */
+        sf::Transform getTransformMatrix()
+        {
+            return transform.getTransform();
+        }
 
+    private:
+        sf::Transformable transform;
+    };
+}
 
 #endif //PANCAKE_TRANSFORM_HPP

@@ -5,6 +5,8 @@
 #include "../../include/GameLogic/GameObject.hpp"
 #include "../../include/GameLogic/Components/Transform.hpp"
 
+using namespace PancakeEngine;
+
 GameObject::GameObject(std::string n) {
     name = n;
     transform = new Transform();

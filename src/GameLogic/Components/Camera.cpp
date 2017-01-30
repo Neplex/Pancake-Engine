@@ -4,6 +4,8 @@
 
 #include "../../../include/GameLogic/Components/Camera.hpp"
 
+using namespace PancakeEngine;
+
 Camera * Camera::mainCamera = NULL;
 
 Camera::Camera()  {

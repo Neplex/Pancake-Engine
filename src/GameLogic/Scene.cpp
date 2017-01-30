@@ -4,6 +4,8 @@
 
 #include "../../include/GameLogic/Scene.hpp"
 
+using namespace PancakeEngine;
+
 void Scene::awake() {
     for (int i = 0; i < gameObjects.size(); ++i) {
         gameObjects[i]->awake();

@@ -4,6 +4,8 @@
 
 #include "../../include/Inputs/Button.hpp"
 
+using namespace PancakeEngine;
+
 int Button::numButtons = 0;
 
 Button::Button(const std::string& name, const std::vector<sf::Keyboard::Key>& keys)

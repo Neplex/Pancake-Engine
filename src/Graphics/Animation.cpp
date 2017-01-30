@@ -4,6 +4,8 @@
 
 #include "../../include/Graphics/Animation.hpp"
 
+using namespace PancakeEngine;
+
 void Animation::addFrame(unsigned int i, unsigned int j, unsigned int time) {
     Frame frame;
     frame.rect = sf::IntRect(

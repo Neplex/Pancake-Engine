@@ -11,24 +11,30 @@
 #include "PhysicsEngine.hpp"
 #include "Time.hpp"
 
-class Engine {
+namespace PancakeEngine {
 
-public:
-    const double SECONDS_PER_UPDATE = 1.0 / 100.0;
+    class Engine {
 
-    Engine();
-    void run();
-    SceneManager sceneManager;
-    Window window;
-    PhysicsEngine physicsEngine;
-    Time time;
+    public:
+        const double SECONDS_PER_UPDATE = 1.0/100.0;
 
-private:
+        Engine();
 
-    /*
-     * Update the engine (physics and logic) with a constant time.
-     */
-    void update();
-};
+        void run();
+
+        SceneManager sceneManager;
+        Window window;
+        PhysicsEngine physicsEngine;
+        Time time;
+
+    private:
+
+        /*
+         * Update the engine (physics and logic) with a constant time.
+         */
+        void update();
+    };
+
+}
 
 #endif //PANCAKE_ENGINE_HPP

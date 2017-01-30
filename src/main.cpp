@@ -4,6 +4,8 @@
 #include "../include/User/MainCamera.hpp"
 #include "../include/Inputs/InputManager.hpp"
 
+using namespace PancakeEngine;
+
 int main() {
     Engine * engine = new Engine();
     Ground * ground = new Ground("Ground");

@@ -5,6 +5,8 @@
 #include <cassert>
 #include "../../include/Inputs/Input.hpp"
 
+using namespace PancakeEngine;
+
 std::map<std::string, Button *> Input::buttons = std::map<std::string, Button *>();
 
 bool Input::getButtonPressed(const std::string& buttonName)

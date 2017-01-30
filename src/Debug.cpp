@@ -10,6 +10,10 @@
 #include "../include/Debug/Widgets/AppLog.hpp"
 #include "../include/Debug/MainDebugMenu.hpp"
 
+using namespace PancakeEngine;
+
+using namespace PancakeEngine;
+
 bool Debug::initialized = false;
 sf::RenderWindow * Debug::renderWindow = nullptr;
 sf::Clock Debug::clock = sf::Clock();

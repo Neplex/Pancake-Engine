@@ -4,6 +4,8 @@
 
 #include "../include/SceneManager.hpp"
 
+using namespace PancakeEngine;
+
 void SceneManager::addScene(Scene *scene) {
     //scenes.push_back(scene);
 }

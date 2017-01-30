@@ -11,76 +11,86 @@
 
 class Transform;
 class Component;
-class GameObject {
-public:
-    std::string name;
-    Transform * transform;
 
-    GameObject(std::string name);
-    virtual ~GameObject();
+namespace PancakeEngine {
 
-    /**
-     * Return the first component of the type T in the game object.
-     * Use of dynamic_cast
-     * @tparam T The type of the component.
-     * @return The first component of the type T, NULL if no component of the type T.
-     */
-    template <typename T>
-    T* getComponent() const {
-        T* component;
-        for (int i = 0; i < components.size(); ++i) {
-            if(component = dynamic_cast<T*>(components[i]))
-                return component;
+    class GameObject {
+    public:
+        std::string name;
+        Transform* transform;
+
+        GameObject(std::string name);
+
+        virtual ~GameObject();
+
+        /**
+         * Return the first component of the type T in the game object.
+         * Use of dynamic_cast
+         * @tparam T The type of the component.
+         * @return The first component of the type T, NULL if no component of the type T.
+         */
+        template<typename T>
+        T* getComponent() const
+        {
+            T* component;
+            for (int i = 0; i<components.size(); ++i) {
+                if (component = dynamic_cast<T*>(components[i]))
+                    return component;
+            }
+            return NULL;
         }
-        return NULL;
-    }
 
-    /**
-     * Return the list of components of the type T in the game object.
-     * Use of dynamic_cast
-     * @tparam T The type of the component.
-     * @return The vector of all component of the type T.
-     */
-    template <typename T>
-    const std::vector<T*> getComponents() const {
-        std::vector<T*> cs = std::vector<T*>();
-        T* component;
-        for (int i = 0; i < components.size(); ++i) {
-            if(component = dynamic_cast<T*>(components[i]))
-                cs.push_back(component);
-        }
-        return cs;
+        /**
+         * Return the list of components of the type T in the game object.
+         * Use of dynamic_cast
+         * @tparam T The type of the component.
+         * @return The vector of all component of the type T.
+         */
+        template<typename T>
+        const std::vector<T*> getComponents() const
+        {
+            std::vector<T*> cs = std::vector<T*>();
+            T* component;
+            for (int i = 0; i<components.size(); ++i) {
+                if (component = dynamic_cast<T*>(components[i]))
+                    cs.push_back(component);
+            }
+            return cs;
+        };
+
+        /**
+         * Add the given component after the others on the game object.
+         * @param c The component to add.
+         */
+        void addComponent(Component& c);
+
+        /**
+         * Called at GameObject creation.
+         * Call the same method on all components in order.
+         */
+        void awake();
+
+        /**
+         * Called just before the first Update call.
+         * Call the same method on all components in order.
+         */
+        void start();
+
+        /**
+         * Called at each frame before physics.
+         * Call the same method on all components in order.
+         */
+        void update();
+
+        /**
+         * Called at each frame after physics.
+         * Call the same method on all components in order.
+         */
+        void lateUpdate();
+
+    private:
+        std::vector<Component*> components;
     };
-
-    /**
-     * Add the given component after the others on the game object.
-     * @param c The component to add.
-     */
-    void addComponent(Component& c);
-
-    /**
-     * Called at GameObject creation.
-     * Call the same method on all components in order.
-     */
-    void awake();
-    /**
-     * Called just before the first Update call.
-     * Call the same method on all components in order.
-     */
-    void start();
-    /**
-     * Called at each frame before physics.
-     * Call the same method on all components in order.
-     */
-    void update();
-    /**
-     * Called at each frame after physics.
-     * Call the same method on all components in order.
-     */
-    void lateUpdate();
-
-private:
-    std::vector<Component *> components;
-};
+}
 
 #endif //PANCAKE_GAMEOBJECT_HPP

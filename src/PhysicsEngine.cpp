@@ -6,6 +6,8 @@
 #include "../include/GameLogic/Components/Transform.hpp"
 #include <iostream>
 
+using namespace PancakeEngine;
+
 int PhysicsEngine::numberPixelsPerMeter = 72; // TODO to change with the scene
 
 PhysicsEngine::PhysicsEngine() {

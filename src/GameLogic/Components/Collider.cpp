@@ -7,6 +7,7 @@
 #include "../../../include/PhysicsEngine.hpp"
 #include "../../../include/GameLogic/Components/Rigidbody.hpp"
 
+using namespace PancakeEngine;
 
 PhysicsEngine* Collider::physicsEngine = NULL;
 
