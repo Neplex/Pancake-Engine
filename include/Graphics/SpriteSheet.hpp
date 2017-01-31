@@ -7,7 +7,6 @@
 
 
 #include <SFML/Graphics/Texture.hpp>
-#include "../GameLogic/Components/SpriteRenderer.hpp"
 
 namespace PancakeEngine {
 
@@ -19,9 +18,7 @@ namespace PancakeEngine {
          * @param tile_w the tile width
          * @param tile_h the tile height
          */
-        SpriteSheet(std::string uri, unsigned int tile_w, unsigned int tile_h)
-                :tile_width(tile_w), tile_height(tile_h)
-        {
+        SpriteSheet(std::string uri, unsigned int tile_w, unsigned int tile_h) : tile_width(tile_w), tile_height(tile_h) {
             if (!texture.loadFromFile(uri)) exit(EXIT_FAILURE);
             texture.setSmooth(true);
         }

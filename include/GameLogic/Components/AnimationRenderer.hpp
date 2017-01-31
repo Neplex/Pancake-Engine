@@ -13,7 +13,7 @@ namespace PancakeEngine {
 
     class AnimationRenderer : public Component {
     public:
-        AnimationRenderer(Animation& a);
+        AnimationRenderer();
 
         void play();
 
@@ -25,11 +25,13 @@ namespace PancakeEngine {
 
         void update();
 
+        void setAnimation(Animation& a);
+
     private:
         friend class Window;
 
         sf::Sprite sprite;
-        Animation& animation;
+        Animation* animation;
         bool isRun;
         bool isLoop;
         double currentTime;

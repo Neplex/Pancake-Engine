@@ -7,25 +7,21 @@
 
 using namespace PancakeEngine;
 
-AnimationRenderer::AnimationRenderer(Animation& a) : animation(a), isRun(false), isLoop(false), currentTime(0), currentFrame(0) {
-    sprite.setTexture(animation.spriteSheet.texture);
-    sprite.setTextureRect(animation.frames[currentFrame].rect);
-    sprite.setOrigin(animation.spriteSheet.tile_width/2, animation.spriteSheet.tile_height/2);
-}
+AnimationRenderer::AnimationRenderer() : sprite(), animation(NULL), isRun(false), isLoop(false), currentTime(0), currentFrame(0) {}
 
 void AnimationRenderer::update() {
-    if (isRun) {
+    if (isRun && animation != NULL) {
         currentTime += Time::getDeltaTime() * 1000;
-        if (currentTime >= animation.frames.at(currentFrame).time) {
-            currentTime -= animation.frames.at(currentFrame).time;
-            if (++currentFrame >= animation.frames.size()) {
+        if (currentTime >= animation->frames.at(currentFrame).time) {
+            currentTime -= animation->frames.at(currentFrame).time;
+            if (++currentFrame >= animation->frames.size()) {
                 if (isLoop) currentFrame = 0;
                 else {
                     pause();
                     currentFrame--;
                 }
             }
-            sprite.setTextureRect(animation.frames.at(currentFrame).rect);
+            sprite.setTextureRect(animation->frames.at(currentFrame).rect);
         }
     }
 }
@@ -50,4 +46,11 @@ void AnimationRenderer::reset() {
 
 void AnimationRenderer::loop(bool b) {
     isLoop = b;
+}
+
+void AnimationRenderer::setAnimation(Animation &a) {
+    animation = &a;
+    sprite.setTexture(animation->spriteSheet.texture);
+    sprite.setTextureRect(animation->frames[currentFrame].rect);
+    sprite.setOrigin(animation->spriteSheet.tile_width/2, animation->spriteSheet.tile_height/2);
 }

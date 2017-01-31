@@ -9,26 +9,23 @@
 #include "../../Graphics/SpriteSheet.hpp"
 #include <SFML/Graphics.hpp>
 
-class SpriteSheet;
 namespace PancakeEngine {
 
     class SpriteRenderer : public Component {
     public:
         /**
-         * Create sprite with default texture
-         * @param width
-         * @param height
+         * Create default sprite sheet (32*32)
          */
-        SpriteRenderer(unsigned int width, unsigned int height);
+        SpriteRenderer();
 
         /**
-         * Create sprite from a SpriteSheet 'sheet'
+         * Set sprite from a SpriteSheet 'sheet'
          * Take the sprite at the column i and row j
          * @param sheet the SpriteSheet
          * @param i the column index
          * @param j the row index
          */
-        SpriteRenderer(SpriteSheet& sheet, unsigned int i, unsigned int j);
+        void setSprite(SpriteSheet& sheet, unsigned int i, unsigned int j);
 
     private:
         friend class Window;

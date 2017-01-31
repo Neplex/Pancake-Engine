@@ -10,16 +10,9 @@
 
 namespace PancakeEngine {
 
-    struct Frame {
-        sf::IntRect rect;
-        unsigned int time;
-    };
-
+    class AssetsManager;
     class Animation {
     public:
-        Animation(SpriteSheet& sheet)
-                :spriteSheet(sheet) { }
-
         /**
          * Add the sprite at the column i and row j from the SpriteSheet to the animation
          * @param i the column index
@@ -29,10 +22,18 @@ namespace PancakeEngine {
         void addFrame(unsigned int i, unsigned int j, unsigned int time);
 
     private:
+        friend class AssetsManager;
         friend class AnimationRenderer;
 
+        struct Frame {
+            sf::IntRect rect;
+            unsigned int time;
+        };
+
         SpriteSheet spriteSheet;
-        std::vector<Frame> frames;
+        std::vector<Animation::Frame> frames;
+
+        Animation(SpriteSheet sheet) : spriteSheet(sheet) {}
     };
 
 }
