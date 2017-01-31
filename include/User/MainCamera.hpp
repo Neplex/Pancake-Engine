@@ -11,8 +11,8 @@
 namespace PancakeEngine {
     class MainCamera : public GameObject {
     public:
-        MainCamera(std::string name)
-                :GameObject(name)
+        MainCamera()
+                :GameObject()
         {
             Camera& cm = addComponent<Camera>();
             cm.zoom(1.2);

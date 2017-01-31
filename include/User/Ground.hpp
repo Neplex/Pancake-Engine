@@ -12,8 +12,8 @@
 namespace PancakeEngine {
     class Ground : public GameObject {
     public:
-        Ground(std::string name)
-                :GameObject(name)
+        Ground()
+                :GameObject()
         {
                 BoxCollider& bcGroundingBox = addComponent<BoxCollider>();
                 bcGroundingBox.height = 72;

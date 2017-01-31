@@ -8,9 +8,8 @@
 
 using namespace PancakeEngine;
 
-GameObject::GameObject(std::string n) : components() {
+GameObject::GameObject() : components() {
     transform.gameObject = this;
-    name = n;
 }
 
 void GameObject::awake() {

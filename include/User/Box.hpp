@@ -16,8 +16,8 @@ namespace PancakeEngine {
     class Box : public GameObject {
 
     public:
-        Box(std::string name)
-                :GameObject(name)
+        Box()
+                :GameObject()
         {
                //AnimationRenderer& ar = addComponent<AnimationRenderer>();
                 BoxCollider& bc = addComponent<BoxCollider>();

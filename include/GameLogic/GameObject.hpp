@@ -19,7 +19,7 @@ namespace PancakeEngine {
         std::string name;
         Transform transform;
 
-        GameObject(std::string name);
+        GameObject();
 
         /**
          * Return the first component of the type T in the game object.

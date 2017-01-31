@@ -22,7 +22,12 @@ namespace PancakeEngine {
          * Add the given game object to the scene (after the others).
          * @param go The game object to add.
          */
-        void addGameObject(GameObject* go);
+        template <class T>
+        T& addGameObject() {
+                T* gameObject = new T();
+                gameObjects.push_back(gameObject);
+                return *gameObject;
+        }
 
         /**
          * Awake is used to initialize any variables or game state before the game starts.

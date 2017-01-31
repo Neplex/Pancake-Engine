@@ -8,15 +8,15 @@ using namespace PancakeEngine;
 
 int main() {
     Engine * engine = new Engine();
-    Ground * ground = new Ground("Ground");
-    MainCamera * mainCamera = new MainCamera("MainCamera");
+    //Ground * ground = new Ground("Ground");
+    //MainCamera * mainCamera = new MainCamera("MainCamera");
     Scene* scene = new Scene("TestScene");
-    scene->addGameObject(ground);
-    scene->addGameObject(mainCamera);
+    scene->addGameObject<Ground>();
+    scene->addGameObject<MainCamera>();
 
     for (int i = 0; i < 40; ++i) {
-        Box * box = new Box("Box");
-        scene->addGameObject(box);
+        //Box * box = new Box("Box");
+        scene->addGameObject<Box>();
     }
 
     engine->sceneManager.loadScene(scene);
