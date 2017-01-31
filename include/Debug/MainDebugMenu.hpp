@@ -13,6 +13,7 @@ namespace PancakeEngine {
 
     class MainDebugMenu {
     public:
+
         void draw()
         {
             // Draw the main bar

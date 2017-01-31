@@ -19,22 +19,19 @@ namespace PancakeEngine {
         Box(std::string name)
                 :GameObject(name)
         {
-                SpriteSheet* ss = new SpriteSheet("../resources/tiles_spritesheet.png", 72, 72);
-                Animation* a = new Animation(*ss);
-                a->addFrame(0, 3, 200);
+               //AnimationRenderer& ar = addComponent<AnimationRenderer>();
+                BoxCollider& bc = addComponent<BoxCollider>();
+                Rigidbody& rb = addComponent<Rigidbody>();
+                //SpriteSheet* ss = new SpriteSheet("../resources/tiles_spritesheet.png", 72, 72);
+                //Animation* a = new Animation(*ss);
+                /*a->addFrame(0, 3, 200);
                 a->addFrame(0, 4, 200);
-                a->addFrame(0, 5, 200);
-                AnimationRenderer* ar = new AnimationRenderer(*a);
-                ar->play();
-                BoxCollider* bc = new BoxCollider();
-                Rigidbody* rb = new Rigidbody();
-                bc->width = 72;
-                bc->height = 72;
-                transform->setPosition(sf::Vector2f(100, -100));
-                transform->setRotation(0);
-                addComponent(*ar);
-                addComponent(*bc);
-                addComponent(*rb);
+                a->addFrame(0, 5, 200);*/
+                //ar.play();
+                bc.width = 72;
+                bc.height = 72;
+                transform.setPosition(sf::Vector2f(100, -100));
+                transform.setRotation(0);
         }
     };
 }

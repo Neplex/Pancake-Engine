@@ -47,8 +47,8 @@ void Window::drawScene() {
     // Set view
     if (Camera::mainCamera != NULL) {
         sf::View view = Camera::mainCamera->view;
-        view.setCenter(Camera::mainCamera->gameObject->transform->getPosition());
-        view.setRotation(Camera::mainCamera->gameObject->transform->getRotation());
+        view.setCenter(Camera::mainCamera->gameObject->transform.getPosition());
+        view.setRotation(Camera::mainCamera->gameObject->transform.getRotation());
         window.setView(view);
     } else {
         window.setView(window.getDefaultView());
@@ -57,19 +57,19 @@ void Window::drawScene() {
     // Draw elements
     sf::RenderStates renderStates;
     for (unsigned i = 0; i < scenes.getCurrentScene()->gameObjects.size(); ++i) {
-        const GameObject * gameObject = scenes.getCurrentScene()->gameObjects[i];
-        renderStates.transform = gameObject->transform->getTransformMatrix();
+        GameObject * gameObject = scenes.getCurrentScene()->gameObjects[i];
+        renderStates.transform = gameObject->transform.getTransformMatrix();
 
         // Get SpriteRenderer
-        const SpriteRenderer * spriteRenderer = gameObject->getComponent<SpriteRenderer>();
+        SpriteRenderer * spriteRenderer = gameObject->getComponent<SpriteRenderer>();
         if (spriteRenderer != NULL) window.draw(spriteRenderer->sprite, renderStates);
 
         // Get AnimationRenderer
-        const AnimationRenderer * animationRenderer = gameObject->getComponent<AnimationRenderer>();
+        AnimationRenderer * animationRenderer = gameObject->getComponent<AnimationRenderer>();
         if (animationRenderer != NULL) window.draw(animationRenderer->sprite, renderStates);
 
         // Get Animator
-        const Animator * animator = gameObject->getComponent<Animator>();
+        Animator * animator = gameObject->getComponent<Animator>();
         if (animator != NULL) window.draw(animator->getCurrentAnimation()->sprite, renderStates);
 
         // Debug elements
@@ -122,7 +122,7 @@ void Window::draw(const BoxCollider * boxCollider) {
     }
     // Transform
     sf::RenderStates renderStates;
-    renderStates.transform = boxCollider->gameObject->transform->getTransformMatrix();
+    renderStates.transform = boxCollider->gameObject->transform.getTransformMatrix();
     renderStates.transform.translate(boxCollider->offset);
     window.draw(vertices, 6, sf::LinesStrip, renderStates);
 }

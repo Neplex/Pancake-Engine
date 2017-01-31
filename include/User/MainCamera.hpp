@@ -14,9 +14,8 @@ namespace PancakeEngine {
         MainCamera(std::string name)
                 :GameObject(name)
         {
-            Camera* cm = new Camera();
-            cm->zoom(1.2);
-            addComponent(*cm);
+            Camera& cm = addComponent<Camera>();
+            cm.zoom(1.2);
         }
     };
 }

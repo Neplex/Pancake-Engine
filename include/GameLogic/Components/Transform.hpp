@@ -7,6 +7,7 @@
 
 #include "Component.hpp"
 #include <SFML/Graphics.hpp>
+#include <cassert>
 
 namespace PancakeEngine {
 

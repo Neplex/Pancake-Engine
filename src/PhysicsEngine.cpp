@@ -24,9 +24,9 @@ void PhysicsEngine::update(float dt) {
     {
         if (b->GetType() != b2_staticBody) {
             Rigidbody * rb = static_cast<Rigidbody*>(b->GetUserData());
-            rb->gameObject->transform->setPosition((sf::Vector2f(b->GetPosition().x * numberPixelsPerMeter,
+            rb->gameObject->transform.setPosition((sf::Vector2f(b->GetPosition().x * numberPixelsPerMeter,
                                                                  b->GetPosition().y * numberPixelsPerMeter)));
-            rb->gameObject->transform->setRotation(b->GetAngle());
+            rb->gameObject->transform.setRotation(b->GetAngle());
         }
     }
 }
@@ -35,8 +35,8 @@ void PhysicsEngine::addStaticBodyToPhysicsWorld(Collider& c) {
     b2BodyDef bodyDef;
     bodyDef.type = b2_staticBody;
 
-    bodyDef.position.Set((c.gameObject->transform->getPosition().x)/numberPixelsPerMeter,
-                         (c.gameObject->transform->getPosition().y)/numberPixelsPerMeter);
+    bodyDef.position.Set((c.gameObject->transform.getPosition().x)/numberPixelsPerMeter,
+                         (c.gameObject->transform.getPosition().y)/numberPixelsPerMeter);
     bodyDef.userData = (void *) &c;
     b2Body* body = world->CreateBody(&bodyDef);
     b2PolygonShape shape;
@@ -44,7 +44,7 @@ void PhysicsEngine::addStaticBodyToPhysicsWorld(Collider& c) {
         BoxCollider *bc = (BoxCollider *) &c;
         shape.SetAsBox((bc->width/2)/numberPixelsPerMeter, (bc->height/2)/numberPixelsPerMeter,
                        (b2Vec2(c.offset.x/numberPixelsPerMeter,c.offset.y/numberPixelsPerMeter)),
-                       c.gameObject->transform->getRotation());
+                       c.gameObject->transform.getRotation());
     } else {
         assert(false);
     }
@@ -72,8 +72,8 @@ void PhysicsEngine::addRigidBodyToPhysicsWorld(Rigidbody &rb) {
             assert(false);
     }
 
-    bodyDef.position.Set((rb.gameObject->transform->getPosition().x)/numberPixelsPerMeter,
-                         (rb.gameObject->transform->getPosition().y)/numberPixelsPerMeter);
+    bodyDef.position.Set((rb.gameObject->transform.getPosition().x)/numberPixelsPerMeter,
+                         (rb.gameObject->transform.getPosition().y)/numberPixelsPerMeter);
     bodyDef.userData = (void *) &rb;
     //bodyDef.angularVelocity = rb.angularVelocity;
     bodyDef.angularDamping = rb.angularDrag;
@@ -90,7 +90,7 @@ void PhysicsEngine::addRigidBodyToPhysicsWorld(Rigidbody &rb) {
                 BoxCollider *bc = (BoxCollider *) &c;
                 shape.SetAsBox((bc->width/2)/numberPixelsPerMeter, (bc->height/2)/numberPixelsPerMeter,
                                (b2Vec2(c.offset.x/numberPixelsPerMeter,c.offset.y/numberPixelsPerMeter)),
-                               c.gameObject->transform->getRotation());
+                               c.gameObject->transform.getRotation());
             } else {
                 assert(false);
             }

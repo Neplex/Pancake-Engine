@@ -17,11 +17,9 @@ namespace PancakeEngine {
     class GameObject {
     public:
         std::string name;
-        Transform* transform;
+        Transform transform;
 
         GameObject(std::string name);
-
-        virtual ~GameObject();
 
         /**
          * Return the first component of the type T in the game object.
@@ -30,7 +28,7 @@ namespace PancakeEngine {
          * @return The first component of the type T, NULL if no component of the type T.
          */
         template<typename T>
-        T* getComponent() const
+        T* getComponent()
         {
             T* component;
             for (unsigned i = 0; i<components.size(); ++i) {
@@ -47,22 +45,30 @@ namespace PancakeEngine {
          * @return The vector of all component of the type T.
          */
         template<typename T>
-        const std::vector<T*> getComponents() const
+        const std::vector<T*> getComponents()
         {
             std::vector<T*> cs = std::vector<T*>();
-            T* component;
-            for (unsigned i = 0; i<components.size(); ++i) {
-                if ((component = dynamic_cast<T*>(components[i])))
-                    cs.push_back(component);
+            T* p_component;
+            for (unsigned i = 0; i < components.size(); ++i) {
+                if ((p_component = dynamic_cast<T*>(components[i])))
+                    cs.push_back(p_component);
             }
             return cs;
         };
 
+
         /**
-         * Add the given component after the others on the game object.
-         * @param c The component to add.
+         *
+         * @tparam T should inherit from Component.
+         * @return
          */
-        void addComponent(Component& c);
+        template <class T>
+        T& addComponent() {
+            T* component = new T();
+            components.push_back(component);
+            component->gameObject = this;
+            return *component;
+        }
 
         /**
          * Called at GameObject creation.

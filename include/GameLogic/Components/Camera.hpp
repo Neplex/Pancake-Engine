@@ -23,12 +23,12 @@ namespace PancakeEngine {
          * @param factor
          */
         void zoom(float factor);
+        static Camera* mainCamera;
 
     private:
         friend class Window;
-
         sf::View view;
-        static Camera* mainCamera;
+
     };
 }
 #endif //PANCAKE_CAMERA_HPP

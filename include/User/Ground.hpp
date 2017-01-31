@@ -15,11 +15,10 @@ namespace PancakeEngine {
         Ground(std::string name)
                 :GameObject(name)
         {
-                BoxCollider* bcGroundingBox = new BoxCollider();
-                bcGroundingBox->height = 72;
-                bcGroundingBox->width = 72*8;
-                transform->setPosition(sf::Vector2f(200, 300));
-                addComponent(*bcGroundingBox);
+                BoxCollider& bcGroundingBox = addComponent<BoxCollider>();
+                bcGroundingBox.height = 72;
+                bcGroundingBox.width = 72*8;
+                transform.setPosition(sf::Vector2f(200, 300));
         }
 
     };

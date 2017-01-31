@@ -8,7 +8,7 @@ using namespace PancakeEngine;
 
 Camera * Camera::mainCamera = NULL;
 
-Camera::Camera()  {
+Camera::Camera() {
     view = sf::View(sf::FloatRect(0, 0, sf::VideoMode::getDesktopMode().width, sf::VideoMode::getDesktopMode().height));
     if (Camera::mainCamera == NULL) mainCamera = this;
 }

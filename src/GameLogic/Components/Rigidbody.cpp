@@ -20,7 +20,7 @@ void Rigidbody::awake() {
         assert(false);
         // Should have an engine
     }
-    std::vector<Collider *> v = gameObject->getComponents<Collider>();
+    std::vector<Collider*> v = gameObject->getComponents<Collider>();
     for (unsigned i = 0; i < v.size(); ++i) {
         v[i]->attachedRigidbody = this;
     }

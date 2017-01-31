@@ -4,20 +4,13 @@
 
 #include "../../include/GameLogic/GameObject.hpp"
 #include "../../include/GameLogic/Components/Transform.hpp"
+#include "../../include/GameLogic/Components/BoxCollider.hpp"
 
 using namespace PancakeEngine;
 
-GameObject::GameObject(std::string n) {
+GameObject::GameObject(std::string n) : components() {
+    transform.gameObject = this;
     name = n;
-    transform = new Transform();
-    components = std::vector<Component *> ();
-    components.push_back((Component *&&) transform);
-}
-
-GameObject::~GameObject() {
-    for (unsigned i = 0; i < components.size(); ++i) {
-        delete(components[i]);
-    }
 }
 
 void GameObject::awake() {
@@ -44,7 +37,3 @@ void GameObject::lateUpdate() {
     }
 }
 
-void GameObject::addComponent(Component& c) {
-    components.push_back(&c);
-    c.gameObject = this;
-}

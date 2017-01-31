@@ -6,6 +6,6 @@
 
 using namespace PancakeEngine;
 
-Transform::Transform() {
+Transform::Transform() : transform() {
     transform.setPosition(0, 0);
 }
