@@ -3,7 +3,7 @@ FILE(GLOB_RECURSE SOURCE_FILES ../libs/* * ../include/imgui/imgui.cpp ../include
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
 add_executable(Pancake ${SOURCE_FILES})
 
-add_definitions(-D PANCAKE_DEBUG)
+add_definitions(-D PANCAKE_DEBUG -Wall -Wextra -Wformat-security)
 
 if(WIN32)
     set(LIB opengl32)

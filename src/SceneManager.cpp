@@ -7,7 +7,7 @@
 using namespace PancakeEngine;
 
 void SceneManager::addScene(Scene *scene) {
-    //scenes.push_back(scene);
+    scenes.push_back(scene);
 }
 
 Scene* SceneManager::getCurrentScene() {
@@ -17,14 +17,15 @@ Scene* SceneManager::getCurrentScene() {
 
 void SceneManager::setCurrentScene(std::string name) {
     for (unsigned int i = 0; i < scenes.size(); ++i) {
-        if (scenes[i]->name == name)
+        if (scenes[i]->name == name) {
             currentScene = i;
             return;
+        }
     }
 }
 
 void SceneManager::nextScene() {
-    currentScene = (currentScene++)%scenes.size();
+    //currentScene = (currentScene++)%scenes.size();
 }
 
 void SceneManager::loadScene(Scene *scene)

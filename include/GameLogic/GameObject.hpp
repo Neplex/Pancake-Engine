@@ -33,8 +33,8 @@ namespace PancakeEngine {
         T* getComponent() const
         {
             T* component;
-            for (int i = 0; i<components.size(); ++i) {
-                if (component = dynamic_cast<T*>(components[i]))
+            for (unsigned i = 0; i<components.size(); ++i) {
+                if ((component = dynamic_cast<T*>(components[i])))
                     return component;
             }
             return NULL;
@@ -51,8 +51,8 @@ namespace PancakeEngine {
         {
             std::vector<T*> cs = std::vector<T*>();
             T* component;
-            for (int i = 0; i<components.size(); ++i) {
-                if (component = dynamic_cast<T*>(components[i]))
+            for (unsigned i = 0; i<components.size(); ++i) {
+                if ((component = dynamic_cast<T*>(components[i])))
                     cs.push_back(component);
             }
             return cs;

@@ -15,31 +15,31 @@ GameObject::GameObject(std::string n) {
 }
 
 GameObject::~GameObject() {
-    for (int i = 0; i < components.size(); ++i) {
+    for (unsigned i = 0; i < components.size(); ++i) {
         delete(components[i]);
     }
 }
 
 void GameObject::awake() {
-    for (int i = 0; i < components.size(); ++i) {
+    for (unsigned i = 0; i < components.size(); ++i) {
         components[i]->awake();
     }
 }
 
 void GameObject::start() {
-    for (int i = 0; i < components.size(); ++i) {
+    for (unsigned i = 0; i < components.size(); ++i) {
         components[i]->start();
     }
 }
 
 void GameObject::update() {
-    for (int i = 0; i < components.size(); ++i) {
+    for (unsigned i = 0; i < components.size(); ++i) {
         components[i]->update();
     }
 }
 
 void GameObject::lateUpdate() {
-    for (int i = 0; i < components.size(); ++i) {
+    for (unsigned i = 0; i < components.size(); ++i) {
         components[i]->lateUpdate();
     }
 }

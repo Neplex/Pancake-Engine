@@ -83,7 +83,7 @@ void PhysicsEngine::addRigidBodyToPhysicsWorld(Rigidbody &rb) {
 
             // Create a fixture for each collider
     std::vector<Collider *> v = rb.gameObject->getComponents<Collider>();
-        for (int i = 0; i < v.size(); ++i) {
+        for (unsigned i = 0; i < v.size(); ++i) {
             Collider & c = *v[i];
             b2PolygonShape shape;
             if (dynamic_cast<BoxCollider *>(&c) != NULL) {

@@ -56,7 +56,7 @@ void Window::drawScene() {
 
     // Draw elements
     sf::RenderStates renderStates;
-    for (int i = 0; i < scenes.getCurrentScene()->gameObjects.size(); ++i) {
+    for (unsigned i = 0; i < scenes.getCurrentScene()->gameObjects.size(); ++i) {
         const GameObject * gameObject = scenes.getCurrentScene()->gameObjects[i];
         renderStates.transform = gameObject->transform->getTransformMatrix();
 

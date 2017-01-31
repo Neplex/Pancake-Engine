@@ -70,7 +70,7 @@ namespace PancakeEngine {
             b->pressedCallback = callback;
             buttons.push_back(b);
             Input::buttons[b->name] = b;
-            for (int i = 0; i<keys.size(); ++i) {
+            for (unsigned i = 0; i<keys.size(); ++i) {
                 keyToButtons[keys[i]].push_back(b);
             }
         }
