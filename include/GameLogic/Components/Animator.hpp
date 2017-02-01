@@ -12,6 +12,8 @@ namespace PancakeEngine {
 
     class Animator : public Component {
     public:
+        ~Animator();
+
         /**
          * Add animation
          * @param name the name of the state
@@ -19,6 +21,7 @@ namespace PancakeEngine {
          * @param handler the handler of the state
          */
         void addAnimation(std::string name, Animation& animation, std::string (*handler)());
+
         /**
          * Get the animation associate with the current GameObject state
          * @return the current animation
