@@ -29,7 +29,7 @@ int main() {
     InputManager::createButton("Jump", std::vector<sf::Keyboard::Key> ({sf::Keyboard::Key::Up}));
     InputManager::createButton("Jump", std::vector<sf::Keyboard::Key> ({sf::Keyboard::Key::Down}));
     InputManager::createButton("Jump", std::vector<sf::Keyboard::Key> ({sf::Keyboard::Key::Left}));
-
+    
     engine->run();
     delete engine;
     return EXIT_SUCCESS;
