@@ -13,6 +13,11 @@ namespace PancakeEngine {
 
     class MainDebugMenu {
     public:
+        ~MainDebugMenu() {
+            for (auto p : loggers) {
+                delete p.second;
+            }
+        }
 
         void draw()
         {
