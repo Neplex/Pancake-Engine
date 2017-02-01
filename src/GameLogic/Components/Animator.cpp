@@ -32,9 +32,6 @@ AnimationRenderer& Animator::getCurrentAnimation() const {
 
 void Animator::update() {
     std::string state = states[currentState].handler();
-    //Debug::addLogger("Animator");
-    //if (Input::getButtonPressed("Jump")) Debug::log("Animator", "jump");
-    //else Debug::log("Animator", "idle");
     if (state == currentState) {
         states[currentState].animation->update();
     } else if (states.find(state) != states.end()) {

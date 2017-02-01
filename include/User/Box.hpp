@@ -18,9 +18,14 @@
 #include <string>
 
 namespace PancakeEngine {
-    std::string sh() {
-        if (Input::getButtonPressed("Jump")) return "jump";
+    std::string sh1() {
+        if (Input::getButtonPressed("S1")) return "jump";
         else return "idle";
+    };
+
+    std::string sh2() {
+        if (Input::getButtonPressed("S2")) return "idle";
+        else return "jump";
     };
 
     class Box : public GameObject {
@@ -43,8 +48,8 @@ namespace PancakeEngine {
             a2.addFrame(0, 1, 200);
             a2.addFrame(0, 2, 200);
             Animator& ar = addComponent<Animator>();
-            ar.addAnimation("idle", a1, sh);
-            ar.addAnimation("jump", a2, sh);
+            ar.addAnimation("idle", a1, sh1);
+            ar.addAnimation("jump", a2, sh2);
 
             addComponent<SpriteRenderer>();
         }
