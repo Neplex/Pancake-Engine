@@ -13,6 +13,11 @@ namespace PancakeEngine {
 
     class MainDebugMenu {
     public:
+        ~MainDebugMenu() {
+            for (auto pair : loggers) {
+                delete pair.second;
+            }
+        }
 
         void draw()
         {
@@ -32,25 +37,25 @@ namespace PancakeEngine {
             auto it = loggersToggled.begin();
             for (; it!=loggersToggled.end(); ++it) {
                 if (it->second) {
-                    loggers[it->first].Draw(it->first.c_str());
+                    loggers[it->first]->Draw(it->first.c_str());
                 }
             }
         }
 
         void logLogger(std::string name, std::string message)
         {
-            loggers[name].AddLog("Bonjour");
+            loggers[name]->AddLog("Bonjour");
         }
 
         void addLogger(const std::string& name)
         {
-            AppLog logger;
-            loggers.emplace(name, logger);
+            AppLog* app = new AppLog();
+            loggers[name] = app;
             loggersToggled.emplace(name, false);
         }
 
     private:
-        std::map<const std::string, AppLog> loggers; ///< The name of the logger associated to the logger
+        std::map<const std::string, AppLog*> loggers; ///< The name of the logger associated to the logger
         std::map<const std::string, bool> loggersToggled; ///< Associate a bool to each logger, if the menu item  of a logger is toggled, set the associated bool to true;
     };
 }

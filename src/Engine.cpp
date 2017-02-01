@@ -17,7 +17,6 @@ Engine::Engine() : sceneManager(), window(sceneManager), physicsEngine(), time()
     Rigidbody::physicsEngine = &physicsEngine;
     Time::deltaTime = SECONDS_PER_UPDATE;
     InputManager::window = &window.window;
-#undef PANCAKE_DEBUG
 #ifdef PANCAKE_DEBUG
    Debug::init(window.window);
     Debug::setEnableDebugGUI(true);
