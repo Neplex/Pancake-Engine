@@ -28,7 +28,7 @@ namespace PancakeEngine {
         Box() :GameObject() {
 
             BoxCollider& bc = addComponent<BoxCollider>();
-            Rigidbody& rb = addComponent<Rigidbody>();
+            addComponent<Rigidbody>();
             bc.width = 72;
             bc.height = 72;
             transform.setPosition(sf::Vector2f(100, -100));

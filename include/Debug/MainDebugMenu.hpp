@@ -39,7 +39,7 @@ namespace PancakeEngine {
 
         void logLogger(std::string name, std::string message)
         {
-            loggers[name].AddLog("Bonjour");
+            loggers[name].AddLog(message.c_str());
         }
 
         void addLogger(const std::string& name)

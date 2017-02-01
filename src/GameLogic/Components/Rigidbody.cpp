@@ -37,8 +37,8 @@ void Rigidbody::update() {
     }
 }
 
-Rigidbody::Rigidbody() : type(bodyType::dynamicBody), angularDrag(0.05f), drag(0),
-                         gravityScale(1), freezeRotation(false), mass(1)
+Rigidbody::Rigidbody() : type(bodyType::dynamicBody), drag(0), freezeRotation(false),
+                         gravityScale(1), mass(1), angularDrag(0.05f)
 {
 
 }
@@ -67,5 +67,6 @@ void Rigidbody::applyForceAtPosition(const sf::Vector2f& force, const sf::Vector
 void Rigidbody::applyLinearImpulseAtPosition(const sf::Vector2f& impulse, const sf::Vector2f& position) {
     physicsBody->ApplyLinearImpulse(b2Vec2(impulse.x, impulse.y), b2Vec2(position.x, position.y), true);
 }
+
 
 

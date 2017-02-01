@@ -7,9 +7,8 @@
 using namespace PancakeEngine;
 
 Button::Button(const std::string& name, const std::vector<sf::Keyboard::Key>& keys) : name(name), keys(keys),
-                                                                                      isUp(true), isDown(false),
-                                                                                      isHeld(false), isPressed(false),
-                                                                                      isReleased(false),
+                                                                                      isPressed(false),
+                                                                                      isReleased(false), isHeld(false), isDown(false), isUp(true),
                                                                                       pressedCallback(nullptr)
 { }
 

@@ -5,7 +5,7 @@ add_executable(Pancake ${SOURCE_FILES})
 
 set(WARNINGS -Wall -Wextra -Wformat-security)
 
-add_definitions(-D PANCAKE_DEBUG)
+add_definitions(-D PANCAKE_DEBUG ${WARNINGS})
 
 if(WIN32)
     set(LIB opengl32)
