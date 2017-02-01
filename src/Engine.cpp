@@ -8,7 +8,6 @@
 #include "../include/imgui/imgui-SFML.h"
 #include "../include/Debug/Debug.hpp"
 
- #undef PANCAKE_DEBUG
 
 using namespace PancakeEngine;
 
@@ -18,6 +17,7 @@ Engine::Engine() : sceneManager(), window(sceneManager), physicsEngine(), time()
     Rigidbody::physicsEngine = &physicsEngine;
     Time::deltaTime = SECONDS_PER_UPDATE;
     InputManager::window = &window.window;
+#undef PANCAKE_DEBUG
 #ifdef PANCAKE_DEBUG
    Debug::init(window.window);
     Debug::setEnableDebugGUI(true);

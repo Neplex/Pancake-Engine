@@ -75,6 +75,12 @@ namespace PancakeEngine {
                 keyToButtons[keys[i]].push_back(b);
             }
         }
+
+        static void destroyButtons() {
+            for (Button * b : buttons) {
+                delete b;
+            }
+        }
     private:
         /**
          * @brief Update the state of the buttons.

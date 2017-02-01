@@ -20,6 +20,10 @@ namespace PancakeEngine {
 
         }
 
+        ~SceneManager() {
+            delete scene;
+        }
+
         /**
          * Add the 'scene' to the manager
          * @param scene

@@ -11,13 +11,13 @@ int main() {
     //Ground * ground = new Ground("Ground");
     //MainCamera * mainCamera = new MainCamera("MainCamera");
     Scene* scene = new Scene("TestScene");
-    scene->addGameObject<Ground>();
-    scene->addGameObject<MainCamera>();
+    //scene->addGameObject<Ground>();
 
     for (int i = 0; i < 1; ++i) {
         //Box * box = new Box("Box");
         scene->addGameObject<Box>();
     }
+    scene->addGameObject<MainCamera>();
 
     engine->sceneManager.loadScene(scene);
     engine->window.setDebug();

@@ -10,6 +10,7 @@
 #include "Graphics/Window.hpp"
 #include "PhysicsEngine.hpp"
 #include "Time.hpp"
+#include "Inputs/InputManager.hpp"
 
 namespace PancakeEngine {
 
@@ -19,6 +20,9 @@ namespace PancakeEngine {
         const double SECONDS_PER_UPDATE = 1.0/100.0;
 
         Engine();
+        ~Engine() {
+            InputManager::destroyButtons();
+        }
 
         void run();
 
