@@ -7,6 +7,12 @@
 
 using namespace PancakeEngine;
 
+Animator::~Animator() {
+    for (auto const &s : states) {
+        delete s.second.animation;
+    }
+}
+
 void Animator::addAnimation(std::string name, Animation& animation, std::string (*handler)()) {
     State state;
     state.animation = new AnimationRenderer();
