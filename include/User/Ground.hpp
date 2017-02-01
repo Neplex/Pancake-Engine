@@ -15,6 +15,7 @@ namespace PancakeEngine {
         Ground()
                 :GameObject()
         {
+                name = "Ground";
                 BoxCollider& bcGroundingBox = addComponent<BoxCollider>();
                 bcGroundingBox.height = 72;
                 bcGroundingBox.width = 72*8;

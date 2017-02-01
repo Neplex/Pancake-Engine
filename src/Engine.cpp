@@ -8,7 +8,7 @@
 #include "../include/imgui/imgui-SFML.h"
 #include "../include/Debug/Debug.hpp"
 
-#undef PANCAKE_DEBUG
+ #undef PANCAKE_DEBUG
 
 using namespace PancakeEngine;
 

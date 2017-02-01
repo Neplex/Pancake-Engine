@@ -14,6 +14,7 @@ namespace PancakeEngine {
         MainCamera()
                 :GameObject()
         {
+            name = "MainCamera";
             Camera& cm = addComponent<Camera>();
             cm.zoom(1.2);
         }

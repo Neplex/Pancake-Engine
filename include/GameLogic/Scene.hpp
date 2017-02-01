@@ -18,6 +18,12 @@ namespace PancakeEngine {
         Scene(std::string name)
                 :name(name), gameObjects() { }
 
+        ~Scene() {
+                for(GameObject* go : gameObjects) {
+                        delete go;
+                }
+        }
+
         /**
          * Add the given game object to the scene (after the others).
          * @param go The game object to add.

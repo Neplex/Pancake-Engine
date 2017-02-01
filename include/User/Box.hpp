@@ -26,6 +26,7 @@ namespace PancakeEngine {
 
     public:
         Box() :GameObject() {
+
             BoxCollider& bc = addComponent<BoxCollider>();
             Rigidbody& rb = addComponent<Rigidbody>();
             bc.width = 72;

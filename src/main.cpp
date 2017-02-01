@@ -14,7 +14,7 @@ int main() {
     scene->addGameObject<Ground>();
     scene->addGameObject<MainCamera>();
 
-    for (int i = 0; i < 40; ++i) {
+    for (int i = 0; i < 1; ++i) {
         //Box * box = new Box("Box");
         scene->addGameObject<Box>();
     }
@@ -25,6 +25,10 @@ int main() {
     InputManager::createButton("Jump", std::vector<sf::Keyboard::Key> ({sf::Keyboard::Key::Space}));
 
     InputManager::createButton("ShowDebugInfo", std::vector<sf::Keyboard::Key> ({sf::Keyboard::Key::F1}), Debug::switchEnableDebugGUI);
+
+    InputManager::createButton("Jump", std::vector<sf::Keyboard::Key> ({sf::Keyboard::Key::Up}));
+    InputManager::createButton("Jump", std::vector<sf::Keyboard::Key> ({sf::Keyboard::Key::Down}));
+    InputManager::createButton("Jump", std::vector<sf::Keyboard::Key> ({sf::Keyboard::Key::Left}));
 
     engine->run();
     delete engine;

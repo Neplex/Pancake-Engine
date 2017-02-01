@@ -20,6 +20,11 @@ namespace PancakeEngine {
         Transform transform;
 
         GameObject();
+        ~GameObject() {
+            for (Component* c : components) {
+                delete c;
+            }
+        }
 
         /**
          * Return the first component of the type T in the game object.

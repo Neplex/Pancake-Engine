@@ -41,7 +41,7 @@ namespace PancakeEngine {
 
     /**
      * \class InputManager
-     * \brief Handle all inputs. Should be used to create buttons.
+     * \brief Handle all inputs. Should be used to create and destroy buttons.
      * \details This class is used by the engine to handle inputs events.
      * The engine user should only use it to create buttons.
      * \ingroup Inputs
@@ -49,6 +49,7 @@ namespace PancakeEngine {
     class InputManager {
         //TODO make a InputHandler that will handle inputs. Input Manager will only create and update buttons.
     public:
+
         /**
          * @brief Create a virtual Button that will be pressed or released when the given keys are.
          * @param name The name of the button.
