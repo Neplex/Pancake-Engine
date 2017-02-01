@@ -9,6 +9,9 @@ using namespace PancakeEngine;
 std::map<std::string, SpriteSheet> AssetsManager::spriteSheets;
 std::map<std::string, Animation> AssetsManager::animations;
 
+SpriteSheet AssetsManager::defaultSpriteSheet = SpriteSheet("../resources/default.png", 32, 32);
+Animation AssetsManager::defaultAnimation = Animation(defaultSpriteSheet);
+
 AssetsManager::AssetsManager() {}
 
 SpriteSheet& AssetsManager::createSpriteSheet(std::string name, std::string uri, unsigned int tile_w, unsigned int tile_h) {
@@ -18,7 +21,14 @@ SpriteSheet& AssetsManager::createSpriteSheet(std::string name, std::string uri,
 }
 
 SpriteSheet& AssetsManager::getSpriteSheet(std::string name) {
-    return spriteSheets.at(name);
+    if (spriteSheets.find(name) != spriteSheets.end())
+        return spriteSheets.at(name);
+    else
+        return getDefaultSpriteSheet();
+}
+
+SpriteSheet &AssetsManager::getDefaultSpriteSheet() {
+    return defaultSpriteSheet;
 }
 
 Animation& AssetsManager::createAnimation(std::string name, std::string spriteSheetName) {
@@ -32,5 +42,12 @@ Animation& AssetsManager::createAnimation(std::string name, SpriteSheet &spriteS
 }
 
 Animation& AssetsManager::getAnimation(std::string name) {
-    return animations.at(name);
+    if (animations.find(name) != animations.end())
+        return animations.at(name);
+    else
+        return getDefaultAnimation();
+}
+
+Animation &AssetsManager::getDefaultAnimation() {
+    return defaultAnimation;
 }

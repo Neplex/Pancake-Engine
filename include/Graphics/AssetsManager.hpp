@@ -16,13 +16,20 @@ namespace PancakeEngine {
         static SpriteSheet& createSpriteSheet(std::string name, std::string uri, unsigned int tile_w, unsigned int tile_h);
         static SpriteSheet& getSpriteSheet(std::string name);
 
+        static SpriteSheet &getDefaultSpriteSheet();
+
         static Animation& createAnimation(std::string name, std::string spriteSheetName);
         static Animation& createAnimation(std::string name, SpriteSheet& spriteSheet);
         static Animation& getAnimation(std::string name);
 
+        static Animation &getDefaultAnimation();
+
     private:
         static std::map<std::string, SpriteSheet> spriteSheets;
         static std::map<std::string, Animation> animations;
+
+        static SpriteSheet defaultSpriteSheet;
+        static Animation defaultAnimation;
 
         AssetsManager();
     };

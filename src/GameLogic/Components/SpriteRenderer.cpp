@@ -9,7 +9,7 @@
 using namespace PancakeEngine;
 
 SpriteRenderer::SpriteRenderer() {
-    setSprite(AssetsManager::getSpriteSheet("null"), 32, 32);
+    setSprite(AssetsManager::getDefaultSpriteSheet(), 0, 0);
 }
 
 void SpriteRenderer::setSprite(SpriteSheet &sheet, unsigned int i, unsigned int j) {

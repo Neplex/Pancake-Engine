@@ -14,6 +14,7 @@
 #include "../Inputs/Input.hpp"
 #include "../GameLogic/Components/Camera.hpp"
 #include "../Graphics/AssetsManager.hpp"
+#include "../GameLogic/Components/SpriteRenderer.hpp"
 #include <string>
 
 namespace PancakeEngine {
@@ -44,6 +45,8 @@ namespace PancakeEngine {
             Animator& ar = addComponent<Animator>();
             ar.addAnimation("idle", a1, sh);
             ar.addAnimation("jump", a2, sh);
+
+            addComponent<SpriteRenderer>();
         }
     };
 }
