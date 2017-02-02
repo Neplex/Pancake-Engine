@@ -32,9 +32,6 @@ void Rigidbody::start() {
 
 void Rigidbody::update() {
     Component::update();
-    if (Input::getButtonPressed("Jump")) {
-       this->applyLinearImpulse(sf::Vector2f(0, -10));
-    }
 }
 
 Rigidbody::Rigidbody() : type(bodyType::dynamicBody), drag(0), freezeRotation(false),
