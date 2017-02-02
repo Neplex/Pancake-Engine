@@ -18,33 +18,20 @@
 */
 
 /**
- * \file        Time.hpp
+ * \file        Inputs.hpp
  * \author      Darenn Keller - keller.darenn@gmail.com
  */
 
-#ifndef PANCAKE_TIME_HPP
-#define PANCAKE_TIME_HPP
+#ifndef PANCAKE_INPUTS_HPP
+#define PANCAKE_INPUTS_HPP
 
-namespace PancakeEngine {
+#include "Inputs/Input.hpp"
+#include "Inputs/InputManager.hpp"
+#include "Inputs/Button.hpp"
 
-    /**
-     * @brief Provide some useful information about time and allow to rescale it.
-     */
-    class Time {
-    public:
-        /**
-         * @brief The time in seconds it took to complete the last frame.
-         * @return The time in seconds it took to complete the last frame.
-         */
-        static float getDeltaTime()
-        {
-            return Time::deltaTime;
-        }
+#endif //PANCAKE_INPUTS_HPP
 
-    private:
-        friend class Engine; ///< The engine is the only one to change the deltatime.
-
-        static double deltaTime; ///< Time between two udpates.
-    };
-}
-#endif //PANCAKE_TIME_HPP
+/**
+ * @defgroup Inputs Inputs
+ * Create buttons, get states of buttons.
+ */
