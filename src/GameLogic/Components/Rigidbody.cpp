@@ -35,7 +35,7 @@ void Rigidbody::update() {
 }
 
 Rigidbody::Rigidbody() : type(bodyType::dynamicBody), drag(0), freezeRotation(false),
-                         gravityScale(1), mass(1), angularDrag(0.05f)
+                         gravityScale(1), mass(1), angularDrag(0.05f), isBullet(false)
 {
 
 }

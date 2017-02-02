@@ -8,5 +8,6 @@ include(CmakeConfig.cmake)
 
 include_directories(./libs/)
 include_directories(${SFML_PATH}/include)
+#include_directories(${BOOST_PATH})
 
 add_subdirectory(src)

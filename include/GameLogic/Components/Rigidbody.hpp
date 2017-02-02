@@ -22,13 +22,14 @@ namespace PancakeEngine {
         enum bodyType {
             dynamicBody, staticBody, kinematicBody
         };
-        bodyType type; // The physical behaviour type of the Rigidbody.
-        float angularVelocity; // Angular velocity in degrees per second.
-        float drag; // Coefficient of drag.
-        bool freezeRotation; // Controls whether physics will change the rotation of the object.
-        float gravityScale; // The degree to which this object is affected by gravity.
-        float mass; // Mass of the rigidbody.
-        float angularDrag; // Coefficient of angular drag.
+        bodyType type; ///< The physical behaviour type of the Rigidbody.
+        float angularVelocity; ///< Angular velocity in degrees per second.
+        float drag; ///< Coefficient of drag.
+        bool freezeRotation; ///< Controls whether physics will change the rotation of the object.
+        float gravityScale; ///< The degree to which this object is affected by gravity.
+        float mass; ///< Mass of the rigidbody.
+        float angularDrag; ///< Coefficient of angular drag.
+        bool isBullet; ///< More realistics impacts, good for fast rigibody, but more CPU usage.
 
         void awake();
 
