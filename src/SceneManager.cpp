@@ -27,10 +27,18 @@ void SceneManager::setCurrentScene(std::string name) {
 void SceneManager::nextScene() {
     //currentScene = (currentScene++)%scenes.size();
 }
-
+/**!
+ * @deprecated
+ * @param scene
+ */
 void SceneManager::loadScene(Scene *scene)
 {
     this->scene = scene;
     getCurrentScene()->awake();
     getCurrentScene()->start();
+}
+
+Scene SceneManager::loadScene(const char *filename) {
+    Scene myScene = SceneFactory::loadAllGameObject(filename);
+    return myScene;
 }

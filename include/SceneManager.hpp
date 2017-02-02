@@ -9,6 +9,7 @@
 
 #include <vector>
 #include "GameLogic/Scene.hpp"
+#include "Parser/SceneFactory.hpp"
 
 namespace PancakeEngine {
 
@@ -47,8 +48,12 @@ namespace PancakeEngine {
          * Get next scene (in add order)
          */
         void nextScene();
-
+        /**!
+         * @deprecated
+         * @param scene
+         */
         void loadScene(Scene* scene);
+        Scene loadScene(const char* filename);
 
     private:
         Scene* scene;
