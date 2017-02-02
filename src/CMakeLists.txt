@@ -10,7 +10,7 @@ add_definitions(-D PANCAKE_DEBUG ${WARNINGS})
 if(WIN32)
     set(LIB opengl32)
 elseif(UNIX)
-    set(LIB GL)
+    set(LIB GL lua)
 endif()
 
 target_link_libraries(Pancake ${SFML_LIB_DEBUG} ${LIB})
