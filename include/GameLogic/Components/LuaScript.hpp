@@ -5,41 +5,32 @@
 #ifndef PANCAKE_LUASCRIPT_HPP
 #define PANCAKE_LUASCRIPT_HPP
 
-#include "Component.hpp"
 #include "../../Debug/Debug.hpp"
-#include <iostream>
-#include <sstream>
-#include <lua.hpp>
+#include "Component.hpp"
 #include <lauxlib.h>
+#include <lua.hpp>
 #include <lualib.h>
 
 namespace PancakeEngine {
     class LuaScript : public Component {
-        void awake() {
-            Debug::addLogger("Lua");
+    public:
+        void setScript(std::string uri);
 
-            Debug::log("Lua", "[C++] Init lua");
-            lua_State *lua = luaL_newstate();
+        void awake();
+        void start();
+        void update();
+        void lateUpdate();
 
-            Debug::log("Lua", "[C++] Load libs");
-            luaopen_base(lua);
-            luaopen_math(lua);
-            luaopen_io(lua);
+    private:
+        friend class GameObject;
 
-            Debug::log("Lua", "[C++] Clear stack");
-            lua_settop(lua, 0);
+        lua_State *L;
 
-            Debug::log("Lua", "[C++] Load script");
-            if (luaL_loadfile (lua, "../resources/scripts/test.lua") == 0) {
-                Debug::log("Lua", "[C++] Run awake function");
-                lua_setglobal(lua, "awake");
-                lua_pcall(lua, 0, 0, 0);
-            }
+        LuaScript();
+        ~LuaScript();
 
-            Debug::log("Lua", "[C++] Close lua");
-            lua_close(lua);
-        }
+        void bindFunctions();
     };
 }
 
-#endif //PANCAKE_LUASCRIPT_HPP
+#endif // PANCAKE_LUASCRIPT_HPP

@@ -1,3 +1,9 @@
+a = 10
+
 function awake()
-    io.write("hello World")
+    print(a)
+end
+
+function start()
+    print(a)
 end
