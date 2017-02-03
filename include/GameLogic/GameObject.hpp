@@ -58,7 +58,7 @@ namespace PancakeEngine {
          * @sa Component
          */
         template<typename T>
-        T* getComponent()
+        const T* getComponent()
         {
             T* component;
             for (unsigned i = 0; i<components.size(); ++i) {
