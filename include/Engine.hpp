@@ -28,7 +28,7 @@
 
 #include "SceneManager.hpp"
 #include "Graphics/Window.hpp"
-#include "PhysicsEngine.hpp"
+#include "Physics/PhysicsEngine.hpp"
 #include "Time.hpp"
 #include "Inputs/InputManager.hpp"
 

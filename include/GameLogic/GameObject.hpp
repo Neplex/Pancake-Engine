@@ -28,7 +28,10 @@
 
 #include <vector>
 #include <string>
+#include <Debug/Debug.hpp>
+#include <iostream>
 #include "../GameLogic/Components/Transform.hpp"
+#include "../Physics/Collision.hpp"
 
 class Transform;
 class Component;
@@ -58,7 +61,7 @@ namespace PancakeEngine {
          * @sa Component
          */
         template<typename T>
-        const T* getComponent()
+        T* getComponent()
         {
             T* component;
             for (unsigned i = 0; i<components.size(); ++i) {
@@ -136,6 +139,17 @@ namespace PancakeEngine {
             }
         }
         std::vector<Component*> components; ///< The components of the gameobject in the added order.
+
+    private:
+        friend class PhysicsListener; ///< Is the only one to call OnCollision*
+        void OnCollisionEnter(const Collision& collision) {
+            std::cout << "salut";
+            //TODO
+        }
+        void OnCollisionExit(const Collision& collision) {
+            std::cout << "au re voir";
+        //TODO
+        }
     };
 }
 

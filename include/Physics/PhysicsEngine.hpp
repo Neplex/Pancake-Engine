@@ -26,8 +26,9 @@
 #define PANCAKE_PHYSICSENGINE_HPP
 
 #include <Box2D/Box2D.h>
-#include "GameLogic/GameObject.hpp"
-#include "GameLogic/Components/BoxCollider.hpp"
+#include "../GameLogic/GameObject.hpp"
+#include "../GameLogic/Components/BoxCollider.hpp"
+#include "PhysicsListener.hpp"
 
 namespace PancakeEngine {
 
@@ -69,7 +70,8 @@ namespace PancakeEngine {
         void addRigidBodyToPhysicsWorld(Rigidbody& rb);
 
     private:
-        b2World* world; ///< the physics world of box2D
+        b2World world; ///< the physics world of box2D
+        PhysicsListener physicsListener;
     };
 }
 

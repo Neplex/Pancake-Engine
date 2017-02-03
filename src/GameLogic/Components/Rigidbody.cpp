@@ -5,7 +5,7 @@
 #include <iostream>
 #include "../../../include/GameLogic/Components/Rigidbody.hpp"
 #include "../../../include/GameLogic/Components/Collider.hpp"
-#include "../../../include/PhysicsEngine.hpp"
+#include "../../../include/Physics/PhysicsEngine.hpp"
 #include "../../../include/Inputs/Input.hpp"
 
 using namespace PancakeEngine;

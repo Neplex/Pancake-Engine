@@ -10,6 +10,8 @@
 #include <Box2D/Dynamics/b2Body.h>
 #include "Component.hpp"
 
+// Tutorial here : http://www.iforce2d.net/b2dtut/introduction
+
 namespace PancakeEngine {
 
     class PhysicsEngine;

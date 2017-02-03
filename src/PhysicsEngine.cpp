@@ -2,25 +2,25 @@
 // Created by kelle on 23/01/2017.
 //
 
-#include "../include/PhysicsEngine.hpp"
+#include "../include/Physics/PhysicsEngine.hpp"
 #include "../include/GameLogic/Components/Transform.hpp"
+#include "../include/Physics/PhysicsUserData.hpp"
 #include <iostream>
 
 using namespace PancakeEngine;
 
 int PhysicsEngine::numberPixelsPerMeter = 72; // TODO to change with the scene
 
-PhysicsEngine::PhysicsEngine() {
-    world = new b2World(b2Vec2(0, 10));
+PhysicsEngine::PhysicsEngine() : world(b2Vec2(0, 10)), physicsListener() {
+    world.SetContactListener(&physicsListener);
 }
 
 PhysicsEngine::~PhysicsEngine() {
-    delete world;
 }
 
 void PhysicsEngine::update(float dt) {
-    world->Step(dt, velocityIterations, positionIterations);
-    for ( b2Body* b = world->GetBodyList(); b; b = b->GetNext())
+    world.Step(dt, velocityIterations, positionIterations);
+    for ( b2Body* b = world.GetBodyList(); b; b = b->GetNext())
     {
         if (b->GetType() != b2_staticBody) {
             Rigidbody * rb = static_cast<Rigidbody*>(b->GetUserData());
@@ -38,7 +38,8 @@ void PhysicsEngine::addStaticBodyToPhysicsWorld(Collider& c) {
     bodyDef.position.Set((c.gameObject->transform.getPosition().x)/numberPixelsPerMeter,
                          (c.gameObject->transform.getPosition().y)/numberPixelsPerMeter);
     bodyDef.userData = (void *) &c;
-    b2Body* body = world->CreateBody(&bodyDef);
+    //bodyDef.userData = new PhysicsUserData(PhysicsUserData::Type::Collider, nullptr, &c);
+    b2Body* body = world.CreateBody(&bodyDef);
     b2PolygonShape shape;
     if (dynamic_cast<BoxCollider *>(&c) != NULL) {
         BoxCollider *bc = (BoxCollider *) &c;
@@ -74,15 +75,16 @@ void PhysicsEngine::addRigidBodyToPhysicsWorld(Rigidbody &rb) {
 
     bodyDef.position.Set((rb.gameObject->transform.getPosition().x)/numberPixelsPerMeter,
                          (rb.gameObject->transform.getPosition().y)/numberPixelsPerMeter);
+    //bodyDef.userData = new PhysicsUserData(PhysicsUserData::Type::Rigidbody, &rb);
     bodyDef.userData = (void *) &rb;
     //bodyDef.angularVelocity = rb.angularVelocity;
     bodyDef.angularDamping = rb.angularDrag;
     bodyDef.fixedRotation = rb.freezeRotation;
     bodyDef.bullet = rb.isBullet;
-    b2Body *body = world->CreateBody(&bodyDef);
+    b2Body *body = world.CreateBody(&bodyDef);
     rb.physicsBody = body;
 
-            // Create a fixture for each collider
+    // Create a fixture for each collider
     std::vector<Collider *> v = rb.gameObject->getComponents<Collider>();
         for (unsigned i = 0; i < v.size(); ++i) {
             Collider & c = *v[i];
