@@ -62,7 +62,7 @@ namespace PancakeEngine {
          * @sa Component
          */
         template<typename T>
-        T* getComponent()
+        T* getComponent() const
         {
             T* component;
             for (unsigned i = 0; i<components.size(); ++i) {
@@ -81,7 +81,7 @@ namespace PancakeEngine {
          * @todo To optimize by avoiding dynamic cast
          */
         template<typename T>
-        const std::vector<T*> getComponents()
+        const std::vector<T*> getComponents() const
         {
             std::vector<T*> cs = std::vector<T*>();
             T* p_component;

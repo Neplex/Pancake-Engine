@@ -16,7 +16,8 @@ void Collider::awake() {
     if (physicsEngine != NULL) {
         Rigidbody* const rb = gameObject->getComponent<Rigidbody>();
         if (rb == NULL) {
-            Collider::physicsEngine->addStaticBodyToPhysicsWorld(*this);
+            if (fixture == nullptr) // If fixture is set, it's because it was already added
+                Collider::physicsEngine->addStaticBodyToPhysicsWorld(*this);
         }
     } else {
         assert(false);

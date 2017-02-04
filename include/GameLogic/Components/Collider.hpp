@@ -49,6 +49,7 @@ namespace PancakeEngine {
         friend class Engine;
 
         static PhysicsEngine* physicsEngine;
+        b2Fixture* fixture;
     };
 }
 

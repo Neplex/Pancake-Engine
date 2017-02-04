@@ -58,6 +58,7 @@ namespace PancakeEngine {
         /**
          * @brief Add a static body to the physics world according to a given collider.
          * @details That allows to have other gameobject with rigidbody to collide this object.
+         * Add all colliders of the gameobject on the same body.
          * @param c The collider of the object to create in the world.
          */
         void addStaticBodyToPhysicsWorld(Collider& c);
@@ -72,6 +73,8 @@ namespace PancakeEngine {
     private:
         b2World world; ///< the physics world of box2D
         PhysicsListener physicsListener;
+
+        void createFixtures(const GameObject& go, b2Body& body);
     };
 }
 

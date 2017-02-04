@@ -32,7 +32,7 @@ void PhysicsEngine::update(float dt) {
 }
 
 void PhysicsEngine::addStaticBodyToPhysicsWorld(Collider& c) {
-    // TODO Can have multiple collider, does not work here !
+    // TODO Test if ti works with multiple triggers.
 
     b2BodyDef bodyDef;
     bodyDef.type = b2_staticBody;
@@ -42,23 +42,7 @@ void PhysicsEngine::addStaticBodyToPhysicsWorld(Collider& c) {
     bodyDef.userData = (void *) &c;
     //bodyDef.userData = new PhysicsUserData(PhysicsUserData::Type::Collider, nullptr, &c);
     b2Body* body = world.CreateBody(&bodyDef);
-    b2PolygonShape shape;
-    if (dynamic_cast<BoxCollider *>(&c) != NULL) {
-        BoxCollider *bc = (BoxCollider *) &c;
-        shape.SetAsBox((bc->width/2)/numberPixelsPerMeter, (bc->height/2)/numberPixelsPerMeter,
-                       (b2Vec2(c.offset.x/numberPixelsPerMeter,c.offset.y/numberPixelsPerMeter)),
-                       c.gameObject->transform.getRotation());
-    } else {
-        assert(false); // Collider unknown
-    }
-    b2FixtureDef fixtureDef;
-    fixtureDef.shape = &shape;
-    fixtureDef.density = c.density;
-    fixtureDef.friction = c.friction;
-    fixtureDef.restitution = c.bounciness;
-    fixtureDef.isSensor = c.isTrigger;
-    fixtureDef.userData = (void *) &c;
-    body->CreateFixture(&fixtureDef);
+    createFixtures(*c.gameObject, *body);
 }
 
 void PhysicsEngine::addRigidBodyToPhysicsWorld(Rigidbody &rb) {
@@ -88,28 +72,34 @@ void PhysicsEngine::addRigidBodyToPhysicsWorld(Rigidbody &rb) {
     b2Body *body = world.CreateBody(&bodyDef);
     rb.physicsBody = body;
 
+    createFixtures(*rb.gameObject, *body);
+}
+
+// Helper functions
+
+void PhysicsEngine::createFixtures(const GameObject& go, b2Body& body) {
     // Create a fixture for each collider
-    std::vector<Collider *> v = rb.gameObject->getComponents<Collider>();
-        for (unsigned i = 0; i < v.size(); ++i) {
-            Collider & c = *v[i];
-            b2PolygonShape shape;
-            if (dynamic_cast<BoxCollider *>(&c) != NULL) {
-                BoxCollider *bc = (BoxCollider *) &c;
-                shape.SetAsBox((bc->width/2)/numberPixelsPerMeter, (bc->height/2)/numberPixelsPerMeter,
-                               (b2Vec2(c.offset.x/numberPixelsPerMeter,c.offset.y/numberPixelsPerMeter)),
-                               c.gameObject->transform.getRotation());
-            } else {
-                assert(false); // Collider unknown
-            }
-            b2FixtureDef fixtureDef;
-            fixtureDef.shape = &shape;
-            fixtureDef.density = c.density;
-            fixtureDef.friction = c.friction;
-            fixtureDef.restitution = c.bounciness;
-            fixtureDef.isSensor = c.isTrigger;
-            fixtureDef.userData = (void *) &c;
-            body->CreateFixture(&fixtureDef);
+    std::vector<Collider *> v = go.getComponents<Collider>();
+    for (unsigned i = 0; i < v.size(); ++i) {
+        Collider & c = *v[i];
+        b2PolygonShape shape;
+        if (dynamic_cast<BoxCollider *>(&c) != NULL) {
+            BoxCollider *bc = (BoxCollider *) &c;
+            shape.SetAsBox((bc->width/2)/PhysicsEngine::numberPixelsPerMeter, (bc->height/2)/PhysicsEngine::numberPixelsPerMeter,
+                           (b2Vec2(c.offset.x/PhysicsEngine::numberPixelsPerMeter,c.offset.y/PhysicsEngine::numberPixelsPerMeter)),
+                           c.gameObject->transform.getRotation());
+        } else {
+            assert(false); // Collider unknown
         }
+        b2FixtureDef fixtureDef;
+        fixtureDef.shape = &shape;
+        fixtureDef.density = c.density;
+        fixtureDef.friction = c.friction;
+        fixtureDef.restitution = c.bounciness;
+        fixtureDef.isSensor = c.isTrigger;
+        fixtureDef.userData = (void *) &c;
+        body.CreateFixture(&fixtureDef);
+    }
 }
 
 
