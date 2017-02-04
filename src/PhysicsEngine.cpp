@@ -49,11 +49,13 @@ void PhysicsEngine::addStaticBodyToPhysicsWorld(Collider& c) {
     } else {
         assert(false);
     }
+    // TODO Can have multiple collider
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &shape;
     fixtureDef.density = c.density;
     fixtureDef.friction = c.friction;
     fixtureDef.restitution = c.bounciness;
+    fixtureDef.userData = (void *) &c;
     body->CreateFixture(&fixtureDef);
 }
 

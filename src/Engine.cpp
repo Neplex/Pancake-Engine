@@ -22,6 +22,7 @@ Engine::Engine() : sceneManager(), window(sceneManager), physicsEngine(), time()
     Debug::setEnableDebugGUI(true);
 
     // Add some loggers
+    Debug::addLogger("Foo");
     Debug::addLogger("Inputs");
 
     // Add some keyshorcuts for debug

@@ -36,38 +36,40 @@ namespace PancakeEngine {
     class PhysicsListener : public b2ContactListener {
 
         void BeginContact(b2Contact* contact) {
-            const Collision coll(*(static_cast<Collider*>(contact->GetFixtureA()->GetUserData())),
-                                       *(static_cast<Collider*>(contact->GetFixtureB()->GetUserData())),
-                                       contact->GetRestitution(), contact->GetFriction(), contact->GetTangentSpeed());
+            if (contact->IsTouching()) {
+                const Collision collA(*(static_cast<Collider *>(contact->GetFixtureA()->GetUserData())),
+                                     *(static_cast<Collider *>(contact->GetFixtureB()->GetUserData())),
+                                     contact->GetRestitution(), contact->GetFriction(), contact->GetTangentSpeed());
 
-            static_cast<Component*>(contact->GetFixtureA()->GetBody()->GetUserData())->gameObject->OnCollisionEnter(coll);
+                static_cast<Component *>(contact->GetFixtureA()->GetBody()->GetUserData())->gameObject->OnCollisionEnter(
+                        collA);
 
-            /*PhysicsUserData * bodyUserData = static_cast<PhysicsUserData>();
-            if (bodyUserData) {
-                switch(bodyUserData->type) {
-                    case PhysicsUserData::Type::Rigidbody:
-                        assert(bodyUserData->rigidbody); // The type is rigidbody but the pointer is NULL
-                        bodyUserData->rigidbody->gameObject->OnCollisionEnter(coll);
-                        break;
-                    case PhysicsUserData::Type::Collider:
-                        bodyUserData->collider->gameObject->OnCollisionEnter(coll);
-                        break;
-                    default:
-                        assert(false); // The data has a type
-                }
-            }*/
 
+                const Collision collB(*(static_cast<Collider *>(contact->GetFixtureB()->GetUserData())),
+                                      *(static_cast<Collider *>(contact->GetFixtureA()->GetUserData())),
+                                      contact->GetRestitution(), contact->GetFriction(), contact->GetTangentSpeed());
+
+                static_cast<Component *>(contact->GetFixtureB()->GetBody()->GetUserData())->gameObject->OnCollisionEnter(
+                        collB);
+            }
         }
 
         void EndContact(b2Contact* contact) {
+            if (!contact->IsTouching()) {
+                const Collision collA(*(static_cast<Collider *>(contact->GetFixtureA()->GetUserData())),
+                                     *(static_cast<Collider *>(contact->GetFixtureB()->GetUserData())),
+                                     contact->GetRestitution(), contact->GetFriction(), contact->GetTangentSpeed());
 
-            Collision coll (*(static_cast<Collider*>(contact->GetFixtureA()->GetUserData())),
-                                       *(static_cast<Collider*>(contact->GetFixtureB()->GetUserData())),
-                                       contact->GetRestitution(), contact->GetFriction(), contact->GetTangentSpeed());
+                static_cast<Component *>(contact->GetFixtureA()->GetBody()->GetUserData())->gameObject->OnCollisionExit(
+                        collA);
 
-            static_cast<Component*>(contact->GetFixtureA()->GetBody()->GetUserData())->gameObject->OnCollisionExit(coll);
+                const Collision collB(*(static_cast<Collider *>(contact->GetFixtureB()->GetUserData())),
+                                      *(static_cast<Collider *>(contact->GetFixtureA()->GetUserData())),
+                                      contact->GetRestitution(), contact->GetFriction(), contact->GetTangentSpeed());
 
-
+                static_cast<Component *>(contact->GetFixtureB()->GetBody()->GetUserData())->gameObject->OnCollisionExit(
+                        collB);
+            }
         }
     };
 

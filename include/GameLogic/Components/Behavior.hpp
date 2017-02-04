@@ -34,12 +34,14 @@ namespace PancakeEngine {
      * @class Behavior
      * @brief Behavior is the base class from which every scripts should derives.
      */
-    class Behavior : Component {
+    class Behavior : public Component {
 
     public:
 
-        virtual void OnCollisionEnter(Collision collision);
-        virtual void OnCollisionExit(Collision collision);
+        virtual void OnCollisionEnter(const Collision& collision) {
+            Debug::log("Foo", "Virtual");
+        };
+        virtual void OnCollisionExit(const Collision& collision) {};
 
     };
 

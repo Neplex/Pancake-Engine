@@ -11,7 +11,12 @@
 #include "../GameLogic/Components/Rigidbody.hpp"
 #include "../GameLogic/GameObject.hpp"
 
-class PlayerController : public PancakeEngine::Component {
+class PlayerController : public PancakeEngine::Behavior {
+public:
+    void OnCollisionEnter(const PancakeEngine::Collision &collision) override {
+        PancakeEngine::Debug::log("Foo", "The player collides something !");
+    }
+
 
     void update() {
         if (PancakeEngine::Input::getButtonPressed("Jump")) {

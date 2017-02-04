@@ -33,7 +33,7 @@ namespace PancakeEngine {
 
     public:
         Box() :GameObject() {
-
+            name = "Box";
             BoxCollider& bc = addComponent<BoxCollider>();
             addComponent<Rigidbody>();
             addComponent<PlayerController>();
