@@ -35,41 +35,56 @@ namespace PancakeEngine {
 
     class PhysicsListener : public b2ContactListener {
 
+        /**
+         * @details If only one of them is a sensor call OnTrigger on the sensor GameObject.
+         * If none of them is a sensor, call OnCollision on both ot them.
+         * Else if both are sensor do nothing.
+         * @param contact
+         */
         void BeginContact(b2Contact* contact) {
-            if (contact->IsTouching()) {
-                const Collision collA(*(static_cast<Collider *>(contact->GetFixtureA()->GetUserData())),
-                                     *(static_cast<Collider *>(contact->GetFixtureB()->GetUserData())),
-                                     contact->GetRestitution(), contact->GetFriction(), contact->GetTangentSpeed());
-
-                static_cast<Component *>(contact->GetFixtureA()->GetBody()->GetUserData())->gameObject->OnCollisionEnter(
-                        collA);
-
-
-                const Collision collB(*(static_cast<Collider *>(contact->GetFixtureB()->GetUserData())),
-                                      *(static_cast<Collider *>(contact->GetFixtureA()->GetUserData())),
-                                      contact->GetRestitution(), contact->GetFriction(), contact->GetTangentSpeed());
-
-                static_cast<Component *>(contact->GetFixtureB()->GetBody()->GetUserData())->gameObject->OnCollisionEnter(
-                        collB);
-            }
+            onContact(contact, &GameObject::OnTriggerEnter, &GameObject::OnCollisionEnter, false);
         }
 
+        /**
+         * @details If only one of them is a sensor call OnTrigger on the sensor GameObject.
+         * If none of them is a sensor, call OnCollision on both ot them.
+         * Else if both are sensor do nothing.
+         * @param contact
+         */
         void EndContact(b2Contact* contact) {
-            if (!contact->IsTouching()) {
-                const Collision collA(*(static_cast<Collider *>(contact->GetFixtureA()->GetUserData())),
-                                     *(static_cast<Collider *>(contact->GetFixtureB()->GetUserData())),
-                                     contact->GetRestitution(), contact->GetFriction(), contact->GetTangentSpeed());
+            onContact(contact, &GameObject::OnTriggerExit, &GameObject::OnCollisionExit, true);
+        }
 
-                static_cast<Component *>(contact->GetFixtureA()->GetBody()->GetUserData())->gameObject->OnCollisionExit(
-                        collA);
+        // Helper functions
+        void onContact(b2Contact* contact, void (GameObject::*triggerFunction)(const Collider&, const Collider&), void (GameObject::*collisionFunction)(const Collision&), bool exiting) {
+            if (contact->IsTouching() || exiting) {
+                // If only one of them is a sensor call OnTrigger on the sensor GameObject
+                if (contact->GetFixtureA()->IsSensor() ^ contact->GetFixtureB()->IsSensor()) {
+                    const Collider* sensor;
+                    const Collider* other;
+                    if (contact->GetFixtureA()->IsSensor()) {
+                        sensor = static_cast<Collider *>(contact->GetFixtureA()->GetUserData());
+                        other = static_cast<Collider *>(contact->GetFixtureB()->GetUserData());
+                    } else if (contact->GetFixtureB()->IsSensor()) {
+                        sensor = static_cast<Collider *>(contact->GetFixtureB()->GetUserData());
+                        other = static_cast<Collider *>(contact->GetFixtureA()->GetUserData());
+                    }
+                    (sensor->gameObject->*triggerFunction)(*sensor, *other);
+                    // If none of them is a sensor, call OnCollision on both ot them
+                } else if (contact->GetFixtureA()->IsSensor() ^ contact->GetFixtureB()->IsSensor()) {
+                    const Collision collA(*(static_cast<Collider *>(contact->GetFixtureA()->GetUserData())),
+                                          *(static_cast<Collider *>(contact->GetFixtureB()->GetUserData())),
+                                          contact->GetRestitution(), contact->GetFriction(),
+                                          contact->GetTangentSpeed());
+                    (static_cast<Collider *>(contact->GetFixtureA()->GetUserData())->gameObject->*collisionFunction)(collA);
 
-                const Collision collB(*(static_cast<Collider *>(contact->GetFixtureB()->GetUserData())),
-                                      *(static_cast<Collider *>(contact->GetFixtureA()->GetUserData())),
-                                      contact->GetRestitution(), contact->GetFriction(), contact->GetTangentSpeed());
-
-                static_cast<Component *>(contact->GetFixtureB()->GetBody()->GetUserData())->gameObject->OnCollisionExit(
-                        collB);
-            }
+                    const Collision collB(*(static_cast<Collider *>(contact->GetFixtureB()->GetUserData())),
+                                          *(static_cast<Collider *>(contact->GetFixtureA()->GetUserData())),
+                                          contact->GetRestitution(), contact->GetFriction(),
+                                          contact->GetTangentSpeed());
+                    (static_cast<Collider *>(contact->GetFixtureB()->GetUserData())->gameObject->*collisionFunction)(collB);
+                } // Else if both are sensor do nothing
+            } // Else if fixtures are not touching do nothing
         }
     };
 

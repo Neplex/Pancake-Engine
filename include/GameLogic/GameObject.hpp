@@ -169,6 +169,34 @@ namespace PancakeEngine {
                 b->OnCollisionExit(collision);
             }
         }
+
+        /**
+         * @brief Called by the physics listener when a gameobject enter one of this's triggers.
+         * @details Will call OnTriggerEnter on each Behavior script.
+         * @param triggered The collider triggered
+         * @param other The collider triggering
+         * @todo Can be optimized by avoid using getComponents.
+         */
+        void OnTriggerEnter(const Collider& triggered, const Collider& other) {
+            std::vector<Behavior*> v = getComponents<Behavior>();
+            for (Behavior* b : v) {
+                b->OnTriggerEnter(triggered, other);
+            }
+        }
+
+        /**
+         * @brief Called by the physics listener when a gameobject exit one of this's triggers.
+         * @details Will call OnTriggerExit on each Behavior script.
+         * @param triggered The collider triggered
+         * @param other The collider triggering
+         * @todo Can be optimized by avoid using getComponents.
+         */
+        void OnTriggerExit(const Collider& triggered, const Collider& other) {
+            std::vector<Behavior*> v = getComponents<Behavior>();
+            for (Behavior* b : v) {
+                b->OnTriggerExit(triggered, other);
+            }
+        }
     };
 }
 

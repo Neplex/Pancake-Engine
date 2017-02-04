@@ -32,6 +32,8 @@ void PhysicsEngine::update(float dt) {
 }
 
 void PhysicsEngine::addStaticBodyToPhysicsWorld(Collider& c) {
+    // TODO Can have multiple collider, does not work here !
+
     b2BodyDef bodyDef;
     bodyDef.type = b2_staticBody;
 
@@ -47,14 +49,14 @@ void PhysicsEngine::addStaticBodyToPhysicsWorld(Collider& c) {
                        (b2Vec2(c.offset.x/numberPixelsPerMeter,c.offset.y/numberPixelsPerMeter)),
                        c.gameObject->transform.getRotation());
     } else {
-        assert(false);
+        assert(false); // Collider unknown
     }
-    // TODO Can have multiple collider
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &shape;
     fixtureDef.density = c.density;
     fixtureDef.friction = c.friction;
     fixtureDef.restitution = c.bounciness;
+    fixtureDef.isSensor = c.isTrigger;
     fixtureDef.userData = (void *) &c;
     body->CreateFixture(&fixtureDef);
 }
@@ -97,13 +99,14 @@ void PhysicsEngine::addRigidBodyToPhysicsWorld(Rigidbody &rb) {
                                (b2Vec2(c.offset.x/numberPixelsPerMeter,c.offset.y/numberPixelsPerMeter)),
                                c.gameObject->transform.getRotation());
             } else {
-                assert(false);
+                assert(false); // Collider unknown
             }
             b2FixtureDef fixtureDef;
             fixtureDef.shape = &shape;
             fixtureDef.density = c.density;
             fixtureDef.friction = c.friction;
             fixtureDef.restitution = c.bounciness;
+            fixtureDef.isSensor = c.isTrigger;
             fixtureDef.userData = (void *) &c;
             body->CreateFixture(&fixtureDef);
         }

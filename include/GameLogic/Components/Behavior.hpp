@@ -38,10 +38,10 @@ namespace PancakeEngine {
 
     public:
 
-        virtual void OnCollisionEnter(const Collision& collision) {
-            Debug::log("Foo", "Virtual");
-        };
+        virtual void OnCollisionEnter(const Collision& collision) {};
         virtual void OnCollisionExit(const Collision& collision) {};
+        virtual void OnTriggerEnter(const Collider& triggered, const Collider& other) {};
+        virtual void OnTriggerExit(const Collider& triggered, const Collider& other) {};
 
     };
 
