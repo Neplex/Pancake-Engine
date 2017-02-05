@@ -10,6 +10,8 @@
 #include <Box2D/Dynamics/b2Body.h>
 #include "Component.hpp"
 
+// Tutorial here : http://www.iforce2d.net/b2dtut/introduction
+
 namespace PancakeEngine {
 
     class PhysicsEngine;
@@ -22,19 +24,50 @@ namespace PancakeEngine {
         enum bodyType {
             dynamicBody, staticBody, kinematicBody
         };
-        bodyType type; // The physical behaviour type of the Rigidbody.
-        float angularVelocity; // Angular velocity in degrees per second.
-        float drag; // Coefficient of drag.
-        bool freezeRotation; // Controls whether physics will change the rotation of the object.
-        float gravityScale; // The degree to which this object is affected by gravity.
-        float mass; // Mass of the rigidbody.
-        float angularDrag; // Coefficient of angular drag.
 
-        void awake();
+        void awake() override;
 
-        void start();
+        void start() override;
 
-        void update();
+        void update() override;
+
+        // Setters
+
+        void setType(bodyType type);
+
+        void setAngularVelocity(float angularVelocity);
+
+        void setDrag(float drag);
+
+        void setFreezeRotation(bool freezeRotation);
+
+        void setGravityScale(float gravityScale);
+
+        void setAngularDrag(float angularDrag);
+
+        void setIsBullet(bool isBullet);
+
+        void setVelocity(const sf::Vector2f &velocity);
+
+        // Getters
+
+        bodyType getType() const;
+
+        float getAngularVelocity() const;
+
+        float getDrag() const;
+
+        bool isFreezeRotation() const;
+
+        float getGravityScale() const;
+
+        float getAngularDrag() const;
+
+        bool isBullet() const;
+
+        const sf::Vector2f &getVelocity() const;
+
+        // Methods
 
         /**
          * Applies a force to the Rigidbody.
@@ -85,6 +118,15 @@ namespace PancakeEngine {
         friend class Engine;
 
         friend class PhysicsEngine;
+
+        bodyType type; ///< The physical behaviour type of the Rigidbody.
+        float angularVelocity; ///< Angular velocity in degrees per second.
+        float drag; ///< Coefficient of drag.
+        bool freezeRotation; ///< Controls whether physics will change the rotation of the object.
+        float gravityScale; ///< The degree to which this object is affected by gravity.
+        float mass; ///< Mass of the rigidbody.
+        float angularDrag; ///< Coefficient of angular drag.
+        bool bullet; ///< More realistics impacts, good for fast rigibody, but more CPU usage.
 
         static PhysicsEngine* physicsEngine;
         // The body of the rigidbody in the physics engine.

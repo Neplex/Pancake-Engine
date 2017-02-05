@@ -18,33 +18,33 @@
 */
 
 /**
- * \file        Time.hpp
+ * \file        Behavior.hpp
  * \author      Darenn Keller - keller.darenn@gmail.com
  */
 
-#ifndef PANCAKE_TIME_HPP
-#define PANCAKE_TIME_HPP
+#ifndef PANCAKE_BEHAVIOR_HPP
+#define PANCAKE_BEHAVIOR_HPP
+
+#include "Component.hpp"
+#include "../../Physics/Collision.hpp"
 
 namespace PancakeEngine {
 
     /**
-     * @brief Provide some useful information about time and allow to rescale it.
+     * @class Behavior
+     * @brief Behavior is the base class from which every scripts should derives.
      */
-    class Time {
+    class Behavior : public Component {
+
     public:
-        /**
-         * @brief The time in seconds it took to complete the last frame.
-         * @return The time in seconds it took to complete the last frame.
-         */
-        static float getDeltaTime()
-        {
-            return Time::deltaTime;
-        }
 
-    private:
-        friend class Engine; ///< The engine is the only one to change the deltatime.
+        virtual void OnCollisionEnter(const Collision& collision) {};
+        virtual void OnCollisionExit(const Collision& collision) {};
+        virtual void OnTriggerEnter(const Collider& triggered, const Collider& other) {};
+        virtual void OnTriggerExit(const Collider& triggered, const Collider& other) {};
 
-        static double deltaTime; ///< Time between two udpates.
     };
+
 }
-#endif //PANCAKE_TIME_HPP
+
+#endif //PANCAKE_BEHAVIOR_HPP

@@ -9,13 +9,15 @@
 
 /**
  * @struct AppLog Represents a logger used in debug.
- * It uses the ImGui library and is based on the examples of @file imgui_demo.cpp .
- * Use the draw function in between ImGui update and render to draw the logger.
+ * @brief It uses the ImGui library and is based on the examples of @file imgui_demo.cpp .
+ * @details Use the draw function in between ImGui update and render to draw the logger.
  * Add a log with the AddLog function.
- * Usage:
+ * @example
+ * @code
  * static AppLog my_log;
  * my_log.AddLog("Hello %d world\n", 123);
  * my_log.Draw("title");
+ * @endcode
  */
 struct AppLog
 {
@@ -28,7 +30,7 @@ struct AppLog
     }
 
     /**
-     * Clear the logger from logs.
+     * @brief Clear the logger from logs.
      */
     void Clear()     {
         Buf.clear();
@@ -36,7 +38,7 @@ struct AppLog
     }
 
     /**
-     * Add a log to the logger.
+     * @brief Add a log to the logger.
      * @param fmt The message formated.
      * @param ... Args
      */
@@ -54,8 +56,8 @@ struct AppLog
     }
 
     /**
-     * Draw the logger.
-     * Should be called between ImGui update and render to draw the logger.
+     * @brief Draw the logger.
+     * @details Should be called between ImGui update and render to draw the logger.
      * @param title The title of the logger
      * @param p_open A pointer to the boolean that indicates if the logger should be drawn or not.
      */

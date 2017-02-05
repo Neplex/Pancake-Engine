@@ -5,7 +5,7 @@
 #include <iostream>
 #include "../../../include/GameLogic/Components/Rigidbody.hpp"
 #include "../../../include/GameLogic/Components/Collider.hpp"
-#include "../../../include/PhysicsEngine.hpp"
+#include "../../../include/Physics/PhysicsEngine.hpp"
 #include "../../../include/Inputs/Input.hpp"
 
 using namespace PancakeEngine;
@@ -32,13 +32,10 @@ void Rigidbody::start() {
 
 void Rigidbody::update() {
     Component::update();
-    if (Input::getButtonPressed("Jump")) {
-       this->applyLinearImpulse(sf::Vector2f(0, -10));
-    }
 }
 
 Rigidbody::Rigidbody() : type(bodyType::dynamicBody), drag(0), freezeRotation(false),
-                         gravityScale(1), mass(1), angularDrag(0.05f)
+                         gravityScale(1), mass(1), angularDrag(0.05f), bullet(false)
 {
 
 }
@@ -66,6 +63,92 @@ void Rigidbody::applyForceAtPosition(const sf::Vector2f& force, const sf::Vector
 
 void Rigidbody::applyLinearImpulseAtPosition(const sf::Vector2f& impulse, const sf::Vector2f& position) {
     physicsBody->ApplyLinearImpulse(b2Vec2(impulse.x, impulse.y), b2Vec2(position.x, position.y), true);
+}
+
+Rigidbody::bodyType Rigidbody::getType() const {
+    return type;
+}
+
+float Rigidbody::getAngularVelocity() const {
+    return angularVelocity;
+}
+
+float Rigidbody::getDrag() const {
+    return drag;
+}
+
+bool Rigidbody::isFreezeRotation() const {
+    return freezeRotation;
+}
+
+float Rigidbody::getGravityScale() const {
+    return gravityScale;
+}
+
+float Rigidbody::getAngularDrag() const {
+    return angularDrag;
+}
+
+bool Rigidbody::isBullet() const {
+    return bullet;
+}
+
+const sf::Vector2f &Rigidbody::getVelocity() const {
+    return velocity;
+}
+
+void Rigidbody::setType(Rigidbody::bodyType type) {
+    Rigidbody::type = type;
+    switch (type) {
+        case bodyType::dynamicBody:
+            physicsBody->SetType(b2_dynamicBody);
+            break;
+        case bodyType::kinematicBody:
+            physicsBody->SetType(b2_kinematicBody);
+            break;
+        case bodyType::staticBody:
+            physicsBody->SetType(b2_staticBody);
+            break;
+        default:
+            assert(false); // Imposible to have another type of body
+    }
+
+}
+
+void Rigidbody::setAngularVelocity(float angularVelocity) {
+    Rigidbody::angularVelocity = angularVelocity;
+    physicsBody->SetAngularVelocity(angularVelocity);
+}
+
+void Rigidbody::setDrag(float drag) {
+    Rigidbody::drag = drag;
+    physicsBody->SetLinearDamping(drag);
+}
+
+void Rigidbody::setFreezeRotation(bool freezeRotation) {
+    Rigidbody::freezeRotation = freezeRotation;
+    physicsBody->SetFixedRotation(freezeRotation);
+}
+
+void Rigidbody::setGravityScale(float gravityScale) {
+    Rigidbody::gravityScale = gravityScale;
+    physicsBody->SetGravityScale(gravityScale);
+}
+
+void Rigidbody::setAngularDrag(float angularDrag) {
+    Rigidbody::angularDrag = angularDrag;
+    physicsBody->SetAngularDamping(angularDrag);
+}
+
+void Rigidbody::setIsBullet(bool isBullet) {
+    Rigidbody::bullet = isBullet;
+    physicsBody->SetBullet(isBullet);
+}
+
+void Rigidbody::setVelocity(const sf::Vector2f &velocity) {
+    Rigidbody::velocity = velocity;
+    const b2Vec2 vel = b2Vec2(velocity.x, velocity.y);
+    physicsBody->SetLinearVelocity(vel);
 }
 
 

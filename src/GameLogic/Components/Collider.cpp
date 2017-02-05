@@ -4,7 +4,7 @@
 
 #include <iostream>
 #include "../../../include/GameLogic/Components/Collider.hpp"
-#include "../../../include/PhysicsEngine.hpp"
+#include "../../../include/Physics/PhysicsEngine.hpp"
 #include "../../../include/GameLogic/Components/Rigidbody.hpp"
 
 using namespace PancakeEngine;
@@ -14,9 +14,10 @@ PhysicsEngine* Collider::physicsEngine = NULL;
 void Collider::awake() {
     Component::awake();
     if (physicsEngine != NULL) {
-        Rigidbody *rb = gameObject->getComponent<Rigidbody>();
+        Rigidbody* const rb = gameObject->getComponent<Rigidbody>();
         if (rb == NULL) {
-            Collider::physicsEngine->addStaticBodyToPhysicsWorld(*this);
+            if (fixture == nullptr) // If fixture is set, it's because it was already added
+                Collider::physicsEngine->addStaticBodyToPhysicsWorld(*this);
         }
     } else {
         assert(false);

@@ -40,7 +40,7 @@ namespace PancakeEngine {
         Rigidbody::bodyType getBodyType() const
         {
             if (attachedRigidbody!=NULL) {
-                return attachedRigidbody->type;
+                return attachedRigidbody->getType();
             }
             return Rigidbody::bodyType::staticBody;
         }
@@ -49,6 +49,7 @@ namespace PancakeEngine {
         friend class Engine;
 
         static PhysicsEngine* physicsEngine;
+        b2Fixture* fixture;
     };
 }
 

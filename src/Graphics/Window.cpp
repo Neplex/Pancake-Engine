@@ -61,15 +61,15 @@ void Window::drawScene() {
         renderStates.transform = gameObject->transform.getTransformMatrix();
 
         // Get SpriteRenderer
-        SpriteRenderer * spriteRenderer = gameObject->getComponent<SpriteRenderer>();
+        const SpriteRenderer * spriteRenderer = gameObject->getComponent<SpriteRenderer>();
         if (spriteRenderer != NULL) window.draw(spriteRenderer->sprite, renderStates);
 
         // Get AnimationRenderer
-        AnimationRenderer * animationRenderer = gameObject->getComponent<AnimationRenderer>();
+        const AnimationRenderer * animationRenderer = gameObject->getComponent<AnimationRenderer>();
         if (animationRenderer != NULL) window.draw(animationRenderer->sprite, renderStates);
 
         // Get Animator
-        Animator * animator = gameObject->getComponent<Animator>();
+        const Animator * animator = gameObject->getComponent<Animator>();
         // TODO: segmentation fault if animator is empty
         if (animator != NULL) window.draw(animator->getCurrentAnimation().sprite, renderStates);
 

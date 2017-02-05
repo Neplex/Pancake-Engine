@@ -15,6 +15,7 @@
 #include "../GameLogic/Components/Camera.hpp"
 #include "../Graphics/AssetsManager.hpp"
 #include "../GameLogic/Components/SpriteRenderer.hpp"
+#include "PlayerController.hpp"
 #include <string>
 
 namespace PancakeEngine {
@@ -32,9 +33,12 @@ namespace PancakeEngine {
 
     public:
         Box() :GameObject() {
-
+            name = "Box";
             BoxCollider& bc = addComponent<BoxCollider>();
+            bc.isTrigger = true;
             addComponent<Rigidbody>();
+            addComponent<PlayerController>();
+            addComponent<Camera>().zoom(1.2f);
             bc.width = 72;
             bc.height = 72;
             transform.setPosition(sf::Vector2f(100, -100));

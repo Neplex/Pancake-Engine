@@ -47,7 +47,7 @@ namespace PancakeEngine {
      * \ingroup Inputs
      */
     class InputManager {
-        //TODO make a InputHandler that will handle inputs. Input Manager will only create and update buttons.
+        //TODO ?make a InputHandler that will handle inputs. Input Manager will only create and update buttons.
     public:
 
         /**
@@ -76,6 +76,10 @@ namespace PancakeEngine {
             }
         }
 
+        /**
+         * @brief Free all buttons.
+         * @details Should becalled before the end of the program.
+         */
         static void destroyButtons() {
             for (Button * b : buttons) {
                 delete b;
@@ -125,7 +129,7 @@ namespace PancakeEngine {
         }
 
     private:
-        friend class Engine; ///< the engine is the only to call update and handleInputs
+        friend class Engine; ///< the engine is the only one to call update and handleInputs
 
         static sf::RenderWindow* window; ///< the window from where poll events
         static std::vector<Button*> buttons; ///< the buttons created
