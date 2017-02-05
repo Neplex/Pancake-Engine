@@ -68,7 +68,7 @@ void PhysicsEngine::addRigidBodyToPhysicsWorld(Rigidbody &rb) {
     //bodyDef.angularVelocity = rb.angularVelocity;
     bodyDef.angularDamping = rb.angularDrag;
     bodyDef.fixedRotation = rb.freezeRotation;
-    bodyDef.bullet = rb.isBullet;
+    bodyDef.bullet = rb.bullet;
     b2Body *body = world.CreateBody(&bodyDef);
     rb.physicsBody = body;
 
