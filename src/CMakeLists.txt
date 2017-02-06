@@ -8,7 +8,7 @@ set(WARNINGS -Wall -Wextra -Wformat-security)
 add_definitions(-D PANCAKE_DEBUG ${WARNINGS})
 
 if(WIN32)
-    set(LIB opengl32)
+    set(LIB opengl32 lua)
 elseif(UNIX)
     set(LIB GL lua)
 endif()
