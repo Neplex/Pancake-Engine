@@ -171,7 +171,7 @@ int an_new(lua_State *L) {
     SpriteSheet** ss = (SpriteSheet**)luaL_checkudata(L, -1, SS);
     Animation** an = (Animation**)lua_newuserdata(L, sizeof(Animation*));
     *an = &AssetsManager::createAnimation(name, **ss);
-    luaL_setmetatable(L, GO);
+    luaL_setmetatable(L, AN);
     return 1;
 }
 
@@ -200,7 +200,7 @@ int assetsManager_getAnimation(lua_State *L) {
     std::string name = luaL_checklstring(L, -1, NULL);
     Animation** ss = (Animation**)lua_newuserdata(L, sizeof(Animation*));
     *ss = &AssetsManager::getAnimation(name);
-    luaL_setmetatable(L, SS);
+    luaL_setmetatable(L, AN);
     return 1;
 }
 
@@ -209,7 +209,7 @@ int assetsManager_getDefaultAnimation(lua_State *L) {
     THROW_ERROR(L, "invalid number of argument in 'getDefaultAnimation'");
     Animation** ss = (Animation**)lua_newuserdata(L, sizeof(Animation*));
     *ss = &AssetsManager::getDefaultAnimation();
-    luaL_setmetatable(L, SS);
+    luaL_setmetatable(L, AN);
     return 1;
 }
 

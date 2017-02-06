@@ -26,7 +26,7 @@ function start()
     a = Animation("test", s)
     a = getAnimation("test")
 
-    this:setSprite(a, 1, 1)
+    this:setSprite(s, 1, 1)
 end
 
 function update()
