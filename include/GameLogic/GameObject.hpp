@@ -28,7 +28,11 @@
 
 #include <vector>
 #include <string>
+#include <Debug/Debug.hpp>
+#include <iostream>
+#include <GameLogic/Components/Behavior.hpp>
 #include "../GameLogic/Components/Transform.hpp"
+#include "../Physics/Collision.hpp"
 
 class Transform;
 class Component;
@@ -58,7 +62,7 @@ namespace PancakeEngine {
          * @sa Component
          */
         template<typename T>
-        T* getComponent()
+        T* getComponent() const
         {
             T* component;
             for (unsigned i = 0; i<components.size(); ++i) {
@@ -74,10 +78,10 @@ namespace PancakeEngine {
          * @tparam T The type of the component.
          * @return The vector of all component of the type T.
          * @attention Please do not mess up with the pointer.
-         * @todo pointer is too permissive ?
+         * @todo To optimize by avoiding dynamic cast
          */
         template<typename T>
-        const std::vector<T*> getComponents()
+        const std::vector<T*> getComponents() const
         {
             std::vector<T*> cs = std::vector<T*>();
             T* p_component;
@@ -136,6 +140,63 @@ namespace PancakeEngine {
             }
         }
         std::vector<Component*> components; ///< The components of the gameobject in the added order.
+
+    private:
+        friend class PhysicsListener; ///< Is the only one to call OnCollision*
+
+        /**
+         * @brief Called by the physics listener when this gameObject collides another.
+         * @details Will call OnCollisionEnter on each Behavior script.
+         * @param collision Info about the collision.
+         * @todo Can be optimized by avoid using getComponents.
+         */
+        void OnCollisionEnter(const Collision& collision) {
+            std::vector<Behavior*> v = getComponents<Behavior>();
+            for (Behavior* b : v) {
+                b->OnCollisionEnter(collision);
+            }
+        }
+
+        /**
+         * @brief Called by the physics listener when this gameObject non longer collides another.
+         * @details Will call OnCollisionExit on each Behavior script.
+         * @param collision Info about the collision.
+         * @todo Can be optimized by avoid using getComponents.
+         */
+        void OnCollisionExit(const Collision& collision) {
+            std::vector<Behavior*> v = getComponents<Behavior>();
+            for (Behavior* b : v) {
+                b->OnCollisionExit(collision);
+            }
+        }
+
+        /**
+         * @brief Called by the physics listener when a gameobject enter one of this's triggers.
+         * @details Will call OnTriggerEnter on each Behavior script.
+         * @param triggered The collider triggered
+         * @param other The collider triggering
+         * @todo Can be optimized by avoid using getComponents.
+         */
+        void OnTriggerEnter(const Collider& triggered, const Collider& other) {
+            std::vector<Behavior*> v = getComponents<Behavior>();
+            for (Behavior* b : v) {
+                b->OnTriggerEnter(triggered, other);
+            }
+        }
+
+        /**
+         * @brief Called by the physics listener when a gameobject exit one of this's triggers.
+         * @details Will call OnTriggerExit on each Behavior script.
+         * @param triggered The collider triggered
+         * @param other The collider triggering
+         * @todo Can be optimized by avoid using getComponents.
+         */
+        void OnTriggerExit(const Collider& triggered, const Collider& other) {
+            std::vector<Behavior*> v = getComponents<Behavior>();
+            for (Behavior* b : v) {
+                b->OnTriggerExit(triggered, other);
+            }
+        }
     };
 }
 

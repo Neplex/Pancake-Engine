@@ -19,6 +19,7 @@ namespace PancakeEngine {
                 BoxCollider& bcGroundingBox = addComponent<BoxCollider>();
                 bcGroundingBox.height = 72;
                 bcGroundingBox.width = 72*60;
+                //bcGroundingBox.isTrigger = true;
                 transform.setPosition(sf::Vector2f(200, 300));
         }
 

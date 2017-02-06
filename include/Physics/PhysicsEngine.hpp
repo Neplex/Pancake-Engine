@@ -26,8 +26,9 @@
 #define PANCAKE_PHYSICSENGINE_HPP
 
 #include <Box2D/Box2D.h>
-#include "GameLogic/GameObject.hpp"
-#include "GameLogic/Components/BoxCollider.hpp"
+#include "../GameLogic/GameObject.hpp"
+#include "../GameLogic/Components/BoxCollider.hpp"
+#include "PhysicsListener.hpp"
 
 namespace PancakeEngine {
 
@@ -57,6 +58,7 @@ namespace PancakeEngine {
         /**
          * @brief Add a static body to the physics world according to a given collider.
          * @details That allows to have other gameobject with rigidbody to collide this object.
+         * Add all colliders of the gameobject on the same body.
          * @param c The collider of the object to create in the world.
          */
         void addStaticBodyToPhysicsWorld(Collider& c);
@@ -69,7 +71,10 @@ namespace PancakeEngine {
         void addRigidBodyToPhysicsWorld(Rigidbody& rb);
 
     private:
-        b2World* world; ///< the physics world of box2D
+        b2World world; ///< the physics world of box2D
+        PhysicsListener physicsListener;
+
+        void createFixtures(const GameObject& go, b2Body& body);
     };
 }
 
