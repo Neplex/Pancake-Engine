@@ -35,10 +35,10 @@ public:
             gameObject->getComponent<PancakeEngine::Rigidbody>()->applyLinearImpulse(sf::Vector2f(0, -5));;
         }
         if (PancakeEngine::Input::getButtonPressed("Right")) {
-            gameObject->getComponent<PancakeEngine::Rigidbody>()->applyLinearImpulse(sf::Vector2f(5, 0));;
+            gameObject->getComponent<PancakeEngine::Rigidbody>()->setVelocity(sf::Vector2f(5,0));
         }
         if (PancakeEngine::Input::getButtonPressed("Left")) {
-            gameObject->getComponent<PancakeEngine::Rigidbody>()->applyLinearImpulse(sf::Vector2f(-5, 0));;
+            gameObject->getComponent<PancakeEngine::Rigidbody>()->setVelocity(sf::Vector2f(-5,0));
         }
     }
 };

@@ -2,9 +2,9 @@
 // Created by kelle on 23/01/2017.
 //
 
-#include "../include/Physics/PhysicsEngine.hpp"
-#include "../include/GameLogic/Components/Transform.hpp"
-#include "../include/Physics/PhysicsUserData.hpp"
+#include "Physics/PhysicsEngine.hpp"
+#include "GameLogic/Components/Transform.hpp"
+#include "Physics/PhysicsUserData.hpp"
 #include <iostream>
 
 using namespace PancakeEngine;
@@ -65,7 +65,7 @@ void PhysicsEngine::addRigidBodyToPhysicsWorld(Rigidbody &rb) {
                          (rb.gameObject->transform.getPosition().y)/numberPixelsPerMeter);
     //bodyDef.userData = new PhysicsUserData(PhysicsUserData::Type::Rigidbody, &rb);
     bodyDef.userData = (void *) &rb;
-    //bodyDef.angularVelocity = rb.angularVelocity;
+    bodyDef.angularVelocity = rb.angularVelocity;
     bodyDef.angularDamping = rb.angularDrag;
     bodyDef.fixedRotation = rb.freezeRotation;
     bodyDef.bullet = rb.bullet;
