@@ -25,7 +25,7 @@
 #ifndef PANCAKE_FIXEDOVERLAY_HPP
 #define PANCAKE_FIXEDOVERLAY_HPP
 
-#include "../imgui/imgui.h"
+#include "Imgui/imgui.h"
 
 namespace PancakeEngine {
 

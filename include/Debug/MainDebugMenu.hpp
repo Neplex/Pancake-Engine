@@ -26,7 +26,7 @@
 #define PANCAKE_MAINDEBUGMENU_HPP
 
 #include <map>
-#include "../imgui/imgui.h"
+#include "Imgui/imgui.h"
 #include "Widgets/AppLog.hpp"
 
 namespace PancakeEngine {
