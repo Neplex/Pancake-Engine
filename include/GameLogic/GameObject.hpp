@@ -33,8 +33,9 @@
 #include <GameLogic/Components/Behavior.hpp>
 #include "../GameLogic/Components/Transform.hpp"
 #include "../Physics/Collision.hpp"
+#include "GameLogic/Components/Transform.hpp"
 
-class Transform;
+//class Transform;
 class Component;
 
 namespace PancakeEngine {

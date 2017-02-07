@@ -70,6 +70,10 @@ namespace PancakeEngine {
          */
         void addRigidBodyToPhysicsWorld(Rigidbody& rb);
 
+        void setPosition(const sf::Vector2f& pos, b2Body& body);
+
+        void setRotation(const float angle, b2Body& body);
+
     private:
         b2World world; ///< the physics world of box2D
         PhysicsListener physicsListener;
