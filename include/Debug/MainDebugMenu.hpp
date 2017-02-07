@@ -75,7 +75,7 @@ namespace PancakeEngine {
          */
         void logLogger(std::string name, std::string message)
         {
-            loggers[name]->AddLog(message.c_str());
+            loggers[name]->AddLog("%s", message.c_str());
         }
 
         /**
