@@ -24,6 +24,7 @@ Engine::Engine() : sceneManager(), window(sceneManager), physicsEngine(), time()
     // Add some loggers
     Debug::addLogger("Foo");
     Debug::addLogger("Inputs");
+    Debug::addLogger("Lua");
 
     // Add some keyshorcuts for debug
 //

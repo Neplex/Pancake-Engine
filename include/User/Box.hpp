@@ -16,6 +16,7 @@
 #include "../Graphics/AssetsManager.hpp"
 #include "../GameLogic/Components/SpriteRenderer.hpp"
 #include "PlayerController.hpp"
+#include "../GameLogic/Components/LuaScript.hpp"
 #include <string>
 
 namespace PancakeEngine {
@@ -34,8 +35,8 @@ namespace PancakeEngine {
     public:
         Box() :GameObject() {
             name = "Box";
+
             BoxCollider& bc = addComponent<BoxCollider>();
-            bc.isTrigger = true;
             addComponent<Rigidbody>();
             addComponent<PlayerController>();
             addComponent<Camera>().zoom(1.2f);
@@ -56,6 +57,9 @@ namespace PancakeEngine {
             ar.addAnimation("jump", a2, sh2);
 
             addComponent<SpriteRenderer>();
+
+            LuaScript& lua = addComponent<LuaScript>();
+            lua.setScript("../resources/scripts/test.lua");
         }
     };
 }
