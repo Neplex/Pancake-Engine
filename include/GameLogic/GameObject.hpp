@@ -144,6 +144,9 @@ namespace PancakeEngine {
 
     private:
         friend class PhysicsListener; ///< Is the only one to call OnCollision*
+        friend class Behavior;
+        friend void Behavior::destroy(GameObject& go);
+        bool toDestroy = false;
 
         /**
          * @brief Called by the physics listener when this gameObject collides another.
