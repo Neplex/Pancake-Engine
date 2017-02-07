@@ -17,6 +17,8 @@ namespace PancakeEngine {
     class Collider : public Component {
 
     public:
+        Collider();
+
         void awake();
 
         Rigidbody* attachedRigidbody;
@@ -47,6 +49,7 @@ namespace PancakeEngine {
 
     private:
         friend class Engine;
+        friend class Transform; ///< Change the position of the fixture
 
         static PhysicsEngine* physicsEngine;
         b2Fixture* fixture;

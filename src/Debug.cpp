@@ -5,8 +5,8 @@
 #include <SFML/Window/Event.hpp>
 #include <iostream>
 #include "../include/Debug/Debug.hpp"
-#include "../include/imgui/imgui.h"
-#include "../include/imgui/imgui_internal.h"
+#include "Imgui/imgui.h"
+#include "Imgui/imgui_internal.h"
 #include "../include/Debug/Widgets/AppLog.hpp"
 #include "../include/Debug/MainDebugMenu.hpp"
 

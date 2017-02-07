@@ -25,8 +25,19 @@ function start()
     local a = getDefaultAnimation()
     a = Animation("test", s)
     a = getAnimation("test")
+    a:addFrame(0, 0, 200);
+    a:addFrame(0, 1, 200);
 
-    this:setSprite(s, 1, 1)
+    this:getComponent("SpriteRenderer"):setSprite(s, 1, 1)
+    this:getComponent("Camera"):zoom(2)
+
+    local r = this:getComponent("AnimationRenderer")
+    r:setAnimation(a)
+    r:loop()
+    r:loop(false)
+    r:play()
+    r:pause()
+    r:stop()
 end
 
 function update()

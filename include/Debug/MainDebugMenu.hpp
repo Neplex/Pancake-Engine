@@ -26,7 +26,7 @@
 #define PANCAKE_MAINDEBUGMENU_HPP
 
 #include <map>
-#include "../imgui/imgui.h"
+#include "Imgui/imgui.h"
 #include "Widgets/AppLog.hpp"
 
 namespace PancakeEngine {
@@ -75,7 +75,7 @@ namespace PancakeEngine {
          */
         void logLogger(std::string name, std::string message)
         {
-            loggers[name]->AddLog(message.c_str());
+            loggers[name]->AddLog("%s", message.c_str());
         }
 
         /**

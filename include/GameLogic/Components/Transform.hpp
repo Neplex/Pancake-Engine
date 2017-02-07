@@ -6,6 +6,7 @@
 #define PANCAKE_TRANSFORM_HPP
 
 #include "Component.hpp"
+#include "Rigidbody.hpp"
 #include <SFML/Graphics.hpp>
 #include <cassert>
 
@@ -28,19 +29,13 @@ namespace PancakeEngine {
          * Set the position of the transform.
          * @param newPos The new position.
          */
-        void setPosition(const sf::Vector2f newPos)
-        {
-            transform.setPosition(newPos);
-        }
+        void setPosition(const sf::Vector2f& newPos);
 
         /**
          * Apply rotation with angle 'angle'
          * @param angle
          */
-        void setRotation(float angle)
-        {
-            transform.setRotation(angle);
-        }
+        void setRotation(float angle);
 
         /**
          * Get current rotation

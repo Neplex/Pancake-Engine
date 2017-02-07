@@ -11,6 +11,10 @@ using namespace PancakeEngine;
 
 PhysicsEngine* Collider::physicsEngine = NULL;
 
+PancakeEngine::Collider::Collider() {
+    fixture = nullptr;
+}
+
 void Collider::awake() {
     Component::awake();
     if (physicsEngine != NULL) {
