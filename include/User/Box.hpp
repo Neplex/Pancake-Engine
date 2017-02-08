@@ -17,6 +17,7 @@
 #include "../GameLogic/Components/SpriteRenderer.hpp"
 #include "PlayerController.hpp"
 #include <string>
+#include <GameLogic/Components/PythonScript.hpp>
 
 namespace PancakeEngine {
     std::string sh1() {
@@ -56,6 +57,8 @@ namespace PancakeEngine {
             ar.addAnimation("jump", a2, sh2);
 
             addComponent<SpriteRenderer>();
+
+            addComponent<PythonScript>();
         }
     };
 }

@@ -13,4 +13,7 @@ elseif(UNIX)
     set(LIB GL)
 endif()
 
-target_link_libraries(Pancake ${SFML_LIB_DEBUG} ${LIB})
+find_package (PythonLibs 2.7 EXACT REQUIRED)
+include_directories(${PYTHON_INCLUDE_DIR})
+
+target_link_libraries(Pancake ${SFML_LIB_DEBUG} ${LIB} python2.7)
