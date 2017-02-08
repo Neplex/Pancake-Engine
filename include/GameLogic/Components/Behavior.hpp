@@ -27,6 +27,7 @@
 
 #include "Component.hpp"
 #include "../../Physics/Collision.hpp"
+#include "GameLogic/GameObject.hpp"
 
 namespace PancakeEngine {
 
@@ -42,6 +43,9 @@ namespace PancakeEngine {
         virtual void OnCollisionExit(const Collision& collision) {};
         virtual void OnTriggerEnter(const Collider& triggered, const Collider& other) {};
         virtual void OnTriggerExit(const Collider& triggered, const Collider& other) {};
+        void destroy(GameObject& go) {
+            //go.toDestroy = true;
+        }
 
     };
 

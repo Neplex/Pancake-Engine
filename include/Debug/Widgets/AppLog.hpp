@@ -5,7 +5,7 @@
 #ifndef PANCAKE_APPLOG_HPP
 #define PANCAKE_APPLOG_HPP
 
-#include "../../imgui/imgui.h"
+#include "Imgui/imgui.h"
 
 /**
  * @struct AppLog Represents a logger used in debug.

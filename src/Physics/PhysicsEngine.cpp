@@ -102,4 +102,12 @@ void PhysicsEngine::createFixtures(const GameObject& go, b2Body& body) {
     }
 }
 
+void PhysicsEngine::setPosition(const sf::Vector2f& pos, b2Body& body) {
+    body.SetTransform(b2Vec2(pos.x / numberPixelsPerMeter, pos.y / numberPixelsPerMeter), body.GetAngle());
+}
+
+void PhysicsEngine::setRotation(const float angle, b2Body &body) {
+    body.SetTransform(body.GetPosition(), angle);
+}
+
 

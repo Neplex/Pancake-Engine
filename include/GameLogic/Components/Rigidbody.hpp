@@ -116,6 +116,7 @@ namespace PancakeEngine {
 
     private:
         friend class Engine;
+        friend class Transform; ///< The transform update the position of the physics body
 
         friend class PhysicsEngine;
 

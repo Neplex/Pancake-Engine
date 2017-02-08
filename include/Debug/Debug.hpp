@@ -26,7 +26,7 @@
 #define PANCAKE_DEBUG_HPP
 
 #include <SFML/Graphics/RenderWindow.hpp>
-#include "../imgui/imgui-SFML.h"
+#include "Imgui/imgui-SFML.h"
 #include "MainDebugMenu.hpp"
 #include "FixedOverlayDebug.hpp"
 
