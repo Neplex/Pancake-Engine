@@ -53,6 +53,7 @@ namespace PancakeEngine {
         Engine();
         ~Engine() {
             InputManager::destroyButtons();
+            delete sceneManager.getCurrentScene();
         }
 
         /**

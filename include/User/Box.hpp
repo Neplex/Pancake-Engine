@@ -34,8 +34,9 @@ namespace PancakeEngine {
     public:
         Box() :GameObject() {
             name = "Box";
-            BoxCollider& bc = addComponent<BoxCollider>();
+
             addComponent<Rigidbody>();
+            BoxCollider& bc = addComponent<BoxCollider>();
             addComponent<PlayerController>();
             addComponent<Camera>().zoom(1.2f);
             bc.width = 72;

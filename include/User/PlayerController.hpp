@@ -15,6 +15,7 @@ class PlayerController : public PancakeEngine::Behavior {
 public:
     void OnCollisionEnter(const PancakeEngine::Collision &collision) override {
         PancakeEngine::Debug::log("Foo", "The player collides something !");
+        destroy(*collision.otherCollider.gameObject);
     }
 
     void OnCollisionExit(const PancakeEngine::Collision &collision) override {
