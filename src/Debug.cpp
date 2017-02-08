@@ -4,6 +4,7 @@
 
 #include <SFML/Window/Event.hpp>
 #include <iostream>
+#include <Debug/Widgets/Console.hpp>
 #include "../include/Debug/Debug.hpp"
 #include "Imgui/imgui.h"
 #include "Imgui/imgui_internal.h"
