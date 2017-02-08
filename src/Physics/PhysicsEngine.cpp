@@ -98,7 +98,7 @@ void PhysicsEngine::createFixtures(const GameObject& go, b2Body& body) {
         fixtureDef.restitution = c.bounciness;
         fixtureDef.isSensor = c.isTrigger;
         fixtureDef.userData = (void *) &c;
-        body.CreateFixture(&fixtureDef);
+        c.fixture = body.CreateFixture(&fixtureDef);
     }
 }
 
@@ -108,6 +108,11 @@ void PhysicsEngine::setPosition(const sf::Vector2f& pos, b2Body& body) {
 
 void PhysicsEngine::setRotation(const float angle, b2Body &body) {
     body.SetTransform(body.GetPosition(), angle);
+}
+
+void PhysicsEngine::removeBody(b2Body* body) {
+    world.DestroyBody(body);
+    body = nullptr;
 }
 
 

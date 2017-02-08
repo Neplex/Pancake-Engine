@@ -29,3 +29,10 @@ void Collider::awake() {
     }
     // Else we do nothing, the awake of the rigibody will do the work
 }
+
+Collider::~Collider() {
+    if (gameObject->getComponent<Rigidbody>() == nullptr && fixture != nullptr) { // we let the rigidbody destroy the body if there is one
+        physicsEngine->removeBody(fixture->GetBody());
+        fixture = nullptr;
+    }
+}

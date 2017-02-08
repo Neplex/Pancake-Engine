@@ -71,7 +71,7 @@ namespace PancakeEngine {
                     }
                     (sensor->gameObject->*triggerFunction)(*sensor, *other);
                     // If none of them is a sensor, call OnCollision on both ot them
-                } else if (contact->GetFixtureA()->IsSensor() ^ contact->GetFixtureB()->IsSensor()) {
+                } else if (!contact->GetFixtureA()->IsSensor() && !contact->GetFixtureB()->IsSensor()) {
                     const Collision collA(*(static_cast<Collider *>(contact->GetFixtureA()->GetUserData())),
                                           *(static_cast<Collider *>(contact->GetFixtureB()->GetUserData())),
                                           contact->GetRestitution(), contact->GetFriction(),

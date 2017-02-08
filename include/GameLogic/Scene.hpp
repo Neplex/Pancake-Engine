@@ -57,6 +57,9 @@ namespace PancakeEngine {
          * Call the same method on all game objects in order.
          */
         void lateUpdate();
+    private:
+        std::vector<GameObject*> toDestroy;
+        void destroyGameObjects();
     };
 }
 

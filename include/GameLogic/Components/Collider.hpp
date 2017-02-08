@@ -47,10 +47,14 @@ namespace PancakeEngine {
             return Rigidbody::bodyType::staticBody;
         }
 
+    protected:
+        ~Collider();
+
     private:
         friend class Engine;
         friend class Transform; ///< Change the position of the fixture
-
+        friend class PhysicsEngine;
+        friend class Rigidbody; ///< null fixtures if removed body
         static PhysicsEngine* physicsEngine;
         b2Fixture* fixture;
     };

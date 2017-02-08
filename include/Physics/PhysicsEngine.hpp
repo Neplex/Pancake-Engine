@@ -70,6 +70,8 @@ namespace PancakeEngine {
          */
         void addRigidBodyToPhysicsWorld(Rigidbody& rb);
 
+        void removeBody(b2Body* body);
+
         void setPosition(const sf::Vector2f& pos, b2Body& body);
 
         void setRotation(const float angle, b2Body& body);

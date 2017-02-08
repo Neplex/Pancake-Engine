@@ -120,6 +120,8 @@ namespace PancakeEngine {
 
         friend class PhysicsEngine;
 
+        ~Rigidbody();
+
         bodyType type; ///< The physical behaviour type of the Rigidbody.
         float angularVelocity; ///< Angular velocity in degrees per second.
         float drag; ///< Coefficient of drag.

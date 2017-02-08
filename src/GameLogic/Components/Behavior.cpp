@@ -18,37 +18,20 @@
 */
 
 /**
- * \file        Behavior.hpp
- * \author      Darenn Keller - keller.darenn@gmail.com
+ * @file        Behavior.cpp
+ * @author      Darenn Keller - keller.darenn@gmail.com
  */
 
-#ifndef PANCAKE_BEHAVIOR_HPP
-#define PANCAKE_BEHAVIOR_HPP
-
-#include "Component.hpp"
-#include "../../Physics/Collision.hpp"
+#include "GameLogic/Components/Behavior.hpp"
+#include "GameLogic/GameObject.hpp"
 
 namespace PancakeEngine {
-    class GameObject;
 
-    /**
-     * @class Behavior
-     * @brief Behavior is the base class from which every scripts should derives.
-     */
-    class Behavior : public Component {
+    void Behavior::destroy(PancakeEngine::GameObject &go) {
+        go.toDestroy = true;
+    }
 
-    public:
-
-        virtual void OnCollisionEnter(const Collision& collision) {};
-        virtual void OnCollisionExit(const Collision& collision) {};
-        virtual void OnTriggerEnter(const Collider& triggered, const Collider& other) {};
-        virtual void OnTriggerExit(const Collider& triggered, const Collider& other) {};
-        void destroy(GameObject& go);
-        void destroy(Component& c);
-
-    };
-
-
+    void Behavior::destroy(Component &c) {
+        c.toDestroy = true;
+    }
 }
-
-#endif //PANCAKE_BEHAVIOR_HPP
