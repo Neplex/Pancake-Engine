@@ -21,7 +21,7 @@ namespace PancakeEngine {
         }
 
         ~SceneManager() {
-            delete scene;
+         //   delete scene;
         }
 
         /**
