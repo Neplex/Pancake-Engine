@@ -43,7 +43,16 @@ namespace PancakeEngine {
         virtual void OnCollisionExit(const Collision& collision) {};
         virtual void OnTriggerEnter(const Collider& triggered, const Collider& other) {};
         virtual void OnTriggerExit(const Collider& triggered, const Collider& other) {};
+        /**
+         * Destroy the game object after all updates or after all late update.
+         * @param go The game object to destroy
+         */
         void destroy(GameObject& go);
+
+        /**
+         * Destroy the component after all updates or after all late update.
+         * @param c The component to destroy.
+         */
         void destroy(Component& c);
 
     };

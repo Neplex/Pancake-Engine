@@ -75,6 +75,20 @@ void PhysicsEngine::addRigidBodyToPhysicsWorld(Rigidbody &rb) {
     createFixtures(*rb.gameObject, *body);
 }
 
+
+void PhysicsEngine::setPosition(const sf::Vector2f& pos, b2Body& body) {
+    body.SetTransform(b2Vec2(pos.x / numberPixelsPerMeter, pos.y / numberPixelsPerMeter), body.GetAngle());
+}
+
+void PhysicsEngine::setRotation(const float angle, b2Body &body) {
+    body.SetTransform(body.GetPosition(), angle);
+}
+
+void PhysicsEngine::removeBody(b2Body* body) {
+    world.DestroyBody(body);
+    body = nullptr;
+}
+
 // Helper functions
 
 void PhysicsEngine::createFixtures(const GameObject& go, b2Body& body) {
@@ -102,17 +116,6 @@ void PhysicsEngine::createFixtures(const GameObject& go, b2Body& body) {
     }
 }
 
-void PhysicsEngine::setPosition(const sf::Vector2f& pos, b2Body& body) {
-    body.SetTransform(b2Vec2(pos.x / numberPixelsPerMeter, pos.y / numberPixelsPerMeter), body.GetAngle());
-}
 
-void PhysicsEngine::setRotation(const float angle, b2Body &body) {
-    body.SetTransform(body.GetPosition(), angle);
-}
-
-void PhysicsEngine::removeBody(b2Body* body) {
-    world.DestroyBody(body);
-    body = nullptr;
-}
 
 
