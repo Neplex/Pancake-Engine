@@ -5,11 +5,11 @@
 #include <SFML/Window/Event.hpp>
 #include <iostream>
 #include <Debug/Widgets/Console.hpp>
-#include "../include/Debug/Debug.hpp"
+#include "Debug/Debug.hpp"
 #include "Imgui/imgui.h"
 #include "Imgui/imgui_internal.h"
-#include "../include/Debug/Widgets/AppLog.hpp"
-#include "../include/Debug/MainDebugMenu.hpp"
+#include "Debug/Widgets/AppLog.hpp"
+#include "Debug/MainDebugMenu.hpp"
 
 using namespace PancakeEngine;
 
@@ -39,7 +39,7 @@ void Debug::render()
 {
     if (!initialized)
         return;
-    //ImGui::ShowTestWindow();
+    ImGui::ShowTestWindow();
     if (displayDebug) {
         mainDebugMenu.draw();
         fixedOverlayDebug.draw(nullptr);

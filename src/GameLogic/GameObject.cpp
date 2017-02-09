@@ -8,8 +8,11 @@
 
 using namespace PancakeEngine;
 
+int GameObject::numGameobjects = 0;
+
 GameObject::GameObject() : components() {
     transform.gameObject = this;
+    numGameobjects++;
 }
 
 void GameObject::awake() {

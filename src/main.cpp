@@ -13,7 +13,7 @@ int main() {
     scene->addGameObject<Ground>();
     scene->addGameObject<Ground>().transform.setPosition(sf::Vector2f(1000, 228));
 
-    for (int i = 0; i < 1; ++i) {
+    for (int i = 0; i < 10; ++i) {
         //Box * box = new Box("Box");
         scene->addGameObject<Box>();
     }

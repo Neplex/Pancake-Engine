@@ -53,6 +53,10 @@ namespace PancakeEngine {
         {
             // Draw the main bar
             if (ImGui::BeginMainMenuBar()) {
+                if (ImGui::BeginMenu("Console")) {
+                    ImGui::MenuItem("Console", NULL, &consoleToggled);
+                    ImGui::EndMenu();
+                }
                 if (ImGui::BeginMenu("Loggers")) {
                     auto it = loggers.begin();
                     for (; it!=loggers.end(); ++it) {
@@ -60,7 +64,6 @@ namespace PancakeEngine {
                     }
                     ImGui::EndMenu();
                 }
-                ImGui::MenuItem("Console", NULL, &consoleToggled);
                 ImGui::EndMainMenuBar();
             }
 
