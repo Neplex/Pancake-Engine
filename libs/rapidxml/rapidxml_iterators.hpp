@@ -103,6 +103,7 @@ namespace rapidxml
         typedef typename xml_attribute<Ch> *pointer;
         typedef std::ptrdiff_t difference_type;
         typedef std::bidirectional_iterator_tag iterator_category;
+        
         attribute_iterator()
             : m_attribute(0)
         {
