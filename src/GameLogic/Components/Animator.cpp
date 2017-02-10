@@ -13,7 +13,7 @@ Animator::~Animator() {
     }
 }
 
-void Animator::addAnimation(std::string name, Animation& animation, std::string (*handler)()) {
+void Animator::addAnimation(std::string name, Animation& animation, std::string (*handler)(GameObject& go)) {
     State state;
     state.animation = new AnimationRenderer();
     state.animation->setAnimation(animation);
@@ -31,7 +31,7 @@ AnimationRenderer& Animator::getCurrentAnimation() const {
 }
 
 void Animator::update() {
-    std::string state = states[currentState].handler();
+    std::string state = states[currentState].handler(*gameObject);
     if (state == currentState) {
         states[currentState].animation->update();
     } else if (states.find(state) != states.end()) {

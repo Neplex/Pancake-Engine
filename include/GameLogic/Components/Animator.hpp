@@ -20,7 +20,7 @@ namespace PancakeEngine {
          * @param animation the animation of the state
          * @param handler the handler of the state
          */
-        void addAnimation(std::string name, Animation& animation, std::string (*handler)());
+        void addAnimation(std::string name, Animation& animation, std::string (*handler)(GameObject&));
 
         /**
          * Get the animation associate with the current GameObject state
@@ -33,7 +33,7 @@ namespace PancakeEngine {
     private:
         struct State {
             AnimationRenderer * animation;
-            std::string (*handler)();
+            std::string (*handler)(GameObject&);
         };
         std::map<std::string, State> states;
         std::string currentState = "";

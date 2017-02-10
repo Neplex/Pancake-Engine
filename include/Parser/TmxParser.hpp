@@ -41,10 +41,7 @@ namespace TMX
             std::map<std::string, std::string> property;
         };
 
-        struct Tileset {
-            unsigned int firstGID;
-            std::string source;
-        };
+
 
         struct Data {
             std::string encoding;
@@ -65,6 +62,7 @@ namespace TMX
             std::string type;
             int x;
             int y;
+            unsigned int id;
             unsigned int width;
             unsigned int height;
             unsigned int gid;
@@ -77,7 +75,7 @@ namespace TMX
             std::string name;
             float opacity;
             bool visible;
-            std::map<std::string, Object> object;
+            std::map<unsigned int, Object> object;
             std::map<std::string, std::string> property;
         };
 
@@ -92,6 +90,25 @@ namespace TMX
             bool visible;
             std::map<std::string, std::string> property;
             Image image;
+        };
+
+        struct Frame{
+            unsigned int tileid;
+            unsigned int duration;
+        };
+        struct Animation {
+            std::vector<Frame> listFrame;
+        };
+        struct Tileset {
+            std::string name;
+            unsigned int width;
+            unsigned int height;
+            unsigned int tileCount;
+            unsigned int firstGID;
+            std::string source;
+            unsigned int id;
+            unsigned int column;
+            Animation a;
         };
 
         Map mapInfo;

@@ -19,13 +19,13 @@ namespace PancakeEngine {
          * @param object
          * @return pointer on a gameObject
          */
-        static void loadGameObject(Scene scene, std::map<std::string, TMX::Parser::Object> object);
+        static void loadGameObject(Scene& scene, std::map<unsigned int, TMX::Parser::Object> object,TMX::Parser* myParser);
         /**!
          * load all game object of a file
          * @param filename file to parse
          * @return scene of the file
          */
-        static Scene loadAllGameObject(const char* filename);
+        static Scene& loadAllGameObject(const char* filename);
     private:
         SceneFactory();
     };

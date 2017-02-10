@@ -32,7 +32,7 @@ namespace TMX {
         mapInfo.tileWidth = (unsigned int) std::atoi(root_node->first_attribute("tilewidth")->value());
         mapInfo.tileHeight = (unsigned int) std::atoi(root_node->first_attribute("tileheight")->value());
 
-        if (root_node->first_attribute("backgroundcolor")->value() != 0) {
+/*        if (root_node->first_attribute("backgroundcolor")->value() != 0) {
             mapInfo.backgroundColor = root_node->first_attribute("backgroundcolor")->value();
         }
 
@@ -42,15 +42,37 @@ namespace TMX {
                 mapInfo.property[properties_node->first_attribute("name")->value()] = properties_node->first_attribute(
                         "value")->value();
             }
-        }
+        }*/
         return true;
     }
     void Parser::loadTileset() {
         Tileset tmpTileset;
         for (rapidxml::xml_node<> *tileset_node = root_node->first_node(
                 "tileset"); tileset_node; tileset_node = tileset_node->next_sibling("tileset")) {
+            tmpTileset.name = tileset_node->first_attribute("name")->value();
             tmpTileset.firstGID = (unsigned int) std::atoi(tileset_node->first_attribute("firstgid")->value());
-            tmpTileset.source = tileset_node->first_attribute("source")->value();
+            tmpTileset.width = (unsigned int) std::atoi(tileset_node->first_attribute("tilewidth")->value());
+            tmpTileset.height = (unsigned int) std::atoi(tileset_node->first_attribute("tileheight")->value());
+            tmpTileset.tileCount = (unsigned int) std::atoi(tileset_node->first_attribute("tilecount")->value());
+            tmpTileset.source = tileset_node->first_node("image")->first_attribute("source")->value();
+            tmpTileset.column = (unsigned int) std::atoi(tileset_node->first_attribute("columns")->value());
+
+            if(tileset_node->first_node("tile") != NULL){
+                rapidxml::xml_node<> * tile_node = tileset_node->first_node("tile");
+                if(tile_node->first_node("animation") != NULL){
+                    std::vector<Frame> animation;
+                    rapidxml::xml_node<>* animation_node = tile_node->first_node("animation");
+                    for(rapidxml::xml_node<> * frame_node = animation_node->first_node("frame");frame_node;frame_node = frame_node->next_sibling("frame")){
+                        Frame frame;
+                        frame.tileid =(unsigned int) std::atoi(frame_node->first_attribute("tileid")->value());
+                        frame.duration = (unsigned int) std::atoi(frame_node->first_attribute("duration")->value());
+                        animation.push_back(frame);
+                    }
+                    Animation a;
+                    a.listFrame = animation;
+                    tmpTileset.a = a;
+                }
+            }
             tilesetList.push_back(tmpTileset);
         }
     }
@@ -85,10 +107,24 @@ namespace TMX {
         for (rapidxml::xml_node<> *oGroup_node = root_node->first_node(
                 "objectgroup"); oGroup_node; oGroup_node = oGroup_node->next_sibling("objectgroup")) {
             ObjectGroup oGroup;
-            oGroup.color = oGroup_node->first_attribute("color")->value();
+//            oGroup.color = oGroup_node->first_attribute("color")->value();
             oGroup.name = oGroup_node->first_attribute("name")->value();
-            oGroup.opacity = (float) std::atof(oGroup_node->first_attribute("opacity")->value());
-            oGroup.visible =  (bool) std::atoi(oGroup_node->first_attribute("visible")->value());
+//            oGroup.opacity = (float) std::atof(oGroup_node->first_attribute("opacity")->value());
+//            oGroup.visible =  (bool) std::atoi(oGroup_node->first_attribute("visible")->value());
+            std::map<unsigned int,Object> mapObject;
+            for (rapidxml::xml_node<> *object = oGroup_node->first_node(
+                    "object"); object; object = object->next_sibling("object")) {
+                Object o;
+                o.name = object->first_attribute("name")->value();
+                o.id = (unsigned int) std::atoi(object->first_attribute("id")->value());
+                o.gid = (unsigned int) std::atoi(object->first_attribute("gid")->value());
+                o.height = (unsigned int) std::atoi(object->first_attribute("height")->value());
+                o.width = (unsigned int) std::atoi(object->first_attribute("width")->value());
+                o.x = (unsigned int) std::atoi(object->first_attribute("x")->value());
+                o.y = (unsigned int) std::atoi(object->first_attribute("y")->value());
+                mapObject[o.id] = o;
+            }
+            oGroup.object = mapObject;
             if (oGroup_node->first_node("properties") != 0) {
                 for (rapidxml::xml_node<> *properties_node = oGroup_node->first_node("properties")->first_node(
                         "property"); properties_node; properties_node = properties_node->next_sibling()) {
