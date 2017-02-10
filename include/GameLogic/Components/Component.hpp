@@ -51,7 +51,7 @@ namespace PancakeEngine {
         virtual void update() { };
 
         /**
-         * Called at each frame after physics.
+         * Called at each frame update.
          */
         virtual void lateUpdate() { };
 

@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <GameLogic/Components/CircleCollider.hpp>
 #include "../../include/Graphics/Window.hpp"
 #include "../../include/GameLogic/Components/SpriteRenderer.hpp"
 #include "../../include/GameLogic/Components/Camera.hpp"
@@ -78,6 +79,9 @@ void Window::drawScene() {
             // Box collider
             const std::vector<BoxCollider *> boxColliders = scenes.getCurrentScene()->gameObjects[i]->getComponents<BoxCollider>();
             for (BoxCollider *bc : boxColliders) draw(bc);
+            // Circle collider
+            const std::vector<CircleCollider *> circleColliders = scenes.getCurrentScene()->gameObjects[i]->getComponents<CircleCollider>();
+            for (CircleCollider *bc : circleColliders) draw(bc);
         }
     }
 }
@@ -126,4 +130,13 @@ void Window::draw(const BoxCollider * boxCollider) {
     renderStates.transform = boxCollider->gameObject->transform.getTransformMatrix();
     renderStates.transform.translate(boxCollider->offset);
     window.draw(vertices, 6, sf::LinesStrip, renderStates);
+}
+
+void Window::draw(const CircleCollider* collider) {
+    sf::CircleShape circle(collider->radius);
+    circle.setFillColor(sf::Color::Transparent);
+    circle.setOutlineThickness(-2);
+    circle.setOutlineColor(getColor(collider));
+    circle.setPosition(collider->gameObject->transform.getPosition() + collider->offset);
+    window.draw(circle);
 }

@@ -39,7 +39,7 @@ void Debug::render()
 {
     if (!initialized)
         return;
-    ImGui::ShowTestWindow();
+    //ImGui::ShowTestWindow();
     if (displayDebug) {
         mainDebugMenu.draw();
         fixedOverlayDebug.draw(nullptr);

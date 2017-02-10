@@ -8,6 +8,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include "../SceneManager.hpp"
 #include "../GameLogic/Components/BoxCollider.hpp"
+#include "GameLogic/Components/CircleCollider.hpp"
 
 namespace PancakeEngine {
 
@@ -55,6 +56,7 @@ namespace PancakeEngine {
 
         // Debug
         void draw(const BoxCollider* boxCollider);
+        void draw(const CircleCollider* collider);
 
         sf::Color getColor(const Collider* collider);
     };

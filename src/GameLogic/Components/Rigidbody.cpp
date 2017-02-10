@@ -127,6 +127,7 @@ void Rigidbody::setDrag(float drag) {
 
 void Rigidbody::setFreezeRotation(bool freezeRotation) {
     Rigidbody::freezeRotation = freezeRotation;
+    // todo check if null
     physicsBody->SetFixedRotation(freezeRotation);
 }
 
