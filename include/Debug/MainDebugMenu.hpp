@@ -79,7 +79,7 @@ namespace PancakeEngine {
             static Console c;
             console = &c;
             if (consoleToggled) {
-                console->Draw("Console", &consoleToggled);
+                console->draw("Console", &consoleToggled);
             }
         }
 
