@@ -137,6 +137,6 @@ void Window::draw(const CircleCollider* collider) {
     circle.setFillColor(sf::Color::Transparent);
     circle.setOutlineThickness(-2);
     circle.setOutlineColor(getColor(collider));
-    circle.setPosition(collider->gameObject->transform.getPosition() + collider->offset);
+    circle.setPosition(collider->gameObject->transform.getPosition()  + collider->offset - sf::Vector2f(collider->radius,collider->radius)); // Because SFML take the upperleftcorner
     window.draw(circle);
 }

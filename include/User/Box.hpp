@@ -37,7 +37,7 @@ namespace PancakeEngine {
 
             addComponent<Rigidbody>();
             BoxCollider& bc = addComponent<BoxCollider>();
-            addComponent<PlayerController>();
+            //addComponent<PlayerController>();
             addComponent<Camera>().zoom(1.2f);
             bc.width = 72;
             bc.height = 72;

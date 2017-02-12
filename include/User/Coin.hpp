@@ -17,7 +17,7 @@ namespace PancakeEngine {
             name = "Coin";
             addComponent<Rigidbody>();
             addComponent<CircleCollider>().radius = 50;
-
+            transform.setPosition(sf::Vector2f(200,-500));
         }
     };
 }
