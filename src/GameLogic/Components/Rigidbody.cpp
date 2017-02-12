@@ -70,31 +70,54 @@ Rigidbody::bodyType Rigidbody::getType() const {
 }
 
 float Rigidbody::getAngularVelocity() const {
-    return angularVelocity;
+    if (physicsBody)
+        return physicsBody->GetAngularVelocity();
+    else
+        return angularVelocity;
 }
 
 float Rigidbody::getDrag() const {
-    return drag;
+    if (physicsBody)
+        return physicsBody->GetLinearDamping();
+    else
+        return drag;
 }
 
 bool Rigidbody::isFreezeRotation() const {
-    return freezeRotation;
+    if (physicsBody)
+        return physicsBody->IsFixedRotation();
+    else
+        return freezeRotation;
 }
 
 float Rigidbody::getGravityScale() const {
-    return gravityScale;
+    if (physicsBody)
+        return physicsBody->GetGravityScale();
+    else
+        return gravityScale;
 }
 
 float Rigidbody::getAngularDrag() const {
-    return angularDrag;
+    if (physicsBody)
+        return physicsBody->GetAngularDamping();
+    else
+        return angularDrag;
 }
 
 bool Rigidbody::isBullet() const {
-    return bullet;
+    if (physicsBody) {
+        return physicsBody->IsBullet();
+    } else {
+        return bullet;
+    }
 }
 
-const sf::Vector2f &Rigidbody::getVelocity() const {
-    return velocity;
+const sf::Vector2f Rigidbody::getVelocity() const {
+    if (physicsBody) {
+        return sf::Vector2f(physicsBody->GetLinearVelocity().x, physicsBody->GetLinearVelocity().y);
+    } else {
+        return velocity;
+    }
 }
 
 void Rigidbody::setType(Rigidbody::bodyType type) {
@@ -172,7 +195,10 @@ Rigidbody::~Rigidbody() {
 }
 
 float Rigidbody::getMass() const {
-    return physicsBody->GetMass();
+    if (physicsBody)
+        return physicsBody->GetMass();
+    else
+        return mass;
 }
 
 
