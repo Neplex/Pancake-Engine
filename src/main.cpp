@@ -14,12 +14,12 @@ int main() {
     scene->addGameObject<Ground>();
     scene->addGameObject<Ground>().transform.setPosition(sf::Vector2f(1000, 228));
 
-    for (int i = 0; i < 1; ++i) {
+    for (int i = 0; i < 2; ++i) {
         //Box * box = new Box("Box");
         scene->addGameObject<Box>();
     }
-
-    scene->addGameObject<Coin>().transform.setPosition(sf::Vector2f(100,-500));
+    scene->addGameObject<Box>().addComponent<PlayerController>();
+    scene->addGameObject<Coin>();
 
     //scene->addGameObject<MainCamera>();
 
