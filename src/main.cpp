@@ -18,7 +18,10 @@ int main() {
         //Box * box = new Box("Box");
         scene->addGameObject<Box>();
     }
-    scene->addGameObject<Box>().addComponent<PlayerController>();
+    Box& player = scene->addGameObject<Box>();
+    player.addComponent<PlayerController>();
+    player.addComponent<Camera>();
+    player.getComponent<Rigidbody>()->setFreezeRotation(true);
     scene->addGameObject<Coin>().transform.setPosition(sf::Vector2f(300, -100));
 
     //scene->addGameObject<MainCamera>();

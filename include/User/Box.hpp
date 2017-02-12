@@ -37,8 +37,6 @@ namespace PancakeEngine {
 
             addComponent<Rigidbody>();
             BoxCollider& bc = addComponent<BoxCollider>();
-            //addComponent<PlayerController>();
-            addComponent<Camera>().zoom(1.2f);
             bc.width = 72;
             bc.height = 72;
             transform.setPosition(sf::Vector2f(100, -100));
