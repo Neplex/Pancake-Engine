@@ -20,7 +20,7 @@
 /**
  * \file        GameObject.hpp
  * \author      Darenn Keller - keller.darenn@gmail.com
- * \author      Nicolas Hiot
+ * \author      Nicolas Hiot - nicolashiot@hotmail.com
  */
 
 #ifndef PANCAKE_GAMEOBJECT_HPP
