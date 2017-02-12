@@ -106,11 +106,10 @@ int Console::handleEvent(ImGuiTextEditCallbackData *data) {
                     updateBuffer(data, candidates[0]);
                 } else {
                     std::stringstream ss;
-                    ss << "Candidates: ";
                     for (unsigned i=0; i < candidates.size()-1; i++)
                         ss << candidates[i].c_str() << ", ";
                     ss << candidates[candidates.size()-1];
-                    print("%s", ss.str().c_str());
+                    print("Candidates: %s", ss.str().c_str());
                 }
             }
             break;
