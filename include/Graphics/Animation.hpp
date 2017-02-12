@@ -48,7 +48,7 @@ namespace PancakeEngine {
          * @param time the duration in millisecond
          * @sa SpriteSheet
          */
-        void addFrame(unsigned int i, unsigned int j, unsigned int time);
+        void addFrame(unsigned int i, unsigned int j, unsigned int time, bool flip = false);
 
     private:
         friend class AssetsManager; ///< The only one can create animation

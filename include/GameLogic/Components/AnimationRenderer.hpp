@@ -67,6 +67,11 @@ namespace PancakeEngine {
         void loop(bool b = true);
 
         /**
+         * @brief Flip the animation
+         */
+        void flip();
+
+        /**
          * @brief Update the animation with time elapse.
          */
         void update();
@@ -84,6 +89,7 @@ namespace PancakeEngine {
         Animation* animation;
         bool isRun; ///< True if the animation is playing
         bool isLoop; ///< True if the animation loop
+        bool isFlip; ///< True if the animation is flip
         double currentTime;
         unsigned int currentFrame;
 

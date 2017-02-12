@@ -54,9 +54,15 @@ namespace PancakeEngine {
          */
         void setSprite(SpriteSheet& sheet, unsigned int i, unsigned int j);
 
+        /**
+         * @brief Flip the sprite.
+         */
+        void flip();
+
     private:
         friend class Window; ///< Draw the sprite
 
+        bool isFlip;
         sf::Sprite sprite;
     };
 }
