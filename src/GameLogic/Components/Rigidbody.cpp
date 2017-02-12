@@ -99,57 +99,65 @@ const sf::Vector2f &Rigidbody::getVelocity() const {
 
 void Rigidbody::setType(Rigidbody::bodyType type) {
     Rigidbody::type = type;
-    switch (type) {
-        case bodyType::dynamicBody:
-            physicsBody->SetType(b2_dynamicBody);
-            break;
-        case bodyType::kinematicBody:
-            physicsBody->SetType(b2_kinematicBody);
-            break;
-        case bodyType::staticBody:
-            physicsBody->SetType(b2_staticBody);
-            break;
-        default:
-            assert(false); // Imposible to have another type of body
+    if (physicsBody) {
+        switch (type) {
+            case bodyType::dynamicBody:
+                physicsBody->SetType(b2_dynamicBody);
+                break;
+            case bodyType::kinematicBody:
+                physicsBody->SetType(b2_kinematicBody);
+                break;
+            case bodyType::staticBody:
+                physicsBody->SetType(b2_staticBody);
+                break;
+            default:
+                assert(false); // Imposible to have another type of body
+        }
     }
 
 }
 
 void Rigidbody::setAngularVelocity(float angularVelocity) {
     Rigidbody::angularVelocity = angularVelocity;
-    physicsBody->SetAngularVelocity(angularVelocity);
+    if (physicsBody)
+        physicsBody->SetAngularVelocity(angularVelocity);
 }
 
 void Rigidbody::setDrag(float drag) {
     Rigidbody::drag = drag;
-    physicsBody->SetLinearDamping(drag);
+    if (physicsBody)
+        physicsBody->SetLinearDamping(drag);
 }
 
 void Rigidbody::setFreezeRotation(bool freezeRotation) {
     Rigidbody::freezeRotation = freezeRotation;
-    // todo check if null
-    physicsBody->SetFixedRotation(freezeRotation);
+    if (physicsBody)
+        physicsBody->SetFixedRotation(freezeRotation);
 }
 
 void Rigidbody::setGravityScale(float gravityScale) {
     Rigidbody::gravityScale = gravityScale;
-    physicsBody->SetGravityScale(gravityScale);
+    if (physicsBody)
+        physicsBody->SetGravityScale(gravityScale);
 }
 
 void Rigidbody::setAngularDrag(float angularDrag) {
     Rigidbody::angularDrag = angularDrag;
-    physicsBody->SetAngularDamping(angularDrag);
+    if (physicsBody)
+        physicsBody->SetAngularDamping(angularDrag);
 }
 
 void Rigidbody::setIsBullet(bool isBullet) {
     Rigidbody::bullet = isBullet;
-    physicsBody->SetBullet(isBullet);
+    if (physicsBody)
+        physicsBody->SetBullet(isBullet);
 }
 
 void Rigidbody::setVelocity(const sf::Vector2f &velocity) {
     Rigidbody::velocity = velocity;
     const b2Vec2 vel = b2Vec2(velocity.x, velocity.y);
-    physicsBody->SetLinearVelocity(vel);
+    if (physicsBody)
+        physicsBody->SetLinearVelocity(vel);
 }
 
 Rigidbody::~Rigidbody() {
@@ -161,6 +169,10 @@ Rigidbody::~Rigidbody() {
         }
         physicsBody = nullptr;
     }
+}
+
+float Rigidbody::getMass() const {
+    return physicsBody->GetMass();
 }
 
 
