@@ -6,6 +6,7 @@
 #define PANCAKE_COIN_HPP
 
 #include <GameLogic/Components/CircleCollider.hpp>
+#include <User/Behaviors/OnTriggerDestroy.hpp>
 #include "GameLogic/GameObject.hpp"
 
 namespace PancakeEngine {
@@ -15,9 +16,10 @@ namespace PancakeEngine {
         Coin()
         {
             name = "Coin";
-            addComponent<Rigidbody>();
-            addComponent<CircleCollider>().radius = 50;
-            transform.setPosition(sf::Vector2f(200,-500));
+            CircleCollider& cc = addComponent<CircleCollider>();
+            cc.radius = 20;
+            cc.isTrigger = true;
+            addComponent<OnTriggerDestroy>();
         }
     };
 }

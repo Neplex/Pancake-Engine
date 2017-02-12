@@ -19,7 +19,7 @@ int main() {
         scene->addGameObject<Box>();
     }
     scene->addGameObject<Box>().addComponent<PlayerController>();
-    scene->addGameObject<Coin>();
+    scene->addGameObject<Coin>().transform.setPosition(sf::Vector2f(300, -100));
 
     //scene->addGameObject<MainCamera>();
 
