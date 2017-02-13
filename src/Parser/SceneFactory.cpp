@@ -35,14 +35,12 @@ namespace PancakeEngine{
         SpriteRenderer& spriteRenderer = gameObject.addComponent<SpriteRenderer>();
         std::vector<TMX::Parser::Tileset>::iterator itTileset;
         for(itTileset=myParser->tilesetList.begin();itTileset!=myParser->tilesetList.end();++itTileset) {
-            if((itTileset->firstGID <= gid) && (itTileset->firstGID + itTileset->tileCount) >= gid){
+            if((itTileset->firstGID <= gid) && (itTileset->firstGID + itTileset->tileCount) > gid){
                 std::string source = itTileset->source;
                 CalculPositionInSprite(gid,itTileset->firstGID,itTileset->column,&i,&j);
-                SpriteSheet& spriteSheet =  AssetsManager::createSpriteSheet(source,source,itTileset->width,itTileset->height);
-                if(itTileset->a.listFrame.empty())
+                SpriteSheet& spriteSheet =  AssetsManager::createSpriteSheet(gameObject.name,source,itTileset->width,itTileset->height);
+                if(gameObject.name != "Player")
                     spriteRenderer.setSprite(spriteSheet,i,j);
-                else
-                    setAnimation(gid,itTileset,gameObject,spriteSheet);
             }
         }
     }
@@ -68,27 +66,27 @@ namespace PancakeEngine{
         unsigned int i,j;
         std::map<unsigned int, TMX::Parser::Object>::iterator itObject;
         for(itObject = object.begin();itObject != object.end();++itObject) {
-            GameObject &gameObject = scene.addGameObject<GameObject>();
-            v2f.x = itObject->second.x;
-            v2f.y = itObject->second.y;
-            gameObject.transform.setPosition(v2f);
-            gameObject.name = itObject->second.name;
-            findImageOfSprite(itObject->second.gid, myParser,gameObject);
-            BoxCollider& bcGroundingBox = gameObject.addComponent<BoxCollider>();
-            bcGroundingBox.width = itObject->second.width;
-            bcGroundingBox.height = itObject->second.height;
-            //bcGroundingBox.friction = 0;
-            //rb.setIsBullet(true);
-            if(gameObject.name == "castle"){
-                bcGroundingBox.density = 1;
+            if(itObject->second.name == "Player"){
+                Player& player = scene.addGameObject<Player>();
+                v2f.x = itObject->second.x;
+                v2f.y = itObject->second.y;
+                BoxCollider& bcGroundingBox = player.addComponent<BoxCollider>();
+                bcGroundingBox.width = itObject->second.width;
+                bcGroundingBox.height = itObject->second.height;
+                player.transform.setPosition(v2f);
+                findImageOfSprite(itObject->second.gid, myParser,player);
+                player.setAnimation();
             }
-            if(gameObject.name == "Player"){
-                bcGroundingBox.density = 1;
-                Rigidbody& rb = gameObject.addComponent<Rigidbody>();
-                //rb.setFreezeRotation(true);
-                gameObject.addComponent<PlayerController>();
-                gameObject.addComponent<Camera>().zoom(1.2f);
-
+            else{
+                GameObject &gameObject = scene.addGameObject<GameObject>();
+                v2f.x = itObject->second.x;
+                v2f.y = itObject->second.y;
+                gameObject.transform.setPosition(v2f);
+                gameObject.name = itObject->second.name;
+                findImageOfSprite(itObject->second.gid, myParser,gameObject);
+                BoxCollider& bcGroundingBox = gameObject.addComponent<BoxCollider>();
+                bcGroundingBox.width = itObject->second.width;
+                bcGroundingBox.height = itObject->second.height;
             }
         }
     }

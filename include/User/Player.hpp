@@ -24,32 +24,27 @@ namespace PancakeEngine {
     public:
         Player() :GameObject() {
             name = "Player";
-
-            BoxCollider& bc = addComponent<BoxCollider>();
             addComponent<Rigidbody>();
             addComponent<PlayerController>();
             addComponent<Camera>().zoom(1.2f);
-            bc.width = 72;
-            bc.height = 72;
-            transform.setPosition(sf::Vector2f(100, -100));
-            transform.setRotation(0);
-
-            /*AssetsManager::createSpriteSheet("sprites", "../resources/tiles_spritesheet.png", 72, 72);
-            Animation& a1 = AssetsManager::createAnimation("a1", "sprites");
-            a1.addFrame(0, 9, 200);
-            a1.addFrame(0, 10, 200);
-            Animation& a2 = AssetsManager::createAnimation("a2", "sprites");
-            a2.addFrame(0, 1, 200);
-            a2.addFrame(0, 2, 200);
-            Animator& ar = addComponent<Animator>();
-            ar.addAnimation("idle", a1, sh1);
-            ar.addAnimation("jump", a2, sh2);*/
-
-            //addComponent<SpriteRenderer>();
 
            /* LuaScript& lua = addComponent<LuaScript>();
             lua.setScript("../resources/scripts/test.lua");*/
         }
+        void setAnimation(){
+            Animation &a = AssetsManager::createAnimation("PlayerAnimation", "Player");
+            a.addFrame(0, 0, 100);
+            a.addFrame(0, 2, 100);
+            a.addFrame(0, 1, 100);
+            a.addFrame(0, 0, 100);
+            a.addFrame(0, 1, 100);
+
+            AnimationRenderer &ar = addComponent<AnimationRenderer>();
+            ar.setAnimation(a);
+            ar.start();
+            ar.loop();
+            ar.play();
+        };
     };
 }
 #endif //PANCAKE_PLAYER_HPP
