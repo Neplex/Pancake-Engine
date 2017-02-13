@@ -10,6 +10,7 @@
 #include <lua.hpp>
 #include <lualib.h>
 #include <lauxlib.h>
+#include <lua.h>
 
 namespace PancakeEngine {
     /**
