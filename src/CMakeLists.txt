@@ -13,4 +13,4 @@ elseif(UNIX)
     set(LIB GL)
 endif()
 
-target_link_libraries(Pancake ${SFML_LIB_DEBUG} ${LIB})
+target_link_libraries(Pancake ${SFML_LIB_DEBUG} ${LIB} ${LIB_LUA})
