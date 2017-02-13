@@ -14,3 +14,8 @@ bool Input::getButtonPressed(const std::string& buttonName)
     assert(buttons.find(buttonName) != buttons.end()); // button should be in the map (created)
     return buttons[buttonName]->isButtonPressed();
 }
+
+bool Input::getButtonHeld(const std::string &buttonName) {
+    assert(buttons.find(buttonName) != buttons.end()); // button should be in the map (created)
+    return buttons[buttonName]->isButtonHeld();
+}

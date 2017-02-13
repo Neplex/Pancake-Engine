@@ -57,6 +57,8 @@ namespace PancakeEngine {
 
         float getDrag() const;
 
+        float getMass() const;
+
         bool isFreezeRotation() const;
 
         float getGravityScale() const;
@@ -65,7 +67,7 @@ namespace PancakeEngine {
 
         bool isBullet() const;
 
-        const sf::Vector2f &getVelocity() const;
+        const sf::Vector2f getVelocity() const;
 
         // Methods
 
@@ -120,7 +122,11 @@ namespace PancakeEngine {
 
         friend class PhysicsEngine;
 
+        ~Rigidbody();
+
         bodyType type; ///< The physical behaviour type of the Rigidbody.
+
+        // These attributes are only use before the physic body is created
         float angularVelocity; ///< Angular velocity in degrees per second.
         float drag; ///< Coefficient of drag.
         bool freezeRotation; ///< Controls whether physics will change the rotation of the object.

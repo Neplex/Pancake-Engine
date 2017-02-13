@@ -4,11 +4,12 @@
 
 #include <SFML/Window/Event.hpp>
 #include <iostream>
-#include "../include/Debug/Debug.hpp"
+#include <Debug/Widgets/Console.hpp>
+#include "Debug/Debug.hpp"
 #include "Imgui/imgui.h"
 #include "Imgui/imgui_internal.h"
-#include "../include/Debug/Widgets/AppLog.hpp"
-#include "../include/Debug/MainDebugMenu.hpp"
+#include "Debug/Widgets/AppLog.hpp"
+#include "Debug/MainDebugMenu.hpp"
 
 using namespace PancakeEngine;
 

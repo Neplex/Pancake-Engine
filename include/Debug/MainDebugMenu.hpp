@@ -26,6 +26,7 @@
 #define PANCAKE_MAINDEBUGMENU_HPP
 
 #include <map>
+#include <Debug/Widgets/Console.hpp>
 #include "Imgui/imgui.h"
 #include "Widgets/AppLog.hpp"
 
@@ -37,6 +38,9 @@ namespace PancakeEngine {
      */
     class MainDebugMenu {
     public:
+        MainDebugMenu() {
+        }
+
         ~MainDebugMenu() {
             for (auto p : loggers) {
                 delete p.second;
@@ -49,6 +53,10 @@ namespace PancakeEngine {
         {
             // Draw the main bar
             if (ImGui::BeginMainMenuBar()) {
+                if (ImGui::BeginMenu("Console")) {
+                    ImGui::MenuItem("Console", NULL, &consoleToggled);
+                    ImGui::EndMenu();
+                }
                 if (ImGui::BeginMenu("Loggers")) {
                     auto it = loggers.begin();
                     for (; it!=loggers.end(); ++it) {
@@ -65,6 +73,13 @@ namespace PancakeEngine {
                 if (it->second) {
                     loggers[it->first]->Draw(it->first.c_str());
                 }
+            }
+
+            // if console is toggled
+            static Console c;
+            console = &c;
+            if (consoleToggled) {
+                console->draw("Console", &consoleToggled);
             }
         }
 
@@ -90,6 +105,8 @@ namespace PancakeEngine {
         }
 
     private:
+        Console* console;
+        bool consoleToggled = false;
         std::map<const std::string, AppLog*> loggers; ///< The name of the logger associated to the logger
         std::map<const std::string, bool> loggersToggled; ///< Associate a bool to each logger, if the menu item  of a logger is toggled, set the associated bool to true;
     };

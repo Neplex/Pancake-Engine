@@ -47,6 +47,8 @@ namespace PancakeEngine {
          */
         static bool getButtonPressed(const std::string& buttonName);
 
+        static bool getButtonHeld(const std::string& buttonName);
+
     private:
         friend class InputManager; ///< The input manager update #buttons.
         static std::map<std::string, Button*> buttons; ///< Associate a name with a button.

@@ -31,15 +31,22 @@ public:
 
 
     void update() {
-        if (PancakeEngine::Input::getButtonPressed("Jump")) {
+
+        float velocityDesired = 0;
+        PancakeEngine::Rigidbody* rb = gameObject->getComponent<PancakeEngine::Rigidbody>();
+        if (PancakeEngine::Input::getButtonPressed("Jump") && rb->getVelocity().y == 0) {
             gameObject->getComponent<PancakeEngine::Rigidbody>()->applyLinearImpulse(sf::Vector2f(0, -5));;
         }
-        if (PancakeEngine::Input::getButtonPressed("Right")) {
-            gameObject->getComponent<PancakeEngine::Rigidbody>()->setVelocity(sf::Vector2f(5,0));
+        if (PancakeEngine::Input::getButtonHeld("Right")) {
+            velocityDesired = 5;
         }
-        if (PancakeEngine::Input::getButtonPressed("Left")) {
-            gameObject->getComponent<PancakeEngine::Rigidbody>()->setVelocity(sf::Vector2f(-5,0));
+        if (PancakeEngine::Input::getButtonHeld("Left")) {
+            velocityDesired = -5;
         }
+
+        float velChange = velocityDesired - rb->getVelocity().x;
+        float impulse = rb->getMass() * velChange; //disregard time factor
+        rb->applyLinearImpulse(sf::Vector2f(impulse,0));
     }
 };
 

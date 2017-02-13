@@ -8,8 +8,11 @@
 
 using namespace PancakeEngine;
 
+int GameObject::numGameobjects = 0;
+
 GameObject::GameObject() : components() {
     transform.gameObject = this;
+    numGameobjects++;
 }
 
 void GameObject::awake() {
@@ -27,12 +30,33 @@ void GameObject::start() {
 void GameObject::update() {
     for (unsigned i = 0; i < components.size(); ++i) {
         components[i]->update();
+        if (components[i]->toDestroy) {
+            componentsToDestroy.push_back(components[i]);
+            components[i] = components.back();
+            components.pop_back();
+            i--;
+        }
     }
+    destroyComponents();
 }
 
 void GameObject::lateUpdate() {
     for (unsigned i = 0; i < components.size(); ++i) {
         components[i]->lateUpdate();
+        if (components[i]->toDestroy) {
+            componentsToDestroy.push_back(components[i]);
+            components[i] = components.back();
+            components.pop_back();
+            i--;
+        }
     }
+    destroyComponents();
+}
+
+void GameObject::destroyComponents() {
+    for (unsigned i = 0; i < componentsToDestroy.size(); ++i) {
+        delete componentsToDestroy[i];
+    }
+    componentsToDestroy.clear();
 }
 

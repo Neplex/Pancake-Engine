@@ -20,7 +20,7 @@
 /**
  * \file        GameObject.hpp
  * \author      Darenn Keller - keller.darenn@gmail.com
- * \author      Nicolas Hiot
+ * \author      Nicolas Hiot - nicolashiot@hotmail.com
  */
 
 #ifndef PANCAKE_GAMEOBJECT_HPP
@@ -28,7 +28,6 @@
 
 #include <vector>
 #include <string>
-#include <Debug/Debug.hpp>
 #include <iostream>
 #include <GameLogic/Components/Behavior.hpp>
 #include "../GameLogic/Components/Transform.hpp"
@@ -70,7 +69,7 @@ namespace PancakeEngine {
                 if ((component = dynamic_cast<T*>(components[i])))
                     return component;
             }
-            return NULL;
+            return nullptr;
         }
 
         /**
@@ -132,21 +131,34 @@ namespace PancakeEngine {
          */
         void lateUpdate();
 
+        static int getNbGameObjects() {
+            return numGameobjects;
+        }
+
     protected:
         friend class Scene; ///< The scene is the only one to create and destroy gameobjects
         GameObject();
+        std::vector<Component*> components; ///< The components of the gameobject.
         ~GameObject() {
-            for (Component* c : components) {
-                delete c;
+            for (int i = 0; i < components.size(); ++i) {
+                delete components[i];
+                components[i] = components.back();
+                components.pop_back();
+                i--;
             }
+            numGameobjects--;
         }
-        std::vector<Component*> components; ///< The components of the gameobject in the added order.
 
     private:
         friend class PhysicsListener; ///< Is the only one to call OnCollision*
-        friend class Behavior;
         friend void Behavior::destroy(GameObject& go);
+
+        static int numGameobjects;
+
         bool toDestroy = false;
+        std::vector<Component *> componentsToDestroy;
+
+        void destroyComponents();
 
         /**
          * @brief Called by the physics listener when this gameObject collides another.

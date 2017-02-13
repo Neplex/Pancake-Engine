@@ -18,52 +18,20 @@
 */
 
 /**
- * @file        Component.hpp
+ * @file        Behavior.cpp
  * @author      Darenn Keller - keller.darenn@gmail.com
  */
 
-#ifndef PANCAKE_COMPONENT_HPP
-#define PANCAKE_COMPONENT_HPP
-
+#include "GameLogic/Components/Behavior.hpp"
+#include "GameLogic/GameObject.hpp"
 
 namespace PancakeEngine {
-    class GameObject;
-    class Behavior;
 
-    class Component {
-    public:
-        GameObject* gameObject;
+    void Behavior::destroy(PancakeEngine::GameObject &go) {
+        go.toDestroy = true;
+    }
 
-
-        /**
-         * Called at GameObject creation.
-         */
-        virtual void awake() { };
-
-        /**
-         * Called just before the first update call.
-         */
-        virtual void start() { };
-
-        /**
-         * Called at each frame before physics.
-         */
-        virtual void update() { };
-
-        /**
-         * Called at each frame update.
-         */
-        virtual void lateUpdate() { };
-
-    protected:
-        virtual ~Component() {};
-
-
-    private:
-        friend class Behavior; ///< To allow modify toDestroy flag
-        friend class GameObject; ///< to destroy the component
-        bool toDestroy = false;
-    };
+    void Behavior::destroy(Component &c) {
+        c.toDestroy = true;
+    }
 }
-
-#endif //PANCAKE_COMPONENT_HPP

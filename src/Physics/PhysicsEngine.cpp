@@ -6,6 +6,7 @@
 #include "GameLogic/Components/Transform.hpp"
 #include "Physics/PhysicsUserData.hpp"
 #include <iostream>
+#include <GameLogic/Components/CircleCollider.hpp>
 
 using namespace PancakeEngine;
 
@@ -75,32 +76,6 @@ void PhysicsEngine::addRigidBodyToPhysicsWorld(Rigidbody &rb) {
     createFixtures(*rb.gameObject, *body);
 }
 
-// Helper functions
-
-void PhysicsEngine::createFixtures(const GameObject& go, b2Body& body) {
-    // Create a fixture for each collider
-    std::vector<Collider *> v = go.getComponents<Collider>();
-    for (unsigned i = 0; i < v.size(); ++i) {
-        Collider & c = *v[i];
-        b2PolygonShape shape;
-        if (dynamic_cast<BoxCollider *>(&c) != NULL) {
-            BoxCollider *bc = (BoxCollider *) &c;
-            shape.SetAsBox((bc->width/2)/PhysicsEngine::numberPixelsPerMeter, (bc->height/2)/PhysicsEngine::numberPixelsPerMeter,
-                           (b2Vec2(c.offset.x/PhysicsEngine::numberPixelsPerMeter,c.offset.y/PhysicsEngine::numberPixelsPerMeter)),
-                           c.gameObject->transform.getRotation());
-        } else {
-            assert(false); // Collider unknown
-        }
-        b2FixtureDef fixtureDef;
-        fixtureDef.shape = &shape;
-        fixtureDef.density = c.density;
-        fixtureDef.friction = c.friction;
-        fixtureDef.restitution = c.bounciness;
-        fixtureDef.isSensor = c.isTrigger;
-        fixtureDef.userData = (void *) &c;
-        body.CreateFixture(&fixtureDef);
-    }
-}
 
 void PhysicsEngine::setPosition(const sf::Vector2f& pos, b2Body& body) {
     body.SetTransform(b2Vec2(pos.x / numberPixelsPerMeter, pos.y / numberPixelsPerMeter), body.GetAngle());
@@ -109,5 +84,48 @@ void PhysicsEngine::setPosition(const sf::Vector2f& pos, b2Body& body) {
 void PhysicsEngine::setRotation(const float angle, b2Body &body) {
     body.SetTransform(body.GetPosition(), angle);
 }
+
+void PhysicsEngine::removeBody(b2Body* body) {
+    world.DestroyBody(body);
+    body = nullptr;
+}
+
+// Helper functions
+
+void PhysicsEngine::createFixtures(const GameObject& go, b2Body& body) {
+    // Create a fixture for each collider
+    std::vector<Collider *> v = go.getComponents<Collider>();
+    for (unsigned i = 0; i < v.size(); ++i) {
+        Collider & c = *v[i];
+        b2FixtureDef fixtureDef;
+        b2PolygonShape polygonShape;
+        b2CircleShape circleShape;
+        if (dynamic_cast<BoxCollider *>(&c) != NULL) {
+
+            BoxCollider *bc = (BoxCollider *) &c;
+            polygonShape.SetAsBox((bc->width/2)/PhysicsEngine::numberPixelsPerMeter, (bc->height/2)/PhysicsEngine::numberPixelsPerMeter,
+                    (b2Vec2(c.offset.x/PhysicsEngine::numberPixelsPerMeter,c.offset.y/PhysicsEngine::numberPixelsPerMeter)),
+                    c.gameObject->transform.getRotation());
+            fixtureDef.shape = &polygonShape;
+        }
+        else if (dynamic_cast<CircleCollider *>(&c) != NULL) {
+            CircleCollider* cc = (CircleCollider*) &c;
+            circleShape.m_p.Set(cc->offset.x/PhysicsEngine::numberPixelsPerMeter, cc->offset.y/PhysicsEngine::numberPixelsPerMeter);
+            circleShape.m_radius = cc->radius/PhysicsEngine::numberPixelsPerMeter;
+            fixtureDef.shape = &circleShape;
+        }
+        else {
+            assert(false); // Collider unknown
+        }
+        fixtureDef.density = c.density;
+        fixtureDef.friction = c.friction;
+        fixtureDef.restitution = c.bounciness;
+        fixtureDef.isSensor = c.isTrigger;
+        fixtureDef.userData = (void *) &c;
+        c.fixture = body.CreateFixture(&fixtureDef);
+    }
+}
+
+
 
 

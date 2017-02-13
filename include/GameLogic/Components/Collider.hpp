@@ -21,6 +21,7 @@ namespace PancakeEngine {
 
         void awake();
 
+        // TODO make getters and setters
         Rigidbody* attachedRigidbody;
         // Is this collider configured as a trigger?
         bool isTrigger;
@@ -47,10 +48,14 @@ namespace PancakeEngine {
             return Rigidbody::bodyType::staticBody;
         }
 
+    protected:
+        ~Collider();
+
     private:
         friend class Engine;
         friend class Transform; ///< Change the position of the fixture
-
+        friend class PhysicsEngine;
+        friend class Rigidbody; ///< null fixtures if removed body
         static PhysicsEngine* physicsEngine;
         b2Fixture* fixture;
     };

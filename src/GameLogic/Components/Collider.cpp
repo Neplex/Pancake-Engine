@@ -11,7 +11,7 @@ using namespace PancakeEngine;
 
 PhysicsEngine* Collider::physicsEngine = NULL;
 
-PancakeEngine::Collider::Collider() {
+PancakeEngine::Collider::Collider() : isTrigger(false), bounciness(0), density(1), friction(1), offset(sf::Vector2f(0, 0)){
     fixture = nullptr;
 }
 
@@ -28,4 +28,11 @@ void Collider::awake() {
         // Should have an engine
     }
     // Else we do nothing, the awake of the rigibody will do the work
+}
+
+Collider::~Collider() {
+    if (gameObject->getComponent<Rigidbody>() == nullptr && fixture != nullptr) { // we let the rigidbody destroy the body if there is one
+        physicsEngine->removeBody(fixture->GetBody());
+        fixture = nullptr;
+    }
 }
