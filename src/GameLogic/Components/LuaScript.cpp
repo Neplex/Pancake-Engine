@@ -17,6 +17,7 @@
 #define SPRITE_RENDERER "SpriteRenderer"
 #define CAMERA "Camera"
 #define ANIMATION_RENDERER "AnimationRenderer"
+#define RIGIDBODY "Rigidbody"
 
 #define CALL_FUNCTION(L, name)                                                 \
   {                                                                            \
@@ -47,7 +48,7 @@
 
 using namespace PancakeEngine;
 
-LuaScript::LuaScript() : Component() {
+LuaScript::LuaScript() : Behavior() {
     Debug::log("Lua", "[C++] Init lua");
     L = luaL_newstate();
 
@@ -91,6 +92,13 @@ int input_getButtonPressed(lua_State *L) {
     if (lua_gettop(L) != 1)
     THROW_ERROR(L, "invalid number of argument in 'getButtonPressed'");
     lua_pushboolean(L, Input::getButtonPressed(luaL_checklstring(L, 1, NULL)));
+    return 1;
+}
+
+int input_getButtonHeld(lua_State *L) {
+    if (lua_gettop(L) != 1) THROW_ERROR(L,
+                                        "invalid number of argument in 'getButtonHeld'");
+    lua_pushboolean(L, Input::getButtonHeld(luaL_checklstring(L, 1, NULL)));
     return 1;
 }
 
@@ -238,6 +246,7 @@ int gameObject_getComponent(lua_State *L) {
     GET_COMPONENT(SPRITE_RENDERER, SpriteRenderer)
     GET_COMPONENT(ANIMATION_RENDERER, AnimationRenderer)
     GET_COMPONENT(CAMERA, Camera)
+    GET_COMPONENT(RIGIDBODY, Rigidbody)
     {
         std::stringstream err;
         err << "invalid component type '" << type.c_str() << "'";
@@ -315,11 +324,39 @@ int animationRenderer_loop(lua_State *L) {
     return 0;
 }
 
+int rigidbody_getVelocity(lua_State *L) {
+    if (lua_gettop(L) != 1) THROW_ERROR(L,
+                                        "invalid number of argument in 'getVelocity'");
+    Rigidbody **rb = (Rigidbody **) luaL_checkudata(L, -1, RIGIDBODY);
+    lua_pushnumber(L, (*rb)->getVelocity().x);
+    lua_pushnumber(L, (*rb)->getVelocity().y);
+    return 2;
+}
+
+int rigidbody_applyLinearImpulse(lua_State *L) {
+    if (lua_gettop(L) != 3) THROW_ERROR(L,
+                                        "invalid number of argument in 'applyLinearImpulse'");
+    Rigidbody **rb = (Rigidbody **) luaL_checkudata(L, -3, RIGIDBODY);
+    float x = (float) luaL_checknumber(L, -2);
+    float y = (float) luaL_checknumber(L, -1);
+    (*rb)->applyLinearImpulse(sf::Vector2f(x, y));
+    return 0;
+}
+
+int rigidbody_getMass(lua_State *L) {
+    if (lua_gettop(L) != 1) THROW_ERROR(L,
+                                        "invalid number of argument in 'getMass'");
+    Rigidbody **rb = (Rigidbody **) luaL_checkudata(L, -1, RIGIDBODY);
+    lua_pushnumber(L, (*rb)->getMass());
+    return 0;
+}
+
 void LuaScript::bindFunctions() {
     Debug::log("Lua", "[C++] Bind functions");
 
     lua_register(L, "print", lua_print);
     lua_register(L, "getButtonPressed", input_getButtonPressed);
+    lua_register(L, "getButtonHeld", input_getButtonHeld);
     lua_register(L, "getDeltaTime", time_getDeltaTime);
     lua_register(L, "getSpriteSheet", assetsManager_getSpriteSheet);
     lua_register(L, "getDefaultSpriteSheet", assetsManager_getDefaultSpriteSheet);
@@ -365,6 +402,15 @@ void LuaScript::bindFunctions() {
             {NULL, NULL}
     };
     NEW_LUA_TYPE(L, CAMERA, camera_methods);
+
+    // Rigidbody type
+    static const luaL_Reg rigidbody_methods[] = {
+            {"getVelocity",        rigidbody_getVelocity},
+            {"applyLinearImpulse", rigidbody_applyLinearImpulse},
+            {"getMass",            rigidbody_getMass},
+            {NULL, NULL}
+    };
+    NEW_LUA_TYPE(L, RIGIDBODY, rigidbody_methods);
 
     // GameObject type
     static const luaL_Reg gameObject_methods[] = {
