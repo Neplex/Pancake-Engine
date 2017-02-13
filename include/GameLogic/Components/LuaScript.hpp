@@ -37,9 +37,9 @@ namespace PancakeEngine {
      * @class LuaScript
      * @brief Component that can run a lua script.
      * @details All component methods will call the lua function with the same name in the current script.
-     * @sa Component
+     * @sa Component Behavior
      */
-    class LuaScript : public Component {
+    class LuaScript : public Behavior {
     public:
         /**
          * @brief Set and run a new script

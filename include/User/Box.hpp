@@ -55,9 +55,6 @@ namespace PancakeEngine {
             ar.addAnimation("jump", a2, sh2);
 
             addComponent<SpriteRenderer>();
-
-            LuaScript& lua = addComponent<LuaScript>();
-            lua.setScript("../resources/scripts/test.lua");
         }
     };
 }
