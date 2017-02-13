@@ -16,6 +16,7 @@
 #include "../Graphics/AssetsManager.hpp"
 #include "../GameLogic/Components/SpriteRenderer.hpp"
 #include "PlayerController.hpp"
+#include "../GameLogic/Components/LuaScript.hpp"
 #include <string>
 
 namespace PancakeEngine {
@@ -35,8 +36,10 @@ namespace PancakeEngine {
         Box() :GameObject() {
             name = "Box";
 
-            addComponent<Rigidbody>();
             BoxCollider& bc = addComponent<BoxCollider>();
+            addComponent<Rigidbody>();
+            addComponent<PlayerController>();
+            addComponent<Camera>().zoom(1.2f);
             bc.width = 72;
             bc.height = 72;
             transform.setPosition(sf::Vector2f(100, -100));
@@ -54,6 +57,9 @@ namespace PancakeEngine {
             ar.addAnimation("jump", a2, sh2);
 
             addComponent<SpriteRenderer>();
+
+            LuaScript& lua = addComponent<LuaScript>();
+            lua.setScript("../resources/scripts/test.lua");
         }
     };
 }
