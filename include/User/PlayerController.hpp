@@ -5,14 +5,13 @@
 #ifndef PANCAKE_PLAYERCONTROLLER_HPP
 #define PANCAKE_PLAYERCONTROLLER_HPP
 
-
-#include "../GameLogic/Components/Component.hpp"
-#include "../Inputs/Input.hpp"
-#include "../GameLogic/Components/Rigidbody.hpp"
-#include "../GameLogic/GameObject.hpp"
+#include "GameLogic.hpp"
 
 class PlayerController : public PancakeEngine::Behavior {
 public:
+
+    PancakeEngine::Animator* animator;
+
     void OnCollisionEnter(const PancakeEngine::Collision &collision) override {
         PancakeEngine::Debug::log("Foo", "The player collides something !");
     }
@@ -28,7 +27,6 @@ public:
     void OnTriggerExit(const PancakeEngine::Collider &triggered, const PancakeEngine::Collider &other) override {
         PancakeEngine::Debug::log("Foo", "The player exit trigger !");
     }
-
 
     void update() {
 
