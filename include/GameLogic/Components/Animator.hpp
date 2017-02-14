@@ -51,7 +51,7 @@ namespace PancakeEngine {
          * @brief Get the animation associate with the current GameObject state
          * @return the current animation
          */
-        AnimationRenderer& getCurrentAnimation() const;
+        const AnimationRenderer* getCurrentAnimation() const;
 
         void update();
 

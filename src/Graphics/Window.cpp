@@ -72,8 +72,7 @@ void Window::drawScene() {
 
         // Get Animator
         const Animator * animator = gameObject->getComponent<Animator>();
-        // TODO: segmentation fault if animator is empty
-        if (animator != NULL) window.draw(animator->getCurrentAnimation().sprite, renderStates);
+        if (animator != NULL && animator->getCurrentAnimation() != NULL) window.draw(animator->getCurrentAnimation()->sprite, renderStates);
 
         // Debug elements
         if (debug) {

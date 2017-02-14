@@ -26,17 +26,20 @@ void Animator::addAnimation(std::string name, Animation& animation, std::string 
     }
 }
 
-AnimationRenderer& Animator::getCurrentAnimation() const {
-    return *states.at(currentState).animation;
+const AnimationRenderer* Animator::getCurrentAnimation() const {
+    if (states.size() == 0) return NULL;
+    return states.at(currentState).animation;
 }
 
 void Animator::update() {
-    std::string state = states[currentState].handler();
-    if (state == currentState) {
-        states[currentState].animation->update();
-    } else if (states.find(state) != states.end()) {
-        states[currentState].animation->stop();
-        currentState = state;
-        states[currentState].animation->play();
+    if (states.size() > 0) {
+        std::string state = states[currentState].handler();
+        if (state == currentState) {
+            states[currentState].animation->update();
+        } else if (states.find(state) != states.end()) {
+            states[currentState].animation->stop();
+            currentState = state;
+            states[currentState].animation->play();
+        }
     }
 }
