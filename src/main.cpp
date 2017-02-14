@@ -1,3 +1,4 @@
+#include <User/Coin.hpp>
 #include "../include/Engine.hpp"
 #include "../include/User/Box.hpp"
 #include "../include/User/MainCamera.hpp"
@@ -13,14 +14,20 @@ int main() {
     //scene.addGameObject<Ground>();
     //scene.addGameObject<Ground>().transform.setPosition(sf::Vector2f(1000, 228));
 
-    /*for (int i = 0; i < 1; ++i) {
+    for (int i = 0; i < 1; ++i) {
         //Box * box = new Box("Box");
-        scene.addGameObject<Box>();
-    }*/
+        scene->addGameObject<Box>();
+    }
+    Box& player = scene->addGameObject<Box>();
+    player.addComponent<PlayerController>();
+    player.addComponent<Camera>();
+    player.getComponent<Rigidbody>()->setFreezeRotation(true);
+    scene->addGameObject<Coin>().transform.setPosition(sf::Vector2f(300, -100));
+
     //scene->addGameObject<MainCamera>();
 
-    engine->sceneManager.loadScene(&scene);
-    engine->window.setDebug();
+    engine->sceneManager.loadScene(scene);
+   // engine->window.setDebug();
 
     InputManager::createButton("Jump", std::vector<sf::Keyboard::Key> ({sf::Keyboard::Key::Space}));
     InputManager::createButton("Left", std::vector<sf::Keyboard::Key> ({sf::Keyboard::Key::Left}));

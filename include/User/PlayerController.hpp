@@ -6,43 +6,28 @@
 #define PANCAKE_PLAYERCONTROLLER_HPP
 
 
-#include "../Inputs/Input.hpp"
-#include "../GameLogic/Components/Rigidbody.hpp"
-#include "../GameLogic/GameObject.hpp"
+#include "GameLogic.hpp"
+#include "Inputs.hpp"
 
 class PlayerController : public PancakeEngine::Behavior {
 public:
-    void OnCollisionEnter(const PancakeEngine::Collision &collision) override {
-        PancakeEngine::Debug::log("Foo", "The player collides something !");
-        //destroy(*collision.otherCollider.gameObject);
-    }
-
-    void OnCollisionExit(const PancakeEngine::Collision &collision) override {
-        PancakeEngine::Debug::log("Foo", "The player exit collides something !");
-    }
-
-    void OnTriggerEnter(const PancakeEngine::Collider& triggered, const PancakeEngine::Collider& other) override {
-        PancakeEngine::Debug::log("Foo", "The player triggers something !");
-    }
-
-    void OnTriggerExit(const PancakeEngine::Collider &triggered, const PancakeEngine::Collider &other) override {
-        PancakeEngine::Debug::log("Foo", "The player exit trigger !");
-    }
-
-
     void update() {
-        if (PancakeEngine::Input::getButtonPressed("Jump")) {
+
+        float velocityDesired = 0;
+        PancakeEngine::Rigidbody* rb = gameObject->getComponent<PancakeEngine::Rigidbody>();
+        if (PancakeEngine::Input::getButtonPressed("Jump") && rb->getVelocity().y < 0.1 && rb->getVelocity().y > -0.1) {
             gameObject->getComponent<PancakeEngine::Rigidbody>()->applyLinearImpulse(sf::Vector2f(0, -5));;
         }
-        if (PancakeEngine::Input::getButtonPressed("Right")) {
-            gameObject->getComponent<PancakeEngine::Rigidbody>()->applyLinearImpulse(sf::Vector2f(5,0));
+        if (PancakeEngine::Input::getButtonHeld("Right")) {
+            velocityDesired = 5;
         }
-        if (PancakeEngine::Input::getButtonPressed("Left")) {
-            gameObject->getComponent<PancakeEngine::Rigidbody>()->applyLinearImpulse(sf::Vector2f(-5  ,0));
+        if (PancakeEngine::Input::getButtonHeld("Left")) {
+            velocityDesired = -5;
         }
-    }
-    void awake() {
-        gameObject->getComponent<PancakeEngine::Rigidbody>()->setFreezeRotation(true);
+
+        float velChange = velocityDesired - rb->getVelocity().x;
+        float impulse = rb->getMass() * velChange; //disregard time factor
+        rb->applyLinearImpulse(sf::Vector2f(impulse,0));
     }
 };
 

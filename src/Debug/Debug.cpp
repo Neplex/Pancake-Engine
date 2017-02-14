@@ -3,28 +3,25 @@
 //
 
 #include <SFML/Window/Event.hpp>
-#include <iostream>
 #include <Debug/Widgets/Console.hpp>
-#include "../include/Debug/Debug.hpp"
-#include "Imgui/imgui.h"
+#include "Debug/Debug.hpp"
 #include "Imgui/imgui_internal.h"
-#include "../include/Debug/Widgets/AppLog.hpp"
-#include "../include/Debug/MainDebugMenu.hpp"
-
-using namespace PancakeEngine;
 
 using namespace PancakeEngine;
 
 bool Debug::initialized = false;
 sf::RenderWindow * Debug::renderWindow = nullptr;
+Window* Debug::window = nullptr;
 sf::Clock Debug::clock = sf::Clock();
 MainDebugMenu Debug::mainDebugMenu;
 FixedOverlayDebug Debug::fixedOverlayDebug;
 bool Debug::displayDebug = false;
 
-void Debug::init(sf::RenderWindow& window) {
-    ImGui::SFML::Init(window);
-    renderWindow = &window;
+void Debug::init(sf::RenderWindow& rwin, Window& win) {
+    ImGui::SFML::Init(rwin);
+    window = &win;
+    //win.setDebug(true);
+    renderWindow = &rwin;
     initialized = true;
 }
 

@@ -21,6 +21,7 @@ namespace PancakeEngine {
 
         void awake();
 
+        // TODO make getters and setters
         Rigidbody* attachedRigidbody;
         // Is this collider configured as a trigger?
         bool isTrigger;

@@ -7,7 +7,7 @@
 
 using namespace PancakeEngine;
 
-AnimationRenderer::AnimationRenderer() : sprite(), animation(NULL), isRun(false), isLoop(false), currentTime(0), currentFrame(0) {}
+AnimationRenderer::AnimationRenderer() : sprite(), animation(NULL), isRun(false), isLoop(false), isFlip(false), currentTime(0), currentFrame(0) {}
 
 void AnimationRenderer::update() {
     if (isRun && animation != NULL) {
@@ -46,6 +46,12 @@ void AnimationRenderer::reset() {
 
 void AnimationRenderer::loop(bool b) {
     isLoop = b;
+}
+
+void AnimationRenderer::flip() {
+    isFlip = !isFlip;
+    if (isFlip) sprite.setScale(-1, 1);
+    else sprite.setScale(1, 1);
 }
 
 void AnimationRenderer::setAnimation(Animation &a) {

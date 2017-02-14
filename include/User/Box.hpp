@@ -16,25 +16,30 @@
 #include "../Graphics/AssetsManager.hpp"
 #include "../GameLogic/Components/SpriteRenderer.hpp"
 #include "PlayerController.hpp"
+#include "../GameLogic/Components/LuaScript.hpp"
 #include <string>
 
 namespace PancakeEngine {
+    std::string sh1() {
+        if (Input::getButtonPressed("S1")) return "jump";
+        else return "idle";
+    };
+
+    std::string sh2() {
+        if (Input::getButtonPressed("S2")) return "idle";
+        else return "jump";
+    };
+
     class Box : public GameObject {
 
     public:
         Box() :GameObject() {
             name = "Box";
 
-            Rigidbody& rb = addComponent<Rigidbody>();
-            rb.setFreezeRotation(false);
+            addComponent<Rigidbody>();
             BoxCollider& bc = addComponent<BoxCollider>();
-            addComponent<PlayerController>();
-            addComponent<Camera>().zoom(1.2f);
-
             bc.width = 72;
             bc.height = 72;
-            bc.friction = 0;
-            rb.setIsBullet(true);
             transform.setPosition(sf::Vector2f(100, -100));
             transform.setRotation(0);
 
@@ -46,7 +51,8 @@ namespace PancakeEngine {
             a2.addFrame(0, 1, 200);
             a2.addFrame(0, 2, 200);
             Animator& ar = addComponent<Animator>();
-
+            ar.addAnimation("idle", a1, sh1);
+            ar.addAnimation("jump", a2, sh2);
 
             addComponent<SpriteRenderer>();
         }
