@@ -25,8 +25,8 @@
 #ifndef PANCAKE_LUASCRIPT_HPP
 #define PANCAKE_LUASCRIPT_HPP
 
-#include "../../Debug/Debug.hpp"
-#include "Component.hpp"
+#include <Debug/Debug.hpp>
+#include "Behavior.hpp"
 #include <lua.hpp>
 #include <lualib.h>
 #include <lauxlib.h>
@@ -51,6 +51,11 @@ namespace PancakeEngine {
         void start();
         void update();
         void lateUpdate();
+
+        void OnCollisionEnter(const Collision& collision);
+        void OnCollisionExit(const Collision& collision);
+        void OnTriggerEnter(const Collider& triggered, const Collider& other);
+        void OnTriggerExit(const Collider& triggered, const Collider& other);
 
     private:
         friend class GameObject;
