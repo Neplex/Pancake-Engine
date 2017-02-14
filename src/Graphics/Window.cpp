@@ -18,7 +18,6 @@ Window::Window(SceneManager& s) : scenes(s), window(sf::VideoMode::getDesktopMod
     timeBetweenTwoFrames = sf::seconds((1.0f/FPS));
     clock = sf::Clock();
     window.setVerticalSyncEnabled(false); ///< Don't activate it ! It does not fit with our type of game loop
-    window.setActive(false); // TODO Why ?
     debug = false;
 }
 
