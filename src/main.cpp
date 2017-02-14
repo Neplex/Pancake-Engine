@@ -27,7 +27,7 @@ int main() {
     //scene->addGameObject<MainCamera>();
 
     engine->sceneManager.loadScene(scene);
-    engine->window.setDebug();
+   // engine->window.setDebug();
 
     InputManager::createButton("Jump", std::vector<sf::Keyboard::Key> ({sf::Keyboard::Key::Space}));
     InputManager::createButton("Left", std::vector<sf::Keyboard::Key> ({sf::Keyboard::Key::Left}));

@@ -18,8 +18,8 @@ Engine::Engine() : sceneManager(), window(sceneManager), physicsEngine(), time()
     Time::deltaTime = SECONDS_PER_UPDATE;
     InputManager::window = &window.window;
 #ifdef PANCAKE_DEBUG
-   Debug::init(window.window);
-    Debug::setEnableDebugGUI(true);
+   Debug::init(window.window, window);
+    //Debug::setEnableDebugGUI(true);
 
     // Add some loggers
     Debug::addLogger("Foo");

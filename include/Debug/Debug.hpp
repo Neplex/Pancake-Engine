@@ -25,10 +25,10 @@
 #ifndef PANCAKE_DEBUG_HPP
 #define PANCAKE_DEBUG_HPP
 
-#include <SFML/Graphics/RenderWindow.hpp>
 #include "Imgui/imgui-SFML.h"
 #include "MainDebugMenu.hpp"
 #include "FixedOverlayDebug.hpp"
+#include "Graphics.hpp"
 
 namespace PancakeEngine {
 
@@ -69,8 +69,11 @@ namespace PancakeEngine {
          */
         static void setEnableDebugGUI(bool activate)
         {
-            if (initialized)
+            if (initialized) {
                 displayDebug = activate;
+                window->setDebug(activate);
+            }
+
         }
 
         /**
@@ -80,8 +83,10 @@ namespace PancakeEngine {
          */
         static void switchEnableDebugGUI()
         {
-            if (initialized)
+            if (initialized) {
                 displayDebug = !displayDebug;
+                window->setDebug(displayDebug);
+            }
         }
 
     private:
@@ -89,12 +94,13 @@ namespace PancakeEngine {
 
         friend class InputManager; ///< The input manager will call the processEvent.
 
-        friend class Window; ///< The wwindow will call the render method.
+        friend class Window; ///< The window will call the render method.
 
         static MainDebugMenu mainDebugMenu; ///< the main debug menu of the debug, will be drawn on the given window.
         static FixedOverlayDebug fixedOverlayDebug; ///< A little windows to display some debug info.
         static bool displayDebug; ///< the debug gui is displayed if set to true.
 
+        static Window* window; ///< The windows to set debug flags
         static sf::RenderWindow* renderWindow; ///< The window where ImGui is drawing.
         static bool initialized; ///< Set to true if debug was initialized.
         static sf::Clock clock; ///< To get the delta time.
@@ -107,7 +113,7 @@ namespace PancakeEngine {
          * @todo resolve this problem with rendering, the debug should draw itself on the window.
          * @see Window
          */
-        static void init(sf::RenderWindow& window);
+        static void init(sf::RenderWindow& window, Window& win);
 
         /**
          * @brief Update ImGui.
