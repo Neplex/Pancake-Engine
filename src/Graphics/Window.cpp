@@ -62,16 +62,16 @@ void Window::drawScene() {
         renderStates.transform = gameObject->transform.getTransformMatrix();
 
         // Get SpriteRenderer
-        const SpriteRenderer * spriteRenderer = gameObject->getComponent<SpriteRenderer>();
-        if (spriteRenderer != NULL) window.draw(spriteRenderer->sprite, renderStates);
+        const std::vector<SpriteRenderer*> spriteRenderers = gameObject->getComponents<SpriteRenderer>();
+        for (SpriteRenderer* sr : spriteRenderers) window.draw(sr->sprite, renderStates);
 
         // Get AnimationRenderer
-        const AnimationRenderer * animationRenderer = gameObject->getComponent<AnimationRenderer>();
-        if (animationRenderer != NULL) window.draw(animationRenderer->sprite, renderStates);
+        const std::vector<AnimationRenderer*> animationRenderers = gameObject->getComponents<AnimationRenderer>();
+        for (AnimationRenderer* ar : animationRenderers) window.draw(ar->sprite, renderStates);
 
         // Get Animator
-        const Animator * animator = gameObject->getComponent<Animator>();
-        if (animator != NULL && animator->getCurrentAnimation() != NULL) window.draw(animator->getCurrentAnimation()->sprite, renderStates);
+        const std::vector<Animator*> animators = gameObject->getComponents<Animator>();
+        for (Animator* ar : animators) if(ar->getCurrentAnimation() != NULL) window.draw(ar->getCurrentAnimation()->sprite, renderStates);
 
         // Debug elements
         if (debug) {

@@ -193,13 +193,14 @@ int collision_getOtherCollider(lua_State *L) {
 }
 
 int spriteSheet_new(lua_State *L) {
-    if (lua_gettop(L) != 4) THROW_ERROR(L, "invalid number of argument in constructor of 'SpriteSheet(name, uri, width, height)'");
-    std::string name = luaL_checklstring(L, -4, NULL);
-    std::string uri = luaL_checklstring(L, -3, NULL);
-    unsigned w = (unsigned)luaL_checkinteger(L, -2);
-    unsigned h = (unsigned)luaL_checkinteger(L, -1);
+    if (lua_gettop(L) != 5) THROW_ERROR(L, "invalid number of argument in constructor of 'SpriteSheet(name, uri, width, height)'");
+    std::string name = luaL_checklstring(L, -5, NULL);
+    std::string uri = luaL_checklstring(L, -4, NULL);
+    unsigned w = (unsigned)luaL_checkinteger(L, -3);
+    unsigned h = (unsigned)luaL_checkinteger(L, -2);
+    unsigned m = (unsigned)luaL_checkinteger(L, -1);
     SpriteSheet **ss = (SpriteSheet **)lua_newuserdata(L, sizeof(SpriteSheet *));
-    *ss = &AssetsManager::createSpriteSheet(name, uri, w, h);
+    *ss = &AssetsManager::createSpriteSheet(name, uri, w, h, m);
     luaL_setmetatable(L, SPRITE_SHEET);
     return 1;
 }

@@ -58,5 +58,5 @@ void AnimationRenderer::setAnimation(Animation &a) {
     animation = &a;
     sprite.setTexture(animation->spriteSheet.texture);
     sprite.setTextureRect(animation->frames[currentFrame].rect);
-    sprite.setOrigin(animation->spriteSheet.tile_width/2, animation->spriteSheet.tile_height/2);
+    sprite.setOrigin(animation->spriteSheet.tile_width / 2, animation->spriteSheet.tile_height / 2);
 }

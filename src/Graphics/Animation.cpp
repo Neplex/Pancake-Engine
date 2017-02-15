@@ -10,15 +10,15 @@ void Animation::addFrame(unsigned int i, unsigned int j, unsigned int time, bool
     Frame frame;
     if (!flip)
         frame.rect = sf::IntRect(
-                spriteSheet.tile_width  * i,
-                spriteSheet.tile_height * j,
+                (spriteSheet.tile_width  + spriteSheet.margin) * i,
+                (spriteSheet.tile_height + spriteSheet.margin) * j,
                 spriteSheet.tile_width,
                 spriteSheet.tile_height
         );
     else
         frame.rect = sf::IntRect(
-                spriteSheet.tile_width  * (i+1),
-                spriteSheet.tile_height * j,
+                (spriteSheet.tile_width  + spriteSheet.margin) * (i+1),
+                (spriteSheet.tile_height + spriteSheet.margin) * j,
                -spriteSheet.tile_width,
                 spriteSheet.tile_height
         );

@@ -26,16 +26,15 @@ namespace PancakeEngine {
         Box() :GameObject() {
             name = "Box";
 
-            addComponent<Rigidbody>();
+            Rigidbody& rb = addComponent<Rigidbody>();
+            rb.setFreezeRotation(true);
             BoxCollider& bc = addComponent<BoxCollider>();
-            bc.width = 72;
-            bc.height = 72;
+            bc.width = 70;
+            bc.height = 70;
             transform.setPosition(sf::Vector2f(100, -100));
             transform.setRotation(0);
 
-            SpriteSheet& s = AssetsManager::createSpriteSheet("sprites", "../resources/tiles_spritesheet.png", 72, 72);
-
-            addComponent<SpriteRenderer>().setSprite(s, 0, 9);
+            addComponent<SpriteRenderer>().setSprite(AssetsManager::getSpriteSheet("sprites"), 0, 11);
         }
     };
 }

@@ -14,9 +14,9 @@ Animation AssetsManager::defaultAnimation = Animation(defaultSpriteSheet);
 
 AssetsManager::AssetsManager() {}
 
-SpriteSheet& AssetsManager::createSpriteSheet(std::string name, std::string uri, unsigned int tile_w, unsigned int tile_h) {
+SpriteSheet& AssetsManager::createSpriteSheet(std::string name, std::string uri, unsigned int tile_w, unsigned int tile_h, unsigned int margin) {
     if (spriteSheets.find(name) == spriteSheets.end())
-        spriteSheets.emplace(name, SpriteSheet(uri, tile_w, tile_h));
+        spriteSheets.emplace(name, SpriteSheet(uri, tile_w, tile_h, margin));
     return spriteSheets.at(name);
 }
 

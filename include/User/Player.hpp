@@ -36,11 +36,14 @@ namespace PancakeEngine {
             name = "Player";
 
             addComponent<Rigidbody>().setFreezeRotation(true);
-            BoxCollider& bc = addComponent<BoxCollider>();
-            bc.width = 73;
-            bc.height = 94;
+            // TODO: Add "capsule" collider
+            CircleCollider& cl_top = addComponent<CircleCollider>();
+            CircleCollider& cl_bottom = addComponent<CircleCollider>();
+            cl_top.radius = cl_bottom.radius = 35;
+            cl_top.offset = sf::Vector2f(0, -13);
+            cl_bottom.offset = sf::Vector2f(0, 13);
 
-            addComponent<PlayerController>();
+            addComponent<LuaScript>().setScript("../resources/scripts/PlayerController.lua");
             addComponent<Camera>();
 
             SpriteSheet& sprites = AssetsManager::createSpriteSheet("player1", "../resources/player/player1.png", 73, 94);

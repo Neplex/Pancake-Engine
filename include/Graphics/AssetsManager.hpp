@@ -51,10 +51,11 @@ namespace PancakeEngine {
          * @param uri the uri of the image
          * @param tile_w the tile width
          * @param tile_h the tile height
+         * @param margin the spriteSheet margin
          * @return the created spriteSheet
          * @as SpriteSheet
          */
-        static SpriteSheet& createSpriteSheet(std::string name, std::string uri, unsigned int tile_w, unsigned int tile_h);
+        static SpriteSheet& createSpriteSheet(std::string name, std::string uri, unsigned int tile_w, unsigned int tile_h, unsigned int margin = 0);
 
         /**
          * @brief Get a spriteSheet by name. If name doesn't exist, return the

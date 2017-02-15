@@ -60,6 +60,12 @@ namespace PancakeEngine {
          */
         void flip(bool b = true);
 
+        /**
+         * @brief Set the position of the sprite relative to the parent
+         * @param position the position relative to the parent
+         */
+        void setPosition(sf::Vector2f position);
+
     private:
         friend class Window; ///< Draw the sprite
 

@@ -3,15 +3,15 @@ function update()
     local vx, vy = rb:getVelocity()
     local velocityDesired = 0
 
-    if getButtonPressed("Jump") then
-        rb:applyLinearImpulse(0, -5)
+    if getButtonPressed("Jump") and vy < .1 and vy > -.1 and not getButtonHeld("Duck") then
+        rb:applyLinearImpulse(0, -7)
     end
 
-    if getButtonHeld("Right") then
+    if getButtonHeld("Right") and not getButtonHeld("Duck") then
         velocityDesired = 5;
     end
 
-    if getButtonHeld("Left") then
+    if getButtonHeld("Left") and not getButtonHeld("Duck") then
         velocityDesired = -5;
     end
 

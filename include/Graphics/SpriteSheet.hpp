@@ -44,7 +44,7 @@ namespace PancakeEngine {
          * @param tile_w the tile width
          * @param tile_h the tile height
          */
-        SpriteSheet(std::string uri, unsigned int tile_w, unsigned int tile_h) : tile_width(tile_w), tile_height(tile_h) {
+        SpriteSheet(std::string uri, unsigned int tile_w, unsigned int tile_h, unsigned int m = 0) : tile_width(tile_w), tile_height(tile_h), margin(m) {
             if (!texture.loadFromFile(uri)) exit(EXIT_FAILURE);
             texture.setSmooth(true);
         }
@@ -57,6 +57,7 @@ namespace PancakeEngine {
         sf::Texture texture;
         unsigned int tile_width;
         unsigned int tile_height;
+        unsigned int margin;
     };
 }
 
