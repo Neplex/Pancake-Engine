@@ -23,8 +23,8 @@ void SpriteRenderer::setSprite(SpriteSheet &sheet, unsigned int i, unsigned int 
     sprite.setOrigin(sheet.tile_width/2, sheet.tile_height/2);
 }
 
-void SpriteRenderer::flip() {
-    isFlip = !isFlip;
+void SpriteRenderer::flip(bool b) {
+    isFlip = b;
     if (isFlip) sprite.setScale(-1, 1);
     else sprite.setScale(1, 1);
 }

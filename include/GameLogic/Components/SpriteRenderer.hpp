@@ -56,8 +56,9 @@ namespace PancakeEngine {
 
         /**
          * @brief Flip the sprite.
+         * @param b True to flip sprite
          */
-        void flip();
+        void flip(bool b = true);
 
     private:
         friend class Window; ///< Draw the sprite

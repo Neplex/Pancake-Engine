@@ -25,7 +25,7 @@
 
 #include <GameLogic/Components/Animator.hpp>
 #include <Graphics/AssetsManager.hpp>
-#include "User/PlayerController.hpp"
+#include "User/Behaviors/PlayerController.hpp"
 #include <string>
 
 /*std:::string PlayerController::walkingTransition(GameObject& go)

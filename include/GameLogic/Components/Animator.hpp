@@ -45,7 +45,13 @@ namespace PancakeEngine {
          * @param animation the animation of the state
          * @param handler the handler of the state
          */
-        void addAnimation(std::string name, Animation& animation, std::string (*handler)());
+        void addAnimation(std::string name, Animation& animation, std::string (*handler)(GameObject&));
+
+        /**
+         * @brief Flip the animation
+         * @param b True to flip animation
+         */
+        void flip(bool b = true);
 
         /**
          * @brief Get the animation associate with the current GameObject state
@@ -61,10 +67,11 @@ namespace PancakeEngine {
          */
         struct State {
             AnimationRenderer * animation;
-            std::string (*handler)();
+            std::string (*handler)(GameObject&);
         };
         std::map<std::string, State> states; ///< The list of states
         std::string currentState = ""; ///< Name of the current state
+        bool isFlip = false;
     };
 }
 

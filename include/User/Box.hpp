@@ -15,23 +15,13 @@
 #include "../GameLogic/Components/Camera.hpp"
 #include "../Graphics/AssetsManager.hpp"
 #include "../GameLogic/Components/SpriteRenderer.hpp"
-#include "PlayerController.hpp"
+#include "User/Behaviors/PlayerController.hpp"
 #include "../GameLogic/Components/LuaScript.hpp"
 #include <string>
 
 namespace PancakeEngine {
-    std::string sh1() {
-        if (Input::getButtonPressed("S1")) return "jump";
-        else return "idle";
-    };
-
-    std::string sh2() {
-        if (Input::getButtonPressed("S2")) return "idle";
-        else return "jump";
-    };
 
     class Box : public GameObject {
-
     public:
         Box() :GameObject() {
             name = "Box";
@@ -43,18 +33,9 @@ namespace PancakeEngine {
             transform.setPosition(sf::Vector2f(100, -100));
             transform.setRotation(0);
 
-            AssetsManager::createSpriteSheet("sprites", "../resources/tiles_spritesheet.png", 72, 72);
-            Animation& a1 = AssetsManager::createAnimation("a1", "sprites");
-            a1.addFrame(0, 9, 200);
-            a1.addFrame(0, 10, 200);
-            Animation& a2 = AssetsManager::createAnimation("a2", "sprites");
-            a2.addFrame(0, 1, 200);
-            a2.addFrame(0, 2, 200);
-            Animator& ar = addComponent<Animator>();
-            ar.addAnimation("idle", a1, sh1);
-            ar.addAnimation("jump", a2, sh2);
+            SpriteSheet& s = AssetsManager::createSpriteSheet("sprites", "../resources/tiles_spritesheet.png", 72, 72);
 
-            addComponent<SpriteRenderer>();
+            addComponent<SpriteRenderer>().setSprite(s, 0, 9);
         }
     };
 }

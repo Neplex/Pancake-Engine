@@ -8,7 +8,7 @@ using namespace PancakeEngine;
 
 void Animation::addFrame(unsigned int i, unsigned int j, unsigned int time, bool flip) {
     Frame frame;
-    if (flip)
+    if (!flip)
         frame.rect = sf::IntRect(
                 spriteSheet.tile_width  * i,
                 spriteSheet.tile_height * j,

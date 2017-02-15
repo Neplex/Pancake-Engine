@@ -68,8 +68,9 @@ namespace PancakeEngine {
 
         /**
          * @brief Flip the animation
+         * @param b True to flip animation
          */
-        void flip();
+        void flip(bool b = true);
 
         /**
          * @brief Update the animation with time elapse.

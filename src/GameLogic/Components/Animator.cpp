@@ -13,7 +13,7 @@ Animator::~Animator() {
     }
 }
 
-void Animator::addAnimation(std::string name, Animation& animation, std::string (*handler)()) {
+void Animator::addAnimation(std::string name, Animation& animation, std::string (*handler)(GameObject&)) {
     State state;
     state.animation = new AnimationRenderer();
     state.animation->setAnimation(animation);
@@ -26,6 +26,10 @@ void Animator::addAnimation(std::string name, Animation& animation, std::string 
     }
 }
 
+void Animator::flip(bool b) {
+    isFlip = b;
+}
+
 const AnimationRenderer* Animator::getCurrentAnimation() const {
     if (states.size() == 0) return NULL;
     return states.at(currentState).animation;
@@ -33,7 +37,9 @@ const AnimationRenderer* Animator::getCurrentAnimation() const {
 
 void Animator::update() {
     if (states.size() > 0) {
-        std::string state = states[currentState].handler();
+        std::string state = states[currentState].handler(*gameObject);
+        states[currentState].animation->flip(isFlip);
+
         if (state == currentState) {
             states[currentState].animation->update();
         } else if (states.find(state) != states.end()) {

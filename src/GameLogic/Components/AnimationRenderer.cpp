@@ -48,8 +48,8 @@ void AnimationRenderer::loop(bool b) {
     isLoop = b;
 }
 
-void AnimationRenderer::flip() {
-    isFlip = !isFlip;
+void AnimationRenderer::flip(bool b) {
+    isFlip = b;
     if (isFlip) sprite.setScale(-1, 1);
     else sprite.setScale(1, 1);
 }
