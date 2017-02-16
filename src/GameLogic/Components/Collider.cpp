@@ -11,7 +11,7 @@ using namespace PancakeEngine;
 
 PhysicsEngine* Collider::physicsEngine = NULL;
 
-PancakeEngine::Collider::Collider() {
+PancakeEngine::Collider::Collider() : isTrigger(false), bounciness(0), density(1), friction(1), offset(sf::Vector2f(0, 0)){
     fixture = nullptr;
 }
 

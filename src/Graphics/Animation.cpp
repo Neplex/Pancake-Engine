@@ -6,14 +6,22 @@
 
 using namespace PancakeEngine;
 
-void Animation::addFrame(unsigned int i, unsigned int j, unsigned int time) {
+void Animation::addFrame(unsigned int i, unsigned int j, unsigned int time, bool flip) {
     Frame frame;
-    frame.rect = sf::IntRect(
-            spriteSheet.tile_width  * i,
-            spriteSheet.tile_height * j,
-            spriteSheet.tile_width,
-            spriteSheet.tile_height
-    );
+    if (!flip)
+        frame.rect = sf::IntRect(
+                (spriteSheet.tile_width  + spriteSheet.margin) * i,
+                (spriteSheet.tile_height + spriteSheet.margin) * j,
+                spriteSheet.tile_width,
+                spriteSheet.tile_height
+        );
+    else
+        frame.rect = sf::IntRect(
+                (spriteSheet.tile_width  + spriteSheet.margin) * (i+1),
+                (spriteSheet.tile_height + spriteSheet.margin) * j,
+               -spriteSheet.tile_width,
+                spriteSheet.tile_height
+        );
     frame.time = time;
     frames.push_back(frame);
 }

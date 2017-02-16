@@ -20,7 +20,7 @@
 /**
  * \file        GameObject.hpp
  * \author      Darenn Keller - keller.darenn@gmail.com
- * \author      Nicolas Hiot
+ * \author      Nicolas Hiot - nicolashiot@hotmail.com
  */
 
 #ifndef PANCAKE_GAMEOBJECT_HPP
@@ -28,7 +28,6 @@
 
 #include <vector>
 #include <string>
-#include <Debug/Debug.hpp>
 #include <iostream>
 #include <GameLogic/Components/Behavior.hpp>
 #include "../GameLogic/Components/Transform.hpp"
@@ -132,6 +131,10 @@ namespace PancakeEngine {
          */
         void lateUpdate();
 
+        static int getNbGameObjects() {
+            return numGameobjects;
+        }
+
     protected:
         friend class Scene; ///< The scene is the only one to create and destroy gameobjects
         GameObject();
@@ -143,11 +146,14 @@ namespace PancakeEngine {
                 components.pop_back();
                 i--;
             }
+            numGameobjects--;
         }
 
     private:
         friend class PhysicsListener; ///< Is the only one to call OnCollision*
         friend void Behavior::destroy(GameObject& go);
+
+        static int numGameobjects;
 
         bool toDestroy = false;
         std::vector<Component *> componentsToDestroy;

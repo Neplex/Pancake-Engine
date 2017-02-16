@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <GameLogic/Components/CircleCollider.hpp>
 #include "../../include/Graphics/Window.hpp"
 #include "../../include/GameLogic/Components/SpriteRenderer.hpp"
 #include "../../include/GameLogic/Components/Camera.hpp"
@@ -17,7 +18,7 @@ Window::Window(SceneManager& s) : scenes(s), window(sf::VideoMode::getDesktopMod
     timeBetweenTwoFrames = sf::seconds((1.0f/FPS));
     clock = sf::Clock();
     window.setVerticalSyncEnabled(false); ///< Don't activate it ! It does not fit with our type of game loop
-    window.setActive(false); // TODO Why ?
+    debug = false;
 }
 
 void Window::render()
@@ -61,23 +62,25 @@ void Window::drawScene() {
         renderStates.transform = gameObject->transform.getTransformMatrix();
 
         // Get SpriteRenderer
-        const SpriteRenderer * spriteRenderer = gameObject->getComponent<SpriteRenderer>();
-        if (spriteRenderer != NULL) window.draw(spriteRenderer->sprite, renderStates);
+        const std::vector<SpriteRenderer*> spriteRenderers = gameObject->getComponents<SpriteRenderer>();
+        for (SpriteRenderer* sr : spriteRenderers) window.draw(sr->sprite, renderStates);
 
         // Get AnimationRenderer
-        const AnimationRenderer * animationRenderer = gameObject->getComponent<AnimationRenderer>();
-        if (animationRenderer != NULL) window.draw(animationRenderer->sprite, renderStates);
+        const std::vector<AnimationRenderer*> animationRenderers = gameObject->getComponents<AnimationRenderer>();
+        for (AnimationRenderer* ar : animationRenderers) window.draw(ar->sprite, renderStates);
 
         // Get Animator
-        const Animator * animator = gameObject->getComponent<Animator>();
-        // TODO: segmentation fault if animator is empty
-        if (animator != NULL) window.draw(animator->getCurrentAnimation().sprite, renderStates);
+        const std::vector<Animator*> animators = gameObject->getComponents<Animator>();
+        for (Animator* ar : animators) if(ar->getCurrentAnimation() != NULL) window.draw(ar->getCurrentAnimation()->sprite, renderStates);
 
         // Debug elements
         if (debug) {
             // Box collider
             const std::vector<BoxCollider *> boxColliders = scenes.getCurrentScene()->gameObjects[i]->getComponents<BoxCollider>();
             for (BoxCollider *bc : boxColliders) draw(bc);
+            // Circle collider
+            const std::vector<CircleCollider *> circleColliders = scenes.getCurrentScene()->gameObjects[i]->getComponents<CircleCollider>();
+            for (CircleCollider *bc : circleColliders) draw(bc);
         }
     }
 }
@@ -126,4 +129,13 @@ void Window::draw(const BoxCollider * boxCollider) {
     renderStates.transform = boxCollider->gameObject->transform.getTransformMatrix();
     renderStates.transform.translate(boxCollider->offset);
     window.draw(vertices, 6, sf::LinesStrip, renderStates);
+}
+
+void Window::draw(const CircleCollider* collider) {
+    sf::CircleShape circle(collider->radius);
+    circle.setFillColor(sf::Color::Transparent);
+    circle.setOutlineThickness(-2);
+    circle.setOutlineColor(getColor(collider));
+    circle.setPosition(collider->gameObject->transform.getPosition()  + collider->offset - sf::Vector2f(collider->radius,collider->radius)); // Because SFML take the upperleftcorner
+    window.draw(circle);
 }
