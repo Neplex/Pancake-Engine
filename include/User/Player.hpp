@@ -12,6 +12,10 @@
 
 namespace PancakeEngine {
     class Player : public GameObject {
+        friend class Player1;
+        friend class Player2;
+        friend class Player3;
+
         static std::string handler(GameObject& go) {
             sf::Vector2f velocity = go.getComponent<Rigidbody>()->getVelocity();
             Animator* ar = go.getComponent<Animator>();
@@ -22,7 +26,7 @@ namespace PancakeEngine {
                 ar->flip(true);
             }
 
-            if (Input::getButtonHeld("Duck")) {
+            if (Input::getButtonHeld(go.name + "_duck")) {
                 return "duck";
             } else if (velocity.y < -.1 || velocity.y > .1) {
                 return "jump";
@@ -31,9 +35,9 @@ namespace PancakeEngine {
             }
             return "idle";
         }
-    public:
-        Player () : GameObject() {
-            name = "Player";
+
+        Player (std::string n) : GameObject() {
+            name = n;
 
             addComponent<Rigidbody>().setFreezeRotation(true);
             // TODO: Add "capsule" collider
@@ -46,17 +50,17 @@ namespace PancakeEngine {
             addComponent<LuaScript>().setScript("../resources/scripts/PlayerController.lua");
             addComponent<Camera>();
 
-            SpriteSheet& sprites = AssetsManager::createSpriteSheet("player1", "../resources/player/player1.png", 73, 94);
+            SpriteSheet& sprites = AssetsManager::getSpriteSheet(name);
 
-            Animation& a_duck = AssetsManager::createAnimation("player_duck", sprites);
+            Animation& a_duck = AssetsManager::createAnimation(name + "_duck", sprites);
             a_duck.addFrame(0, 0, ANIMATION_SPEED);
-            Animation& a_idle = AssetsManager::createAnimation("player_idle", sprites);
+            Animation& a_idle = AssetsManager::createAnimation(name + "r_idle", sprites);
             a_idle.addFrame(1, 0, ANIMATION_SPEED);
-            Animation& a_jump = AssetsManager::createAnimation("player_jump", sprites);
+            Animation& a_jump = AssetsManager::createAnimation(name + "_jump", sprites);
             a_jump.addFrame(2, 0, ANIMATION_SPEED);
-            Animation& a_hurt = AssetsManager::createAnimation("player_hurt", sprites);
+            Animation& a_hurt = AssetsManager::createAnimation(name + "_hurt", sprites);
             a_hurt.addFrame(3, 0, ANIMATION_SPEED);
-            Animation& a_walk = AssetsManager::createAnimation("player_walk", sprites);
+            Animation& a_walk = AssetsManager::createAnimation(name + "_walk", sprites);
             a_walk.addFrame(0, 1, ANIMATION_SPEED);
             a_walk.addFrame(1, 1, ANIMATION_SPEED);
             a_walk.addFrame(2, 1, ANIMATION_SPEED);
@@ -64,11 +68,11 @@ namespace PancakeEngine {
             a_walk.addFrame(0, 2, ANIMATION_SPEED);
             a_walk.addFrame(1, 2, ANIMATION_SPEED);
             a_walk.addFrame(2, 2, ANIMATION_SPEED);
-            a_walk.addFrame(3, 2, ANIMATION_SPEED);
-            a_walk.addFrame(0, 3, ANIMATION_SPEED);
-            a_walk.addFrame(1, 3, ANIMATION_SPEED);
+            a_walk.addFrame(3, 2, ANIMATION_SPEED/2);
+            a_walk.addFrame(0, 3, ANIMATION_SPEED/2);
+            a_walk.addFrame(1, 3, ANIMATION_SPEED/2);
             a_walk.addFrame(2, 3, ANIMATION_SPEED);
-            Animation& a_front = AssetsManager::createAnimation("player_front", sprites);
+            Animation& a_front = AssetsManager::createAnimation(name + "_front", sprites);
             a_front.addFrame(3, 3, ANIMATION_SPEED);
 
             Animator& ar = addComponent<Animator>();
@@ -80,6 +84,10 @@ namespace PancakeEngine {
             ar.addAnimation("front", a_front, handler);
         }
     };
+
+    class Player1 : public Player { public: Player1() : Player("player1") {} };
+    class Player2 : public Player { public: Player2() : Player("player2") {} };
+    class Player3 : public Player { public: Player3() : Player("player3") {} };
 }
 
 #endif //PANCAKE_PLAYER_HPP

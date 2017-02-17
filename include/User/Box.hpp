@@ -31,10 +31,13 @@ namespace PancakeEngine {
             BoxCollider& bc = addComponent<BoxCollider>();
             bc.width = 70;
             bc.height = 70;
+            bc.density = 15;
             transform.setPosition(sf::Vector2f(100, -100));
             transform.setRotation(0);
 
-            addComponent<SpriteRenderer>().setSprite(AssetsManager::getSpriteSheet("sprites"), 0, 11);
+            addComponent<SpriteRenderer>().setSprite(
+                    AssetsManager::getSpriteSheet("tiles"), 0, 11
+            );
         }
     };
 }

@@ -13,13 +13,17 @@ namespace PancakeEngine {
 
     class Coin : public GameObject {
     public:
-        Coin()
-        {
+        Coin() {
             name = "Coin";
+
             CircleCollider& cc = addComponent<CircleCollider>();
             cc.radius = 20;
             cc.isTrigger = true;
-            addComponent<OnTriggerDestroy>();
+            addComponent<OnTriggerDestroy>().target = "player1";
+
+            addComponent<SpriteRenderer>().setSprite(
+                    AssetsManager::getSpriteSheet("items"), 2, 3
+            );
         }
     };
 }

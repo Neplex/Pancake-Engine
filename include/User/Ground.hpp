@@ -21,7 +21,7 @@ namespace PancakeEngine {
             bcGroundingBox.height = SIZE;
             bcGroundingBox.width = SIZE * WIDTH;
 
-            SpriteSheet& sheet = AssetsManager::getSpriteSheet("sprites");
+            SpriteSheet& sheet = AssetsManager::getSpriteSheet("tiles");
 
             for (int i = -WIDTH/2; i < WIDTH/2; ++i) {
                 SpriteRenderer& sr = addComponent<SpriteRenderer>();

@@ -16,13 +16,23 @@ namespace PancakeEngine {
     class Sandbox : public Scene {
     public:
         Sandbox() : Scene("Sandbox") {
-            SpriteSheet& s = AssetsManager::createSpriteSheet("sprites", "../resources/tiles_spritesheet.png", 70, 70, 2);
+            AssetsManager::createSpriteSheet("player1", "../resources/player/player1.png", 73, 94);
+            AssetsManager::createSpriteSheet("player2", "../resources/player/player2.png", 73, 94);
+            AssetsManager::createSpriteSheet("player3", "../resources/player/player3.png", 73, 94);
+            AssetsManager::createSpriteSheet("tiles", "../resources/tiles.png", 70, 70, 2);
+            AssetsManager::createSpriteSheet("items", "../resources/items.png", 70, 70);
 
             addGameObject<Ground>().transform.setPosition(sf::Vector2f(0, 50));
+
             addGameObject<Box>();
             addGameObject<Box>();
             addGameObject<Box>();
-            addGameObject<Player>();
+
+            for (int i = 1; i <= 10; ++i) addGameObject<Coin>().transform.setPosition(sf::Vector2f(-75*i-50, -20));
+
+            addGameObject<Player1>();
+            addGameObject<Player2>();
+            //addGameObject<Player3>();
         }
     };
 }

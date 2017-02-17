@@ -3,13 +3,9 @@
 //
 
 #include <iostream>
+#include <math.h>
 #include <GameLogic/Components/CircleCollider.hpp>
-#include "../../include/Graphics/Window.hpp"
-#include "../../include/GameLogic/Components/SpriteRenderer.hpp"
-#include "../../include/GameLogic/Components/Camera.hpp"
-#include "../../include/GameLogic/Components/AnimationRenderer.hpp"
-#include "../../include/Debug/Debug.hpp"
-#include "../../include/GameLogic/Components/Animator.hpp"
+#include <GameLogic.hpp>
 
 using namespace PancakeEngine;
 
@@ -44,43 +40,72 @@ void Window::setFrameRate(float framerate) {
     timeBetweenTwoFrames = sf::seconds((float) (1.0/FPS));
 }
 
+std::pair<unsigned, unsigned> splitScreen(unsigned nbPart) {
+    if (nbPart < 3) return {nbPart, 1};
+    std::pair<unsigned, unsigned> dimensions;
+    double s = sqrt(nbPart);
+    dimensions.first = (unsigned)ceil(s);
+    dimensions.second = dimensions.first < s ? dimensions.first+1 : dimensions.first;
+    return dimensions;
+}
+
 void Window::drawScene() {
     // Set view
-    if (Camera::mainCamera != NULL) {
-        sf::View view = Camera::mainCamera->view;
-        view.setCenter(Camera::mainCamera->gameObject->transform.getPosition());
-        view.setRotation(Camera::mainCamera->gameObject->transform.getRotation());
-        window.setView(view);
-    } else {
-        window.setView(window.getDefaultView());
+    std::vector<sf::View> views;
+    for (GameObject* go : scenes.getCurrentScene()->gameObjects) {
+        Camera* c = go->getComponent<Camera>();
+        if (c != NULL) {
+            sf::View view = c->view;
+            view.setCenter(c->gameObject->transform.getPosition());
+            view.setRotation(c->gameObject->transform.getRotation());
+            views.push_back(view);
+        }
     }
+    if (views.size() == 0) views.push_back(window.getDefaultView());
 
-    // Draw elements
-    sf::RenderStates renderStates;
-    for (unsigned i = 0; i < scenes.getCurrentScene()->gameObjects.size(); ++i) {
-        GameObject * gameObject = scenes.getCurrentScene()->gameObjects[i];
-        renderStates.transform = gameObject->transform.getTransformMatrix();
+    std::pair<unsigned, unsigned> nbElem = splitScreen((unsigned) views.size());
+    float width = (float)1.0 / nbElem.first;
+    float height = (float)1.0 / nbElem.second;
 
-        // Get SpriteRenderer
-        const std::vector<SpriteRenderer*> spriteRenderers = gameObject->getComponents<SpriteRenderer>();
-        for (SpriteRenderer* sr : spriteRenderers) window.draw(sr->sprite, renderStates);
+    unsigned nbCamera = (unsigned) views.size();
+    for (unsigned i = 0; i < nbCamera; i++) {
+        views[i].setViewport(sf::FloatRect(
+                (i%nbElem.first) * width ,
+                (i/nbElem.second) * height * (nbCamera > 2),
+                width, height
+        ));
+        if (nbCamera < 3)
+            views[i].setSize(
+                    width * sf::VideoMode::getDesktopMode().width * 1.5,
+                    height * sf::VideoMode::getDesktopMode().height * 1.5
+            );
+        window.setView(views[i]);
 
-        // Get AnimationRenderer
-        const std::vector<AnimationRenderer*> animationRenderers = gameObject->getComponents<AnimationRenderer>();
-        for (AnimationRenderer* ar : animationRenderers) window.draw(ar->sprite, renderStates);
+        sf::RenderStates renderStates;
+        for (GameObject *gameObject : scenes.getCurrentScene()->gameObjects) {
+            renderStates.transform = gameObject->transform.getTransformMatrix();
 
-        // Get Animator
-        const std::vector<Animator*> animators = gameObject->getComponents<Animator>();
-        for (Animator* ar : animators) if(ar->getCurrentAnimation() != NULL) window.draw(ar->getCurrentAnimation()->sprite, renderStates);
+            // Get SpriteRenderer
+            const std::vector<SpriteRenderer *> spriteRenderers = gameObject->getComponents<SpriteRenderer>();
+            for (SpriteRenderer *sr : spriteRenderers) window.draw(sr->sprite, renderStates);
 
-        // Debug elements
-        if (debug) {
-            // Box collider
-            const std::vector<BoxCollider *> boxColliders = scenes.getCurrentScene()->gameObjects[i]->getComponents<BoxCollider>();
-            for (BoxCollider *bc : boxColliders) draw(bc);
-            // Circle collider
-            const std::vector<CircleCollider *> circleColliders = scenes.getCurrentScene()->gameObjects[i]->getComponents<CircleCollider>();
-            for (CircleCollider *bc : circleColliders) draw(bc);
+            // Get AnimationRenderer
+            const std::vector<AnimationRenderer *> animationRenderers = gameObject->getComponents<AnimationRenderer>();
+            for (AnimationRenderer *ar : animationRenderers) window.draw(ar->sprite, renderStates);
+
+            // Get Animator
+            const std::vector<Animator *> animators = gameObject->getComponents<Animator>();
+            for (Animator *ar : animators) if (ar->getCurrentAnimation() != NULL) window.draw(ar->getCurrentAnimation()->sprite, renderStates);
+
+            // Debug elements
+            if (debug) {
+                // Box collider
+                const std::vector<BoxCollider *> boxColliders = gameObject->getComponents<BoxCollider>();
+                for (BoxCollider *bc : boxColliders) draw(bc);
+                // Circle collider
+                const std::vector<CircleCollider *> circleColliders = gameObject->getComponents<CircleCollider>();
+                for (CircleCollider *bc : circleColliders) draw(bc);
+            }
         }
     }
 }

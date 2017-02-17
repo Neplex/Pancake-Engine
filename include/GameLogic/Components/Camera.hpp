@@ -46,8 +46,6 @@ namespace PancakeEngine {
          */
         void zoom(float factor);
 
-        static Camera* mainCamera; ///< The first camera created (is the only one).
-
     private:
         friend class Window; ///< Use the camera to draw.
         sf::View view;

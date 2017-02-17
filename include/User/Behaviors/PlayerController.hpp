@@ -15,13 +15,13 @@ public:
 
         float velocityDesired = 0;
         PancakeEngine::Rigidbody* rb = gameObject->getComponent<PancakeEngine::Rigidbody>();
-        if (PancakeEngine::Input::getButtonPressed("Jump") && rb->getVelocity().y < 0.1 && rb->getVelocity().y > -0.1) {
+        if (PancakeEngine::Input::getButtonPressed(gameObject->name + "_jump") && rb->getVelocity().y < 0.1 && rb->getVelocity().y > -0.1) {
             gameObject->getComponent<PancakeEngine::Rigidbody>()->applyLinearImpulse(sf::Vector2f(0, -7));
         }
-        if (PancakeEngine::Input::getButtonHeld("Right")) {
+        if (PancakeEngine::Input::getButtonHeld(gameObject->name + "_right")) {
             velocityDesired = 5;
         }
-        if (PancakeEngine::Input::getButtonHeld("Left")) {
+        if (PancakeEngine::Input::getButtonHeld(gameObject->name + "_left")) {
             velocityDesired = -5;
         }
 

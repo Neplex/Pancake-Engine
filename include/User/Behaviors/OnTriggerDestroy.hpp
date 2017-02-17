@@ -11,10 +11,12 @@
 namespace PancakeEngine {
 
     class OnTriggerDestroy : public Behavior {
-
     public:
+        std::string target = "";
+
         void OnTriggerEnter(const Collider &triggered, const Collider &other) override {
-            destroy(*gameObject);
+            if (target == "" || (target != "" && target == other.gameObject->name))
+                destroy(*gameObject);
             Debug::log("Foo", "On trigger destroy called !");
         }
     };
