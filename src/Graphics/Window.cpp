@@ -50,7 +50,7 @@ std::pair<unsigned, unsigned> splitScreen(unsigned nbPart) {
 }
 
 void Window::drawScene() {
-    // Set view
+    // Get views
     std::vector<sf::View> views;
     for (GameObject* go : scenes.getCurrentScene()->gameObjects) {
         Camera* c = go->getComponent<Camera>();
@@ -67,20 +67,14 @@ void Window::drawScene() {
     float width = (float)1.0 / nbElem.first;
     float height = (float)1.0 / nbElem.second;
 
+    // Draw all views
     unsigned nbCamera = (unsigned) views.size();
     for (unsigned i = 0; i < nbCamera; i++) {
-        views[i].setViewport(sf::FloatRect(
-                (i%nbElem.first) * width ,
-                (i/nbElem.second) * height * (nbCamera > 2),
-                width, height
-        ));
-        if (nbCamera < 3)
-            views[i].setSize(
-                    width * sf::VideoMode::getDesktopMode().width * 1.5,
-                    height * sf::VideoMode::getDesktopMode().height * 1.5
-            );
+        views[i].setViewport(sf::FloatRect((i%nbElem.first) * width, (i/nbElem.second) * height * (nbCamera > 2), width, height));
+        if (nbCamera == 2)views[i].setSize(width * window.getSize().x * 1.5, height * window.getSize().y * 1.5);
         window.setView(views[i]);
 
+        // Draw gameObjects
         sf::RenderStates renderStates;
         for (GameObject *gameObject : scenes.getCurrentScene()->gameObjects) {
             renderStates.transform = gameObject->transform.getTransformMatrix();
@@ -108,6 +102,9 @@ void Window::drawScene() {
             }
         }
     }
+
+    // Draw HUD
+    window.setView(window.getDefaultView());
 }
 
 sf::Color Window::getColor(const Collider * collider) {

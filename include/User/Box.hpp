@@ -36,7 +36,7 @@ namespace PancakeEngine {
             transform.setRotation(0);
 
             addComponent<SpriteRenderer>().setSprite(
-                    AssetsManager::getSpriteSheet("tiles"), 0, 11
+                    AssetsManager::getSpriteSheet("tiles"), 0, 1
             );
         }
     };

@@ -25,7 +25,7 @@ namespace PancakeEngine {
 
             for (int i = -WIDTH/2; i < WIDTH/2; ++i) {
                 SpriteRenderer& sr = addComponent<SpriteRenderer>();
-                sr.setSprite(sheet, 7, 8);
+                sr.setSprite(sheet, 2, 6);
                 sr.setPosition(sf::Vector2f(i*SIZE, 0));
             }
         }
