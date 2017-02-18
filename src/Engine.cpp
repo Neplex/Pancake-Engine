@@ -3,10 +3,7 @@
 //
 
 #include <vector>
-#include "../include/Engine.hpp"
-#include "../include/Inputs/InputManager.hpp"
-#include "Imgui/imgui-SFML.h"
-#include "../include/Debug/Debug.hpp"
+#include <Engine.hpp>
 
 
 using namespace PancakeEngine;

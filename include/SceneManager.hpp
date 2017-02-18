@@ -8,7 +8,7 @@
 
 
 #include <vector>
-#include "GameLogic/Scene.hpp"
+#include <GameLogic/Scene.hpp>
 
 namespace PancakeEngine {
 

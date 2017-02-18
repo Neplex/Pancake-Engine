@@ -26,10 +26,8 @@
 #define PANCAKE_LUASCRIPT_HPP
 
 #include <Debug/Debug.hpp>
-#include "Behavior.hpp"
+#include <GameLogic/Components/Behavior.hpp>
 #include <lua.hpp>
-#include <lualib.h>
-#include <lauxlib.h>
 
 namespace PancakeEngine {
 

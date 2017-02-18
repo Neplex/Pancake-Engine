@@ -5,9 +5,9 @@
 #ifndef PANCAKE_COIN_HPP
 #define PANCAKE_COIN_HPP
 
-#include <GameLogic/Components/CircleCollider.hpp>
+#include <GameLogic.hpp>
+#include <Graphics.hpp>
 #include <User/Behaviors/OnTriggerDestroy.hpp>
-#include "GameLogic/GameObject.hpp"
 
 namespace PancakeEngine {
 

@@ -5,8 +5,8 @@
 #ifndef PANCAKE_GROUND_HPP
 #define PANCAKE_GROUND_HPP
 
-#include "../GameLogic/GameObject.hpp"
-#include "../GameLogic/Components/BoxCollider.hpp"
+#include <GameLogic.hpp>
+#include <Graphics.hpp>
 
 #define SIZE 70
 #define WIDTH 61

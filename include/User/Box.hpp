@@ -5,19 +5,8 @@
 #ifndef PANCAKE_BOX_HPP
 #define PANCAKE_BOX_HPP
 
-#include "../GameLogic/GameObject.hpp"
-#include "../Graphics/SpriteSheet.hpp"
-#include "../Graphics/Animation.hpp"
-#include "../GameLogic/Components/AnimationRenderer.hpp"
-#include "../GameLogic/Components/BoxCollider.hpp"
-#include "../GameLogic/Components/Animator.hpp"
-#include "../Inputs/Input.hpp"
-#include "../GameLogic/Components/Camera.hpp"
-#include "../Graphics/AssetsManager.hpp"
-#include "../GameLogic/Components/SpriteRenderer.hpp"
-#include "User/Behaviors/PlayerController.hpp"
-#include "../GameLogic/Components/LuaScript.hpp"
-#include <string>
+#include <GameLogic.hpp>
+#include <Graphics.hpp>
 
 namespace PancakeEngine {
 

@@ -5,6 +5,7 @@
 #include <GameLogic.hpp>
 #include <Inputs.hpp>
 #include <Time.hpp>
+#include <Graphics.hpp>
 #include <sstream>
 
 // Lua types

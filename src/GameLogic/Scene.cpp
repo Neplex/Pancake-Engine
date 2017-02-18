@@ -2,7 +2,7 @@
 // Created by Darenn on 17/01/2017.
 //
 
-#include "../../include/GameLogic/Scene.hpp"
+#include <GameLogic.hpp>
 
 using namespace PancakeEngine;
 
@@ -15,6 +15,8 @@ void Scene::awake() {
 void Scene::start() {
     for (unsigned i = 0; i < gameObjects.size(); ++i) {
         gameObjects[i]->start();
+        std::vector<Camera*> c = gameObjects[i]->getComponents<Camera>();
+        cameras.insert(cameras.end(), c.begin(), c.end());
     }
 }
 

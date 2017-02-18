@@ -22,6 +22,16 @@ int main() {
     InputManager::createButton("player3_left", std::vector<sf::Keyboard::Key> ({}));
     InputManager::createButton("player3_duck", std::vector<sf::Keyboard::Key> ({}));
 
+    InputManager::createButton("player4_jump", std::vector<sf::Keyboard::Key> ({}));
+    InputManager::createButton("player4_right", std::vector<sf::Keyboard::Key> ({}));
+    InputManager::createButton("player4_left", std::vector<sf::Keyboard::Key> ({}));
+    InputManager::createButton("player4_duck", std::vector<sf::Keyboard::Key> ({}));
+
+    InputManager::createButton("player5_jump", std::vector<sf::Keyboard::Key> ({}));
+    InputManager::createButton("player5_right", std::vector<sf::Keyboard::Key> ({}));
+    InputManager::createButton("player5_left", std::vector<sf::Keyboard::Key> ({}));
+    InputManager::createButton("player5_duck", std::vector<sf::Keyboard::Key> ({}));
+
     InputManager::createButton("ShowDebugInfo", std::vector<sf::Keyboard::Key> ({sf::Keyboard::Key::F1}), Debug::switchEnableDebugGUI);
     
     app->run();

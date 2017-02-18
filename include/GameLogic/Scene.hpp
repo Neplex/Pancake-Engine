@@ -6,17 +6,19 @@
 #define PANCAKE_SCENE_HPP
 
 #include <vector>
-#include "GameObject.hpp"
+#include <GameLogic/GameObject.hpp>
 
 namespace PancakeEngine {
 
+    class Camera;
     class Scene {
     public:
         std::string name;
-        std::vector<GameObject*> gameObjects;
+        std::vector<GameObject*> gameObjects; // TODO: vector of pointer is dangerous. Use references.
+        std::vector<Camera*> cameras; // Temporary, use to have a fixed order of camera. TODO: remove this, use static order of GameObjects
 
         Scene(std::string name)
-                :name(name), gameObjects() { }
+                :name(name), gameObjects(), cameras() { }
 
         ~Scene() {
                 for(GameObject* go : gameObjects) {

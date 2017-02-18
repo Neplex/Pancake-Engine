@@ -52,14 +52,11 @@ std::pair<unsigned, unsigned> splitScreen(unsigned nbPart) {
 void Window::drawScene() {
     // Get views
     std::vector<sf::View> views;
-    for (GameObject* go : scenes.getCurrentScene()->gameObjects) {
-        Camera* c = go->getComponent<Camera>();
-        if (c != NULL) {
-            sf::View view = c->view;
-            view.setCenter(c->gameObject->transform.getPosition());
-            view.setRotation(c->gameObject->transform.getRotation());
-            views.push_back(view);
-        }
+    for (Camera* c : scenes.getCurrentScene()->cameras) {
+        sf::View view = c->view;
+        view.setCenter(c->gameObject->transform.getPosition());
+        view.setRotation(c->gameObject->transform.getRotation());
+        views.push_back(view);
     }
     if (views.size() == 0) views.push_back(window.getDefaultView());
 

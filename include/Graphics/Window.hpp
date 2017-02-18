@@ -26,9 +26,9 @@
 #define PANCAKE_WINDOW_HPP
 
 #include <SFML/Graphics/RenderWindow.hpp>
-#include "../SceneManager.hpp"
-#include "../GameLogic/Components/BoxCollider.hpp"
-#include "GameLogic/Components/CircleCollider.hpp"
+#include <SceneManager.hpp>
+#include <GameLogic/Components/BoxCollider.hpp>
+#include <GameLogic/Components/CircleCollider.hpp>
 
 namespace PancakeEngine {
 

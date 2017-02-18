@@ -25,10 +25,10 @@
 #ifndef PANCAKE_DEBUG_HPP
 #define PANCAKE_DEBUG_HPP
 
-#include "Imgui/imgui-SFML.h"
-#include "MainDebugMenu.hpp"
-#include "FixedOverlayDebug.hpp"
-#include "Graphics.hpp"
+#include <Imgui/imgui-SFML.h>
+#include <Debug/FixedOverlayDebug.hpp>
+#include <Debug/MainDebugMenu.hpp>
+#include <Graphics/Window.hpp>
 
 namespace PancakeEngine {
 
