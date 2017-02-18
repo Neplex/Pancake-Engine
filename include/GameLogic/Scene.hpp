@@ -15,15 +15,13 @@ namespace PancakeEngine {
     public:
         std::string name;
         std::vector<GameObject*> gameObjects; // TODO: vector of pointer is dangerous. Use references.
-        std::vector<Camera*> cameras; // Temporary, use to have a fixed order of camera. TODO: remove this, use static order of GameObjects
 
-        Scene(std::string name)
-                :name(name), gameObjects(), cameras() { }
+        Scene(std::string name) :name(name), gameObjects() {}
 
         ~Scene() {
-                for(GameObject* go : gameObjects) {
-                        delete go;
-                }
+            for(GameObject* go : gameObjects) {
+                delete go;
+            }
         }
 
         /**
@@ -32,9 +30,9 @@ namespace PancakeEngine {
          */
         template <class T>
         T& addGameObject() {
-                T* gameObject = new T();
-                gameObjects.push_back(gameObject);
-                return *gameObject;
+            T* gameObject = new T();
+            gameObjects.push_back(gameObject);
+            return *gameObject;
         }
 
         /**

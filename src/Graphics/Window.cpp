@@ -52,12 +52,14 @@ std::pair<unsigned, unsigned> splitScreen(unsigned nbPart) {
 void Window::drawScene() {
     // Get views
     std::vector<sf::View> views;
-    for (Camera* c : scenes.getCurrentScene()->cameras) {
-        sf::View view = c->view;
-        view.setCenter(c->gameObject->transform.getPosition());
-        view.setRotation(c->gameObject->transform.getRotation());
-        views.push_back(view);
-    }
+    // TODO: create a fix order for camera
+    for (GameObject* go : scenes.getCurrentScene()->gameObjects)
+        for (Camera* c : go->getComponents<Camera>()) {
+            sf::View view = c->view;
+            view.setCenter(c->gameObject->transform.getPosition());
+            view.setRotation(c->gameObject->transform.getRotation());
+            views.push_back(view);
+        }
     if (views.size() == 0) views.push_back(window.getDefaultView());
 
     std::pair<unsigned, unsigned> nbElem = splitScreen((unsigned) views.size());
@@ -68,7 +70,7 @@ void Window::drawScene() {
     unsigned nbCamera = (unsigned) views.size();
     for (unsigned i = 0; i < nbCamera; i++) {
         views[i].setViewport(sf::FloatRect((i%nbElem.first) * width, (i/nbElem.second) * height * (nbCamera > 2), width, height));
-        if (nbCamera == 2)views[i].setSize(width * window.getSize().x * 1.5, height * window.getSize().y * 1.5);
+        if (nbCamera == 2) views[i].setSize(width * window.getSize().x * 1.5, height * window.getSize().y * 1.5);
         window.setView(views[i]);
 
         // Draw gameObjects

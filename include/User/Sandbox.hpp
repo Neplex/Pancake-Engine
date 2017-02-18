@@ -24,6 +24,12 @@ namespace PancakeEngine {
             AssetsManager::createSpriteSheet("tiles", "../resources/tiles/tiles.png", 70, 70);
             AssetsManager::createSpriteSheet("items", "../resources/items.png", 70, 70);
 
+            addGameObject<Player1>();
+            addGameObject<Player2>();
+            addGameObject<Player3>();
+            addGameObject<Player4>();
+            addGameObject<Player5>();
+
             addGameObject<Ground>().transform.setPosition(sf::Vector2f(0, 50));
 
             addGameObject<Box>();
@@ -31,12 +37,6 @@ namespace PancakeEngine {
             addGameObject<Box>();
 
             for (int i = 1; i <= 10; ++i) addGameObject<Coin>().transform.setPosition(sf::Vector2f(-75*i-50, -20));
-
-            addGameObject<Player1>();
-            addGameObject<Player2>();
-            addGameObject<Player3>();
-            addGameObject<Player4>();
-            addGameObject<Player5>();
         }
     };
 }
