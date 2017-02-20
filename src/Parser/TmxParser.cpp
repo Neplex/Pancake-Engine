@@ -1,171 +1,44 @@
 //
 // Created by virgil on 25/01/17.
 //
+#include <sstream>
 #include "../../include/Parser/TmxParser.hpp"
-namespace TMX {
+ bool Parser::load( const char* filename ) {
+        map = new Tmx::Map();
+        map->ParseFile(filename);
+        if (map->HasError())
+        {
+            printf("error code: %d\n", map->GetErrorCode());
+            printf("error text: %s\n", map->GetErrorText().c_str());
 
-    Parser::Parser( const char* filename ) {
-        load( filename );
-    }
-
-    Parser::Parser(){}
-
-    Parser::~Parser() {}
-
-    bool Parser::load( const char* filename ) {
-        std::string version = VERSION;
-        rapidxml::file<> file(filename);
-        doc.parse<0>(file.data());
-        //get root nodes
-        root_node = doc.first_node("map");
-
-        //load map element
-        if (root_node->first_attribute("version")->value() != version) {
-            return false;
+            return map->GetErrorCode();
         }
+
     }
     bool Parser::loadMapInfo() {
-        mapInfo.version = root_node->first_attribute("version")->value();
-        mapInfo.orientation = root_node->first_attribute("orientation")->value();
-        mapInfo.width = (unsigned int) std::atoi(root_node->first_attribute("width")->value());
-        mapInfo.height = (unsigned int) std::atoi(root_node->first_attribute("height")->value());
-        mapInfo.tileWidth = (unsigned int) std::atoi(root_node->first_attribute("tilewidth")->value());
-        mapInfo.tileHeight = (unsigned int) std::atoi(root_node->first_attribute("tileheight")->value());
 
-/*        if (root_node->first_attribute("backgroundcolor")->value() != 0) {
-            mapInfo.backgroundColor = root_node->first_attribute("backgroundcolor")->value();
-        }
-
-        if (root_node->first_node("properties") != 0) {
-            for (rapidxml::xml_node<> *properties_node = root_node->first_node("properties")->first_node(
-                    "property"); properties_node; properties_node = properties_node->next_sibling()) {
-                mapInfo.property[properties_node->first_attribute("name")->value()] = properties_node->first_attribute(
-                        "value")->value();
-            }
-        }*/
-        return true;
     }
-    void Parser::loadTileset() {
-        Tileset tmpTileset;
-        for (rapidxml::xml_node<> *tileset_node = root_node->first_node(
-                "tileset"); tileset_node; tileset_node = tileset_node->next_sibling("tileset")) {
-            tmpTileset.name = tileset_node->first_attribute("name")->value();
-            tmpTileset.firstGID = (unsigned int) std::atoi(tileset_node->first_attribute("firstgid")->value());
-            tmpTileset.width = (unsigned int) std::atoi(tileset_node->first_attribute("tilewidth")->value());
-            tmpTileset.height = (unsigned int) std::atoi(tileset_node->first_attribute("tileheight")->value());
-            tmpTileset.tileCount = (unsigned int) std::atoi(tileset_node->first_attribute("tilecount")->value());
-            tmpTileset.source = tileset_node->first_node("image")->first_attribute("source")->value();
-            tmpTileset.column = (unsigned int) std::atoi(tileset_node->first_attribute("columns")->value());
 
-            if(tileset_node->first_node("tile") != NULL){
-                rapidxml::xml_node<> * tile_node = tileset_node->first_node("tile");
-                if(tile_node->first_node("animation") != NULL){
-                    std::vector<Frame> animation;
-                    rapidxml::xml_node<>* animation_node = tile_node->first_node("animation");
-                    for(rapidxml::xml_node<> * frame_node = animation_node->first_node("frame");frame_node;frame_node = frame_node->next_sibling("frame")){
-                        Frame frame;
-                        frame.tileid =(unsigned int) std::atoi(frame_node->first_attribute("tileid")->value());
-                        frame.duration = (unsigned int) std::atoi(frame_node->first_attribute("duration")->value());
-                        animation.push_back(frame);
-                    }
-                    Animation a;
-                    a.listFrame = animation;
-                    tmpTileset.a = a;
-                }
-            }
-            tilesetList.push_back(tmpTileset);
-        }
+std::vector<Tmx::Tileset> Parser::loadTileset() {
+
     }
     bool Parser::loadLayer() {
-        for (rapidxml::xml_node<> *layer_node = root_node->first_node(
-                "layer"); layer_node; layer_node = layer_node->next_sibling("layer")) {
-            TileLayer layer;
-            layer.name = layer_node->first_attribute("name")->value();
-
-            if (layer_node->first_node("properties") != 0) {
-                for (rapidxml::xml_node<> *properties_node = layer_node->first_node("properties")->first_node(
-                        "property"); properties_node; properties_node = properties_node->next_sibling()) {
-                    layer.property[properties_node->first_attribute(
-                            "name")->value()] = properties_node->first_attribute("value")->value();
-                }
-                for (std::map<std::string, std::string>::iterator it = mapInfo.property.begin();
-                     it != mapInfo.property.end(); ++it) {
-                }
-            }
-
-            rapidxml::xml_node<> *data_node = layer_node->first_node("data");
-            layer.data.encoding = data_node->first_attribute("encoding")->value();
-            if (data_node->first_attribute("compression") > 0) {
-                layer.data.compression = data_node->first_attribute("compression")->value();
-            }
-            layer.data.contents = data_node->value();
-            tileLayer[layer.name] = layer;
-        }
-        return true;
-    }
-    bool Parser::loadObjects() {
-        for (rapidxml::xml_node<> *oGroup_node = root_node->first_node(
-                "objectgroup"); oGroup_node; oGroup_node = oGroup_node->next_sibling("objectgroup")) {
-            ObjectGroup oGroup;
-//            oGroup.color = oGroup_node->first_attribute("color")->value();
-            oGroup.name = oGroup_node->first_attribute("name")->value();
-//            oGroup.opacity = (float) std::atof(oGroup_node->first_attribute("opacity")->value());
-//            oGroup.visible =  (bool) std::atoi(oGroup_node->first_attribute("visible")->value());
-            std::map<unsigned int,Object> mapObject;
-            for (rapidxml::xml_node<> *object = oGroup_node->first_node(
-                    "object"); object; object = object->next_sibling("object")) {
-                Object o;
-                o.name = object->first_attribute("name")->value();
-                o.id = (unsigned int) std::atoi(object->first_attribute("id")->value());
-                o.gid = (unsigned int) std::atoi(object->first_attribute("gid")->value());
-                o.height = (unsigned int) std::atoi(object->first_attribute("height")->value());
-                o.width = (unsigned int) std::atoi(object->first_attribute("width")->value());
-                o.x = (unsigned int) std::atoi(object->first_attribute("x")->value());
-                o.y = (unsigned int) std::atoi(object->first_attribute("y")->value());
-                mapObject[o.id] = o;
-            }
-            oGroup.object = mapObject;
-            if (oGroup_node->first_node("properties") != 0) {
-                for (rapidxml::xml_node<> *properties_node = oGroup_node->first_node("properties")->first_node(
-                        "property"); properties_node; properties_node = properties_node->next_sibling()) {
-                    oGroup.property[properties_node->first_attribute(
-                            "name")->value()] = properties_node->first_attribute("value")->value();
-                }
-            }
-
-            objectGroup[oGroup.name] = oGroup;
-        }
-        return true;
     }
     bool Parser::loadImage(){
-        for( rapidxml::xml_node<>* image_node = root_node->first_node( "imagelayer" ); image_node; image_node = image_node->next_sibling( "imagelayer" ) ) {
-            ImageLayer imgLayer;
-            imgLayer.name = image_node->first_attribute( "name" )->value();
-            if( image_node->first_attribute( "opacity" ) != 0 ) {
-                imgLayer.opacity = (float) std::atof(image_node->first_attribute("opacity" )->value() );
-            }
-
-            imgLayer.visible = (unsigned int) std::atoi( image_node->first_attribute( "visible" )->value() );
-
-            imgLayer.image.source = image_node->first_node( "image" )->first_attribute( "source" )->value();
-
-            if( image_node->first_node( "image" )->first_attribute( "trans" ) != 0 ) {
-                imgLayer.image.transparencyColor = image_node->first_node( "image" )->first_attribute( "trans" )->value();
-            }
-
-            if( image_node->first_node( "properties" ) != 0 ) {
-                for( rapidxml::xml_node<>* properties_node = image_node->first_node( "properties" )->first_node( "property" ); properties_node; properties_node = properties_node->next_sibling( "property" ) ) {
-                    imgLayer.property[properties_node->first_attribute( "name" )->value()] = properties_node->first_attribute( "value" )->value();
-                }
-
-                for( std::map<std::string, std::string>::iterator it = imgLayer.property.begin(); it != imgLayer.property.end(); ++it ) {
-                    std::cout << "-> " << it->first << " : " << it->second << std::endl;
-                }
-            }
-
-            imageLayer[imgLayer.name] = imgLayer;
-        }
-
-        return true;
     }
-}
+
+    std::vector<Tmx::Object> Parser::loadObjectGroups(){
+        std::vector<Tmx::Object> objectList;
+        for (int i = 0; i < map->GetNumObjectGroups(); ++i) {
+            const Tmx::ObjectGroup *objectGroup = map->GetObjectGroup(i);
+            std::map<unsigned int, Tmx::Object> mapObject;
+            // Iterate through all objects in the object group.
+            for (int j = 0; j < objectGroup->GetNumObjects(); ++j) {
+                // Get an object.
+                const Tmx::Object *object = objectGroup->GetObject(j);
+                objectList.push_back(*object);
+            }
+        }
+        return objectList;
+    }
+

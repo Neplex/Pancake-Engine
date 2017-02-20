@@ -39,6 +39,6 @@ void SceneManager::loadScene(Scene *scene)
 }
 
 Scene SceneManager::loadScene(const char *filename) {
-    Scene myScene = SceneFactory::loadAllGameObject(filename);
-    return myScene;
+    SceneFactory sceneFactory;
+    return sceneFactory.loadAllGameObject(filename);
 }

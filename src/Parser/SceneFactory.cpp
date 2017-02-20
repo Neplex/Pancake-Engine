@@ -4,92 +4,137 @@
 
 #include <Parser/SceneFactory.hpp>
 #include <User/Player.hpp>
+#include <User/Coin.hpp>
 #include <User/Ground.hpp>
+#include <User/Box.hpp>
 
 namespace PancakeEngine{
-    void CalculPositionInSprite(unsigned int gid, unsigned int firstGID, unsigned int column, unsigned int* i, unsigned int * j){
-            *i = ((gid - firstGID) / column);
-            *j = ((gid - firstGID) % (column));
+    SceneFactory::SceneFactory() {
+
     }
-    std::string shIdle(GameObject& gameObject) {
-        if(gameObject.getComponent<Rigidbody>()->getVelocity().x == 0)
-            return "idle";
-        else
-            return "move";
-    };
-    void setAnimation(unsigned gid,std::vector<TMX::Parser::Tileset>::iterator itTileset,GameObject& gameObject,SpriteSheet& spriteSheet){
-        Animation& animation = AssetsManager::createAnimation(itTileset->source,spriteSheet);
-        std::vector<TMX::Parser::Frame> listFrame = itTileset->a.listFrame;
-        //for (unsigned i = 0;  i < listFrame.size(); ++i) {
-        unsigned int j, k;
-        unsigned i = 0;
-            k = listFrame[i].tileid / itTileset->column;
-            j = listFrame[i].tileid % itTileset->column;
-            animation.addFrame(k, j, listFrame[i].duration);
-        //}
-        Animator& ar = gameObject.addComponent<Animator>();
-        ar.addAnimation("move",animation,shIdle);
+    void setAnimation(GameObject& gameObject,const Tmx::Tile* tile,const Tmx::Tileset* ts){
+        const std::vector<Tmx::AnimationFrame> &frames = tile->GetFrames();
+        unsigned i,j;
+        std::string source = ts->GetImage()->GetSource();
+        Animation &a = AssetsManager::createAnimation(gameObject.name + "AnimationMove", gameObject.name);
+
+        for (std::vector<Tmx::AnimationFrame>::const_iterator it =
+                frames.begin(); it != frames.end(); it++)
+        {
+            i = (it->GetTileID() / (ts->GetImage()->GetWidth()/ts->GetTileWidth()));
+            j = (it->GetTileID() % (ts->GetImage()->GetWidth()/ts->GetTileWidth()));
+            it->GetTileID();
+            a.addFrame(i,j,it->GetDuration());
+        }
+            AnimationRenderer &ar = gameObject.addComponent<AnimationRenderer>();
+            ar.setAnimation(a);
+            ar.start();
+            ar.loop();
+            ar.play();
     }
-    void findImageOfSprite(unsigned int gid, TMX::Parser* myParser,GameObject& gameObject){
+    void setCollider(GameObject& gameObject,const Tmx::Tile* tile){
+        std::vector<Tmx::Object*> objectList = tile->GetObjects();
+        for(unsigned k = 0 ; k < objectList.size();k++){
+            if(objectList[k]->GetEllipse() != NULL){
+                CircleCollider& cc = gameObject.addComponent<CircleCollider>();
+                cc.radius = objectList[k]->GetEllipse()->GetRadiusX();
+                cc.isTrigger = true;
+            }
+            else{
+                BoxCollider& bcGroundingBox = gameObject.addComponent<BoxCollider>();
+                bcGroundingBox.width = objectList[k]->GetWidth();
+                bcGroundingBox.height = objectList[k]->GetHeight();
+            }
+        }
+    }
+
+    void setGOComponent(unsigned int gid, Tmx::Map * map,GameObject& gameObject){
         unsigned int i,j;
         SpriteRenderer& spriteRenderer = gameObject.addComponent<SpriteRenderer>();
-        std::vector<TMX::Parser::Tileset>::iterator itTileset;
-        for(itTileset=myParser->tilesetList.begin();itTileset!=myParser->tilesetList.end();++itTileset) {
-            if((itTileset->firstGID <= gid) && (itTileset->firstGID + itTileset->tileCount) > gid){
-                std::string source = itTileset->source;
-                CalculPositionInSprite(gid,itTileset->firstGID,itTileset->column,&i,&j);
-                SpriteSheet& spriteSheet =  AssetsManager::createSpriteSheet(gameObject.name,source,itTileset->width,itTileset->height);
-                if(gameObject.name != "Player")
+        int nbTileset = map->GetNumTilesets();
+        for(unsigned k = 0; k < nbTileset; k++) {
+            const Tmx::Tileset *ts = map->GetTileset(k);
+            int count = ts->GetFirstGid() + ts->GetColumns();
+            if((ts->GetFirstGid() <= gid) && count > gid){
+                std::string source = ts->GetImage()->GetSource();
+                i = ((gid - ts->GetFirstGid()) / (ts->GetImage()->GetWidth()/ts->GetTileWidth()));
+                j = ((gid - ts->GetFirstGid()) % (ts->GetImage()->GetWidth()/ts->GetTileWidth()));
+                SpriteSheet& spriteSheet =  AssetsManager::createSpriteSheet(gameObject.name,source,(unsigned ) ts->GetTileWidth(),(unsigned )ts->GetTileHeight());
+                if(ts->GetTiles().size() > 0){
+                    const Tmx::Tile *tile = *(ts->GetTiles().begin());
+                    if(tile->IsAnimated())
+                        setAnimation(gameObject,tile,ts);
+                    else
+                        spriteRenderer.setSprite(spriteSheet,i,j);
+                    setCollider(gameObject,tile);
+                }
+                else
                     spriteRenderer.setSprite(spriteSheet,i,j);
             }
         }
     }
-
-    Scene& SceneFactory::loadAllGameObject(const char* filename) {
-
-        Scene* scene = new Scene(filename);
-        std::map<std::string,TMX::Parser::ObjectGroup>::iterator itObjectGroupMap;
-        TMX::Parser* myParser = new TMX::Parser(filename);
-        myParser->loadMapInfo();
-        myParser->loadTileset();
-        myParser->loadObjects();
-
-
-        for(itObjectGroupMap=myParser->objectGroup.begin();itObjectGroupMap!=myParser->objectGroup.end();++itObjectGroupMap) {
-            loadGameObject(*scene,itObjectGroupMap->second.object,myParser);
-        }
-        return *scene;
-    }
-
-    void SceneFactory::loadGameObject(Scene& scene, std::map<unsigned int, TMX::Parser::Object> object,TMX::Parser *myParser) {
+    void SceneFactory::loadObject(Scene& scene,Tmx::Object object, Tmx::Map * map) {
         sf::Vector2f v2f;
-        unsigned int i,j;
-        std::map<unsigned int, TMX::Parser::Object>::iterator itObject;
-        for(itObject = object.begin();itObject != object.end();++itObject) {
-            if(itObject->second.name == "Player"){
-                Player& player = scene.addGameObject<Player>();
-                v2f.x = itObject->second.x;
-                v2f.y = itObject->second.y;
-                BoxCollider& bcGroundingBox = player.addComponent<BoxCollider>();
-                bcGroundingBox.width = itObject->second.width;
-                bcGroundingBox.height = itObject->second.height;
-                player.transform.setPosition(v2f);
-                findImageOfSprite(itObject->second.gid, myParser,player);
-                player.setAnimation();
-            }
-            else{
-                GameObject &gameObject = scene.addGameObject<GameObject>();
-                v2f.x = itObject->second.x;
-                v2f.y = itObject->second.y;
-                gameObject.transform.setPosition(v2f);
-                gameObject.name = itObject->second.name;
-                findImageOfSprite(itObject->second.gid, myParser,gameObject);
-                BoxCollider& bcGroundingBox = gameObject.addComponent<BoxCollider>();
-                bcGroundingBox.width = itObject->second.width;
-                bcGroundingBox.height = itObject->second.height;
-            }
+        /*if( factory_map.find(object.GetName()) == factory_map.end()){
+            GameObject& gameObject = scene.addGameObject<GameObject>();
+            v2f.x = object.GetX();
+            v2f.y = object.GetY();
+            gameObject.transform.setPosition(v2f);
+            gameObject.name = object.GetName();
+            setGOComponent(object.GetGid(), map, gameObject);
+            BoxCollider &bcGroundingBox = gameObject.addComponent<BoxCollider>();
+            bcGroundingBox.width = object.GetWidth();
+            bcGroundingBox.height = object.GetHeight();
         }
-    }
+        else{
+            GameObject* gameObject = factory_map[object.GetName()];
+            v2f.x = object.GetX();
+            v2f.y = object.GetY();
+            gameObject->transform.setPosition(v2f);
+            if(object.GetName() == "Coin"){
+                setGOComponent(object.GetGid(),map, *gameObject);
+            }
+        }*/
+        if(object.GetName() == "Player"){
+            Player& player = scene.addGameObject<Player>();
+            v2f.x = object.GetX();
+            v2f.y = object.GetY();
+            player.transform.setPosition(v2f);
+        }
+        else if(object.GetName() == "Coin"){
+            Coin& coin = scene.addGameObject<Coin>();
+            v2f.x = object.GetX();
+            v2f.y = object.GetY();
+            coin.transform.setPosition(v2f);
+            setGOComponent(object.GetGid(),map,coin);
+        }
+        else{
+            GameObject& gameObject = scene.addGameObject<GameObject>();
+            v2f.x = object.GetX();
+            v2f.y = object.GetY();
+            gameObject.transform.setPosition(v2f);
+            gameObject.name = object.GetName();
+            setGOComponent(object.GetGid(), map, gameObject);
+            BoxCollider &bcGroundingBox = gameObject.addComponent<BoxCollider>();
+            bcGroundingBox.width = object.GetWidth();
+            bcGroundingBox.height = object.GetHeight();
+        }
 
+    }
+    Scene SceneFactory::loadAllGameObject(const char* filename) {
+        Scene scene(filename);
+        Parser* myParser = new Parser(filename);
+        /*factory_map["Player"] = &(scene.addGameObject<Player>());
+        factory_map["Coin"] = &(scene.addGameObject<Coin>());*/
+
+
+        myParser->loadMapInfo();
+        std::vector<Tmx::Object> objectList = myParser->loadObjectGroups();
+        for(unsigned i = 0; i < objectList.size();i++){
+            loadObject(scene,objectList[i],myParser->map);
+        }
+
+        return scene;
+    }
 }
 

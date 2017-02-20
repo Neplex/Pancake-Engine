@@ -14,20 +14,17 @@
 namespace PancakeEngine {
     class SceneFactory {
     public:
-        /**!
-         * Load a gameObject from an object map
-         * @param object
-         * @return pointer on a gameObject
-         */
-        static void loadGameObject(Scene& scene, std::map<unsigned int, TMX::Parser::Object> object,TMX::Parser* myParser);
+        SceneFactory();
         /**!
          * load all game object of a file
          * @param filename file to parse
          * @return scene of the file
          */
-        static Scene& loadAllGameObject(const char* filename);
+        Scene loadAllGameObject(const char* filename);
     private:
-        SceneFactory();
+        std::map<std::string, GameObject*>  factory_map;
+        void loadObject(Scene& scene,Tmx::Object object, Tmx::Map * map);
+
     };
 
 }
