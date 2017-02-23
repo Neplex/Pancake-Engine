@@ -29,6 +29,7 @@
 #include <SceneManager.hpp>
 #include <GameLogic/Components/BoxCollider.hpp>
 #include <GameLogic/Components/CircleCollider.hpp>
+#include <GameLogic/Components/Renderer.hpp>
 
 namespace PancakeEngine {
 
@@ -80,13 +81,15 @@ namespace PancakeEngine {
         sf::Clock clock; ///< Used to limit the FPS
 
         /**
-         * @brief Draw all elements (SpriteRenderer, AnimationRenderer, Animator) of the current scene
+         * @brief Draw all elements (Renderer) of the current scene
          */
         void drawScene();
 
+        void draw(const Renderer* renderer, sf::RenderStates renderStates);
+
         // Debug
-        void draw(const BoxCollider* boxCollider);
-        void draw(const CircleCollider* collider);
+        void draw(const BoxCollider* collider, sf::RenderStates renderStates);
+        void draw(const CircleCollider* collider, sf::RenderStates renderStates);
 
         sf::Color getColor(const Collider* collider);
     };

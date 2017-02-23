@@ -2,26 +2,15 @@
 // Created by nicolas on 25/01/17.
 //
 
-#include "../../include/Graphics/Animation.hpp"
+#include <Graphics/Animation.hpp>
 
 using namespace PancakeEngine;
 
-void Animation::addFrame(unsigned int i, unsigned int j, unsigned int time, bool flip) {
+void Animation::addFrame(unsigned i, unsigned j, unsigned time, bool flip) {
     Frame frame;
-    if (!flip)
-        frame.rect = sf::IntRect(
-                (spriteSheet.tile_width  + spriteSheet.margin) * i,
-                (spriteSheet.tile_height + spriteSheet.margin) * j,
-                spriteSheet.tile_width,
-                spriteSheet.tile_height
-        );
-    else
-        frame.rect = sf::IntRect(
-                (spriteSheet.tile_width  + spriteSheet.margin) * (i+1),
-                (spriteSheet.tile_height + spriteSheet.margin) * j,
-               -spriteSheet.tile_width,
-                spriteSheet.tile_height
-        );
+    frame.i = i;
+    frame.j = j;
     frame.time = time;
+    frame.flip = flip;
     frames.push_back(frame);
 }

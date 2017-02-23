@@ -25,7 +25,6 @@
 #ifndef PANCAKE_LUASCRIPT_HPP
 #define PANCAKE_LUASCRIPT_HPP
 
-#include <Debug/Debug.hpp>
 #include <GameLogic/Components/Behavior.hpp>
 #include <lua.hpp>
 

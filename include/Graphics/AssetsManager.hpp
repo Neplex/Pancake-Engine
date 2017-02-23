@@ -27,11 +27,12 @@
 
 
 #include <map>
-#include "SpriteSheet.hpp"
-#include "Animation.hpp"
 
 namespace PancakeEngine {
 
+    class SpriteSheet;
+    class Animation;
+    class TileMap;
     /**
      * @class AssetsManager
      * @brief Manage animations and spriteSheets.
@@ -116,12 +117,46 @@ namespace PancakeEngine {
          */
         static Animation& getDefaultAnimation();
 
+        /**
+         * @brief Create a new tileMap and return it.
+         * @details Name is unique, if you try to create a new tileMap
+         * with an existing name, the method return the existing tileMap.
+         * TileMap cannot be override.
+         * @attention TileMap must be unique for better performance.
+         * Don't create two same TileMap.
+         * @param name the tileMap name.
+         * @param tile_width the width of tile (in px).
+         * @param tile_height the height of tile (in px).
+         * @param width the width of TileMap (in tile).
+         * @param height the height of TileMap (in tile).
+         * @return A new TileMap.
+         */
+        static TileMap& createTileMap(std::string name, unsigned tile_width, unsigned tile_height, unsigned width, unsigned height);
+
+        /**
+         * @brief Get an tileMap by name. If name doesn't exist, return the
+         * default tileMap.
+         * @param name the tileMap name.
+         * @return The tileMap with the name.
+         * @as TileMap
+         */
+        static TileMap& getTileMap(std::string name);
+
+        /**
+         * @brief Get the default tileMap.
+         * @return The default tileMap.
+         * @as TileMap
+         */
+        static TileMap& getDefaultTileMap();
+
     private:
         static std::map<std::string, SpriteSheet> spriteSheets; ///< List of spriteSheets
         static std::map<std::string, Animation> animations; ///< List of animations
+        static std::map<std::string, TileMap> tileMaps; ///< List of tileMaps
 
         static SpriteSheet defaultSpriteSheet; ///< The default spriteSheet
         static Animation defaultAnimation; ///< The default animation
+        static TileMap defaultTileMap; ///< The default animation
 
         AssetsManager();
     };

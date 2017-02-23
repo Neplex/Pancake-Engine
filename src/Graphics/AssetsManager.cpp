@@ -2,15 +2,17 @@
 // Created by nicolas on 31/01/17.
 //
 
-#include "../../include/Graphics/AssetsManager.hpp"
+#include <Graphics.hpp>
 
 using namespace PancakeEngine;
 
 std::map<std::string, SpriteSheet> AssetsManager::spriteSheets;
 std::map<std::string, Animation> AssetsManager::animations;
+std::map<std::string, TileMap> AssetsManager::tileMaps;
 
 SpriteSheet AssetsManager::defaultSpriteSheet = SpriteSheet("../resources/default.png", 32, 32);
 Animation AssetsManager::defaultAnimation = Animation(defaultSpriteSheet);
+TileMap AssetsManager::defaultTileMap = TileMap(defaultSpriteSheet.tile_height, defaultSpriteSheet.tile_width, 1, 1);
 
 AssetsManager::AssetsManager() {}
 
@@ -50,4 +52,21 @@ Animation& AssetsManager::getAnimation(std::string name) {
 
 Animation &AssetsManager::getDefaultAnimation() {
     return defaultAnimation;
+}
+
+TileMap& AssetsManager::createTileMap(std::string name, unsigned tile_width, unsigned tile_height, unsigned width, unsigned height) {
+    if (tileMaps.find(name) == tileMaps.end())
+        tileMaps.emplace(name, TileMap(tile_height, tile_width, width, height));
+    return tileMaps.at(name);
+}
+
+TileMap& AssetsManager::getTileMap(std::string name) {
+    if (tileMaps.find(name) != tileMaps.end())
+        return tileMaps.at(name);
+    else
+        return getDefaultTileMap();
+}
+
+TileMap& AssetsManager::getDefaultTileMap() {
+    return defaultTileMap;
 }

@@ -12,15 +12,8 @@ SpriteRenderer::SpriteRenderer() : isFlip(false) {
     setSprite(AssetsManager::getDefaultSpriteSheet(), 0, 0);
 }
 
-void SpriteRenderer::setSprite(SpriteSheet &sheet, unsigned int i, unsigned int j) {
-    sprite.setTexture(sheet.texture);
-    sprite.setTextureRect(sf::IntRect(
-            (sheet.tile_width  + sheet.margin) * i,
-            (sheet.tile_height + sheet.margin) * j,
-            sheet.tile_width,
-            sheet.tile_height
-    ));
-    sprite.setOrigin(sheet.tile_width / 2, sheet.tile_height / 2);
+void SpriteRenderer::setSprite(SpriteSheet &sheet, unsigned i, unsigned j) {
+    sprite = sheet.getSprite(i, j);
 }
 
 void SpriteRenderer::flip(bool b) {

@@ -26,17 +26,17 @@
 #define PANCAKE_ANIMATIONRENDERER_HPP
 
 
-#include "Component.hpp"
-#include "../../Graphics/Animation.hpp"
+#include <GameLogic/Components/Renderer.hpp>
+#include <Graphics.hpp>
 
 namespace PancakeEngine {
 
     /**
      * @class AnimationRenderer
      * @brief An animation renderer is used to display and control an animation.
-     * @sa Component Animation
+     * @sa Component Renderer Animation
      */
-    class AnimationRenderer : public Component {
+    class AnimationRenderer : public Renderer {
     public:
         /**
          * @brief Construct an AnimationRenderer with a default animation.
@@ -84,9 +84,6 @@ namespace PancakeEngine {
         void setAnimation(Animation& a);
 
     private:
-        friend class Window; ///< Draw the sprite
-
-        sf::Sprite sprite; ///< The current sprite
         Animation* animation;
         bool isRun; ///< True if the animation is playing
         bool isLoop; ///< True if the animation loop

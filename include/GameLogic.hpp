@@ -39,6 +39,7 @@
 #include "GameLogic/Components/Rigidbody.hpp"
 #include "GameLogic/Components/SpriteRenderer.hpp"
 #include "GameLogic/Components/Transform.hpp"
+#include "GameLogic/Components/TileMapRenderer.hpp"
 
 
 /**

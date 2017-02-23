@@ -26,8 +26,9 @@
 
 #include "Graphics/Window.hpp"
 #include "Graphics/Animation.hpp"
-#include "Graphics/AssetsManager.hpp"
+#include "Graphics/TileMap.hpp"
 #include "Graphics/SpriteSheet.hpp"
+#include "Graphics/AssetsManager.hpp"
 
 /**
  * @defgroup Graphics Graphics

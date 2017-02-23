@@ -7,41 +7,42 @@
 using namespace PancakeEngine;
 
 void Scene::awake() {
-    for (unsigned i = 0; i < gameObjects.size(); ++i) {
-        gameObjects[i]->awake();
-    }
+    for (auto l : layers)
+        for (GameObject* go : l)
+            go->awake();
 }
 
 void Scene::start() {
-    for (unsigned i = 0; i < gameObjects.size(); ++i) {
-        gameObjects[i]->start();
-    }
+    for (auto l : layers)
+        for (GameObject* go : l)
+            go->start();
 }
 
 void Scene::update() {
-    for (unsigned i = 0; i < gameObjects.size(); ++i) {
-        gameObjects[i]->update();
-        if (gameObjects[i]->toDestroy) {
-            toDestroy.push_back(gameObjects[i]);
-            gameObjects[i] = gameObjects.back();
-            gameObjects.pop_back();
-            i--;
+    for (auto layer : layers)
+        for (unsigned i=0; i<layer.size(); i++) {
+            layer.at(i)->update();
+            if (layer.at(i)->toDestroy) {
+                toDestroy.push_back(layer[i]);
+                layer[i] = layer.back();
+                layer.pop_back();
+                i--;
+            }
         }
-    }
     destroyGameObjects();
 }
 
 void Scene::lateUpdate() {
-
-    for (unsigned i = 0; i < gameObjects.size(); ++i) {
-        gameObjects[i]->lateUpdate();
-        if (gameObjects[i]->toDestroy) {
-            toDestroy.push_back(gameObjects[i]);
-            gameObjects[i] = gameObjects.back();
-            gameObjects.pop_back();
-            i--;
+    for (auto layer : layers)
+        for (unsigned i=0; i<layer.size(); i++) {
+            layer.at(i)->lateUpdate();
+            if (layer.at(i)->toDestroy) {
+                toDestroy.push_back(layer[i]);
+                layer[i] = layer.back();
+                layer.pop_back();
+                i--;
+            }
         }
-    }
     destroyGameObjects();
 }
 

@@ -4,8 +4,9 @@
 
 #include <iostream>
 #include <math.h>
-#include <GameLogic/Components/CircleCollider.hpp>
+#include <Graphics/Window.hpp>
 #include <GameLogic.hpp>
+#include <Debug/Debug.hpp>
 
 using namespace PancakeEngine;
 
@@ -41,7 +42,6 @@ void Window::setFrameRate(float framerate) {
 }
 
 std::pair<unsigned, unsigned> splitScreen(unsigned nbPart) {
-    if (nbPart < 3) return {nbPart, 1};
     std::pair<unsigned, unsigned> dimensions;
     double s = sqrt(nbPart);
     dimensions.first = (unsigned)ceil(s);
@@ -53,13 +53,14 @@ void Window::drawScene() {
     // Get views
     std::vector<sf::View> views;
     // TODO: create a fix order for camera
-    for (GameObject* go : scenes.getCurrentScene()->gameObjects)
-        for (Camera* c : go->getComponents<Camera>()) {
-            sf::View view = c->view;
-            view.setCenter(c->gameObject->transform.getPosition());
-            view.setRotation(c->gameObject->transform.getRotation());
-            views.push_back(view);
-        }
+    for (auto l : scenes.getCurrentScene()->layers)
+        for (GameObject* go : l)
+            for (Camera* c : go->getComponents<Camera>()) {
+                sf::View view = c->view;
+                view.setCenter(c->gameObject->transform.getPosition());
+                view.setRotation(c->gameObject->transform.getRotation());
+                views.push_back(view);
+            }
     if (views.size() == 0) views.push_back(window.getDefaultView());
 
     std::pair<unsigned, unsigned> nbElem = splitScreen((unsigned) views.size());
@@ -69,41 +70,48 @@ void Window::drawScene() {
     // Draw all views
     unsigned nbCamera = (unsigned) views.size();
     for (unsigned i = 0; i < nbCamera; i++) {
-        views[i].setViewport(sf::FloatRect((i%nbElem.first) * width, (i/nbElem.second) * height * (nbCamera > 2), width, height));
-        if (nbCamera == 2) views[i].setSize(width * window.getSize().x * 1.5, height * window.getSize().y * 1.5);
+        views[i].setViewport(sf::FloatRect(
+                (i%nbElem.first) * width,
+                (i/nbElem.second) * height,
+                width,
+                height
+        ));
         window.setView(views[i]);
 
         // Draw gameObjects
         sf::RenderStates renderStates;
-        for (GameObject *gameObject : scenes.getCurrentScene()->gameObjects) {
-            renderStates.transform = gameObject->transform.getTransformMatrix();
+        for (auto l : scenes.getCurrentScene()->layers) {
+            for (GameObject* gameObject : l) {
+                renderStates.transform = gameObject->transform.getTransformMatrix();
 
-            // Get SpriteRenderer
-            const std::vector<SpriteRenderer *> spriteRenderers = gameObject->getComponents<SpriteRenderer>();
-            for (SpriteRenderer *sr : spriteRenderers) window.draw(sr->sprite, renderStates);
+                // Renderer
+                const std::vector<Renderer *> rs = gameObject->getComponents<Renderer>();
+                for (Renderer *r : rs) draw(r, renderStates);
 
-            // Get AnimationRenderer
-            const std::vector<AnimationRenderer *> animationRenderers = gameObject->getComponents<AnimationRenderer>();
-            for (AnimationRenderer *ar : animationRenderers) window.draw(ar->sprite, renderStates);
+                // Animator
+                const std::vector<Animator *> animators = gameObject->getComponents<Animator>();
+                for (Animator *ar : animators) if (ar->getCurrentAnimation() != NULL) draw(ar->getCurrentAnimation(), renderStates);
 
-            // Get Animator
-            const std::vector<Animator *> animators = gameObject->getComponents<Animator>();
-            for (Animator *ar : animators) if (ar->getCurrentAnimation() != NULL) window.draw(ar->getCurrentAnimation()->sprite, renderStates);
+                // Debug elements
+                if (debug) {
+                    // Box collider
+                    const std::vector<BoxCollider *> boxColliders = gameObject->getComponents<BoxCollider>();
+                    for (BoxCollider *bc : boxColliders) draw(bc, renderStates);
 
-            // Debug elements
-            if (debug) {
-                // Box collider
-                const std::vector<BoxCollider *> boxColliders = gameObject->getComponents<BoxCollider>();
-                for (BoxCollider *bc : boxColliders) draw(bc);
-                // Circle collider
-                const std::vector<CircleCollider *> circleColliders = gameObject->getComponents<CircleCollider>();
-                for (CircleCollider *bc : circleColliders) draw(bc);
+                    // Circle collider
+                    const std::vector<CircleCollider *> circleColliders = gameObject->getComponents<CircleCollider>();
+                    for (CircleCollider *bc : circleColliders) draw(bc, renderStates);
+                }
             }
         }
     }
 
     // Draw HUD
     window.setView(window.getDefaultView());
+}
+
+void Window::draw(const Renderer *renderer, sf::RenderStates renderStates) {
+    window.draw(renderer->sprite, renderStates);
 }
 
 sf::Color Window::getColor(const Collider * collider) {
@@ -130,33 +138,30 @@ sf::Color Window::getColor(const Collider * collider) {
     return color;
 }
 
-void Window::draw(const BoxCollider * boxCollider) {
+void Window::draw(const BoxCollider * collider, sf::RenderStates renderStates) {
     // To draw from center
     sf::Vertex vertices[6] = {
-            sf::Vertex(sf::Vector2f(-boxCollider->width/2, -boxCollider->height/2)),
-            sf::Vertex(sf::Vector2f( boxCollider->width/2, -boxCollider->height/2)),
-            sf::Vertex(sf::Vector2f( boxCollider->width/2,  boxCollider->height/2)),
-            sf::Vertex(sf::Vector2f(-boxCollider->width/2, -boxCollider->height/2)),
-            sf::Vertex(sf::Vector2f(-boxCollider->width/2,  boxCollider->height/2)),
-            sf::Vertex(sf::Vector2f( boxCollider->width/2,  boxCollider->height/2))
+            sf::Vertex(sf::Vector2f(-collider->width/2, -collider->height/2)),
+            sf::Vertex(sf::Vector2f( collider->width/2, -collider->height/2)),
+            sf::Vertex(sf::Vector2f( collider->width/2,  collider->height/2)),
+            sf::Vertex(sf::Vector2f(-collider->width/2, -collider->height/2)),
+            sf::Vertex(sf::Vector2f(-collider->width/2,  collider->height/2)),
+            sf::Vertex(sf::Vector2f( collider->width/2,  collider->height/2))
     };
     // Color for type
-    sf::Color color = getColor(boxCollider);
-    for (int i = 0; i < 6; ++i) {
-        vertices[i].color = color;
-    }
+    sf::Color color = getColor(collider);
+    for (int i = 0; i < 6; ++i) vertices[i].color = color;
     // Transform
-    sf::RenderStates renderStates;
-    renderStates.transform = boxCollider->gameObject->transform.getTransformMatrix();
-    renderStates.transform.translate(boxCollider->offset);
+    renderStates.transform.translate(collider->offset);
     window.draw(vertices, 6, sf::LinesStrip, renderStates);
 }
 
-void Window::draw(const CircleCollider* collider) {
+void Window::draw(const CircleCollider* collider, sf::RenderStates renderStates) {
     sf::CircleShape circle(collider->radius);
     circle.setFillColor(sf::Color::Transparent);
     circle.setOutlineThickness(-2);
     circle.setOutlineColor(getColor(collider));
-    circle.setPosition(collider->gameObject->transform.getPosition()  + collider->offset - sf::Vector2f(collider->radius,collider->radius)); // Because SFML take the upperleftcorner
-    window.draw(circle);
+    circle.setPosition(-sf::Vector2f(collider->radius,collider->radius)); // Because SFML take the upperleftcorner
+    renderStates.transform.translate(collider->offset);
+    window.draw(circle, renderStates);
 }

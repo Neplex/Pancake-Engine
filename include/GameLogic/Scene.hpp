@@ -10,28 +10,31 @@
 
 namespace PancakeEngine {
 
-    class Camera;
     class Scene {
     public:
         std::string name;
-        std::vector<GameObject*> gameObjects; // TODO: vector of pointer is dangerous. Use references.
+        std::vector<std::vector<GameObject*>> layers; // TODO: vector of pointer is dangerous. Use references.
 
-        Scene(std::string name) :name(name), gameObjects() {}
+        Scene(std::string name) :name(name) {}
 
         ~Scene() {
-            for(GameObject* go : gameObjects) {
-                delete go;
-            }
+            for (auto l : layers)
+                for(GameObject* go : l) {
+                    delete go;
+                }
         }
 
         /**
-         * Add the given game object to the scene (after the others).
-         * @param go The game object to add.
+         * Add the given game object to the scene (after the others) in the corresponding layer.
+         * @tparam T the type of gameObject.
+         * @param layer the layer index (draw over lower index).
+         * @return the created gameObject
          */
         template <class T>
-        T& addGameObject() {
+        T& addGameObject(unsigned layer) {
+            while (layers.size() <= layer) layers.push_back(std::vector<GameObject*>());
             T* gameObject = new T();
-            gameObjects.push_back(gameObject);
+            layers.at(layer).push_back(gameObject);
             return *gameObject;
         }
 

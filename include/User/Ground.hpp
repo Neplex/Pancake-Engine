@@ -9,7 +9,8 @@
 #include <Graphics.hpp>
 
 #define SIZE 70
-#define WIDTH 61
+#define WIDTH 60
+#define HEIGHT 6
 
 namespace PancakeEngine {
     class Ground : public GameObject {
@@ -17,17 +18,18 @@ namespace PancakeEngine {
         Ground() : GameObject() {
             name = "Ground";
 
-            BoxCollider& bcGroundingBox = addComponent<BoxCollider>();
-            bcGroundingBox.height = SIZE;
-            bcGroundingBox.width = SIZE * WIDTH;
+            BoxCollider& collider = addComponent<BoxCollider>();
+            collider.height = HEIGHT * SIZE;
+            collider.width = SIZE * WIDTH;
 
             SpriteSheet& sheet = AssetsManager::getSpriteSheet("tiles");
 
-            for (int i = -WIDTH/2; i < WIDTH/2; ++i) {
-                SpriteRenderer& sr = addComponent<SpriteRenderer>();
-                sr.setSprite(sheet, 2, 6);
-                sr.setPosition(sf::Vector2f(i*SIZE, 0));
-            }
+            TileMap& tileMap = AssetsManager::createTileMap("ground", SIZE, SIZE, WIDTH, HEIGHT);
+            for (unsigned x = 0; x < WIDTH; ++x) tileMap.addTile(sheet, 2, 6, x, 0);
+            for (unsigned x = 0; x < WIDTH; ++x)
+                for (unsigned y = 1; y < HEIGHT; ++y) tileMap.addTile(sheet, 4, 7, x, y);
+
+            addComponent<TileMapRenderer>().setTileMap(tileMap);
         }
 
     };

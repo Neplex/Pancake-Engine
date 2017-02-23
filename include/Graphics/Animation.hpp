@@ -26,7 +26,7 @@
 #define PANCAKE_ANIMATION_HPP
 
 #include <SFML/Graphics/Sprite.hpp>
-#include "SpriteSheet.hpp"
+#include <Graphics/SpriteSheet.hpp>
 
 namespace PancakeEngine {
 
@@ -46,9 +46,10 @@ namespace PancakeEngine {
          * @param i the column index
          * @param j the row index
          * @param time the duration in millisecond
+         * @param flip True if the sprite is flip
          * @sa SpriteSheet
          */
-        void addFrame(unsigned int i, unsigned int j, unsigned int time, bool flip = false);
+        void addFrame(unsigned i, unsigned j, unsigned time, bool flip = false);
 
     private:
         friend class AssetsManager; ///< The only one can create animation
@@ -58,8 +59,8 @@ namespace PancakeEngine {
          * @brief Structure to store an animation frame.
          */
         struct Frame {
-            sf::IntRect rect;
-            unsigned int time;
+            unsigned i, j, time;
+            bool flip;
         };
 
         SpriteSheet spriteSheet; ///< SpriteSheet of the animation.

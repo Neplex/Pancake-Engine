@@ -2,6 +2,7 @@
 // Created by nicolas on 03/02/17.
 //
 
+#include <Debug/Debug.hpp>
 #include <GameLogic.hpp>
 #include <Inputs.hpp>
 #include <Time.hpp>

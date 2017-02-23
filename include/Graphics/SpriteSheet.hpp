@@ -26,7 +26,7 @@
 #define PANCAKE_SPRITESHEET_HPP
 
 
-#include <SFML/Graphics/Texture.hpp>
+#include <SFML/Graphics.hpp>
 
 namespace PancakeEngine {
 
@@ -39,6 +39,27 @@ namespace PancakeEngine {
     class SpriteSheet {
     public:
         /**
+         * @brief Get the sprite at column i, and row j in the spriteSheet.
+         * @param i the column index.
+         * @param j the row index.
+         * @param flip True if the sprite is flip.
+         * @return The sprite.
+         */
+        sf::Sprite getSprite(unsigned i, unsigned j, bool flip = false) {
+            sf::Sprite sprite;
+            sprite.setTexture(texture);
+            sprite.setTextureRect(getRect(i, j, flip));
+            sprite.setOrigin(tile_width / 2, tile_height / 2);
+            return sprite;
+        }
+
+    private:
+        friend class AssetsManager; ///< The only one can create spriteSheet
+
+        sf::Texture texture;
+        unsigned tile_width, tile_height, margin;
+
+        /**
          * @brief Create a SpriteSheet from image 'uri'
          * @param uri the link to the image
          * @param tile_w the tile width
@@ -49,15 +70,28 @@ namespace PancakeEngine {
             texture.setSmooth(true);
         }
 
-    private:
-        friend class Animation;
-        friend class AnimationRenderer;
-        friend class SpriteRenderer;
-
-        sf::Texture texture;
-        unsigned int tile_width;
-        unsigned int tile_height;
-        unsigned int margin;
+        /**
+         * @brief Get the rectangle of sprite at column i, and row j in the
+         * spriteSheet.
+         * @param i the column index.
+         * @param j the row index.
+         * @param flip True if the sprite is flip.
+         * @return The rectangle of sprite.
+         */
+        sf::IntRect getRect(unsigned i, unsigned j, bool flip = false) {
+            if (!flip) return sf::IntRect(
+                        (tile_width  + margin) * i,
+                        (tile_height + margin) * j,
+                        tile_width,
+                        tile_height
+                );
+            else return sf::IntRect(
+                        (tile_width  + margin) * (i+1),
+                        (tile_height + margin) * j,
+                        -tile_width,
+                        tile_height
+                );
+        }
     };
 }
 

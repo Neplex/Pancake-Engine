@@ -142,9 +142,6 @@ namespace PancakeEngine {
         ~GameObject() {
             for (int i = 0; i < components.size(); ++i) {
                 delete components[i];
-                components[i] = components.back();
-                components.pop_back();
-                i--;
             }
             numGameobjects--;
         }

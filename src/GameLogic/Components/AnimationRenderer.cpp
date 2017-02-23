@@ -2,12 +2,12 @@
 // Created by nicolas on 25/01/17.
 //
 
-#include "../../../include/GameLogic/Components/AnimationRenderer.hpp"
-#include "../../../include/Time.hpp"
+#include <GameLogic/Components/AnimationRenderer.hpp>
+#include <Time.hpp>
 
 using namespace PancakeEngine;
 
-AnimationRenderer::AnimationRenderer() : sprite(), animation(NULL), isRun(false), isLoop(false), isFlip(false), currentTime(0), currentFrame(0) {}
+AnimationRenderer::AnimationRenderer() : animation(NULL), isRun(false), isLoop(false), isFlip(false), currentTime(0), currentFrame(0) {}
 
 void AnimationRenderer::update() {
     if (isRun && animation != NULL) {
@@ -21,7 +21,8 @@ void AnimationRenderer::update() {
                     currentFrame--;
                 }
             }
-            sprite.setTextureRect(animation->frames.at(currentFrame).rect);
+            Animation::Frame frame = animation->frames.at(currentFrame);
+            sprite = animation->spriteSheet.getSprite(frame.i, frame.j, frame.flip);
         }
     }
 }
@@ -56,7 +57,9 @@ void AnimationRenderer::flip(bool b) {
 
 void AnimationRenderer::setAnimation(Animation &a) {
     animation = &a;
-    sprite.setTexture(animation->spriteSheet.texture);
-    sprite.setTextureRect(animation->frames[currentFrame].rect);
-    sprite.setOrigin(animation->spriteSheet.tile_width / 2, animation->spriteSheet.tile_height / 2);
+    sprite = animation->spriteSheet.getSprite(
+            animation->frames[currentFrame].i,
+            animation->frames[currentFrame].j,
+            animation->frames[currentFrame].flip
+    );
 }

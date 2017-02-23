@@ -25,18 +25,17 @@
 #ifndef PANCAKE_SPRITERENDERER_HPP
 #define PANCAKE_SPRITERENDERER_HPP
 
-#include "Component.hpp"
-#include "../../Graphics/SpriteSheet.hpp"
-#include <SFML/Graphics.hpp>
+#include <GameLogic/Components/Renderer.hpp>
+#include <Graphics/SpriteSheet.hpp>
 
 namespace PancakeEngine {
 
     /**
      * @class SpriteRenderer
      * @brief Attach a sprite on a GameObject.
-     * @sa Component
+     * @sa Component Renderer SpriteSheet
      */
-    class SpriteRenderer : public Component {
+    class SpriteRenderer : public Renderer {
     public:
         /**
          * @brief Construct an SpriteRenderer with a default SpriteSheet and
@@ -52,7 +51,7 @@ namespace PancakeEngine {
          * @param i the column index
          * @param j the row index
          */
-        void setSprite(SpriteSheet& sheet, unsigned int i, unsigned int j);
+        void setSprite(SpriteSheet& sheet, unsigned i, unsigned j);
 
         /**
          * @brief Flip the sprite.
@@ -67,10 +66,7 @@ namespace PancakeEngine {
         void setPosition(sf::Vector2f position);
 
     private:
-        friend class Window; ///< Draw the sprite
-
         bool isFlip;
-        sf::Sprite sprite;
     };
 }
 
