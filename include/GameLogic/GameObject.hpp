@@ -58,7 +58,6 @@ namespace PancakeEngine {
          * @tparam T The type of the component.
          * @return The first component of the type T, NULL if no component of the type T.
          * @attention Please do not mess up with the pointer.
-         * @todo pointer is too permissive ?
          * @sa Component
          */
         template<typename T>

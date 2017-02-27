@@ -33,15 +33,12 @@ void PhysicsEngine::update(float dt) {
 }
 
 void PhysicsEngine::addStaticBodyToPhysicsWorld(Collider& c) {
-    // TODO Test if ti works with multiple triggers.
-
     b2BodyDef bodyDef;
     bodyDef.type = b2_staticBody;
 
     bodyDef.position.Set((c.gameObject->transform.getPosition().x)/numberPixelsPerMeter,
                          (c.gameObject->transform.getPosition().y)/numberPixelsPerMeter);
     bodyDef.userData = (void *) &c;
-    //bodyDef.userData = new PhysicsUserData(PhysicsUserData::Type::Collider, nullptr, &c);
     b2Body* body = world.CreateBody(&bodyDef);
     createFixtures(*c.gameObject, *body);
 }
@@ -122,6 +119,9 @@ void PhysicsEngine::createFixtures(const GameObject& go, b2Body& body) {
         fixtureDef.restitution = c.bounciness;
         fixtureDef.isSensor = c.isTrigger;
         fixtureDef.userData = (void *) &c;
+        fixtureDef.filter.categoryBits = c.categoryBits;
+        fixtureDef.filter.maskBits = c.maskBits;
+        // TODO use indexgroup
         c.fixture = body.CreateFixture(&fixtureDef);
     }
 }

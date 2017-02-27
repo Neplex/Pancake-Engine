@@ -33,6 +33,10 @@ namespace PancakeEngine {
         float friction;
         // The local offset of the collider
         sf::Vector2f offset;
+        // category bits
+        uint16 categoryBits;
+        // mask bits
+        uint16 maskBits;
 
         /**
          * Return the body type of this collider.

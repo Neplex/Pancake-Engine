@@ -47,7 +47,7 @@ namespace PancakeEngine {
      * \ingroup Inputs
      */
     class InputManager {
-        //TODO ?make a InputHandler that will handle inputs. Input Manager will only create and update buttons.
+        //TODO make a InputHandler that will handle inputs. Input Manager will only create and update buttons.
     public:
 
         /**
@@ -66,7 +66,9 @@ namespace PancakeEngine {
         static void createButton(const std::string& name, const std::vector<sf::Keyboard::Key>& keys,
                 void (* callback)() = nullptr)
         {
-            // TODO assert that the button is not here already
+            for (unsigned i = 0; i<buttons.size(); ++i) {
+                assert(name != buttons[i]->name);
+            }
             Button* b = new Button(name, keys);
             b->pressedCallback = callback;
             buttons.push_back(b);

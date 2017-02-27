@@ -31,7 +31,6 @@ void Button::update() {
 void Button::press()
 {
     if (!isDown) {
-        // TODO bug here at runtime without debugger the name is chelou sometimes
         Debug::log("Inputs", "Button "+name+" has been pressed.");
         if (pressedCallback!=nullptr) {
             pressedCallback();
