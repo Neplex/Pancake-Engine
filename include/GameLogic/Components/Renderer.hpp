@@ -10,9 +10,8 @@
 
 namespace PancakeEngine {
     class Renderer : public Component {
-    protected:
-        friend class Window;
-        sf::Sprite sprite;
+    public:
+        virtual const sf::Sprite getSprite() const = 0;
     };
 }
 

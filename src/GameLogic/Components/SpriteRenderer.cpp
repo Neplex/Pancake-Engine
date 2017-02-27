@@ -25,3 +25,7 @@ void SpriteRenderer::flip(bool b) {
 void SpriteRenderer::setPosition(sf::Vector2f position) {
     sprite.move(position);
 }
+
+const sf::Sprite SpriteRenderer::getSprite() const {
+    return sprite;
+}

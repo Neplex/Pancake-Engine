@@ -3,7 +3,7 @@
 //
 
 #include <iostream>
-#include <math.h>
+#include <cmath>
 #include <Graphics/Window.hpp>
 #include <GameLogic.hpp>
 #include <Debug/Debug.hpp>
@@ -86,11 +86,11 @@ void Window::drawScene() {
 
                 // Renderer
                 const std::vector<Renderer *> rs = gameObject->getComponents<Renderer>();
-                for (Renderer *r : rs) draw(r, renderStates);
+                for (Renderer *r : rs) window.draw(r->getSprite(), renderStates);
 
-                // Animator
-                const std::vector<Animator *> animators = gameObject->getComponents<Animator>();
-                for (Animator *ar : animators) if (ar->getCurrentAnimation() != NULL) draw(ar->getCurrentAnimation(), renderStates);
+                // TileMapRenderer
+                const std::vector<TileMapRenderer *> tmrs = gameObject->getComponents<TileMapRenderer>();
+                for (TileMapRenderer *tmr : tmrs) for (sf::Sprite s : tmr->getChunksSprites()) window.draw(s, renderStates);
 
                 // Debug elements
                 if (debug) {
@@ -108,10 +108,6 @@ void Window::drawScene() {
 
     // Draw HUD
     window.setView(window.getDefaultView());
-}
-
-void Window::draw(const Renderer *renderer, sf::RenderStates renderStates) {
-    window.draw(renderer->sprite, renderStates);
 }
 
 sf::Color Window::getColor(const Collider * collider) {

@@ -63,3 +63,7 @@ void AnimationRenderer::setAnimation(Animation &a) {
             animation->frames[currentFrame].flip
     );
 }
+
+const sf::Sprite AnimationRenderer::getSprite() const {
+    return sprite;
+}

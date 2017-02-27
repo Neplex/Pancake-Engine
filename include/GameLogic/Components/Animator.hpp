@@ -35,7 +35,7 @@ namespace PancakeEngine {
      * @brief An animator display a list of animations and switch between.
      * @sa Component Animation
      */
-    class Animator : public Component {
+    class Animator : public Renderer {
     public:
         ~Animator();
 
@@ -59,7 +59,9 @@ namespace PancakeEngine {
          */
         const AnimationRenderer* getCurrentAnimation() const;
 
-        void update();
+        void update() override;
+
+        const sf::Sprite getSprite() const override;
 
     private:
         /**

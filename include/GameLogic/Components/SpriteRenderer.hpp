@@ -65,8 +65,11 @@ namespace PancakeEngine {
          */
         void setPosition(sf::Vector2f position);
 
+        const sf::Sprite getSprite() const override;
+
     private:
         bool isFlip;
+        sf::Sprite sprite;
     };
 }
 

@@ -49,3 +49,11 @@ void Animator::update() {
         }
     }
 }
+
+const sf::Sprite Animator::getSprite() const {
+    const AnimationRenderer* animationRenderer;
+    if ((animationRenderer = getCurrentAnimation()) == NULL) {
+        return AssetsManager::getDefaultSpriteSheet().getSprite(0, 0);
+    }
+    return animationRenderer->getSprite();
+}

@@ -75,13 +75,15 @@ namespace PancakeEngine {
         /**
          * @brief Update the animation with time elapse.
          */
-        void update();
+        void update() override;
 
         /**
          * @brief Set the animation.
          * @param a the animation.
          */
         void setAnimation(Animation& a);
+
+        const sf::Sprite getSprite() const override;
 
     private:
         Animation* animation;
@@ -90,6 +92,7 @@ namespace PancakeEngine {
         bool isFlip; ///< True if the animation is flip
         double currentTime;
         unsigned int currentFrame;
+        sf::Sprite sprite;
 
         void reset();
     };
