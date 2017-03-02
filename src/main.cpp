@@ -4,8 +4,20 @@
 using namespace PancakeEngine;
 
 int main() {
+    AssetsManager::createSpriteSheet("player1", "../resources/players/player1.png", 70, 100);
+    AssetsManager::createSpriteSheet("player2", "../resources/players/player2.png", 70, 100);
+    AssetsManager::createSpriteSheet("player3", "../resources/players/player3.png", 70, 100);
+    AssetsManager::createSpriteSheet("player4", "../resources/players/player4.png", 70, 100);
+    AssetsManager::createSpriteSheet("player5", "../resources/players/player5.png", 70, 100);
+    AssetsManager::createSpriteSheet("tiles", "../resources/tiles/tiles.png", 70, 70);
+    AssetsManager::createSpriteSheet("items", "../resources/items.png", 70, 70);
+
     Engine * app = new Engine();
-    app->sceneManager.loadScene(new Sandbox());
+    const char* filename = "../resources/test.tmx";
+    //app->sceneManager.loadScene(new Sandbox());
+    Scene sc = app->sceneManager.loadScene(filename);
+    app->sceneManager.loadScene(&sc);
+
 
     InputManager::createButton("player1_jump", std::vector<sf::Keyboard::Key> ({sf::Keyboard::Key::Z}));
     InputManager::createButton("player1_right", std::vector<sf::Keyboard::Key> ({sf::Keyboard::Key::D}));
@@ -33,7 +45,7 @@ int main() {
     InputManager::createButton("player5_duck", std::vector<sf::Keyboard::Key> ({}));
 
     InputManager::createButton("ShowDebugInfo", std::vector<sf::Keyboard::Key> ({sf::Keyboard::Key::F1}), Debug::switchEnableDebugGUI);
-    
+
     app->run();
     delete app;
 
