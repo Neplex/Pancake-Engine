@@ -1,106 +1,75 @@
-//
-// Created by nicolas on 22/02/17.
-//
+/*
+     Copyright (C) 2016-2017 Nicolas Hiot - nicolashiot@hotmail.com
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License along
+    with this program; if not, write to the Free Software Foundation, Inc.,
+    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+
+*/
+
+/**
+ * \file        TileMapRenderer.hpp
+ * \author      Nicolas Hiot - nicolashiot@hotmail.com
+ */
 
 #ifndef PANCAKE_TILEMAPRENDERER_HPP
 #define PANCAKE_TILEMAPRENDERER_HPP
 
-#include <GameLogic/Components/Component.hpp>
 #include <Graphics/TileMap.hpp>
-#include <cmath>
+#include <GameLogic/Components/Component.hpp>
 
 #define CHUNK_SIZE 512
 
 namespace PancakeEngine {
 
+    /**
+     * @class TileMapRenderer
+     * @brief Component that can render a TileMap.
+     * @sa TileMap Component
+     */
     class TileMapRenderer : public Component {
     public:
 
-        TileMapRenderer() {
-            setTileMap(AssetsManager::getDefaultTileMap());
-        }
+        /**
+         * @brief Construct an TileMapRenderer with a default TileMap.
+         * @sa AssetsManager
+         */
+        TileMapRenderer();
+        ~TileMapRenderer();
 
-        ~TileMapRenderer() {
-            clearGrid();
-        }
+        /**
+         * @brief Clear the chunks grid.
+         * @details Call this method to remove TileMap from the renderer.
+         */
+        void clearGrid();
 
-        void clearGrid() {
-            if (textureGrid != NULL) {
-                for (int i = 0; i < nb_column; ++i) {
-                    for (int j = 0; j < nb_row; ++j) {
-                        delete textureGrid[i][j];
-                    }
-                    delete textureGrid[i];
-                }
-                delete textureGrid;
+        /**
+         * @brief Set the tileMap.
+         * @param map the new tileMap.
+         */
+        void setTileMap(TileMap& map);
 
-                textureGrid = NULL;
-                chunk_width = chunk_height = nb_column = nb_row = marge_x = marge_y = 0;
-            }
-        }
-
-        void setTileMap(TileMap& map) {
-            // Remove old map
-            clearGrid();
-
-            // Init
-            chunk_width  = (unsigned) floor(CHUNK_SIZE / map.tile_width ) * map.tile_width;
-            chunk_height = (unsigned) floor(CHUNK_SIZE / map.tile_height) * map.tile_height;
-
-            nb_column = map.width  * map.tile_width  / chunk_width  + 1;
-            nb_row    = map.height * map.tile_height / chunk_height + 1;
-
-            marge_x = (nb_column * chunk_width ) - (map.width  * map.tile_width );
-            marge_y = (nb_row    * chunk_height) - (map.height * map.tile_height);
-
-            textureGrid = new sf::RenderTexture** [nb_column];
-            for (int i = 0; i < nb_column; ++i) {
-                textureGrid[i] = new sf::RenderTexture* [nb_column];
-                for (int j = 0; j < nb_row; ++j) {
-                    textureGrid[i][j] = new sf::RenderTexture();
-                    textureGrid[i][j]->create(chunk_width, chunk_height);
-                    textureGrid[i][j]->clear(sf::Color::Transparent);
-                    textureGrid[i][j]->setSmooth(true);
-                }
-            }
-
-            // Draw tiles
-            for (TileMap::Tile t : map.map) {
-                unsigned chunk_x = t.x / (chunk_width  / map.tile_width );
-                unsigned chunk_y = t.y / (chunk_height / map.tile_height);
-                sf::Sprite s = t.sheet->getSprite(t.i, t.j);
-                s.setPosition(
-                        t.x * map.tile_width  - (chunk_x * chunk_width ) + map.tile_width  / 2,
-                        t.y * map.tile_height - (chunk_y * chunk_height) + map.tile_height / 2
-                );
-                textureGrid[chunk_x][chunk_y]->draw(s);
-            }
-
-            // Display textures
-            for (int i = 0; i < nb_column; ++i) {
-                for (int j = 0; j < nb_row; ++j) {
-                    textureGrid[i][j]->display();
-                }
-            }
-        }
-
-        std::vector<sf::Sprite> getChunksSprites() {
-            std::vector<sf::Sprite> sprites;
-            for (int i = 0; i < nb_column; ++i) {
-                for (int j = 0; j < nb_row; ++j) {
-                    sf::Sprite sprite(textureGrid[i][j]->getTexture());
-                    sprite.setPosition(
-                            i * chunk_width  - (nb_column / 2.0 * chunk_width ) + marge_x / 2,
-                            j * chunk_height - (nb_row    / 2.0 * chunk_height) + marge_y / 2
-                    );
-                    sprites.push_back(sprite);
-                }
-            }
-            return sprites;
-        }
+    protected:
+        friend class Window;
+        /**
+         * @brief Get the vector of sprites (chunks).
+         * @details Only used by the window.
+         * @return A list of sprites (chunks).
+         */
+        std::vector<sf::Sprite> getChunksSprites();
 
     private:
-        sf::RenderTexture*** textureGrid = NULL;
+        sf::RenderTexture*** textureGrid = NULL; ///< Matrix of chunks
         unsigned chunk_width, chunk_height, nb_column, nb_row, marge_x, marge_y;
     };
 

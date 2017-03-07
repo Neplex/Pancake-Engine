@@ -26,8 +26,7 @@
 #define PANCAKE_TILEDMAP_HPP
 
 #include <SFML/Graphics.hpp>
-#include <Graphics.hpp>
-#include <GameLogic/Components/Component.hpp>
+#include <Graphics/SpriteSheet.hpp>
 
 namespace PancakeEngine {
 
@@ -55,7 +54,7 @@ namespace PancakeEngine {
         friend class TileMapRenderer;
 
         /**
-         * @brief Tile structure used to store data of a tile
+         * @struct Tile structure used to store data of a tile
          */
         struct Tile {
             SpriteSheet* sheet;

@@ -3,12 +3,14 @@
 //
 
 #include <Graphics/TileMap.hpp>
+#include <cassert>
 
 using namespace PancakeEngine;
 
 TileMap::TileMap(unsigned tile_w, unsigned tile_h, unsigned w, unsigned h) : tile_width(tile_w), tile_height(tile_h), width(w), height(h), map() {}
 
 void TileMap::addTile(SpriteSheet &sheet, unsigned i, unsigned j, unsigned x, unsigned y) {
+    assert(x < width && y < height); ///< The position is out of the map
     Tile tile;
     tile.sheet = &sheet;
     tile.i = i; tile.j = j;
