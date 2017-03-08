@@ -13,7 +13,11 @@ SpriteRenderer::SpriteRenderer() : isFlip(false) {
 }
 
 void SpriteRenderer::setSprite(SpriteSheet &sheet, unsigned i, unsigned j) {
+    sf::Vector2f pos = sprite.getPosition();
+    float rotation = sprite.getRotation();
     sprite = sheet.getSprite(i, j);
+    sprite.setPosition(pos);
+    sprite.setRotation(rotation);
 }
 
 void SpriteRenderer::flip(bool b) {

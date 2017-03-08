@@ -25,8 +25,7 @@ SpriteSheet& AssetsManager::createSpriteSheet(std::string name, std::string uri,
 SpriteSheet& AssetsManager::getSpriteSheet(std::string name) {
     if (spriteSheets.find(name) != spriteSheets.end())
         return spriteSheets.at(name);
-    else
-        return getDefaultSpriteSheet();
+    return getDefaultSpriteSheet();
 }
 
 SpriteSheet &AssetsManager::getDefaultSpriteSheet() {
@@ -46,8 +45,7 @@ Animation& AssetsManager::createAnimation(std::string name, SpriteSheet &spriteS
 Animation& AssetsManager::getAnimation(std::string name) {
     if (animations.find(name) != animations.end())
         return animations.at(name);
-    else
-        return getDefaultAnimation();
+    return getDefaultAnimation();
 }
 
 Animation &AssetsManager::getDefaultAnimation() {

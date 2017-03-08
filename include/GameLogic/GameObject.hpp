@@ -123,13 +123,13 @@ namespace PancakeEngine {
          */
         void update();
 
-        /**
+        virtual /**
          * @brief Called at each frame after the update engine call.
          * @details Call the same method on all components in order.
          */
         void lateUpdate();
 
-        // TODO: Not better to take the nb of objects in scene
+        // TODO: Not better to take the nb of objects in scene ?
         static int getNbGameObjects() { return numGameobjects; }
 
         /**
