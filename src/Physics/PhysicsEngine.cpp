@@ -36,8 +36,8 @@ void PhysicsEngine::addStaticBodyToPhysicsWorld(Collider& c) {
     b2BodyDef bodyDef;
     bodyDef.type = b2_staticBody;
 
-    bodyDef.position.Set((c.gameObject->transform.getPosition().x)/numberPixelsPerMeter,
-                         (c.gameObject->transform.getPosition().y)/numberPixelsPerMeter);
+    bodyDef.position.Set((c.gameObject->transform.getWorldPosition().x)/numberPixelsPerMeter,
+                         (c.gameObject->transform.getWorldPosition().y)/numberPixelsPerMeter);
     bodyDef.userData = (void *) &c;
     b2Body* body = world.CreateBody(&bodyDef);
     createFixtures(*c.gameObject, *body);
@@ -59,8 +59,8 @@ void PhysicsEngine::addRigidBodyToPhysicsWorld(Rigidbody &rb) {
             assert(false);
     }
 
-    bodyDef.position.Set((rb.gameObject->transform.getPosition().x)/numberPixelsPerMeter,
-                         (rb.gameObject->transform.getPosition().y)/numberPixelsPerMeter);
+    bodyDef.position.Set((rb.gameObject->transform.getWorldPosition().x)/numberPixelsPerMeter,
+                         (rb.gameObject->transform.getWorldPosition().y)/numberPixelsPerMeter);
     //bodyDef.userData = new PhysicsUserData(PhysicsUserData::Type::Rigidbody, &rb);
     bodyDef.userData = (void *) &rb;
     bodyDef.angularVelocity = rb.angularVelocity;
@@ -102,7 +102,7 @@ void PhysicsEngine::createFixtures(const GameObject& go, b2Body& body) {
             BoxCollider *bc = (BoxCollider *) &c;
             polygonShape.SetAsBox((bc->width/2)/PhysicsEngine::numberPixelsPerMeter, (bc->height/2)/PhysicsEngine::numberPixelsPerMeter,
                     (b2Vec2(c.offset.x/PhysicsEngine::numberPixelsPerMeter,c.offset.y/PhysicsEngine::numberPixelsPerMeter)),
-                    c.gameObject->transform.getRotation());
+                                  c.gameObject->transform.getWorldRotation());
             fixtureDef.shape = &polygonShape;
         }
         else if (dynamic_cast<CircleCollider *>(&c) != NULL) {

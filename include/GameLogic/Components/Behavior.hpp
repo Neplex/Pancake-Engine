@@ -25,11 +25,10 @@
 #ifndef PANCAKE_BEHAVIOR_HPP
 #define PANCAKE_BEHAVIOR_HPP
 
-#include "Component.hpp"
-#include "../../Physics/Collision.hpp"
+#include <GameLogic/Components/Component.hpp>
+#include <Physics/Collision.hpp>
 
 namespace PancakeEngine {
-    class GameObject;
 
     /**
      * @class Behavior

@@ -25,11 +25,8 @@
 #ifndef PANCAKE_COMPONENT_HPP
 #define PANCAKE_COMPONENT_HPP
 
-
 namespace PancakeEngine {
     class GameObject;
-    class Behavior;
-
     class Component {
     public:
         GameObject* gameObject;
