@@ -30,14 +30,13 @@
 #include <string>
 #include <iostream>
 #include <GameLogic/Components/Behavior.hpp>
-#include "../GameLogic/Components/Transform.hpp"
-#include "../Physics/Collision.hpp"
-#include "GameLogic/Components/Transform.hpp"
-
-//class Transform;
-class Component;
+#include <GameLogic/Components/Transform.hpp>
 
 namespace PancakeEngine {
+
+    class Transform;
+    class Collision;
+    class Component;
 
     /**
      * @class GameObject
@@ -130,8 +129,63 @@ namespace PancakeEngine {
          */
         void lateUpdate();
 
-        static int getNbGameObjects() {
-            return numGameobjects;
+        // TODO: Not better to take the nb of objects in scene
+        static int getNbGameObjects() { return numGameobjects; }
+
+        /**
+         * @brief Add child to the gameObject.
+         * @param go the child.
+         */
+        void addChild(GameObject& go) {
+            if (go.parent != NULL) go.removeParent();
+            go.parent = this;
+            childs.push_back(&go);
+        }
+
+        /**
+         * @brief Set the new parent.
+         * @param go the new parent.
+         */
+        void setParent(GameObject& go) {
+            go.addChild(*this);
+        }
+
+        /**
+         * @brief Remove a child;
+         * @param go the child to remove.
+         */
+        void removeChild(GameObject& go) {
+            for (int i = 0; i < childs.size(); ++i) {
+                if (childs.at(i) == &go) {
+                    childs.at(i)->parent = NULL;
+                    childs.erase(childs.begin() + i);
+                    return;
+                }
+            }
+            assert(false); ///< GameObject not in this
+        }
+
+        /**
+         * @brief Remove the current parent.
+         */
+        void removeParent() {
+            if (parent != NULL) {
+                parent->removeChild(*this);
+            }
+        }
+
+        /**
+         * @brief Get all sub childs.
+         * @return All sub childs.
+         */
+        std::vector<GameObject*> getChilds() const {
+            std::vector<GameObject*> cs;
+            for (int i = 0; i < childs.size(); ++i) {
+                std::vector<GameObject*> subChilds = childs.at(i)->getChilds();
+                cs.push_back(childs.at(i));
+                cs.insert(cs.end(), subChilds.begin(), subChilds.end());
+            }
+            return cs;
         }
 
     protected:
@@ -139,20 +193,31 @@ namespace PancakeEngine {
         GameObject();
         std::vector<Component*> components; ///< The components of the gameobject.
         ~GameObject() {
+            removeParent();
+
+            for (int i = 0; i < childs.size(); ++i) {
+                delete childs.at(i);
+            }
+
             for (int i = 0; i < components.size(); ++i) {
                 delete components[i];
             }
+
             numGameobjects--;
         }
 
     private:
         friend class PhysicsListener; ///< Is the only one to call OnCollision*
+        friend class Transform;
+        friend class Window;
         friend void Behavior::destroy(GameObject& go);
 
         static int numGameobjects;
 
         bool toDestroy = false;
         std::vector<Component *> componentsToDestroy;
+        GameObject* parent = NULL;
+        std::vector<GameObject *> childs;
 
         void destroyComponents();
 

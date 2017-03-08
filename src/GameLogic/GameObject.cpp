@@ -19,11 +19,19 @@ void GameObject::awake() {
     for (unsigned i = 0; i < components.size(); ++i) {
         components[i]->awake();
     }
+
+    for (unsigned i = 0; i < childs.size(); ++i) {
+        childs[i]->awake();
+    }
 }
 
 void GameObject::start() {
     for (unsigned i = 0; i < components.size(); ++i) {
         components[i]->start();
+    }
+
+    for (unsigned i = 0; i < childs.size(); ++i) {
+        childs[i]->start();
     }
 }
 
@@ -38,6 +46,10 @@ void GameObject::update() {
         }
     }
     destroyComponents();
+
+    for (unsigned i = 0; i < childs.size(); ++i) {
+        childs[i]->update();
+    }
 }
 
 void GameObject::lateUpdate() {
@@ -51,6 +63,10 @@ void GameObject::lateUpdate() {
         }
     }
     destroyComponents();
+
+    for (unsigned i = 0; i < childs.size(); ++i) {
+        childs[i]->lateUpdate();
+    }
 }
 
 void GameObject::destroyComponents() {

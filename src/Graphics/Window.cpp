@@ -53,12 +53,12 @@ void Window::drawScene() {
     // Get views
     std::vector<sf::View> views;
     // TODO: create a fix order for camera
-    for (auto l : scenes.getCurrentScene()->layers)
-        for (GameObject* go : l)
+    for (GameObject* layer : scenes.getCurrentScene()->layers)
+        for (GameObject* go : layer->getChilds())
             for (Camera* c : go->getComponents<Camera>()) {
                 sf::View view = c->view;
-                view.setCenter(c->gameObject->transform.getPosition());
-                view.setRotation(c->gameObject->transform.getRotation());
+                view.setCenter(c->gameObject->transform.getWorldPosition());
+                view.setRotation(c->gameObject->transform.getWorldRotation());
                 views.push_back(view);
             }
     if (views.size() == 0) views.push_back(window.getDefaultView());
@@ -79,28 +79,31 @@ void Window::drawScene() {
         window.setView(views[i]);
 
         // Draw gameObjects
-        sf::RenderStates renderStates;
-        for (auto l : scenes.getCurrentScene()->layers) {
-            for (GameObject* gameObject : l) {
-                renderStates.transform = gameObject->transform.getTransformMatrix();
+        sf::Transform transform;
+        for (GameObject* layer : scenes.getCurrentScene()->layers) {
+            for (GameObject* gameObject : layer->getChilds()) {
+                transform = gameObject->transform.getWorldTransformMatrix();
 
                 // Renderer
                 const std::vector<Renderer *> rs = gameObject->getComponents<Renderer>();
-                for (Renderer *r : rs) window.draw(r->getSprite(), renderStates);
+                for (Renderer *r : rs) window.draw(r->getSprite(), transform);
 
                 // TileMapRenderer
                 const std::vector<TileMapRenderer *> tmrs = gameObject->getComponents<TileMapRenderer>();
-                for (TileMapRenderer *tmr : tmrs) for (sf::Sprite s : tmr->getChunksSprites()) window.draw(s, renderStates);
+                for (TileMapRenderer *tmr : tmrs)
+                    for (sf::Sprite s : tmr->getChunksSprites())
+                        window.draw(s, transform);
 
                 // Debug elements
                 if (debug) {
                     // Box collider
                     const std::vector<BoxCollider *> boxColliders = gameObject->getComponents<BoxCollider>();
-                    for (BoxCollider *bc : boxColliders) draw(bc, renderStates);
+                    for (BoxCollider *bc : boxColliders) draw(bc, transform);
 
                     // Circle collider
                     const std::vector<CircleCollider *> circleColliders = gameObject->getComponents<CircleCollider>();
-                    for (CircleCollider *bc : circleColliders) draw(bc, renderStates);
+                    for (CircleCollider *bc : circleColliders)
+                        draw(bc, transform);
                 }
             }
         }

@@ -7,42 +7,34 @@
 using namespace PancakeEngine;
 
 void Scene::awake() {
-    for (auto l : layers)
-        for (GameObject* go : l)
-            go->awake();
+    for (GameObject* l : layers) l->awake();
 }
 
 void Scene::start() {
-    for (auto l : layers)
-        for (GameObject* go : l)
-            go->start();
+    for (GameObject* l : layers) l->start();
 }
 
 void Scene::update() {
-    for (auto layer : layers)
-        for (unsigned i=0; i<layer.size(); i++) {
-            layer.at(i)->update();
-            if (layer.at(i)->toDestroy) {
-                toDestroy.push_back(layer[i]);
-                layer[i] = layer.back();
-                layer.pop_back();
-                i--;
+    for (GameObject* layer : layers) {
+        for (GameObject* go : layer->getChilds()) {
+            go->update();
+            if (go->toDestroy) {
+                toDestroy.push_back(go);
             }
         }
+    }
     destroyGameObjects();
 }
 
 void Scene::lateUpdate() {
-    for (auto layer : layers)
-        for (unsigned i=0; i<layer.size(); i++) {
-            layer.at(i)->lateUpdate();
-            if (layer.at(i)->toDestroy) {
-                toDestroy.push_back(layer[i]);
-                layer[i] = layer.back();
-                layer.pop_back();
-                i--;
+    for (GameObject* layer : layers) {
+        for (GameObject* go : layer->getChilds()) {
+            go->lateUpdate();
+            if (go->toDestroy) {
+                toDestroy.push_back(go);
             }
         }
+    }
     destroyGameObjects();
 }
 

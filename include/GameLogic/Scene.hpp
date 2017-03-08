@@ -13,15 +13,13 @@ namespace PancakeEngine {
     class Scene {
     public:
         std::string name;
-        std::vector<std::vector<GameObject*>> layers; // TODO: vector of pointer is dangerous. Use references.
+        std::vector<GameObject*> layers;
 
         Scene(std::string name) :name(name) {}
 
         ~Scene() {
-            for (auto l : layers)
-                for(GameObject* go : l) {
-                    delete go;
-                }
+            for (GameObject* l : layers)
+                delete l;
         }
 
         /**
@@ -32,9 +30,9 @@ namespace PancakeEngine {
          */
         template <class T>
         T& addGameObject(unsigned layer) {
-            while (layers.size() <= layer) layers.push_back(std::vector<GameObject*>());
+            while (layers.size() <= layer) layers.push_back(new GameObject());
             T* gameObject = new T();
-            layers.at(layer).push_back(gameObject);
+            layers.at(layer)->addChild(*gameObject);
             return *gameObject;
         }
 

@@ -2,12 +2,13 @@
 // Created by nicolas on 03/02/17.
 //
 
+#include <sstream>
+#include <GameLogic/Components/LuaScript.hpp>
 #include <Debug/Debug.hpp>
-#include <GameLogic.hpp>
 #include <Inputs.hpp>
 #include <Time.hpp>
 #include <Graphics.hpp>
-#include <sstream>
+#include <GameLogic.hpp>
 
 // Lua types
 #define GAME_OBJECT "GameObject"
@@ -243,9 +244,9 @@ int gameObject_getName(lua_State *L) {
 }
 
 int gameObject_getPosition(lua_State *L) {
-    if (lua_gettop(L) != 1) THROW_ERROR(L, "invalid number of argument in 'getPosition'");
+    if (lua_gettop(L) != 1) THROW_ERROR(L, "invalid number of argument in 'getWorldPosition'");
     GameObject **go = (GameObject **)luaL_checkudata(L, -1, GAME_OBJECT);
-    sf::Vector2f pos = (*go)->transform.getPosition();
+    sf::Vector2f pos = (*go)->transform.getWorldPosition();
     lua_pushnumber(L, pos.x);
     lua_pushnumber(L, pos.y);
     return 2;
@@ -261,9 +262,9 @@ int gameObject_setPosition(lua_State *L) {
 }
 
 int gameObject_getRotation(lua_State *L) {
-    if (lua_gettop(L) != 1) THROW_ERROR(L, "invalid number of argument in 'getPosition'");
+    if (lua_gettop(L) != 1) THROW_ERROR(L, "invalid number of argument in 'getWorldPosition'");
     GameObject **go = (GameObject **)luaL_checkudata(L, -1, GAME_OBJECT);
-    lua_pushnumber(L, (*go)->transform.getRotation());
+    lua_pushnumber(L, (*go)->transform.getWorldRotation());
     return 1;
 }
 
@@ -581,9 +582,9 @@ void LuaScript::bindFunctions() {
     // GameObject type
     static const luaL_Reg gameObject_methods[] = {
             {"getName", gameObject_getName},
-            {"getPosition", gameObject_getPosition},
+            {"getWorldPosition", gameObject_getPosition},
             {"setPosition", gameObject_setPosition},
-            {"getRotation", gameObject_getRotation},
+            {"getWorldRotation", gameObject_getRotation},
             {"setRotation", gameObject_setRotation},
             {"getComponent", gameObject_getComponent},
             {NULL, NULL}
