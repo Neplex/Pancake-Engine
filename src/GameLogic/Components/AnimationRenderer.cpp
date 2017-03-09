@@ -51,8 +51,6 @@ void AnimationRenderer::loop(bool b) {
 
 void AnimationRenderer::flip(bool b) {
     isFlip = b;
-    if (isFlip) sprite.setScale(-1, 1);
-    else sprite.setScale(1, 1);
 }
 
 void AnimationRenderer::setAnimation(Animation &a) {
@@ -65,5 +63,8 @@ void AnimationRenderer::setAnimation(Animation &a) {
 }
 
 const sf::Sprite AnimationRenderer::getSprite() const {
-    return sprite;
+    sf::Sprite s = sprite;
+    if (isFlip) s.setScale(-1, 1);
+    else s.setScale(1, 1);
+    return s;
 }
