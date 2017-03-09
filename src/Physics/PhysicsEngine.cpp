@@ -10,6 +10,9 @@
 
 using namespace PancakeEngine;
 
+float const to_rad = 0.017f;
+float const to_deg = 57.3f;
+
 int PhysicsEngine::numberPixelsPerMeter = 72; // TODO to change with the scene
 
 PhysicsEngine::PhysicsEngine() : world(b2Vec2(0, 10)), physicsListener() {
@@ -20,6 +23,16 @@ PhysicsEngine::~PhysicsEngine() {
 }
 
 void PhysicsEngine::update(float dt) {
+    // Update the body position if the engine changes it
+    for ( b2Body* b = world.GetBodyList(); b; b = b->GetNext())
+    {
+        if (b->GetType() != b2_staticBody) {
+            Rigidbody * rb = static_cast<Rigidbody*>(b->GetUserData());
+            b2Vec2 newPos = b2Vec2(rb->gameObject->transform.getWorldPosition().x/ numberPixelsPerMeter,
+                    rb->gameObject->transform.getWorldPosition().y/ numberPixelsPerMeter);
+            b->SetTransform(newPos, rb->gameObject->transform.getWorldRotation() * to_rad); // TODO check radian angle
+        }
+    }
     world.Step(dt, velocityIterations, positionIterations);
     for ( b2Body* b = world.GetBodyList(); b; b = b->GetNext())
     {
@@ -27,7 +40,7 @@ void PhysicsEngine::update(float dt) {
             Rigidbody * rb = static_cast<Rigidbody*>(b->GetUserData());
             rb->gameObject->transform.setPosition((sf::Vector2f(b->GetPosition().x * numberPixelsPerMeter,
                                                                  b->GetPosition().y * numberPixelsPerMeter)));
-            rb->gameObject->transform.setRotation(b->GetAngle());
+            rb->gameObject->transform.setRotation(b->GetAngle() * to_deg);
         }
     }
 }
@@ -38,6 +51,7 @@ void PhysicsEngine::addStaticBodyToPhysicsWorld(Collider& c) {
 
     bodyDef.position.Set((c.gameObject->transform.getWorldPosition().x)/numberPixelsPerMeter,
                          (c.gameObject->transform.getWorldPosition().y)/numberPixelsPerMeter);
+    bodyDef.angle = c.gameObject->transform.getWorldRotation() * to_rad;
     bodyDef.userData = (void *) &c;
     b2Body* body = world.CreateBody(&bodyDef);
     createFixtures(*c.gameObject, *body);
@@ -61,6 +75,7 @@ void PhysicsEngine::addRigidBodyToPhysicsWorld(Rigidbody &rb) {
 
     bodyDef.position.Set((rb.gameObject->transform.getWorldPosition().x)/numberPixelsPerMeter,
                          (rb.gameObject->transform.getWorldPosition().y)/numberPixelsPerMeter);
+    bodyDef.angle = rb.gameObject->transform.getWorldRotation() * to_rad;
     //bodyDef.userData = new PhysicsUserData(PhysicsUserData::Type::Rigidbody, &rb);
     bodyDef.userData = (void *) &rb;
     bodyDef.angularVelocity = rb.angularVelocity;
@@ -79,7 +94,7 @@ void PhysicsEngine::setPosition(const sf::Vector2f& pos, b2Body& body) {
 }
 
 void PhysicsEngine::setRotation(const float angle, b2Body &body) {
-    body.SetTransform(body.GetPosition(), angle);
+    body.SetTransform(body.GetPosition(), angle * to_rad);
 }
 
 void PhysicsEngine::removeBody(b2Body* body) {
@@ -102,7 +117,7 @@ void PhysicsEngine::createFixtures(const GameObject& go, b2Body& body) {
             BoxCollider *bc = (BoxCollider *) &c;
             polygonShape.SetAsBox((bc->width/2)/PhysicsEngine::numberPixelsPerMeter, (bc->height/2)/PhysicsEngine::numberPixelsPerMeter,
                     (b2Vec2(c.offset.x/PhysicsEngine::numberPixelsPerMeter,c.offset.y/PhysicsEngine::numberPixelsPerMeter)),
-                                  c.gameObject->transform.getWorldRotation());
+                                  c.gameObject->transform.getWorldRotation() * to_rad);
             fixtureDef.shape = &polygonShape;
         }
         else if (dynamic_cast<CircleCollider *>(&c) != NULL) {
