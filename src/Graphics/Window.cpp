@@ -49,6 +49,32 @@ std::pair<unsigned, unsigned> splitScreen(unsigned nbPart) {
     return dimensions;
 }
 
+void Window::draw(const GameObject * gameObject) {
+    sf::Transform transform = gameObject->transform.getWorldTransformMatrix();
+
+    // Renderer
+    const std::vector<Renderer *> rs = gameObject->getComponents<Renderer>();
+    for (Renderer *r : rs) window.draw(r->getSprite(), transform);
+
+    // TileMapRenderer
+    const std::vector<TileMapRenderer *> tmrs = gameObject->getComponents<TileMapRenderer>();
+    for (TileMapRenderer *tmr : tmrs)
+        for (sf::Sprite s : tmr->getChunksSprites())
+            window.draw(s, transform);
+
+    // Debug elements
+    if (debug) {
+        // Box collider
+        const std::vector<BoxCollider *> boxColliders = gameObject->getComponents<BoxCollider>();
+        for (BoxCollider *bc : boxColliders) draw(bc, transform);
+
+        // Circle collider
+        const std::vector<CircleCollider *> circleColliders = gameObject->getComponents<CircleCollider>();
+        for (CircleCollider *bc : circleColliders)
+            draw(bc, transform);
+    }
+}
+
 void Window::drawScene() {
     // Get views
     std::vector<sf::View> views;
@@ -79,38 +105,16 @@ void Window::drawScene() {
         window.setView(views[i]);
 
         // Draw gameObjects
-        sf::Transform transform;
         for (GameObject* layer : scenes.getCurrentScene()->layers) {
-            for (GameObject* gameObject : layer->getChilds()) {
-                transform = gameObject->transform.getWorldTransformMatrix();
-
-                // Renderer
-                const std::vector<Renderer *> rs = gameObject->getComponents<Renderer>();
-                for (Renderer *r : rs) window.draw(r->getSprite(), transform);
-
-                // TileMapRenderer
-                const std::vector<TileMapRenderer *> tmrs = gameObject->getComponents<TileMapRenderer>();
-                for (TileMapRenderer *tmr : tmrs)
-                    for (sf::Sprite s : tmr->getChunksSprites())
-                        window.draw(s, transform);
-
-                // Debug elements
-                if (debug) {
-                    // Box collider
-                    const std::vector<BoxCollider *> boxColliders = gameObject->getComponents<BoxCollider>();
-                    for (BoxCollider *bc : boxColliders) draw(bc, transform);
-
-                    // Circle collider
-                    const std::vector<CircleCollider *> circleColliders = gameObject->getComponents<CircleCollider>();
-                    for (CircleCollider *bc : circleColliders)
-                        draw(bc, transform);
-                }
-            }
+            std::vector<GameObject *> layerElems = layer->getChilds();
+            for (GameObject *gameObject : layerElems) draw(gameObject);
         }
     }
 
     // Draw HUD
     window.setView(window.getDefaultView());
+    std::vector<GameObject*> guiElems = scenes.getCurrentScene()->gui->getChilds();
+    for (GameObject* go : guiElems) draw(go);
 }
 
 sf::Color Window::getColor(const Collider * collider) {

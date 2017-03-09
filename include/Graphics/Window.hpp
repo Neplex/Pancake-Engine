@@ -85,6 +85,7 @@ namespace PancakeEngine {
          */
         void drawScene();
 
+        void draw(const GameObject* gameObject);
         // Debug
         void draw(const BoxCollider* collider, sf::RenderStates renderStates);
         void draw(const CircleCollider* collider, sf::RenderStates renderStates);

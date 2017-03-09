@@ -8,10 +8,12 @@ using namespace PancakeEngine;
 
 void Scene::awake() {
     for (GameObject* l : layers) l->awake();
+    gui->awake();
 }
 
 void Scene::start() {
     for (GameObject* l : layers) l->start();
+    gui->start();
 }
 
 void Scene::update() {
@@ -21,6 +23,12 @@ void Scene::update() {
             if (go->toDestroy) {
                 toDestroy.push_back(go);
             }
+        }
+    }
+    for (GameObject* go : gui->getChilds()) {
+        go->update();
+        if (go->toDestroy) {
+            toDestroy.push_back(go);
         }
     }
     destroyGameObjects();
@@ -33,6 +41,12 @@ void Scene::lateUpdate() {
             if (go->toDestroy) {
                 toDestroy.push_back(go);
             }
+        }
+    }
+    for (GameObject* go : gui->getChilds()) {
+        go->lateUpdate();
+        if (go->toDestroy) {
+            toDestroy.push_back(go);
         }
     }
     destroyGameObjects();
