@@ -8,7 +8,7 @@
 
 using namespace PancakeEngine;
 
-Engine::Engine() : sceneManager(), window(sceneManager), physicsEngine(), time() {
+Engine::Engine() : window(), physicsEngine(), time() {
 
     Collider::physicsEngine = &physicsEngine;
     Rigidbody::physicsEngine = &physicsEngine;
@@ -31,8 +31,8 @@ Engine::Engine() : sceneManager(), window(sceneManager), physicsEngine(), time()
 
 void Engine::update() {
     physicsEngine.update(SECONDS_PER_UPDATE);
-    sceneManager.getCurrentScene()->update();
-    sceneManager.getCurrentScene()->lateUpdate();
+    SceneManager::getCurrentScene()->update();
+    SceneManager::getCurrentScene()->lateUpdate();
     InputManager::update();
 }
 

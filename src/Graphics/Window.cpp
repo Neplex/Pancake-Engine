@@ -10,7 +10,7 @@
 
 using namespace PancakeEngine;
 
-Window::Window(SceneManager& s) : scenes(s), window(sf::VideoMode::getDesktopMode(), "", sf::Style::Close) {
+Window::Window() : window(sf::VideoMode::getDesktopMode(), "", sf::Style::Close) {
     FPS = 60.0f;
     timeBetweenTwoFrames = sf::seconds((1.0f/FPS));
     clock = sf::Clock();
@@ -79,7 +79,7 @@ void Window::drawScene() {
     // Get views
     std::vector<sf::View> views;
     // TODO: create a fix order for camera
-    for (GameObject* layer : scenes.getCurrentScene()->layers)
+    for (GameObject* layer : SceneManager::getCurrentScene()->layers)
         for (GameObject* go : layer->getChilds())
             for (Camera* c : go->getComponents<Camera>()) {
                 sf::View view = c->view;
@@ -105,7 +105,7 @@ void Window::drawScene() {
         window.setView(views[i]);
 
         // Draw gameObjects
-        for (GameObject* layer : scenes.getCurrentScene()->layers) {
+        for (GameObject* layer : SceneManager::getCurrentScene()->layers) {
             std::vector<GameObject *> layerElems = layer->getChilds();
             for (GameObject *gameObject : layerElems) draw(gameObject);
         }
@@ -113,7 +113,7 @@ void Window::drawScene() {
 
     // Draw HUD
     window.setView(window.getDefaultView());
-    std::vector<GameObject*> guiElems = scenes.getCurrentScene()->gui->getChilds();
+    std::vector<GameObject*> guiElems = SceneManager::getCurrentScene()->gui->getChilds();
     for (GameObject* go : guiElems) draw(go);
 }
 

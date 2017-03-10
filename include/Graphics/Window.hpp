@@ -44,7 +44,7 @@ namespace PancakeEngine {
          * @param s a scene manager.
          * @sa SceneManager
          */
-        Window(SceneManager& s);
+        Window();
 
         /**
          * @brief Return the state of the window (open/close)
@@ -73,7 +73,6 @@ namespace PancakeEngine {
     private:
         friend class Engine;
 
-        SceneManager& scenes;
         sf::RenderWindow window;
         bool debug;
         float FPS;

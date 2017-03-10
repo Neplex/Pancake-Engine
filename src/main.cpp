@@ -1,5 +1,6 @@
 #include <Engine.hpp>
 #include <User/Sandbox.hpp>
+#include <Parser/SceneFactory.hpp>
 
 using namespace PancakeEngine;
 
@@ -15,9 +16,9 @@ int main() {
     Engine * app = new Engine();
     const char* filename = "../resources/test.tmx";
     //app->sceneManager.loadScene(new Sandbox());
-    Scene sc = app->sceneManager.loadScene(filename);
-    app->sceneManager.loadScene(&sc);
-
+    SceneFactory sf(filename);
+    Scene* sc = sf.loadAllSceneObject();
+    SceneManager::loadScene(sc);
 
     InputManager::createButton("player1_jump", std::vector<sf::Keyboard::Key> ({sf::Keyboard::Key::Z}));
     InputManager::createButton("player1_right", std::vector<sf::Keyboard::Key> ({sf::Keyboard::Key::D}));
