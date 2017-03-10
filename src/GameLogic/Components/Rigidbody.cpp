@@ -34,7 +34,7 @@ void Rigidbody::update() {
     Component::update();
 }
 
-Rigidbody::Rigidbody() : type(bodyType::dynamicBody), angularVelocity(0), drag(0), freezeRotation(false),
+Rigidbody::Rigidbody() : type(bodyType::dynamicBody), angularVelocity(), drag(0), freezeRotation(false),
                          gravityScale(1), mass(1), angularDrag(0.05f), bullet(false), physicsBody(nullptr), velocity(sf::Vector2f(0,0))
 {
 

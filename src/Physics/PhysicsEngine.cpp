@@ -10,8 +10,8 @@
 
 using namespace PancakeEngine;
 
-float const to_rad = 0.017f;
-float const to_deg = 57.3f;
+float const to_rad = 0.0174533f;
+float const to_deg = 57.2958f;
 
 int PhysicsEngine::numberPixelsPerMeter = 72; // TODO to change with the scene
 
@@ -30,7 +30,13 @@ void PhysicsEngine::update(float dt) {
             Rigidbody * rb = static_cast<Rigidbody*>(b->GetUserData());
             b2Vec2 newPos = b2Vec2(rb->gameObject->transform.getWorldPosition().x/ numberPixelsPerMeter,
                     rb->gameObject->transform.getWorldPosition().y/ numberPixelsPerMeter);
-            b->SetTransform(newPos, rb->gameObject->transform.getWorldRotation() * to_rad); // TODO check radian angle
+            //std::cout << "Before: " << rb->gameObject->name << rb->gameObject->transform.getWorldPosition().y << std::endl;
+            b->SetTransform(newPos, rb->gameObject->transform.getWorldRotation() * to_rad); // todo problem here when rigibody as a child
+        } else {
+            Collider * c = static_cast<Collider*>(b->GetUserData());
+            b2Vec2 newPos = b2Vec2(c->gameObject->transform.getWorldPosition().x/ numberPixelsPerMeter,
+                                   c->gameObject->transform.getWorldPosition().y/ numberPixelsPerMeter);
+            b->SetTransform(newPos, c->gameObject->transform.getWorldRotation() * to_rad);
         }
     }
     world.Step(dt, velocityIterations, positionIterations);
@@ -76,7 +82,7 @@ void PhysicsEngine::addRigidBodyToPhysicsWorld(Rigidbody &rb) {
     bodyDef.position.Set((rb.gameObject->transform.getWorldPosition().x)/numberPixelsPerMeter,
                          (rb.gameObject->transform.getWorldPosition().y)/numberPixelsPerMeter);
     bodyDef.angle = rb.gameObject->transform.getWorldRotation() * to_rad;
-    //bodyDef.userData = new PhysicsUserData(PhysicsUserData::Type::Rigidbody, &rb);
+    std::cout << bodyDef.angle << std::endl;
     bodyDef.userData = (void *) &rb;
     bodyDef.angularVelocity = rb.angularVelocity;
     bodyDef.angularDamping = rb.angularDrag;
@@ -117,7 +123,7 @@ void PhysicsEngine::createFixtures(const GameObject& go, b2Body& body) {
             BoxCollider *bc = (BoxCollider *) &c;
             polygonShape.SetAsBox((bc->width/2)/PhysicsEngine::numberPixelsPerMeter, (bc->height/2)/PhysicsEngine::numberPixelsPerMeter,
                     (b2Vec2(c.offset.x/PhysicsEngine::numberPixelsPerMeter,c.offset.y/PhysicsEngine::numberPixelsPerMeter)),
-                                  c.gameObject->transform.getWorldRotation() * to_rad);
+                                  0);
             fixtureDef.shape = &polygonShape;
         }
         else if (dynamic_cast<CircleCollider *>(&c) != NULL) {

@@ -62,6 +62,7 @@ namespace PancakeEngine {
         friend class Rigidbody; ///< null fixtures if removed body
         static PhysicsEngine* physicsEngine;
         b2Fixture* fixture;
+
     };
 }
 

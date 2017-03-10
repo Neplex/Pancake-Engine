@@ -16,7 +16,7 @@ namespace PancakeEngine {
             name = "Box";
 
             Rigidbody& rb = addComponent<Rigidbody>();
-            rb.setFreezeRotation(true);
+            //rb.setFreezeRotation(true);
             BoxCollider& bc = addComponent<BoxCollider>();
             bc.width = 70;
             bc.height = 70;
