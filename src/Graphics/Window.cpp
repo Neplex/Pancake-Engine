@@ -12,7 +12,7 @@
 
 using namespace PancakeEngine;
 
-Window::Window(SceneManager& s) : scenes(s), window(sf::VideoMode::getDesktopMode(), "", sf::Style::Close) {
+Window::Window(SceneManager& s) : scenes(s), window(sf::VideoMode::getDesktopMode(), "", sf::Style::Close, sf::ContextSettings(0,0,8)) {
     FPS = 60.0f;
     timeBetweenTwoFrames = sf::seconds((1.0f/FPS));
     clock = sf::Clock();
