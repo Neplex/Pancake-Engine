@@ -12,6 +12,7 @@
 #include <User/Player.hpp>
 #include <User/Gui/PlayerGui.hpp>
 #include <User/Gui/CoinGui.hpp>
+#include <GameLogic/Components/DataStorage.hpp>
 
 namespace PancakeEngine {
 
@@ -38,6 +39,7 @@ namespace PancakeEngine {
             Coin& c = addGameObject<Coin>(1);
             c.transform.setPosition(sf::Vector2f(0, -200));
             p.addChild(c);
+            DataStorage &ds = p.addComponent<DataStorage>();
 
             // Add objects
             addGameObject<Ground>(0).transform.setPosition(sf::Vector2f(0, 250));
