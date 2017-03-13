@@ -50,7 +50,8 @@ namespace PancakeEngine {
             cl_top.offset = sf::Vector2f(0, -13);
             cl_bottom.offset = sf::Vector2f(0, 13);
 
-            addComponent<LuaScript>().setScript("../resources/scripts/PlayerController.lua");
+            addComponent<PlayerController>();
+           // addComponent<LuaScript>().setScript("../resources/scripts/PlayerController.lua");
             addComponent<Camera>();
 
             SpriteSheet& sprites = AssetsManager::getSpriteSheet(name);
