@@ -7,12 +7,10 @@
 #include <Graphics/Window.hpp>
 #include <GameLogic.hpp>
 #include <Debug/Debug.hpp>
-#include <Box2D/Collision/Shapes/b2PolygonShape.h>
-#include <Box2D/Box2D.h>
 
 using namespace PancakeEngine;
 
-Window::Window(SceneManager& s) : scenes(s), window(sf::VideoMode::getDesktopMode(), "", sf::Style::Close, sf::ContextSettings(0,0,8)) {
+Window::Window() : window(sf::VideoMode::getDesktopMode(), "", sf::Style::Close) {
     FPS = 60.0f;
     timeBetweenTwoFrames = sf::seconds((1.0f/FPS));
     clock = sf::Clock();
@@ -81,7 +79,7 @@ void Window::drawScene() {
     // Get views
     std::vector<sf::View> views;
     // TODO: create a fix order for camera
-    for (GameObject* layer : scenes.getCurrentScene()->layers)
+    for (GameObject* layer : SceneManager::getCurrentScene()->layers)
         for (GameObject* go : layer->getChilds())
             for (Camera* c : go->getComponents<Camera>()) {
                 sf::View view = c->view;
@@ -107,7 +105,7 @@ void Window::drawScene() {
         window.setView(views[i]);
 
         // Draw gameObjects
-        for (GameObject* layer : scenes.getCurrentScene()->layers) {
+        for (GameObject* layer : SceneManager::getCurrentScene()->layers) {
             std::vector<GameObject *> layerElems = layer->getChilds();
             for (GameObject *gameObject : layerElems) draw(gameObject);
         }
@@ -115,7 +113,7 @@ void Window::drawScene() {
 
     // Draw HUD
     window.setView(window.getDefaultView());
-    std::vector<GameObject*> guiElems = scenes.getCurrentScene()->gui->getChilds();
+    std::vector<GameObject*> guiElems = SceneManager::getCurrentScene()->gui->getChilds();
     for (GameObject* go : guiElems) draw(go);
 }
 
@@ -153,20 +151,6 @@ void Window::draw(const BoxCollider * collider, sf::RenderStates renderStates) {
             sf::Vertex(sf::Vector2f(-collider->width/2,  collider->height/2)),
             sf::Vertex(sf::Vector2f( collider->width/2,  collider->height/2))
     };
-    /*
-     * Draw the real collider from the physic engine
-     * sf::Vertex vertices[6];
-    b2PolygonShape* polygonShape = (b2PolygonShape*)collider->fixture->GetShape();
-    int vertexCount = polygonShape->GetVertexCount();
-    for (int i = 0; i < vertexCount; ++i)
-    {
-        //get the vertex in body coordinates
-        b2Vec2 bcVertex = polygonShape->GetVertex( i );
-        vertices[i] = sf::Vertex(sf::Vector2f(bcVertex.x * 72, bcVertex.y * 72));
-
-        //get the vertex in world coordinates
-        //b2Vec2 wcVertex = fixture->GetBody()->GetWorldPoint( bcVertex );
-    }*/
     // Color for type
     sf::Color color = getColor(collider);
     for (int i = 0; i < 6; ++i) vertices[i].color = color;

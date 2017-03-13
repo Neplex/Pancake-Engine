@@ -53,7 +53,7 @@ namespace PancakeEngine {
         Engine();
         ~Engine() {
             InputManager::destroyButtons();
-            delete sceneManager.getCurrentScene();
+            delete SceneManager::getCurrentScene();
         }
 
         /**
@@ -61,7 +61,6 @@ namespace PancakeEngine {
          */
         void run();
 
-        SceneManager sceneManager;
         Window window;
         PhysicsEngine physicsEngine;
         Time time;

@@ -10,6 +10,7 @@ include_directories(./libs/)
 include_directories(./libs/Lua)
 include_directories(./include/)
 include_directories(${SFML_PATH}/include)
+include_directories(${TMX_PATH}/tmxparser/)
 #include_directories(${BOOST_PATH})
 
 add_subdirectory(src)

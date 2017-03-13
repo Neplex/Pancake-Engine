@@ -14,46 +14,56 @@ namespace PancakeEngine {
 
     class SceneManager {
     public:
-        SceneManager()
-                :currentScene(0)
-        {
-
-        }
-
-        ~SceneManager() {
-         //   delete scene;
-        }
-
         /**
          * Add the 'scene' to the manager
          * @param scene
          */
-        void addScene(Scene* scene);
+        static void addScene(Scene* scene){
+            scenes.push_back(scene);
+        };
 
         /**
          * Get the current scene
          * @return the current scene
          */
-        Scene* getCurrentScene();
+        static Scene* getCurrentScene(){
+            //return scenes[currentScene];
+            return scene;
+        };
 
         /**
          * Set the scene with name 'name' as current.
          * No change if no scene has the name 'name'
          * @param name
          */
-        void setCurrentScene(std::string name);
+        static void setCurrentScene(std::string name){
+            for (unsigned int i = 0; i < scenes.size(); ++i) {
+                if (scenes[i]->name == name) {
+                    currentScene = i;
+                    return;
+                }
+            }
+        };
 
         /**
          * Get next scene (in add order)
          */
-        void nextScene();
+        static void nextScene(){
+            //currentScene = (currentScene++)%scenes.size();
+        };
 
-        void loadScene(Scene* scene);
+        static void loadScene(Scene* scene1){
+            scene = scene1;
+            getCurrentScene()->awake();
+            getCurrentScene()->start();
+        }
+        ;
 
     private:
-        Scene* scene;
-        std::vector<Scene*> scenes;
-        unsigned int currentScene;
+        friend class Engine; ///< the engine is the only one to call update and handleInputs
+        static Scene* scene;
+        static std::vector<Scene*> scenes;
+        static unsigned int currentScene;
     };
 }
 

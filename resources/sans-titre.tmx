@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="left-up" width="100" height="100" tilewidth="16" tileheight="16" nextobjectid="129">
+ <tileset firstgid="1" name="p1_duck" tilewidth="69" tileheight="71" tilecount="1" columns="1">
+  <image source="../resources/Base pack/Player/p1_duck.png" width="69" height="71"/>
+  <tile id="0">
+   <objectgroup color="#000000" name="PlayerCollider">
+    <object id="1" x="17.25" y="17.75" width="51.75" height="35.5"/>
+   </objectgroup>
+  </tile>
+ </tileset>
+ <tileset firstgid="2" name="box" tilewidth="70" tileheight="70" tilecount="1" columns="1">
+  <image source="../resources/Base pack/Tiles/box.png" width="70" height="70"/>
+ </tileset>
+ <tileset firstgid="3" name="castle" tilewidth="70" tileheight="70" tilecount="1" columns="1">
+  <image source="../resources/Base pack/Tiles/castle.png" width="70" height="70"/>
+ </tileset>
+ <tileset firstgid="4" name="p1_walk" tilewidth="66" tileheight="92" tilecount="15" columns="3">
+  <image source="../resources/Base pack/Player/p1_walk/p1_walk.png" width="256" height="512"/>
+  <tile id="0">
+   <animation>
+    <frame tileid="0" duration="100"/>
+    <frame tileid="2" duration="100"/>
+    <frame tileid="0" duration="100"/>
+    <frame tileid="3" duration="100"/>
+   </animation>
+  </tile>
+  <tile id="8">
+   <animation>
+    <frame tileid="0" duration="100"/>
+    <frame tileid="2" duration="100"/>
+    <frame tileid="1" duration="100"/>
+   </animation>
+  </tile>
+ </tileset>
+ <tileset firstgid="19" name="coin" tilewidth="70" tileheight="70" tilecount="1" columns="1">
+  <image source="../resources/Base pack/Items/coinGold.png" width="70" height="70"/>
+  <tile id="0">
+   <objectgroup draworder="index" name="CoinCollider">
+    <object id="1" x="17.5" y="17.5" width="35" height="35">
+     <ellipse/>
+    </object>
+   </objectgroup>
+  </tile>
+ </tileset>
+ <objectgroup name="ObjectLayer">
+  <object id="24" name="box" gid="2" x="636" y="156" width="70" height="70"/>
+  <object id="38" name="Player" gid="4" x="588" y="288" width="66" height="92"/>
+  <object id="87" name="Coin" gid="19" x="480" y="300" width="70" height="70"/>
+  <object id="88" name="Coin" gid="19" x="352" y="316" width="70" height="70"/>
+  <object id="114" name="Castle" gid="3" x="584" y="372" width="70" height="70"/>
+  <object id="115" name="Castle" gid="3" x="440" y="372" width="70" height="70"/>
+  <object id="116" name="Castle" gid="3" x="512" y="372" width="70" height="70"/>
+  <object id="117" name="Castle" gid="3" x="656" y="372" width="70" height="70"/>
+  <object id="118" name="Castle" gid="3" x="268" y="336" width="70" height="70"/>
+  <object id="119" name="Castle" gid="3" x="8" y="272" width="70" height="70"/>
+  <object id="120" name="Castle" gid="3" x="764" y="288" width="70" height="70"/>
+  <object id="121" name="Castle" gid="3" x="124" y="336" width="70" height="70"/>
+  <object id="122" name="Castle" gid="3" x="860" y="352" width="70" height="70"/>
+  <object id="123" name="Castle" gid="3" x="968" y="288" width="70" height="70"/>
+  <object id="124" name="Castle" gid="3" x="724" y="372" width="70" height="70"/>
+  <object id="125" name="Castle" gid="3" x="356" y="380" width="70" height="70"/>
+  <object id="126" name="Castle" gid="3" x="196" y="336" width="70" height="70"/>
+  <object id="127" gid="3" x="484" y="148" width="70" height="70"/>
+  <object id="128" gid="3" x="544" y="212" width="70" height="70"/>
+ </objectgroup>
+</map>
