@@ -3,6 +3,7 @@
 //
 
 #include <Parser/SceneFactory.hpp>
+#include <GameLogic/Components/DataStorage.hpp>
 
 #define for_left(width) for(unsigned k = 0; k < width; k++)
 #define for_right(width) for(int k = width-1; k >= 0; --k)
@@ -33,13 +34,7 @@
                         }
 
 namespace PancakeEngine {
-    SceneFactory::SceneFactory(const char* filename) {
-        scene = new Scene(filename);
-        myParser = new Parser(filename);
-        factorySystem.AddFactory<Coin>("Coin");
-        factorySystem.AddFactory<Player1>("Player");
-
-    }
+    GameObjectFactory SceneFactory::factorySystem; ///< the factory for prefab objects
 
     void setAnimation(GameObject &gameObject, const Tmx::Tile *tile, const Tmx::Tileset *ts) {
         const std::vector<Tmx::AnimationFrame> &frames = tile->GetFrames();
@@ -113,6 +108,20 @@ namespace PancakeEngine {
                 SpriteSheet &spriteSheet = AssetsManager::createSpriteSheet(gameObject.name, source,
                                                                             (unsigned) ts->GetTileWidth(),
                                                                             (unsigned) ts->GetTileHeight());
+                std::unordered_map<std::string,Tmx::Property> listP = ts->GetProperties().GetPropertyMap();
+                for(std::unordered_map<std::string,Tmx::Property>::iterator it=listP.begin() ; it!=listP.end() ; ++it)
+                {
+                    DataStorage& ds = gameObject.addComponent<DataStorage>();
+                    if(it->second.GetType() == Tmx::TMX_PROPERTY_STRING) {
+                        ds.set(it->first, it->second.GetValue());
+                    }else if(it->second.GetType() == Tmx::TMX_PROPERTY_BOOL) {
+                        ds.set(it->first, it->second.GetBoolValue());
+                    }else if(it->second.GetType() == Tmx::TMX_PROPERTY_FLOAT){
+                        ds.set(it->first,it->second.GetFloatValue());
+                    }else if(it->second.GetType() == Tmx::TMX_PROPERTY_INT){
+                        ds.set(it->first,it->second.GetIntValue());
+                    }
+                }
                 if (ts->GetTiles().size() > 0) {
                     const Tmx::Tile *tile = *(ts->GetTiles().begin());
                     if (tile->IsAnimated())
@@ -170,7 +179,7 @@ namespace PancakeEngine {
     void SceneFactory::loadLayer(Tmx::TileLayer *layer) {
         std::string s = layer->GetName();
         std::string newString = s.substr(s.find(' ') + 1);
-        unsigned Nblayer = std::stoi( newString );
+        unsigned Nblayer =(unsigned) std::stoi( newString );
         unsigned height =(unsigned) layer->GetHeight();
         unsigned width =(unsigned) layer->GetWidth();
         unsigned tileWidth = (unsigned) myParser->map->GetTileWidth();
@@ -194,8 +203,11 @@ namespace PancakeEngine {
         t.setTileMap(tileMap);
     }
 
-    Scene* SceneFactory::loadAllSceneObject() {
-
+    Scene* SceneFactory::loadAllSceneObject(const char* filename) {
+        if(scene != NULL) delete scene;
+        if(myParser != NULL) delete myParser;
+        scene = new Scene(filename);
+        myParser = new Parser(filename);
         std::vector<Tmx::TileLayer *> layerList = myParser->loadLayer();
         if (!layerList.empty()) {
             for (unsigned i = 0; i < layerList.size(); ++i) {

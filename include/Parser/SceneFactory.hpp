@@ -30,6 +30,8 @@
 #include <Parser/TmxParser.hpp>
 #include <User/Player.hpp>
 #include <User/Coin.hpp>
+#include <User/Box.hpp>
+
 namespace PancakeEngine {
 
     class GOFactory
@@ -85,17 +87,21 @@ namespace PancakeEngine {
      */
     class SceneFactory {
     public:
+        template <class T>
+        static void addPrefab(std::string param){
+            SceneFactory::factorySystem.AddFactory<T>(param);
+        };
         /**!
          * @brief Create a SceneFactory object
          * @param filename file to be parse
          */
-        SceneFactory(const char* filename);
+        SceneFactory(){};
         /**!
          * @brief load all objects of a TMX file
          * @param filename file to parse
          * @return scene of the file
          */
-        Scene *loadAllSceneObject();
+        Scene *loadAllSceneObject(const char* filename);
         /**!
          * @brief load a GameObject
          * @param Tmx::Object object parse from tmx file
@@ -107,12 +113,11 @@ namespace PancakeEngine {
          * @param Tmx::TileLayer layer parse from tmx file
          */
         void loadLayer(Tmx::TileLayer *layer);
+        static GameObjectFactory factorySystem; ///< the factory for prefab objects
 
     private:
-        Scene* scene; ///< the scene being created
-        Parser *myParser; ///< the parser to parse the file
-        SceneFactory(){};
-        GameObjectFactory factorySystem; ///< the factory for prefab objects
+        Scene* scene=NULL; ///< the scene being created
+        Parser *myParser = NULL; ///< the parser to parse the file
 
     };
 

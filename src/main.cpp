@@ -16,8 +16,16 @@ int main() {
     Engine * app = new Engine();
     const char* filename = "../resources/test.tmx";
     //app->sceneManager.loadScene(new Sandbox());
-    SceneFactory sf(filename);
-    Scene* sc = sf.loadAllSceneObject();
+    SceneFactory sf;
+    SceneFactory::addPrefab<Coin>("Coin");
+    SceneFactory::addPrefab<Player1>("Player");
+    SceneFactory::addPrefab<Player2>("Player2");
+    SceneFactory::addPrefab<Player3>("Player3");
+    SceneFactory::addPrefab<Player4>("Player4");
+    SceneFactory::addPrefab<Player5>("Player5");
+    SceneFactory::addPrefab<Box>("Box");
+
+    Scene* sc = sf.loadAllSceneObject(filename);
     SceneManager::loadScene(sc);
 
     InputManager::createButton("player1_jump", std::vector<sf::Keyboard::Key> ({sf::Keyboard::Key::Z}));

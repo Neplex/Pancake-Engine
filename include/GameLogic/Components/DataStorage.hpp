@@ -57,6 +57,10 @@ namespace PancakeEngine {
 
         SET_DATA(char)
 
+        SET_DATA(char*)
+
+        SET_DATA(std::string)
+
         SET_DATA(void *)
 
         /**
