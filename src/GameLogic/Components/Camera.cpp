@@ -7,9 +7,19 @@
 using namespace PancakeEngine;
 
 Camera::Camera() {
-    view = sf::View(sf::FloatRect(0, 0, sf::VideoMode::getDesktopMode().width, sf::VideoMode::getDesktopMode().height));
+    int width = sf::VideoMode::getDesktopMode().width;
+    int height = sf::VideoMode::getDesktopMode().height;
+    view = sf::View(sf::FloatRect(0, 0, width, height));
 }
 
 void Camera::zoom(float factor) {
     view.zoom(factor);
+}
+
+void Camera::setBackground(std::string file) {
+    if (background != NULL) delete background;
+    background = new sf::Texture();
+    assert(background->loadFromFile(file));
+    background->setRepeated(true);
+    background->setSmooth(true);
 }

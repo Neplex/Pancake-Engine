@@ -1,6 +1,8 @@
 #include <Engine.hpp>
 #include <User/Sandbox.hpp>
 #include <Parser/SceneFactory.hpp>
+#include <User/Items/Rock.hpp>
+#include <User/Ladder.hpp>
 
 using namespace PancakeEngine;
 
@@ -11,10 +13,11 @@ int main() {
     AssetsManager::createSpriteSheet("player4", "../resources/players/player4.png", 70, 100);
     AssetsManager::createSpriteSheet("player5", "../resources/players/player5.png", 70, 100);
     AssetsManager::createSpriteSheet("tiles", "../resources/tiles/tiles.png", 70, 70);
+    AssetsManager::createSpriteSheet("miscs", "../resources/tiles/miscs.png", 70, 70);
     AssetsManager::createSpriteSheet("items", "../resources/items.png", 70, 70);
 
     Engine * app = new Engine();
-    const char* filename = "../resources/test.tmx";
+    const char* filename = "../resources/maps/test.tmx";
     //app->sceneManager.loadScene(new Sandbox());
     SceneFactory sf;
     SceneFactory::addPrefab<Coin>("Coin");
@@ -24,6 +27,9 @@ int main() {
     SceneFactory::addPrefab<Player4>("Player4");
     SceneFactory::addPrefab<Player5>("Player5");
     SceneFactory::addPrefab<Box>("Box");
+    SceneFactory::addPrefab<Rock>("Rock");
+    SceneFactory::addPrefab<SmallRock>("SmallRock");
+    SceneFactory::addPrefab<Ladder>("Ladder");
 
     Scene* sc = sf.loadAllSceneObject(filename);
     // Add GUI
@@ -32,6 +38,9 @@ int main() {
     unsigned height = sf::VideoMode::getDesktopMode().height - 120;
     unsigned width = sf::VideoMode::getDesktopMode().width / 5;
     sc->addGameObjectToGui<PlayerGUI1>().transform.setPosition(sf::Vector2f(width * 0 + 50, height));
+    sc->addGameObject<Player2>(2);
+    sc->addGameObject<Player3>(2);
+    sc->addGameObject<Player4>(2);
     SceneManager::loadScene(sc);
 
     InputManager::createButton("player1_jump", std::vector<sf::Keyboard::Key> ({sf::Keyboard::Key::Z}));

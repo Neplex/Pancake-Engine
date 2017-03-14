@@ -30,7 +30,9 @@ namespace PancakeEngine {
                 ar->flip(true);
             }
 
-            if (Input::getButtonHeld(go.name + "_duck")) {
+            if (go.getComponent<PlayerController>()->climbing) {
+                return "climb";
+            } else if (Input::getButtonHeld(go.name + "_duck")) {
                 return "duck";
             } else if (velocity.y < -.1 || velocity.y > .1) {
                 return "jump";
@@ -53,7 +55,7 @@ namespace PancakeEngine {
 
             addComponent<PlayerController>();
            // addComponent<LuaScript>().setScript("../resources/scripts/PlayerController.lua");
-            addComponent<Camera>();
+            addComponent<Camera>().setBackground("../resources/backgrounds/bg_grasslands.png");
 
             SpriteSheet& sprites = AssetsManager::getSpriteSheet(name);
 
@@ -72,8 +74,8 @@ namespace PancakeEngine {
             a_swing.addFrame(1, 1, ANIMATION_SPEED);
             a_swing.addFrame(1, 2, ANIMATION_SPEED);
             Animation& a_climb = AssetsManager::createAnimation(name + "_climb", sprites);
-            a_climb.addFrame(2, 1, ANIMATION_SPEED);
-            a_climb.addFrame(2, 2, ANIMATION_SPEED);
+            a_climb.addFrame(2, 1, ANIMATION_SPEED*2);
+            a_climb.addFrame(2, 2, ANIMATION_SPEED*2);
             Animation& a_front = AssetsManager::createAnimation(name + "_front", sprites);
             a_front.addFrame(3, 1, ANIMATION_SPEED);
 
@@ -83,8 +85,8 @@ namespace PancakeEngine {
             ar.addAnimation("jump", a_jump, handler);
             ar.addAnimation("hurt", a_hurt, handler);
             ar.addAnimation("walk", a_walk, handler);
-            ar.addAnimation("swing", a_walk, handler);
-            ar.addAnimation("climb", a_walk, handler);
+            ar.addAnimation("swing", a_swing, handler);
+            ar.addAnimation("climb", a_climb, handler);
             ar.addAnimation("front", a_front, handler);
         }
     };

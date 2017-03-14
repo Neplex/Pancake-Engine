@@ -77,7 +77,7 @@ void Window::draw(const GameObject * gameObject) {
 
 void Window::drawScene() {
     // Get views
-    std::vector<sf::View> views;
+    std::vector<std::pair<sf::View, Camera*>> views;
     // TODO: create a fix order for camera
     for (GameObject* layer : SceneManager::getCurrentScene()->layers)
         for (GameObject* go : layer->getChilds())
@@ -85,9 +85,18 @@ void Window::drawScene() {
                 sf::View view = c->view;
                 view.setCenter(c->gameObject->transform.getWorldPosition());
                 view.setRotation(c->gameObject->transform.getWorldRotation());
-                views.push_back(view);
+                std::pair<sf::View, Camera*> pair;
+                pair.first = view;
+                pair.second = c;
+                views.push_back(pair);
             }
-    if (views.size() == 0) views.push_back(window.getDefaultView());
+
+    if (views.size() == 0) {
+        std::pair<sf::View, Camera*> pair;
+        pair.first = window.getDefaultView();
+        pair.second = NULL;
+        views.push_back(pair);
+    }
 
     std::pair<unsigned, unsigned> nbElem = splitScreen((unsigned) views.size());
     float width = (float)1.0 / nbElem.first;
@@ -96,13 +105,27 @@ void Window::drawScene() {
     // Draw all views
     unsigned nbCamera = (unsigned) views.size();
     for (unsigned i = 0; i < nbCamera; i++) {
-        views[i].setViewport(sf::FloatRect(
-                (i%nbElem.first) * width,
-                (i/nbElem.second) * height,
-                width,
-                height
+        views[i].first.setViewport(sf::FloatRect(
+                (i%nbElem.first) * width+.003,
+                (i/nbElem.second) * height+.005,
+                width-.007,
+                height-.01
         ));
-        window.setView(views[i]);
+        window.setView(views[i].first);
+
+        if (views[i].second != NULL && views[i].second->background != NULL) {
+            sf::Sprite bg;
+            bg.setTexture(*views[i].second->background);
+            bg.setScale(
+                    sf::VideoMode::getDesktopMode().width  / bg.getGlobalBounds().width,
+                    sf::VideoMode::getDesktopMode().height / bg.getGlobalBounds().height
+            );
+            bg.setPosition(
+                    views[i].second->gameObject->transform.getWorldPosition().x - bg.getGlobalBounds().width  / 2,
+                    views[i].second->gameObject->transform.getWorldPosition().y - bg.getGlobalBounds().height / 2
+            );
+            window.draw(bg);
+        }
 
         // Draw gameObjects
         for (GameObject* layer : SceneManager::getCurrentScene()->layers) {
