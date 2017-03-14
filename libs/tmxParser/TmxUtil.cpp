@@ -34,7 +34,7 @@
 #define MINIZ_HEADER_FILE_ONLY
 #include "miniz.c"
 #else
-#include "../Zlib/zlib.h"
+#include <zlib.h>
 #endif
 
 #include <stdio.h>
