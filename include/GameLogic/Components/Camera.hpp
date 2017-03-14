@@ -46,9 +46,16 @@ namespace PancakeEngine {
          */
         void zoom(float factor);
 
+        /**
+         * @brief Set background image.
+         * @param file the new background path.
+         */
+        void setBackground(std::string file);
+
     private:
         friend class Window; ///< Use the camera to draw.
         sf::View view;
+        sf::Texture* background = NULL;
 
     };
 }

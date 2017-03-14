@@ -52,7 +52,7 @@ namespace PancakeEngine {
 
             addComponent<PlayerController>();
            // addComponent<LuaScript>().setScript("../resources/scripts/PlayerController.lua");
-            addComponent<Camera>();
+            addComponent<Camera>().setBackground("../resources/backgrounds/bg_grasslands.png");
 
             SpriteSheet& sprites = AssetsManager::getSpriteSheet(name);
 

@@ -231,7 +231,7 @@ int animation_addFrame(lua_State *L) {
 int gameObject_new(lua_State *L) {
     if (lua_gettop(L) != 0) THROW_ERROR(L, "invalid number of argument in constructor of 'GameObject()'");
     GameObject **go = (GameObject **)lua_newuserdata(L, sizeof(GameObject *));
-    *go = NULL; // TODO: add new GameObject to the current scene
+    *go = &SceneManager::getCurrentScene()->addGameObject<GameObject>(1);
     luaL_setmetatable(L, GAME_OBJECT);
     return 1;
 }
