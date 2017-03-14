@@ -201,6 +201,7 @@ namespace PancakeEngine {
 
             for (int i = 0; i < components.size(); ++i) {
                 delete components[i];
+                components.erase(components.begin() + i);
             }
 
             numGameobjects--;

@@ -40,9 +40,7 @@ void GameObject::update() {
         components[i]->update();
         if (components[i]->toDestroy) {
             componentsToDestroy.push_back(components[i]);
-            components[i] = components.back();
-            components.pop_back();
-            i--;
+            components.erase(components.begin() + i);
         }
     }
     destroyComponents();
@@ -57,9 +55,7 @@ void GameObject::lateUpdate() {
         components[i]->lateUpdate();
         if (components[i]->toDestroy) {
             componentsToDestroy.push_back(components[i]);
-            components[i] = components.back();
-            components.pop_back();
-            i--;
+            components.erase(components.begin() + i);
         }
     }
     destroyComponents();
@@ -72,6 +68,7 @@ void GameObject::lateUpdate() {
 void GameObject::destroyComponents() {
     for (unsigned i = 0; i < componentsToDestroy.size(); ++i) {
         delete componentsToDestroy[i];
+        components.erase(components.begin() + i);
     }
     componentsToDestroy.clear();
 }
