@@ -2,6 +2,7 @@
 #include <User/Sandbox.hpp>
 #include <Parser/SceneFactory.hpp>
 #include <User/Items/Rock.hpp>
+#include <User/Ladder.hpp>
 
 using namespace PancakeEngine;
 
@@ -28,6 +29,7 @@ int main() {
     SceneFactory::addPrefab<Box>("Box");
     SceneFactory::addPrefab<Rock>("Rock");
     SceneFactory::addPrefab<SmallRock>("SmallRock");
+    SceneFactory::addPrefab<Ladder>("Ladder");
 
     Scene* sc = sf.loadAllSceneObject(filename);
     sc->addGameObject<Player2>(2);
