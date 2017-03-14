@@ -8,6 +8,7 @@
 #include <GameLogic.hpp>
 #include <Graphics.hpp>
 #include <User/Behaviors/PlayerController.hpp>
+#include "Health.hpp"
 
 #define ANIMATION_SPEED 150
 
@@ -41,7 +42,7 @@ namespace PancakeEngine {
 
         Player (std::string n) : GameObject() {
             name = n;
-
+            addComponent<Health>();
             addComponent<Rigidbody>().setFreezeRotation(true);
             // TODO: Add "capsule" collider
             CircleCollider& cl_top = addComponent<CircleCollider>();

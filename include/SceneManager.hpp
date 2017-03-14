@@ -59,6 +59,17 @@ namespace PancakeEngine {
         }
         ;
 
+        static GameObject* findByName(std::string name) {
+            for (GameObject* p_l: SceneManager::getCurrentScene()->layers) {
+                for(GameObject* p_go : p_l->getChilds()) {
+                    if (p_go->name == name) {
+                        return p_go;
+                    }
+                }
+            }
+            return nullptr;
+        }
+
     private:
         friend class Engine; ///< the engine is the only one to call update and handleInputs
         static Scene* scene;

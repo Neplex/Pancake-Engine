@@ -26,6 +26,12 @@ int main() {
     SceneFactory::addPrefab<Box>("Box");
 
     Scene* sc = sf.loadAllSceneObject(filename);
+    // Add GUI
+    AssetsManager::createSpriteSheet("heart", "../resources/heart.png", 53, 45);
+    AssetsManager::createSpriteSheet("hud", "../resources/hud.png", 47, 47);
+    unsigned height = sf::VideoMode::getDesktopMode().height - 120;
+    unsigned width = sf::VideoMode::getDesktopMode().width / 5;
+    sc->addGameObjectToGui<PlayerGUI1>().transform.setPosition(sf::Vector2f(width * 0 + 50, height));
     SceneManager::loadScene(sc);
 
     InputManager::createButton("player1_jump", std::vector<sf::Keyboard::Key> ({sf::Keyboard::Key::Z}));

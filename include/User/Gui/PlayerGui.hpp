@@ -9,34 +9,22 @@
 #include <GameLogic/Components/SpriteRenderer.hpp>
 #include <Graphics/AssetsManager.hpp>
 
+#include <SceneManager.hpp>
+#include <User/Health.hpp>
+
 namespace PancakeEngine {
-    class PlayerGUI : public GameObject {
-        friend class PlayerGUI1;
-        friend class PlayerGUI2;
-        friend class PlayerGUI3;
-        friend class PlayerGUI4;
-        friend class PlayerGUI5;
+
+
+    class PlayerGuiScript : public Behavior {
+
+        public:
 
         std::vector<SpriteRenderer*> lifeSprites;
         unsigned nbHeart = 3;
-        unsigned life = nbHeart * 2;
+        int playerNumber;
 
-        PlayerGUI (unsigned n) : GameObject() {
-            name = n;
-            life = n;
 
-            SpriteRenderer& head = addComponent<SpriteRenderer>();
-            head.setSprite(AssetsManager::getSpriteSheet("hud"), 4, n);
-
-            for (int i = 0; i < nbHeart; ++i) {
-                SpriteRenderer& heart = addComponent<SpriteRenderer>();
-                heart.setSprite(AssetsManager::getSpriteSheet("heart"), 2, 0);
-                heart.setPosition(sf::Vector2f(i*55 + 60, 0));
-                lifeSprites.push_back(&heart);
-            }
-        }
-
-        void lifeToSprite() {
+        void lifeToSprite(unsigned life) {
             SpriteSheet& heart = AssetsManager::getSpriteSheet("heart");
             unsigned buffLife = life;
             for (int i = 0; i < lifeSprites.size(); ++i) {
@@ -46,11 +34,49 @@ namespace PancakeEngine {
             }
         }
 
-    public:
-        void lateUpdate() override {
-            GameObject::lateUpdate();
-            lifeToSprite();
+        Health* playerHealth;
+
+        void awake() override {
+            Behavior::awake();
+            if (SceneManager::findByName("player1")) {
+                std::cout << "player" << playerNumber;
+            } else {
+                std::cout <<"caca";
+            }
+            //std::cout <<  SceneManager::findByName("player" + playerNumber)->name;
+            playerHealth = SceneManager::findByName(std::string("player") + std::to_string(playerNumber))->getComponent<Health>();
         }
+
+        void update() override {
+            Behavior::update();
+            lifeToSprite(playerHealth->getHp());
+        }
+    };
+
+
+    class PlayerGUI : public GameObject {
+        friend class PlayerGUI1;
+        friend class PlayerGUI2;
+        friend class PlayerGUI3;
+        friend class PlayerGUI4;
+        friend class PlayerGUI5;
+
+        PlayerGUI (unsigned n) : GameObject() {
+            PlayerGuiScript& pgs = addComponent<PlayerGuiScript>();
+            name = "PlayerGui" + n;
+            pgs.playerNumber = n;
+
+            SpriteRenderer& head = addComponent<SpriteRenderer>();
+            head.setSprite(AssetsManager::getSpriteSheet("hud"), 4, n);
+
+            for (int i = 0; i < pgs.nbHeart; ++i) {
+                SpriteRenderer& heart = addComponent<SpriteRenderer>();
+                heart.setSprite(AssetsManager::getSpriteSheet("heart"), 2, 0);
+                heart.setPosition(sf::Vector2f(i*55 + 60, 0));
+                pgs.lifeSprites.push_back(&heart);
+            }
+        }
+
     };
 
     class PlayerGUI1 : public PlayerGUI { public: PlayerGUI1() : PlayerGUI(1) {} };
@@ -60,5 +86,7 @@ namespace PancakeEngine {
     class PlayerGUI5 : public PlayerGUI { public: PlayerGUI5() : PlayerGUI(5) {} };
 
 }
+
+
 
 #endif //PANCAKE_PLAYERGUI_HPP

@@ -7,6 +7,7 @@ set(CMAKE_CXX_STANDARD 11)
 include(CmakeConfig.cmake)
 
 include_directories(./libs/)
+include_directories(./libs/zlib)
 include_directories(./libs/Lua)
 include_directories(./include/)
 include_directories(${SFML_PATH}/include)
