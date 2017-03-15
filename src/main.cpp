@@ -56,6 +56,10 @@ int main() {
     unsigned height = sf::VideoMode::getDesktopMode().height - 120;
     unsigned width = sf::VideoMode::getDesktopMode().width / 5;
     sc->addGameObjectToGui<PlayerGUI1>().transform.setPosition(sf::Vector2f(width * 0 + 50, height));
+    sc->addGameObjectToGui<PlayerGUI2>().transform.setPosition(sf::Vector2f(width * 1 + 50, height));
+    sc->addGameObjectToGui<PlayerGUI3>().transform.setPosition(sf::Vector2f(width * 2 + 50, height));
+    sc->addGameObjectToGui<PlayerGUI4>().transform.setPosition(sf::Vector2f(width * 3 + 50, height));
+
     /*sc->addGameObject<Player2>(2);
     sc->addGameObject<Player3>(2);
     sc->addGameObject<Player4>(2);*/
