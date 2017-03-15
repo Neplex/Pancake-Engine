@@ -9,6 +9,7 @@
 #include <SFML/System/Vector2.hpp>
 #include "Component.hpp"
 #include "Rigidbody.hpp"
+#include <Box2D/Box2D.h>
 
 namespace PancakeEngine {
 
@@ -38,6 +39,15 @@ namespace PancakeEngine {
         // mask bits
         uint16 maskBits;
 
+        void setSleep(bool sleeping) {
+            fixture->SetSensor(sleeping);
+            sleeping = sleeping;
+        }
+
+        bool isSleeping() {
+            return sleeping;
+        }
+
         /**
          * Return the body type of this collider.
          * If the collider has not rigidbody, it is a static body.
@@ -56,6 +66,7 @@ namespace PancakeEngine {
         ~Collider();
 
     private:
+        bool sleeping = false;
         friend class Engine;
         friend class Transform; ///< Change the position of the fixture
         friend class PhysicsEngine;

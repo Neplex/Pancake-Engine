@@ -13,9 +13,10 @@ class PlayerController : public PancakeEngine::Behavior {
 public:
     bool climbing = false;
     bool swiming = false;
+    PancakeEngine::Collider* topCollider;
 
     void update() {
-
+        topCollider->setSleep(false);
         float velocityXDesired = 0;
         float velocityYDesired = 0;
         PancakeEngine::Rigidbody* rb = gameObject->getComponent<PancakeEngine::Rigidbody>();
@@ -29,6 +30,9 @@ public:
         }
         if (PancakeEngine::Input::getButtonHeld(gameObject->name + "_duck")) {
             velocityYDesired = 5;
+            if (! climbing && ! swiming) {
+                topCollider->setSleep(true);
+            }
         }
         if (PancakeEngine::Input::getButtonHeld(gameObject->name + "_right")) {
             velocityXDesired = 5;

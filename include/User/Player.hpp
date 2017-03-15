@@ -56,7 +56,8 @@ namespace PancakeEngine {
             cl_top.offset = sf::Vector2f(0, -13);
             cl_bottom.offset = sf::Vector2f(0, 13);
 
-            addComponent<PlayerController>();
+            PlayerController& pc = addComponent<PlayerController>();
+            pc.topCollider = &cl_top;
             addComponent<PlayerScript>();
            // addComponent<LuaScript>().setScript("../resources/scripts/PlayerController.lua");
             addComponent<Camera>().setBackground("../resources/backgrounds/bg_grasslands.png");
