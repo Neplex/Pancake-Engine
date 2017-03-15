@@ -4,6 +4,7 @@
 #include <User/Items/Rock.hpp>
 #include <User/Ladder.hpp>
 #include <User/Water.hpp>
+#include <User/GameControllerSoloObject.hpp>
 
 using namespace PancakeEngine;
 
@@ -43,6 +44,7 @@ int main() {
     sc->addGameObject<Player2>(2);
     sc->addGameObject<Player3>(2);
     sc->addGameObject<Player4>(2);
+    sc->addGameObject<GameControllerSoloObject>(1);
     SceneManager::loadScene(sc);
 
     InputManager::createButton("player1_jump", std::vector<sf::Keyboard::Key> ({sf::Keyboard::Key::Z}));
