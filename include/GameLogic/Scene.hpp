@@ -36,6 +36,7 @@ namespace PancakeEngine {
             while (layers.size() <= layer) layers.push_back(new GameObject());
             T* gameObject = new T();
             layers.at(layer)->addChild(*gameObject);
+            toAwake.push_back(gameObject);
             return *gameObject;
         }
 
@@ -75,6 +76,7 @@ namespace PancakeEngine {
         void lateUpdate();
     private:
         std::vector<GameObject*> toDestroy;
+        std::vector<GameObject*> toAwake;
         void destroyGameObjects();
     };
 }

@@ -27,16 +27,27 @@ void PhysicsEngine::update(float dt) {
     for ( b2Body* b = world.GetBodyList(); b; b = b->GetNext())
     {
         if (b->GetType() != b2_staticBody) {
-            Rigidbody * rb = static_cast<Rigidbody*>(b->GetUserData());
-            b2Vec2 newPos = b2Vec2(rb->gameObject->transform.getWorldPosition().x/ numberPixelsPerMeter,
-                    rb->gameObject->transform.getWorldPosition().y/ numberPixelsPerMeter);
-            //std::cout << "Before: " << rb->gameObject->name << rb->gameObject->transform.getWorldPosition().y << std::endl;
-            b->SetTransform(newPos, rb->gameObject->transform.getWorldRotation() * to_rad); // todo problem here when rigibody as a child
+
+                Rigidbody* rb = static_cast<Rigidbody*>(b->GetUserData());
+            if (rb->gameObject != nullptr) {
+                b2Vec2 newPos = b2Vec2(rb->gameObject->transform.getWorldPosition().x/numberPixelsPerMeter,
+                        rb->gameObject->transform.getWorldPosition().y/numberPixelsPerMeter);
+                //std::cout << "Before: " << rb->gameObject->name << rb->gameObject->transform.getWorldPosition().y << std::endl;
+                b->SetTransform(newPos, rb->gameObject->transform.getWorldRotation()
+                        *to_rad); // todo problem here when rigibody as a child
+            } else {
+                world.DestroyBody(b);
+            }
         } else {
-            Collider * c = static_cast<Collider*>(b->GetUserData());
-            b2Vec2 newPos = b2Vec2(c->gameObject->transform.getWorldPosition().x/ numberPixelsPerMeter,
-                                   c->gameObject->transform.getWorldPosition().y/ numberPixelsPerMeter);
-            b->SetTransform(newPos, c->gameObject->transform.getWorldRotation() * to_rad);
+
+                Collider* c = static_cast<Collider*>(b->GetUserData());
+            if (c->gameObject != nullptr) {
+                b2Vec2 newPos = b2Vec2(c->gameObject->transform.getWorldPosition().x/numberPixelsPerMeter,
+                        c->gameObject->transform.getWorldPosition().y/numberPixelsPerMeter);
+                b->SetTransform(newPos, c->gameObject->transform.getWorldRotation()*to_rad);
+            } else {
+                world.DestroyBody(b);
+            }
         }
     }
     world.Step(dt, velocityIterations, positionIterations);

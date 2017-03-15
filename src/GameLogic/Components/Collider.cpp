@@ -33,6 +33,6 @@ void Collider::awake() {
 Collider::~Collider() {
     if (gameObject->getComponent<Rigidbody>() == nullptr && fixture != nullptr) { // we let the rigidbody destroy the body if there is one
         physicsEngine->removeBody(fixture->GetBody());
-        fixture = nullptr;
     }
+    fixture = nullptr;
 }

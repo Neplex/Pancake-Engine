@@ -5,7 +5,7 @@
 #ifndef PANCAKE_PLAYERCONTROLLER_HPP
 #define PANCAKE_PLAYERCONTROLLER_HPP
 
-
+#include <User/Items/BulletObject.hpp>
 #include "GameLogic.hpp"
 #include "Inputs.hpp"
 
@@ -14,6 +14,7 @@ public:
     bool climbing = false;
     bool swiming = false;
     PancakeEngine::Collider* topCollider;
+    int direction = 1;
 
     void update() {
         topCollider->setSleep(false);
@@ -48,6 +49,21 @@ public:
         if (climbing || swiming) {
             rb->applyLinearImpulse(sf::Vector2f(0,impulseY));
         }
+
+        if (rb->getVelocity().x > 2) {
+            direction = 1;
+        } else if (rb->getVelocity().x < -2){
+            direction = -1;
+        }
+
+       if(PancakeEngine::Input::getButtonPressed(gameObject->name + "_fire")) {
+
+           BulletObject& bo = PancakeEngine::SceneManager::getCurrentScene()->addGameObject<BulletObject>(1);
+           Bullet* b = bo.getComponent<Bullet>();
+           b->direction = direction;
+
+           bo.transform.setPosition(sf::Vector2f(gameObject->transform.getWorldPosition().x + b->direction * 40, gameObject->transform.getWorldPosition().y));
+       }
     }
 };
 

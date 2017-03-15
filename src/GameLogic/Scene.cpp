@@ -7,16 +7,23 @@
 using namespace PancakeEngine;
 
 void Scene::awake() {
-    for (GameObject* l : layers) l->awake();
+    //for (GameObject* l : layers) l->awake();
     gui->awake();
 }
 
 void Scene::start() {
-    for (GameObject* l : layers) l->start();
+    //for (GameObject* l : layers) l->start();
     gui->start();
 }
 
 void Scene::update() {
+    for (GameObject* go : toAwake) {
+        go->awake();
+    }
+    for (GameObject* go : toAwake) {
+        go->start();
+    }
+    toAwake.clear();
     for (GameObject* layer : layers) {
         for (GameObject* go : layer->getChilds()) {
             go->update();

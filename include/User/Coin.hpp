@@ -15,9 +15,9 @@ namespace PancakeEngine {
     public:
         Coin() {
             name = "Coin";
-
+            addComponent<Rigidbody>().setType(Rigidbody::bodyType::kinematicBody);
             CircleCollider& cc = addComponent<CircleCollider>();
-            //addComponent<Rigidbody>().setType(Rigidbody::bodyType::kinematicBody);
+
             cc.radius = 20;
             cc.isTrigger = true;
             addComponent<OnTriggerDestroy>().target = "player1";
