@@ -27,6 +27,11 @@ public:
         return hp;
     }
 
+    void kill() {
+        dead = true;
+        hp = 0;
+    }
+
     void makeDamages(int amount) {
         hp -= amount;
         if (hp <= 0) {
