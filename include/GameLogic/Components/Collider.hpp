@@ -41,7 +41,7 @@ namespace PancakeEngine {
 
         void setSleep(bool sleeping) {
             fixture->SetSensor(sleeping);
-            sleeping = sleeping;
+            this->sleeping = sleeping;
         }
 
         bool isSleeping() {

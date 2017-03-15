@@ -66,12 +66,13 @@ void Window::draw(const GameObject * gameObject) {
     if (debug) {
         // Box collider
         const std::vector<BoxCollider *> boxColliders = gameObject->getComponents<BoxCollider>();
-        for (BoxCollider *bc : boxColliders) draw(bc, transform);
+        for (BoxCollider *bc : boxColliders) {
+            if (!bc->isSleeping()) draw(bc, transform);
+        }
 
         // Circle collider
         const std::vector<CircleCollider *> circleColliders = gameObject->getComponents<CircleCollider>();
-        for (CircleCollider *bc : circleColliders)
-            draw(bc, transform);
+        for (CircleCollider *bc : circleColliders) if (!bc->isSleeping()) draw(bc, transform);
     }
 }
 
