@@ -8,6 +8,7 @@
 #include <GameLogic.hpp>
 #include <Graphics.hpp>
 #include <User/Behaviors/PlayerController.hpp>
+#include <User/Behaviors/PlayerScript.hpp>
 #include "Health.hpp"
 
 #define ANIMATION_SPEED 150
@@ -54,6 +55,7 @@ namespace PancakeEngine {
             cl_bottom.offset = sf::Vector2f(0, 13);
 
             addComponent<PlayerController>();
+            addComponent<PlayerScript>();
            // addComponent<LuaScript>().setScript("../resources/scripts/PlayerController.lua");
             addComponent<Camera>().setBackground("../resources/backgrounds/bg_grasslands.png");
 

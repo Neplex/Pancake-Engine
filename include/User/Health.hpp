@@ -32,6 +32,11 @@ public:
         hp = 0;
     }
 
+    void reSpawn() {
+        hp = maxHp;
+        dead = false;
+    }
+
     void makeDamages(int amount) {
         hp -= amount;
         if (hp <= 0) {

@@ -9,6 +9,7 @@
 #include <GameLogic/Components/CircleCollider.hpp>
 #include <GameLogic/Components/SpriteRenderer.hpp>
 #include <Graphics/AssetsManager.hpp>
+#include <User/Behaviors/CheckPoint.hpp>
 
 namespace PancakeEngine {
     class Rock : public GameObject {
@@ -34,6 +35,7 @@ namespace PancakeEngine {
             Rigidbody& rb = addComponent<Rigidbody>();
             CircleCollider& cc = addComponent<CircleCollider>();
             cc.radius = 15;
+            addComponent<CheckPoint>();
 
             addComponent<SpriteRenderer>().setSprite(
                     AssetsManager::getSpriteSheet("miscs"), 13, 4
