@@ -65,6 +65,18 @@ namespace PancakeEngine {
          */
         void setPosition(sf::Vector2f position);
 
+        /**
+         * @brief Set the rotation of the sprite relative to the parent
+         * @param r the rotation relative to the parent
+         */
+        void setRotation(float r);
+
+        /**
+         * @brief Set the scale of the sprite
+         * @param scale the scale factor
+         */
+        void setScale(sf::Vector2f scale);
+
         const sf::Sprite getSprite() const override;
 
     private:

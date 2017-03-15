@@ -5,6 +5,8 @@
 #include <User/Ladder.hpp>
 #include <User/Water.hpp>
 #include <User/GameControllerSoloObject.hpp>
+#include <User/Laser.hpp>
+#include <User/DeathZone.hpp>
 
 using namespace PancakeEngine;
 
@@ -33,6 +35,8 @@ int main() {
     SceneFactory::addPrefab<SmallRock>("SmallRock");
     SceneFactory::addPrefab<Ladder>("Ladder");
     SceneFactory::addPrefab<Water>("Water");
+    SceneFactory::addPrefab<Laser>("Laser");
+    SceneFactory::addPrefab<DeathZone>("DeathZone");
 
     Scene* sc = sf.loadAllSceneObject(filename);
     // Add GUI
