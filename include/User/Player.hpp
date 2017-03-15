@@ -58,6 +58,8 @@ namespace PancakeEngine {
 
             PlayerController& pc = addComponent<PlayerController>();
             pc.topCollider = &cl_top;
+            cl_top.friction = 0;
+            cl_bottom.friction = 0;
             addComponent<PlayerScript>();
            // addComponent<LuaScript>().setScript("../resources/scripts/PlayerController.lua");
             addComponent<Camera>().setBackground("../resources/backgrounds/bg_grasslands.png");
