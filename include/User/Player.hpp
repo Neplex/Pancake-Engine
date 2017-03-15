@@ -32,6 +32,8 @@ namespace PancakeEngine {
 
             if (go.getComponent<PlayerController>()->climbing) {
                 return "climb";
+            } else if (go.getComponent<PlayerController>()->swiming) {
+                return "swing";
             } else if (Input::getButtonHeld(go.name + "_duck")) {
                 return "duck";
             } else if (velocity.y < -.1 || velocity.y > .1) {
@@ -71,8 +73,8 @@ namespace PancakeEngine {
             a_walk.addFrame(0, 1, ANIMATION_SPEED);
             a_walk.addFrame(0, 2, ANIMATION_SPEED);
             Animation& a_swing = AssetsManager::createAnimation(name + "_swing", sprites);
-            a_swing.addFrame(1, 1, ANIMATION_SPEED);
-            a_swing.addFrame(1, 2, ANIMATION_SPEED);
+            a_swing.addFrame(1, 1, ANIMATION_SPEED*2);
+            a_swing.addFrame(1, 2, ANIMATION_SPEED*2);
             Animation& a_climb = AssetsManager::createAnimation(name + "_climb", sprites);
             a_climb.addFrame(2, 1, ANIMATION_SPEED*2);
             a_climb.addFrame(2, 2, ANIMATION_SPEED*2);
