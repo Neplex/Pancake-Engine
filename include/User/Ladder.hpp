@@ -7,16 +7,14 @@
 
 #include <GameLogic/GameObject.hpp>
 #include <User/Behaviors/LadderScript.hpp>
+#include <User/Behaviors/OnAwakeSetBoxCollider.hpp>
 
 namespace PancakeEngine {
     class Ladder : public GameObject {
     public:
         Ladder() {
+            addComponent<OnAwakeSetBoxCollider>();
             addComponent<LadderScript>();
-            BoxCollider& bc = addComponent<BoxCollider>();
-            bc.width = 70;
-            bc.height = 70*4;
-            bc.isTrigger = true;
         }
     };
 }

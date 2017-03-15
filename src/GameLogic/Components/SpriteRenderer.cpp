@@ -33,3 +33,11 @@ void SpriteRenderer::setPosition(sf::Vector2f position) {
 const sf::Sprite SpriteRenderer::getSprite() const {
     return sprite;
 }
+
+void SpriteRenderer::setRotation(float r) {
+    sprite.setRotation(r);
+}
+
+void SpriteRenderer::setScale(sf::Vector2f scale) {
+    sprite.setScale(scale);
+}

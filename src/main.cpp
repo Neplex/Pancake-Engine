@@ -3,8 +3,13 @@
 #include <Parser/SceneFactory.hpp>
 #include <User/Items/Rock.hpp>
 #include <User/Ladder.hpp>
+#include <User/Transporter.hpp>
+#include <User/Trampoline.hpp>
 #include <User/Water.hpp>
 #include <User/GameControllerSoloObject.hpp>
+#include <User/CheckPointObject.hpp>
+#include <User/Laser.hpp>
+#include <User/DeathZone.hpp>
 
 using namespace PancakeEngine;
 
@@ -19,11 +24,12 @@ int main() {
     AssetsManager::createSpriteSheet("items", "../resources/items.png", 70, 70);
 
     Engine * app = new Engine();
-    const char* filename = "../resources/maps/test.tmx";
+    const char* filename = "../resources/maps/arena.tmx";
     //app->sceneManager.loadScene(new Sandbox());
     SceneFactory sf;
     SceneFactory::addPrefab<Coin>("Coin");
     SceneFactory::addPrefab<Player1>("Player");
+    SceneFactory::addPrefab<Player1>("Player1");
     SceneFactory::addPrefab<Player2>("Player2");
     SceneFactory::addPrefab<Player3>("Player3");
     SceneFactory::addPrefab<Player4>("Player4");
@@ -33,7 +39,16 @@ int main() {
     SceneFactory::addPrefab<SmallRock>("SmallRock");
     SceneFactory::addPrefab<Ladder>("Ladder");
     SceneFactory::addPrefab<Water>("Water");
-
+    SceneFactory::addPrefab<Laser>("Laser");
+    SceneFactory::addPrefab<DeathZone>("DeathZone");
+    SceneFactory::addPrefab<Transporter1>("Transporter1");
+    SceneFactory::addPrefab<Transporter2>("Transporter2");
+    SceneFactory::addPrefab<Transporter3>("Transporter3");
+    SceneFactory::addPrefab<Trampoline>("Trampoline");
+    SceneFactory::addPrefab<CheckPointObject1>("CheckPoint1");
+    SceneFactory::addPrefab<CheckPointObject2>("CheckPoint2");
+    SceneFactory::addPrefab<CheckPointObject3>("CheckPoint3");
+    SceneFactory::addPrefab<CheckPointObject4>("CheckPoint4");
     Scene* sc = sf.loadAllSceneObject(filename);
     // Add GUI
     AssetsManager::createSpriteSheet("heart", "../resources/heart.png", 53, 45);
@@ -41,10 +56,11 @@ int main() {
     unsigned height = sf::VideoMode::getDesktopMode().height - 120;
     unsigned width = sf::VideoMode::getDesktopMode().width / 5;
     sc->addGameObjectToGui<PlayerGUI1>().transform.setPosition(sf::Vector2f(width * 0 + 50, height));
-    sc->addGameObject<Player2>(2);
+    /*sc->addGameObject<Player2>(2);
     sc->addGameObject<Player3>(2);
-    sc->addGameObject<Player4>(2);
+    sc->addGameObject<Player4>(2);*/
     sc->addGameObject<GameControllerSoloObject>(1);
+
     SceneManager::loadScene(sc);
 
     InputManager::createButton("player1_jump", std::vector<sf::Keyboard::Key> ({sf::Keyboard::Key::Z}));

@@ -116,7 +116,6 @@ namespace PancakeEngine {
                 SpriteSheet &spriteSheet = AssetsManager::createSpriteSheet(gameObject.name, source,
                                                                             (unsigned) ts->GetTileWidth(),
                                                                             (unsigned) ts->GetTileHeight());
-
                 if (ts->GetTiles().size() > 0) {
                     //Get tile if there is animation or specific collider
                     const Tmx::Tile *tile = *(ts->GetTiles().begin());
@@ -159,59 +158,38 @@ namespace PancakeEngine {
      */
     void SceneFactory::loadObject(Tmx::Object object, Tmx::Map *map) {
         sf::Vector2f v2f = CalculGOPosition(object);
+        GameObject* gameObject;
         //Check if gameObject is in the prefabs list
         if( !factorySystem.find(object.GetName())){
-            GameObject& gameObject = scene->addGameObject<GameObject>(2);
-            gameObject.transform.setRotation((float)object.GetRot());
-            gameObject.transform.setPosition(v2f);
-            gameObject.name = object.GetName();
+            gameObject = &(scene->addGameObject<GameObject>(2));
+            gameObject->name = object.GetName();
             if(object.GetName() != "MapCollider")
-                setGOComponent((unsigned)object.GetGid(), map, gameObject);
-            BoxCollider &bcGroundingBox = gameObject.addComponent<BoxCollider>();
+                setGOComponent((unsigned)object.GetGid(), map, *gameObject);
+            BoxCollider &bcGroundingBox = gameObject->addComponent<BoxCollider>();
             bcGroundingBox.width = object.GetWidth();
             bcGroundingBox.height = object.GetHeight();
-
-            //Add properties in a Data storage component
-            std::map <std::string,std::string> listP = object.GetProperties().GetList();
-            DataStorage& ds = gameObject.addComponent<DataStorage>();
-            ds.set("height",object.GetHeight());
-            ds.set("width",object.GetWidth());
-            for(std::map<std::string,std::string>::iterator it=listP.begin() ; it!=listP.end() ; ++it)
-            {
-                double d = 0;
-                bool boolean  = false;
-                std::stringstream ss(it->second);
-                if( ss >> d)
-                    ds.set(it->first,d);
-                else if(ss >> boolean)
-                    ds.set(it->first,boolean);
-                else
-                    ds.set(it->first,it->second);
-            }
         }
         else{
-            GameObject* gameObject = factorySystem.CreateNew(scene,2,object.GetName());
-            gameObject->transform.setPosition(v2f);
-            gameObject->transform.setRotation((float)object.GetRot());
-            //Add properties in a Data storage component
-
-            std::map <std::string,std::string> listP = object.GetProperties().GetList();
-            DataStorage& ds = gameObject->addComponent<DataStorage>();
-            ds.set("height",object.GetHeight());
-            ds.set("width",object.GetWidth());
-            for(std::map<std::string,std::string>::iterator it=listP.begin() ; it!=listP.end() ; ++it)
-            {
-                double d = 0;
-                bool boolean  = false;
-                std::stringstream ss(it->second);
-                if( ss >> d)
-                    ds.set(it->first,d);
-                else if(ss >> boolean)
-                    ds.set(it->first,boolean);
-                else
-                    ds.set(it->first,it->second);
-            }
-
+            gameObject = factorySystem.CreateNew(scene,2,object.GetName());
+        }
+        gameObject->transform.setRotation((float)object.GetRot());
+        gameObject->transform.setPosition(v2f);
+        //Add properties in a Data storage component
+        std::map <std::string,std::string> listP = object.GetProperties().GetList();
+        DataStorage& ds = gameObject->addComponent<DataStorage>();
+        ds.set("height",object.GetHeight());
+        ds.set("width",object.GetWidth());
+        for(std::map<std::string,std::string>::iterator it=listP.begin() ; it!=listP.end() ; ++it)
+        {
+            double d = 0;
+            bool boolean  = false;
+            std::stringstream ss(it->second);
+            if( ss >> d)
+                ds.set(it->first,d);
+            else if(ss >> boolean)
+                ds.set(it->first,boolean);
+            else
+                ds.set(it->first,it->second);
         }
     }
     /**!
