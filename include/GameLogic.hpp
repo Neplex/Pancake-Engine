@@ -40,6 +40,7 @@
 #include "GameLogic/Components/SpriteRenderer.hpp"
 #include "GameLogic/Components/Transform.hpp"
 #include "GameLogic/Components/TileMapRenderer.hpp"
+#include "GameLogic/Components/DataStorage.hpp"
 
 
 /**

@@ -3,15 +3,17 @@
 //
 
 #include <Parser/SceneFactory.hpp>
-#include <GameLogic/Components/DataStorage.hpp>
+#include <sstream>
 
 #define for_left(width) for(unsigned k = 0; k < width; k++)
 #define for_right(width) for(int k = width-1; k >= 0; --k)
 #define for_down(height) for(int j = height -1; j >= 0; j--)
 #define for_up(height) for(unsigned j = 0; j < height; j++)
+//Macro to call setTile Function
 #define tileMacro(layer,k,j) unsigned tileGid = layer->GetTileGid(k,j);\
                         if (tileGid != 0)\
                             setTile(tileGid, myParser->map, tileMap, k, j, tmr);
+//Macros for orientation map loop
 #define leftdownOrder(height,width,layer) for_down(height) {\
                         for_left(width) {\
                             tileMacro(layer,k,j)\
@@ -34,8 +36,9 @@
                         }
 
 namespace PancakeEngine {
-    GameObjectFactory SceneFactory::factorySystem; ///< the factory for prefab objects
+    GameObjectFactory SceneFactory::factorySystem;
 
+    //Set animation of a gameObject
     void setAnimation(GameObject &gameObject, const Tmx::Tile *tile, const Tmx::Tileset *ts) {
         const std::vector<Tmx::AnimationFrame> &frames = tile->GetFrames();
         unsigned i, j;
@@ -44,6 +47,7 @@ namespace PancakeEngine {
 
         for (std::vector<Tmx::AnimationFrame>::const_iterator it =
                 frames.begin(); it != frames.end(); it++) {
+            //Calcul position in the tile
             i = (unsigned) (it->GetTileID() / (ts->GetImage()->GetWidth() / ts->GetTileWidth()));
             j = (unsigned) (it->GetTileID() % (ts->GetImage()->GetWidth() / ts->GetTileWidth()));
             it->GetTileID();
@@ -71,7 +75,8 @@ namespace PancakeEngine {
         }
     }
 
-    void setTile(const unsigned gid,const Tmx::Map *map,TileMap &tileMap,const unsigned x,const unsigned y, GameObject &gameObject) { ;
+    void setTile(const unsigned gid,const Tmx::Map *map,TileMap &tileMap,const unsigned x,const unsigned y, GameObject &gameObject) {
+        //Get tileset list
         std::vector<Tmx::Tileset *> tileSetList = map->GetTilesets();
         unsigned posI, posJ;
         for (unsigned i = 0; i < tileSetList.size(); ++i) {
@@ -81,6 +86,7 @@ namespace PancakeEngine {
             int maxGid = ts->GetFirstGid() + tilecount;
             if (ts->GetFirstGid() <= gid && gid < maxGid) {
                 std::string source = ts->GetImage()->GetSource();
+                //Calcul position in the tileset
                 posJ = ((gid - ts->GetFirstGid()) / (ts->GetImage()->GetWidth() / ts->GetTileWidth()));
                 posI = ((gid - ts->GetFirstGid()) % (ts->GetImage()->GetWidth() / ts->GetTileWidth()));
                 SpriteSheet &spriteSheet = AssetsManager::createSpriteSheet(ts->GetName(), source,
@@ -98,32 +104,23 @@ namespace PancakeEngine {
         int nbTileset = map->GetNumTilesets();
         for (unsigned k = 0; k < nbTileset; k++) {
             const Tmx::Tileset *ts = map->GetTileset(k);
+            //Get nb tile in the tileset
             int tilecount = (ts->GetImage()->GetWidth() / ts->GetTileWidth()) *
                             (ts->GetImage()->GetHeight() / ts->GetTileHeight());
             int count = ts->GetFirstGid() + tilecount;
             if ((ts->GetFirstGid() <= gid) && count > gid) {
+                //Calcul position in the tileset
                 std::string source = ts->GetImage()->GetSource();
                 j = ((gid - ts->GetFirstGid()) / (ts->GetImage()->GetWidth() / ts->GetTileWidth()));
                 i = ((gid - ts->GetFirstGid()) % (ts->GetImage()->GetWidth() / ts->GetTileWidth()));
                 SpriteSheet &spriteSheet = AssetsManager::createSpriteSheet(gameObject.name, source,
                                                                             (unsigned) ts->GetTileWidth(),
                                                                             (unsigned) ts->GetTileHeight());
-                std::unordered_map<std::string,Tmx::Property> listP = ts->GetProperties().GetPropertyMap();
-                for(std::unordered_map<std::string,Tmx::Property>::iterator it=listP.begin() ; it!=listP.end() ; ++it)
-                {
-                    DataStorage& ds = gameObject.addComponent<DataStorage>();
-                    if(it->second.GetType() == Tmx::TMX_PROPERTY_STRING) {
-                        ds.set(it->first, it->second.GetValue());
-                    }else if(it->second.GetType() == Tmx::TMX_PROPERTY_BOOL) {
-                        ds.set(it->first, it->second.GetBoolValue());
-                    }else if(it->second.GetType() == Tmx::TMX_PROPERTY_FLOAT){
-                        ds.set(it->first,it->second.GetFloatValue());
-                    }else if(it->second.GetType() == Tmx::TMX_PROPERTY_INT){
-                        ds.set(it->first,it->second.GetIntValue());
-                    }
-                }
+
                 if (ts->GetTiles().size() > 0) {
+                    //Get tile if there is animation or specific collider
                     const Tmx::Tile *tile = *(ts->GetTiles().begin());
+                    //Add properties in a Data storage component
                     if (tile->IsAnimated())
                         setAnimation(gameObject, tile, ts);
                     else
@@ -135,7 +132,7 @@ namespace PancakeEngine {
             }
         }
     }
-
+    // Calcul position of a gameobject in the world
     sf::Vector2f CalculGOPosition(Tmx::Object object){
         sf::Vector2f v2f;
         float px,py,ox,oy;
@@ -155,9 +152,14 @@ namespace PancakeEngine {
         v2f.y = (float)sin(radAngle) * (px - ox) + (float)cos(radAngle) * (py - oy) + oy;
         return v2f;
     }
-
+    /**!
+     * @brief load a GameObject
+     * @param Tmx::Object object parse from tmx file
+     * @param Tmx::Map map being parse
+     */
     void SceneFactory::loadObject(Tmx::Object object, Tmx::Map *map) {
         sf::Vector2f v2f = CalculGOPosition(object);
+        //Check if gameObject is in the prefabs list
         if( !factorySystem.find(object.GetName())){
             GameObject& gameObject = scene->addGameObject<GameObject>(2);
             gameObject.transform.setRotation((float)object.GetRot());
@@ -168,14 +170,54 @@ namespace PancakeEngine {
             BoxCollider &bcGroundingBox = gameObject.addComponent<BoxCollider>();
             bcGroundingBox.width = object.GetWidth();
             bcGroundingBox.height = object.GetHeight();
+
+            //Add properties in a Data storage component
+            std::map <std::string,std::string> listP = object.GetProperties().GetList();
+            DataStorage& ds = gameObject.addComponent<DataStorage>();
+            ds.set("height",object.GetHeight());
+            ds.set("width",object.GetWidth());
+            for(std::map<std::string,std::string>::iterator it=listP.begin() ; it!=listP.end() ; ++it)
+            {
+                double d = 0;
+                bool boolean  = false;
+                std::stringstream ss(it->second);
+                if( ss >> d)
+                    ds.set(it->first,d);
+                else if(ss >> boolean)
+                    ds.set(it->first,boolean);
+                else
+                    ds.set(it->first,it->second);
+            }
         }
         else{
             GameObject* gameObject = factorySystem.CreateNew(scene,2,object.GetName());
             gameObject->transform.setPosition(v2f);
             gameObject->transform.setRotation((float)object.GetRot());
+            //Add properties in a Data storage component
+
+            std::map <std::string,std::string> listP = object.GetProperties().GetList();
+            DataStorage& ds = gameObject->addComponent<DataStorage>();
+            ds.set("height",object.GetHeight());
+            ds.set("width",object.GetWidth());
+            for(std::map<std::string,std::string>::iterator it=listP.begin() ; it!=listP.end() ; ++it)
+            {
+                double d = 0;
+                bool boolean  = false;
+                std::stringstream ss(it->second);
+                if( ss >> d)
+                    ds.set(it->first,d);
+                else if(ss >> boolean)
+                    ds.set(it->first,boolean);
+                else
+                    ds.set(it->first,it->second);
+            }
+
         }
     }
-
+    /**!
+     * @brief load a TileMap layer
+     * @param Tmx::TileLayer layer parse from tmx file
+     */
     void SceneFactory::loadLayer(Tmx::TileLayer *layer) {
         std::string s = layer->GetName();
         std::string newString = s.substr(s.find(' ') + 1);
