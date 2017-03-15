@@ -21,6 +21,17 @@ public:
         if (other.gameObject->getComponent<PlayerController>()) {
             gc->setLastCheckPoint(gameObject);
         }
+        PancakeEngine::GameObject* go = triggered.gameObject;
+        PancakeEngine::SpriteSheet& ss = PancakeEngine::AssetsManager::getSpriteSheet("items");
+        if(go->name == "CheckPoint1"){
+            go->getComponent<PancakeEngine::SpriteRenderer>()->setSprite(ss,6,2);
+        }else if(go->name == "CheckPoint2"){
+            go->getComponent<PancakeEngine::SpriteRenderer>()->setSprite(ss,6,1);
+        }else if(go->name == "CheckPoint3"){
+            go->getComponent<PancakeEngine::SpriteRenderer>()->setSprite(ss,6,3);
+        }else if(go->name == "CheckPoint4"){
+            go->getComponent<PancakeEngine::SpriteRenderer>()->setSprite(ss,6,4);
+        }
     }
 
 private:
