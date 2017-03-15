@@ -33,7 +33,10 @@
 #include <User/Box.hpp>
 
 namespace PancakeEngine {
-
+    /**
+     * @class GOFactory
+     * @brief Interface to create GameObjectFactory
+     */
     class GOFactory
     {
     public:
@@ -46,32 +49,52 @@ namespace PancakeEngine {
     public:
         T* CreateNew(Scene* scene, unsigned layer) const { return &(scene->addGameObject<T>(layer)); }
     };
-
+    /**
+     * @class GameObjectFactory
+     * @brief Use to create prefab map
+     */
     class GameObjectFactory
     {
     private:
         typedef std::map<std::string, GOFactory*> FactoryMap;
-        FactoryMap factoryMap;
+
+        FactoryMap factoryMap; // Map which contains all prefabs
 
     public:
+        /**!
+         * @brief Destroy a GameObjectFactory object
+         * Clear factoryMap objects
+         */
         ~GameObjectFactory()
         {
             FactoryMap::const_iterator map_item = factoryMap.begin();
             for (; map_item != factoryMap.end(); ++map_item) delete map_item->second;
             factoryMap.clear();
         }
-
+        /**!
+         * @brief Add a prefab to the factoryMap
+         * @param string name of the prefab object
+         */
         template <typename T>
         void AddFactory(const std::string& name)
         {
             delete factoryMap[name];
             factoryMap[name] = new Factory<T>();
         }
-
+        /**!
+         * @brief find a prefab in the map
+         * @param string name of the prefab object
+         */
         bool find(std::string name){
             auto search = factoryMap.find(name);
             return search != factoryMap.end();
         }
+        /**!
+         * @brief Create a new prefab in the map
+         * @param Scene where to create the prefab
+         * @param layer which layer is the object
+         * @param name of the prefab
+         */
         GameObject* CreateNew(Scene* scene, unsigned layer,const std::string& name) const
         {
             FactoryMap::const_iterator found = factoryMap.find(name);

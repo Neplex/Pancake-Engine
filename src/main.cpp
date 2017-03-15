@@ -3,6 +3,7 @@
 #include <Parser/SceneFactory.hpp>
 #include <User/Items/Rock.hpp>
 #include <User/Ladder.hpp>
+#include <User/Water.hpp>
 
 using namespace PancakeEngine;
 
@@ -30,6 +31,7 @@ int main() {
     SceneFactory::addPrefab<Rock>("Rock");
     SceneFactory::addPrefab<SmallRock>("SmallRock");
     SceneFactory::addPrefab<Ladder>("Ladder");
+    SceneFactory::addPrefab<Water>("Water");
 
     Scene* sc = sf.loadAllSceneObject(filename);
     // Add GUI

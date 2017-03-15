@@ -12,6 +12,7 @@
 class PlayerController : public PancakeEngine::Behavior {
 public:
     bool climbing = false;
+    bool swiming = false;
 
     void update() {
 
@@ -19,7 +20,7 @@ public:
         float velocityYDesired = 0;
         PancakeEngine::Rigidbody* rb = gameObject->getComponent<PancakeEngine::Rigidbody>();
         if (PancakeEngine::Input::getButtonHeld(gameObject->name + "_jump")) {
-            if (climbing) {
+            if (climbing || swiming) {
                 velocityYDesired = -5;
             }
         }
@@ -40,7 +41,7 @@ public:
         float impulseY = rb->getMass() * velYChange;
         float impulseX = rb->getMass() * velXChange; //disregard time factor
         rb->applyLinearImpulse(sf::Vector2f(impulseX,0));
-        if (climbing) {
+        if (climbing || swiming) {
             rb->applyLinearImpulse(sf::Vector2f(0,impulseY));
         }
     }
