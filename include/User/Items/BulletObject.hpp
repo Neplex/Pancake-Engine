@@ -16,6 +16,9 @@ public:
         cc.isTrigger = true;
 
         addComponent<Bullet>();
+        addComponent<PancakeEngine::SpriteRenderer>().setSprite(
+                PancakeEngine::AssetsManager::getSpriteSheet("miscs"), 7, 0
+        );
     }
 };
 
