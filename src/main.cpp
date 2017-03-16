@@ -3,13 +3,14 @@
 #include <Parser/SceneFactory.hpp>
 #include <User/Items/Rock.hpp>
 #include <User/Ladder.hpp>
-#include <User/Transporter.hpp>
-#include <User/Trampoline.hpp>
-#include <User/Water.hpp>
+#include <User/Items/Transporter.hpp>
+#include <User/Items/Trampoline.hpp>
+#include <User/Items/Water.hpp>
 #include <User/GameControllerSoloObject.hpp>
 #include <User/CheckPointObject.hpp>
 #include <User/Laser.hpp>
 #include <User/DeathZone.hpp>
+#include <User/enemy.hpp>
 
 using namespace PancakeEngine;
 
@@ -22,9 +23,10 @@ int main() {
     AssetsManager::createSpriteSheet("tiles", "../resources/tiles/tiles.png", 70, 70);
     AssetsManager::createSpriteSheet("miscs", "../resources/tiles/miscs.png", 70, 70);
     AssetsManager::createSpriteSheet("items", "../resources/items.png", 70, 70);
+    AssetsManager::createSpriteSheet("slimeGreen", "../resources/enemies/slimeGreen.png", 57, 34);
 
     Engine * app = new Engine();
-    const char* filename = "../resources/maps/arena.tmx";
+    const char* filename = "../resources/maps/mapCastle.tmx";
     //app->sceneManager.loadScene(new Sandbox());
     SceneFactory sf;
     SceneFactory::addPrefab<Coin>("Coin");
@@ -49,6 +51,8 @@ int main() {
     SceneFactory::addPrefab<CheckPointObject2>("CheckPoint2");
     SceneFactory::addPrefab<CheckPointObject3>("CheckPoint3");
     SceneFactory::addPrefab<CheckPointObject4>("CheckPoint4");
+    SceneFactory::addPrefab<enemy>("slimeGreen");
+
     Scene* sc = sf.loadAllSceneObject(filename);
     // Add GUI
     AssetsManager::createSpriteSheet("heart", "../resources/heart.png", 53, 45);
@@ -56,9 +60,9 @@ int main() {
     unsigned height = sf::VideoMode::getDesktopMode().height - 120;
     unsigned width = sf::VideoMode::getDesktopMode().width / 5;
     sc->addGameObjectToGui<PlayerGUI1>().transform.setPosition(sf::Vector2f(width * 0 + 50, height));
-    sc->addGameObjectToGui<PlayerGUI2>().transform.setPosition(sf::Vector2f(width * 1 + 50, height));
+    /*sc->addGameObjectToGui<PlayerGUI2>().transform.setPosition(sf::Vector2f(width * 1 + 50, height));
     sc->addGameObjectToGui<PlayerGUI3>().transform.setPosition(sf::Vector2f(width * 2 + 50, height));
-    sc->addGameObjectToGui<PlayerGUI4>().transform.setPosition(sf::Vector2f(width * 3 + 50, height));
+    sc->addGameObjectToGui<PlayerGUI4>().transform.setPosition(sf::Vector2f(width * 3 + 50, height));*/
 
     /*sc->addGameObject<Player2>(2);
     sc->addGameObject<Player3>(2);

@@ -25,12 +25,9 @@
 #ifndef PANCAKE_SCENEFACTORY_HPP
 #define PANCAKE_SCENEFACTORY_HPP
 
-#include <GameLogic/GameObject.hpp>
-#include <GameLogic/Scene.hpp>
-#include <Parser/TmxParser.hpp>
-#include <User/Player.hpp>
-#include <User/Coin.hpp>
-#include <User/Box.hpp>
+#include <GameLogic.hpp>
+#include <Tmx.h>
+#include "TmxParser.hpp"
 
 namespace PancakeEngine {
     /**

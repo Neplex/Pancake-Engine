@@ -7,7 +7,7 @@
 
 #include <GameLogic.hpp>
 #include <User/Ground.hpp>
-#include <User/Box.hpp>
+#include <User/Items/Box.hpp>
 #include <User/Coin.hpp>
 #include <User/Player.hpp>
 #include <User/Gui/PlayerGui.hpp>
