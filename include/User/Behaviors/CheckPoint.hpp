@@ -19,7 +19,7 @@ public:
     void OnTriggerEnter(const PancakeEngine::Collider& triggered, const PancakeEngine::Collider& other) override
     {
         if (other.gameObject->getComponent<PlayerController>()) {
-            gc->setLastCheckPoint(gameObject);
+            gc->setLastCheckPoint(gameObject, other.gameObject);
         }
         PancakeEngine::GameObject* go = triggered.gameObject;
         PancakeEngine::SpriteSheet& ss = PancakeEngine::AssetsManager::getSpriteSheet("items");

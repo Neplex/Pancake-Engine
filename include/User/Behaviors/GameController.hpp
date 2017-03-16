@@ -11,17 +11,19 @@
 class GameController : public PancakeEngine::Behavior {
 
 public:
-    void setLastCheckPoint(PancakeEngine::GameObject* cp) {
-        lastCheckPoint = cp;
+    void setLastCheckPoint(PancakeEngine::GameObject* cp, PancakeEngine::GameObject* player) {
+        playerToLastCheckPoint[player->name] = cp;
     }
 
     void playerDie(PancakeEngine::GameObject* p) {
-        p->transform.setPosition(sf::Vector2f(lastCheckPoint->transform.getWorldPosition().x,lastCheckPoint->transform.getWorldPosition().y));
+        PancakeEngine::GameObject* lastCheckPoint = playerToLastCheckPoint[p->name];
+        p->transform.setPosition(sf::Vector2f(lastCheckPoint->transform.getWorldPosition().x,
+                lastCheckPoint->transform.getWorldPosition().y));
         p->getComponent<Health>()->reSpawn();
     }
 
 private:
-    PancakeEngine::GameObject* lastCheckPoint;
+    std::map<std::string, PancakeEngine::GameObject*> playerToLastCheckPoint;
 
 };
 

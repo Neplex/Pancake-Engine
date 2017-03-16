@@ -76,7 +76,7 @@ int main() {
     InputManager::createButton("player1_duck", std::vector<sf::Keyboard::Key> ({sf::Keyboard::Key::S}));
 
     InputManager::createButton("player2_jump", std::vector<sf::Keyboard::Key> ({sf::Keyboard::Key::Up}));
-    InputManager::createButton("player2_fire", std::vector<sf::Keyboard::Key> ({sf::Keyboard::Key::RShift}));
+    InputManager::createButton("player2_fire", std::vector<sf::Keyboard::Key> ({sf::Keyboard::Key::RControl}));
     InputManager::createButton("player2_right", std::vector<sf::Keyboard::Key> ({sf::Keyboard::Key::Right}));
     InputManager::createButton("player2_left", std::vector<sf::Keyboard::Key> ({sf::Keyboard::Key::Left}));
     InputManager::createButton("player2_duck", std::vector<sf::Keyboard::Key> ({sf::Keyboard::Key::Down}));
