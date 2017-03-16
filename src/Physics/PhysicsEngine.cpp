@@ -26,28 +26,33 @@ void PhysicsEngine::update(float dt) {
     // Update the body position if the engine changes it
     for ( b2Body* b = world.GetBodyList(); b; b = b->GetNext())
     {
-        if (b->GetType() != b2_staticBody) {
-
+        if (b->GetUserData() != nullptr) {
+            if (b->GetType()!=b2_staticBody) {
                 Rigidbody* rb = static_cast<Rigidbody*>(b->GetUserData());
-            if (rb->gameObject != nullptr) {
-                b2Vec2 newPos = b2Vec2(rb->gameObject->transform.getWorldPosition().x/numberPixelsPerMeter,
-                        rb->gameObject->transform.getWorldPosition().y/numberPixelsPerMeter);
-                //std::cout << "Before: " << rb->gameObject->name << rb->gameObject->transform.getWorldPosition().y << std::endl;
-                b->SetTransform(newPos, rb->gameObject->transform.getWorldRotation()
-                        *to_rad); // todo problem here when rigibody as a child
-            } else {
-                world.DestroyBody(b);
+                if (rb->gameObject!=nullptr) {
+                    b2Vec2 newPos = b2Vec2(rb->gameObject->transform.getWorldPosition().x/numberPixelsPerMeter,
+                            rb->gameObject->transform.getWorldPosition().y/numberPixelsPerMeter);
+                    b->SetTransform(newPos, rb->gameObject->transform.getWorldRotation()
+                            *to_rad); // todo problem here when rigibody as a child
+                }
+                else {
+                    world.DestroyBody(b);
+                }
             }
-        } else {
+            else {
 
                 Collider* c = static_cast<Collider*>(b->GetUserData());
-            if (c->gameObject != nullptr) {
-                b2Vec2 newPos = b2Vec2(c->gameObject->transform.getWorldPosition().x/numberPixelsPerMeter,
-                        c->gameObject->transform.getWorldPosition().y/numberPixelsPerMeter);
-                b->SetTransform(newPos, c->gameObject->transform.getWorldRotation()*to_rad);
-            } else {
-                world.DestroyBody(b);
+                if (c->gameObject!=nullptr) {
+                    b2Vec2 newPos = b2Vec2(c->gameObject->transform.getWorldPosition().x/numberPixelsPerMeter,
+                            c->gameObject->transform.getWorldPosition().y/numberPixelsPerMeter);
+                    b->SetTransform(newPos, c->gameObject->transform.getWorldRotation()*to_rad);
+                }
+                else {
+                    world.DestroyBody(b);
+                }
             }
+        } else {
+            world.DestroyBody(b);
         }
     }
     world.Step(dt, velocityIterations, positionIterations);
@@ -93,7 +98,6 @@ void PhysicsEngine::addRigidBodyToPhysicsWorld(Rigidbody &rb) {
     bodyDef.position.Set((rb.gameObject->transform.getWorldPosition().x)/numberPixelsPerMeter,
                          (rb.gameObject->transform.getWorldPosition().y)/numberPixelsPerMeter);
     bodyDef.angle = rb.gameObject->transform.getWorldRotation() * to_rad;
-    std::cout << bodyDef.angle << std::endl;
     bodyDef.userData = (void *) &rb;
     bodyDef.angularVelocity = rb.angularVelocity;
     bodyDef.angularDamping = rb.angularDrag;

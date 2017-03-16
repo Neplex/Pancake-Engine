@@ -185,6 +185,7 @@ void Rigidbody::setVelocity(const sf::Vector2f &velocity) {
 
 Rigidbody::~Rigidbody() {
     if (physicsBody != nullptr) {
+        physicsBody->SetUserData(nullptr);
         physicsEngine->removeBody(physicsBody);
         /*std::vector<Collider *> v = gameObject->getComponents<Collider>();
         for (Collider* c : v) {

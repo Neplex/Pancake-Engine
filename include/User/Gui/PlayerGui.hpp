@@ -38,12 +38,6 @@ namespace PancakeEngine {
 
         void awake() override {
             Behavior::awake();
-            if (SceneManager::findByName("player1")) {
-                std::cout << "player" << playerNumber;
-            } else {
-                std::cout <<"caca";
-            }
-            //std::cout <<  SceneManager::findByName("player" + playerNumber)->name;
             playerHealth = SceneManager::findByName(std::string("player") + std::to_string(playerNumber))->getComponent<Health>();
         }
 
