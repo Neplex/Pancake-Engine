@@ -51,11 +51,11 @@
  <objectgroup name="Layer 2">
   <object id="1" name="Transporter2" gid="206" x="1890" y="1137.5" width="70" height="70"/>
   <object id="2" name="Transporter1" gid="206" x="787.5" y="1977.5" width="70" height="70"/>
-  <object id="3" name="Player2" x="997.5" y="1330" width="64" height="109"/>
   <object id="4" name="Trampoline" gid="229" x="1610" y="1750" width="70" height="70"/>
   <object id="6" name="Rock" gid="264" x="1610" y="1960" width="70" height="70"/>
   <object id="7" name="Rock" gid="264" x="2310" y="1190" width="70" height="70"/>
   <object id="8" name="Player1" x="4042.5" y="1382.5" width="64" height="109"/>
+  <object id="3" name="Player2" x="997.5" y="1330" width="64" height="109"/>
   <object id="9" name="Player3" x="2100" y="1067.5" width="64" height="109"/>
   <object id="10" name="Player4" x="4060" y="577.5" width="64" height="109"/>
   <object id="11" name="Transporter3" gid="206" x="1120" y="700" width="70" height="70"/>
@@ -107,8 +107,8 @@
   <object id="75" name="DeathZone" x="4410" y="1015" width="542.5" height="35"/>
   <object id="77" name="MapCollider" x="4410" y="1050" height="1400"/>
   <object id="81" name="MapCollider" x="2870" y="1260" width="140" height="52.5"/>
-  <object id="82" name="CheckPoint2" x="1015" y="1417.5" width="35" height="52.5"/>
   <object id="83" name="CheckPoint1" x="4060" y="1470" width="35" height="52.5"/>
+  <object id="82" name="CheckPoint2" x="1015" y="1417.5" width="35" height="52.5"/>
   <object id="86" name="CheckPoint4" x="4077.5" y="630" width="35" height="70"/>
   <object id="87" name="CheckPoint3" x="2117.5" y="1120" width="35" height="70"/>
   <object id="89" name="Ladder" x="770" y="700" width="35" height="980"/>

@@ -12,6 +12,7 @@
 class Laser : public PancakeEngine::GameObject {
 public:
     Laser() {
+        name = "Laser";
         addComponent<LaserScript>();
         addComponent<OnTriggerKill>();
     }

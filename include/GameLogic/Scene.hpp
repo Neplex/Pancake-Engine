@@ -23,6 +23,7 @@ namespace PancakeEngine {
         ~Scene() {
             for (GameObject* l : layers)
                 delete l;
+            delete gui;
         }
 
         /**

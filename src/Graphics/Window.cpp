@@ -10,7 +10,7 @@
 
 using namespace PancakeEngine;
 
-Window::Window() : window(sf::VideoMode::getDesktopMode(), "", sf::Style::Close) {
+Window::Window() : window(sf::VideoMode::getDesktopMode(), "", sf::Style::Fullscreen) {
     FPS = 60.0f;
     timeBetweenTwoFrames = sf::seconds((1.0f/FPS));
     clock = sf::Clock();

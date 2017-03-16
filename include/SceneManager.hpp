@@ -52,8 +52,9 @@ namespace PancakeEngine {
             //currentScene = (currentScene++)%scenes.size();
         };
 
-        static void loadScene(Scene* scene1){
-            scene = scene1;
+        static void loadScene(Scene* scene){
+            if (SceneManager::scene != NULL) delete SceneManager::scene;
+            SceneManager::scene = scene;
             getCurrentScene()->awake();
             getCurrentScene()->start();
         }

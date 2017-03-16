@@ -6,6 +6,7 @@
 #define PANCAKE_GAMECONTROLLER_HPP
 
 #include <GameLogic.hpp>
+#include <User/Health.hpp>
 
 class GameController : public PancakeEngine::Behavior {
 

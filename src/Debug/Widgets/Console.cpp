@@ -7,6 +7,7 @@
 #include <Debug/Commands/CommandHelp.hpp>
 #include <Debug/Commands/CommandClear.hpp>
 #include <sstream>
+#include <Debug/Commands/CommandLoadScene.hpp>
 
 #define BUFFER_SIZE 1024
 #define ERROR_SYMBOL "[error]"
@@ -19,6 +20,7 @@ Console::Console() : historyPos(-1) {
     memset(inputBuf, 0, sizeof(inputBuf));
     addCommand<CommandHelp>("help");
     addCommand<CommandClear>("clear");
+    addCommand<CommandLoadScene>("load");
 }
 
 Console::~Console() {
