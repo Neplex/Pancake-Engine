@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="left-down" width="100" height="50" tilewidth="70" tileheight="70" nextobjectid="102">
- <tileset firstgid="1" name="tiles" tilewidth="70" tileheight="70" tilecount="180">
+<map version="1.0" orientation="orthogonal" renderorder="left-down" width="100" height="50" tilewidth="70" tileheight="70" nextobjectid="107">
+ <tileset firstgid="1" name="tiles" tilewidth="70" tileheight="70" tilecount="180" columns="10">
   <image source="../resources/tiles/tiles.png" width="700" height="1260"/>
  </tileset>
- <tileset firstgid="181" name="buildings" tilewidth="70" tileheight="70" tilecount="98">
+ <tileset firstgid="181" name="buildings" tilewidth="70" tileheight="70" tilecount="98" columns="14">
   <image source="../resources/tiles/buildings.png" width="980" height="490"/>
  </tileset>
- <tileset firstgid="279" name="candy" tilewidth="70" tileheight="70" tilecount="98">
+ <tileset firstgid="279" name="candy" tilewidth="70" tileheight="70" tilecount="98" columns="14">
   <image source="../resources/tiles/candy.png" width="980" height="490"/>
  </tileset>
- <tileset firstgid="377" name="miscs" tilewidth="70" tileheight="70" tilecount="98">
+ <tileset firstgid="377" name="miscs" tilewidth="70" tileheight="70" tilecount="98" columns="14">
   <image source="../resources/tiles/miscs.png" width="980" height="490"/>
  </tileset>
- <tileset firstgid="475" name="snow" tilewidth="70" tileheight="70" tilecount="98">
+ <tileset firstgid="475" name="snow" tilewidth="70" tileheight="70" tilecount="98" columns="14">
   <image source="../resources/tiles/snow.png" width="980" height="490"/>
  </tileset>
- <tileset firstgid="573" name="items" tilewidth="70" tileheight="70" tilecount="56">
+ <tileset firstgid="573" name="items" tilewidth="70" tileheight="70" tilecount="56" columns="8">
   <image source="../resources/items.png" width="560" height="490"/>
  </tileset>
  <layer name="Layer 1" width="100" height="50">
@@ -94,7 +94,7 @@
   <object id="24" name="Coin" gid="599" x="3357" y="2097" width="70" height="70"/>
   <object id="25" name="Coin" gid="599" x="3503" y="2100" width="70" height="70"/>
   <object id="26" name="Coin" gid="599" x="3638" y="2098" width="70" height="70"/>
-  <object id="27" name="Coin" gid="599" x="5539" y="1892" width="70" height="70"/>
+  <object id="27" name="Coin" gid="599" x="5460" y="1890" width="70" height="70"/>
   <object id="28" name="Coin" gid="599" x="5599" y="1892" width="70" height="70"/>
   <object id="29" name="Coin" gid="599" x="5662" y="1893" width="70" height="70"/>
   <object id="30" name="Player" x="123" y="1981" width="64" height="109"/>
@@ -164,6 +164,10 @@
   <object id="98" name="MapCollider" x="6020.15" y="1678.71" width="69.5928" height="40.9172"/>
   <object id="99" name="MapCollider" x="1.92098" y="-12.9366" height="2112.54"/>
   <object id="101" name="MapCollider" x="6968.66" y="25.9142" width="29.6113" height="2112.54"/>
+  <object id="102" name="MapCollider" x="2380" y="2240" width="70" height="35"/>
+  <object id="104" name="slimeGreen" x="1400" y="1925" width="52.5" height="35"/>
+  <object id="105" name="slimeGreen" x="3307.5" y="1592.5" width="52.5" height="35"/>
+  <object id="106" name="slimePink" x="4760" y="1855" width="52.5" height="35"/>
  </objectgroup>
  <layer name="Layer 3" width="100" height="50">
   <data encoding="csv">
