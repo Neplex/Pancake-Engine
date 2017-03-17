@@ -18,9 +18,9 @@
             PancakeEngine::Animator* ar = go.getComponent<PancakeEngine::Animator>();
 
             if (velocity.x > .1) {
-                ar->flip(false);
-            } else if (velocity.x < -.1){
                 ar->flip(true);
+            } else if (velocity.x < -.1){
+                ar->flip(false);
             }
             if (velocity.x < -.1 || velocity.x > .1) {
                 return "walk";
@@ -33,9 +33,13 @@
             rb.setFreezeRotation(true);
             PancakeEngine::BoxCollider& bc = addComponent<PancakeEngine::BoxCollider>();
             bc.width = 57;
-            bc.height = 34;
-            bc.offset = sf::Vector2f(0, 0);
-
+            bc.height = 23;
+            bc.offset.y = 5;
+            PancakeEngine::BoxCollider& bc2  = addComponent<PancakeEngine::BoxCollider>();
+            bc2.width = 55;
+            bc2.height = 10;
+            bc2.offset.y = -10;
+            bc2.isTrigger = true;
             PancakeEngine::SpriteSheet& sprites = PancakeEngine::AssetsManager::getSpriteSheet(name);
 
             PancakeEngine::Animation& a_idle = PancakeEngine::AssetsManager::createAnimation(name + "r_idle", sprites);
