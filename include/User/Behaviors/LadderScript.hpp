@@ -9,56 +9,54 @@
 #include <cmath>
 #include "PlayerController.hpp"
 
-namespace PancakeEngine {
+class LadderScript : public PancakeEngine::Behavior {
+public:
+    float maxSpeed = 5;
 
-    class LadderScript : public Behavior {
-    public:
-        float maxSpeed = 5;
+    void OnTriggerEnter(const PancakeEngine::Collider &triggered, const PancakeEngine::Collider &other) override {
+        PlayerController* pc =  other.gameObject->getComponent<PlayerController>();
+        PancakeEngine::Rigidbody* rb = other.gameObject->getComponent<PancakeEngine::Rigidbody>();
+        if (rb != nullptr && pc != nullptr) {
+            rb->setVelocity(sf::Vector2f(0, 0));
+            rb->setGravityScale(0);
+            climbers.push_back(rb);
+            pc->climbing = true;
+        }
+    }
 
-        void OnTriggerEnter(const Collider &triggered, const Collider &other) override {
-            PlayerController* pc =  other.gameObject->getComponent<PlayerController>();
-            Rigidbody* rb = other.gameObject->getComponent<Rigidbody>();
-            if (rb != nullptr && pc != nullptr) {
-                rb->setVelocity(sf::Vector2f(0, 0));
-                rb->setGravityScale(0);
-                climbers.push_back(rb);
-                pc->climbing = true;
+    void update() override {
+        for(int i = 0; i < climbers.size(); i++) {
+            if (std::abs(climbers[i]->getVelocity().x) > maxSpeed) {
+                if (climbers[i]->getVelocity().x < 0) {
+                    climbers[i]->setVelocity(sf::Vector2f(-maxSpeed, climbers[i]->getVelocity().y));
+                }
+            }
+            if (std::abs(climbers[i]->getVelocity().y) > maxSpeed) {
+                if (climbers[i]->getVelocity().y < 0) {
+                    climbers[i]->setVelocity(sf::Vector2f(climbers[i]->getVelocity().x, -maxSpeed));
+                }
             }
         }
+    }
 
-        void update() override {
+    //TODO careful, maybe the base gravityScale was'nt 1, make a map to remember.
+
+    void OnTriggerExit(const PancakeEngine::Collider &triggered, const PancakeEngine::Collider &other) override {
+        PlayerController* pc =  other.gameObject->getComponent<PlayerController>();
+        PancakeEngine::Rigidbody* rb = other.gameObject->getComponent<PancakeEngine::Rigidbody>();
+        if (rb != nullptr && pc != nullptr) {
+            rb->setGravityScale(1);
+            pc->climbing = false;
             for(int i = 0; i < climbers.size(); i++) {
-                if (std::abs(climbers[i]->getVelocity().x) > maxSpeed) {
-                    if (climbers[i]->getVelocity().x < 0) {
-                        climbers[i]->setVelocity(sf::Vector2f(-maxSpeed, climbers[i]->getVelocity().y));
-                    }
-                }
-                if (std::abs(climbers[i]->getVelocity().y) > maxSpeed) {
-                    if (climbers[i]->getVelocity().y < 0) {
-                        climbers[i]->setVelocity(sf::Vector2f(climbers[i]->getVelocity().x, -maxSpeed));
-                    }
+                if (climbers[i] == rb) {
+                    climbers.erase(climbers.begin() + i);
                 }
             }
         }
+    }
+private:
+    std::vector<PancakeEngine::Rigidbody*> climbers;
+};
 
-        //TODO careful, maybe the base gravityScale was'nt 1, make a map to remember.
-
-        void OnTriggerExit(const Collider &triggered, const Collider &other) override {
-            PlayerController* pc =  other.gameObject->getComponent<PlayerController>();
-            Rigidbody* rb = other.gameObject->getComponent<Rigidbody>();
-            if (rb != nullptr && pc != nullptr) {
-                rb->setGravityScale(1);
-                pc->climbing = false;
-                for(int i = 0; i < climbers.size(); i++) {
-                    if (climbers[i] == rb) {
-                        climbers.erase(climbers.begin() + i);
-                    }
-                }
-            }
-        }
-    private:
-        std::vector<Rigidbody*> climbers;
-    };
-}
 
 #endif //PANCAKE_LADDERSCRIPT_HPP

@@ -12,27 +12,25 @@
 #define WIDTH 60
 #define HEIGHT 6
 
-namespace PancakeEngine {
-    class Ground : public GameObject {
+    class Ground : public PancakeEngine::GameObject {
     public:
         Ground() : GameObject() {
             name = "Ground";
 
-            BoxCollider& collider = addComponent<BoxCollider>();
+            PancakeEngine::BoxCollider& collider = addComponent<PancakeEngine::BoxCollider>();
             collider.height = HEIGHT * SIZE;
             collider.width = SIZE * WIDTH;
 
-            SpriteSheet& sheet = AssetsManager::getSpriteSheet("tiles");
+            PancakeEngine::SpriteSheet& sheet = PancakeEngine::AssetsManager::getSpriteSheet("tiles");
 
-            TileMap& tileMap = AssetsManager::createTileMap("ground", SIZE, SIZE, WIDTH, HEIGHT);
+            PancakeEngine::TileMap& tileMap = PancakeEngine::AssetsManager::createTileMap("ground", SIZE, SIZE, WIDTH, HEIGHT);
             for (unsigned x = 0; x < WIDTH; ++x) tileMap.addTile(sheet, 2, 6, x, 0);
             for (unsigned x = 0; x < WIDTH; ++x)
                 for (unsigned y = 1; y < HEIGHT; ++y) tileMap.addTile(sheet, 4, 7, x, y);
 
-            addComponent<TileMapRenderer>().setTileMap(tileMap);
+            addComponent<PancakeEngine::TileMapRenderer>().setTileMap(tileMap);
         }
 
     };
-}
 
 #endif //PANCAKE_GROUND_HPP

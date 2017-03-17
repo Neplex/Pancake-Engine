@@ -10,14 +10,13 @@
 #include <GameLogic/Components/BoxCollider.hpp>
 #include <User/Behaviors/WaterScript.hpp>
 
-namespace PancakeEngine {
-    class Water : public GameObject {
+    class Water : public PancakeEngine::GameObject {
     public:
         Water() {
             addComponent<OnAwakeSetBoxCollider>();
             addComponent<WaterScript>();
         }
     };
-}
+
 
 #endif //PANCAKE_WATER_HPP

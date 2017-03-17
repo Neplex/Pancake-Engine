@@ -8,26 +8,24 @@
 #include <GameLogic.hpp>
 #include <Graphics.hpp>
 
-namespace PancakeEngine {
 
-    class Box : public GameObject {
+    class Box : public PancakeEngine::GameObject {
     public:
-        Box() :GameObject() {
+        Box() : PancakeEngine::GameObject() {
             name = "Box";
 
-            Rigidbody& rb = addComponent<Rigidbody>();
+            PancakeEngine::Rigidbody& rb = addComponent<PancakeEngine::Rigidbody>();
             //rb.setFreezeRotation(true);
-            BoxCollider& bc = addComponent<BoxCollider>();
+            PancakeEngine::BoxCollider& bc = addComponent<PancakeEngine::BoxCollider>();
             bc.width = 70;
             bc.height = 70;
             bc.density = 15;
             transform.setPosition(sf::Vector2f(100, -100));
             transform.setRotation(0);
 
-            addComponent<SpriteRenderer>().setSprite(
-                    AssetsManager::getSpriteSheet("tiles"), 0, 1
+            addComponent<PancakeEngine::SpriteRenderer>().setSprite(
+                    PancakeEngine::AssetsManager::getSpriteSheet("tiles"), 0, 1
             );
         }
     };
-}
 #endif //PANCAKE_BOX_HPP

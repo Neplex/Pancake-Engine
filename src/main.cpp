@@ -6,7 +6,7 @@ using namespace PancakeEngine;
 
 int main() {
 
-    loadPrefabAndSprite();
+    CreatePrefabAndSpriteAndInput();
     Engine * app = new Engine();
     const char* filename = "../resources/maps/test.tmx";
     //app->sceneManager.loadScene(new Sandbox());

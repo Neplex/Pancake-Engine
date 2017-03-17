@@ -5,7 +5,7 @@
 #ifndef PANCAKE_PLAYERCONTROLLER_HPP
 #define PANCAKE_PLAYERCONTROLLER_HPP
 
-#include <User/Items/BulletObject.hpp>
+#include <User/Items/Bullet.hpp>
 #include "GameLogic.hpp"
 #include "Inputs.hpp"
 
@@ -58,8 +58,8 @@ public:
 
        if(PancakeEngine::Input::getButtonPressed(gameObject->name + "_fire")) {
 
-           BulletObject& bo = PancakeEngine::SceneManager::getCurrentScene()->addGameObject<BulletObject>(1);
-           Bullet* b = bo.getComponent<Bullet>();
+           Bullet& bo = PancakeEngine::SceneManager::getCurrentScene()->addGameObject<Bullet>(1);
+           BulletScript* b = bo.getComponent<BulletScript>();
            b->direction = direction;
 
            bo.transform.setPosition(sf::Vector2f(gameObject->transform.getWorldPosition().x + b->direction * 40, gameObject->transform.getWorldPosition().y));

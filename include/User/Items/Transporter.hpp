@@ -28,21 +28,20 @@
 #include <GameLogic.hpp>
 #include <User/Behaviors/TransporterScript.hpp>
 
-namespace PancakeEngine{
     /**
      * @class Transporter
      * @brief Create a prefab transporter
      */
-    class Transporter : public GameObject{
+    class Transporter : public PancakeEngine::GameObject{
     public:
-        Transporter(std::string n) : GameObject(){
+        Transporter(std::string n){
             name = n;
-            BoxCollider& bc = addComponent<BoxCollider>();
+            PancakeEngine::BoxCollider& bc = addComponent<PancakeEngine::BoxCollider>();
             bc.width = 35;
             bc.height = 35;
             bc.offset = sf::Vector2f(0,30);
-            addComponent<SpriteRenderer>().setSprite(
-                    AssetsManager::getSpriteSheet("items"), 1, 3
+            addComponent<PancakeEngine::SpriteRenderer>().setSprite(
+                    PancakeEngine::AssetsManager::getSpriteSheet("items"), 1, 3
             );
             addComponent<TransporterScript>();
         };
@@ -50,6 +49,5 @@ namespace PancakeEngine{
     class Transporter1 : public Transporter { public: Transporter1() : Transporter("Transporter1") {} };
     class Transporter2 : public Transporter { public: Transporter2() : Transporter("Transporter2") {} };
     class Transporter3 : public Transporter { public: Transporter3() : Transporter("Transporter3") {} };
-    class Transporter4 : public Transporter { public: Transporter4() : Transporter("Transporter4") {} };
-}
+
 #endif //PANCAKE_TRANSPORTER_HPP

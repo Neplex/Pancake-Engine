@@ -9,14 +9,13 @@
 #include <User/Behaviors/LadderScript.hpp>
 #include <User/Behaviors/OnAwakeSetBoxCollider.hpp>
 
-namespace PancakeEngine {
-    class Ladder : public GameObject {
+    class Ladder : public PancakeEngine::GameObject {
     public:
         Ladder() {
             addComponent<OnAwakeSetBoxCollider>();
             addComponent<LadderScript>();
         }
     };
-}
+
 
 #endif //PANCAKE_LADDER_HPP

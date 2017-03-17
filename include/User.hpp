@@ -5,24 +5,30 @@
 #ifndef PANCAKE_USER_HPP
 #define PANCAKE_USER_HPP
 #include <User/Items/Rock.hpp>
-#include <User/Ladder.hpp>
+#include <User/Items/Ladder.hpp>
 #include <User/Items/Transporter.hpp>
 #include <User/Items/Trampoline.hpp>
 #include <User/Items/Water.hpp>
 #include <User/GameControllerSoloObject.hpp>
-#include <User/CheckPointObject.hpp>
-#include <User/Laser.hpp>
+#include <User/CheckPoint.hpp>
+#include <User/Items/Laser.hpp>
 #include <User/DeathZone.hpp>
 #include <User/Enemy.hpp>
-#include <User/LaserButton.hpp>
+#include <User/Items/LaserButton.hpp>
 #include <Parser/SceneFactory.hpp>
-#include <User/Coin.hpp>
+#include <User/Items/Coin.hpp>
 #include <User/Player.hpp>
 #include <User/Items/Box.hpp>
 
-
+/**
+ * @defgroup User User
+ * Contains all classes concerning the User Prefab object.
+ */
 namespace PancakeEngine{
-    void loadPrefabAndSprite() {
+    /**
+     * @brief create all spritesheet, prefab and input for player
+     */
+    void CreatePrefabAndSpriteAndInput() {
         AssetsManager::createSpriteSheet("player1", "../resources/players/player1.png", 70, 100);
         AssetsManager::createSpriteSheet("player2", "../resources/players/player2.png", 70, 100);
         AssetsManager::createSpriteSheet("player3", "../resources/players/player3.png", 70, 100);
@@ -55,10 +61,10 @@ namespace PancakeEngine{
         SceneFactory::addPrefab<Transporter2>("Transporter2");
         SceneFactory::addPrefab<Transporter3>("Transporter3");
         SceneFactory::addPrefab<Trampoline>("Trampoline");
-        SceneFactory::addPrefab<CheckPointObject1>("CheckPoint1");
-        SceneFactory::addPrefab<CheckPointObject2>("CheckPoint2");
-        SceneFactory::addPrefab<CheckPointObject3>("CheckPoint3");
-        SceneFactory::addPrefab<CheckPointObject4>("CheckPoint4");
+        SceneFactory::addPrefab<CheckPoint1>("CheckPoint1");
+        SceneFactory::addPrefab<CheckPoint2>("CheckPoint2");
+        SceneFactory::addPrefab<CheckPoint3>("CheckPoint3");
+        SceneFactory::addPrefab<CheckPoint4>("CheckPoint4");
         SceneFactory::addPrefab<LaserButton>("LaserButton");
         SceneFactory::addPrefab<Enemy1>("slimeGreen");
         SceneFactory::addPrefab<Enemy2>("slimePink");

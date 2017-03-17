@@ -8,7 +8,7 @@
 #include <GameLogic.hpp>
 #include <User/Health.hpp>
 
-class Bullet : public PancakeEngine::Behavior {
+class BulletScript : public PancakeEngine::Behavior {
 public:
     int direction = 1;
 

@@ -8,26 +8,24 @@
 #include <GameLogic.hpp>
 #include <User/Ground.hpp>
 #include <User/Items/Box.hpp>
-#include <User/Coin.hpp>
+#include <User/Items/Coin.hpp>
 #include <User/Player.hpp>
 #include <User/Gui/PlayerGui.hpp>
 #include <User/Gui/CoinGui.hpp>
 #include <GameLogic/Components/DataStorage.hpp>
 
-namespace PancakeEngine {
-
-    class Sandbox : public Scene {
+    class Sandbox : public PancakeEngine::Scene {
     public:
         Sandbox() : Scene("Sandbox") {
-            AssetsManager::createSpriteSheet("player1", "../resources/players/player1.png", 70, 100);
-            AssetsManager::createSpriteSheet("player2", "../resources/players/player2.png", 70, 100);
-            AssetsManager::createSpriteSheet("player3", "../resources/players/player3.png", 70, 100);
-            AssetsManager::createSpriteSheet("player4", "../resources/players/player4.png", 70, 100);
-            AssetsManager::createSpriteSheet("player5", "../resources/players/player5.png", 70, 100);
-            AssetsManager::createSpriteSheet("tiles", "../resources/tiles/tiles.png", 70, 70);
-            AssetsManager::createSpriteSheet("items", "../resources/items.png", 70, 70);
-            AssetsManager::createSpriteSheet("heart", "../resources/heart.png", 53, 45);
-            AssetsManager::createSpriteSheet("hud", "../resources/hud.png", 47, 47);
+            PancakeEngine::AssetsManager::createSpriteSheet("player1", "../resources/players/player1.png", 70, 100);
+            PancakeEngine::AssetsManager::createSpriteSheet("player2", "../resources/players/player2.png", 70, 100);
+            PancakeEngine::AssetsManager::createSpriteSheet("player3", "../resources/players/player3.png", 70, 100);
+            PancakeEngine::AssetsManager::createSpriteSheet("player4", "../resources/players/player4.png", 70, 100);
+            PancakeEngine::AssetsManager::createSpriteSheet("player5", "../resources/players/player5.png", 70, 100);
+            PancakeEngine::AssetsManager::createSpriteSheet("tiles", "../resources/tiles/tiles.png", 70, 70);
+            PancakeEngine::AssetsManager::createSpriteSheet("items", "../resources/items.png", 70, 70);
+            PancakeEngine::AssetsManager::createSpriteSheet("heart", "../resources/heart.png", 53, 45);
+            PancakeEngine::AssetsManager::createSpriteSheet("hud", "../resources/hud.png", 47, 47);
 
             // Players
             Player1& p = addGameObject<Player1>(2);
@@ -39,7 +37,7 @@ namespace PancakeEngine {
             Coin& c = addGameObject<Coin>(1);
             c.transform.setPosition(sf::Vector2f(0, -200));
             p.addChild(c);
-            DataStorage &ds = p.addComponent<DataStorage>();
+            PancakeEngine::DataStorage &ds = p.addComponent<PancakeEngine::DataStorage>();
 
             // Add objects
             addGameObject<Ground>(0).transform.setPosition(sf::Vector2f(0, 250));
@@ -61,6 +59,5 @@ namespace PancakeEngine {
             addGameObjectToGui<CoinGui>().transform.setPosition(sf::Vector2f(50, 50));
         }
     };
-}
 
 #endif //PANCAKE_SANDBOX_HPP
