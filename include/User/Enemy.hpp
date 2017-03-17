@@ -11,31 +11,35 @@
 #define ANIMATION_SPEED 150
 
 
-    class enemy : public PancakeEngine::GameObject{
+    class Enemy : public PancakeEngine::GameObject{
     public:
         static std::string handler1(PancakeEngine::GameObject& go) {
             sf::Vector2f velocity = go.getComponent<PancakeEngine::Rigidbody>()->getVelocity();
             PancakeEngine::Animator* ar = go.getComponent<PancakeEngine::Animator>();
 
             if (velocity.x > .1) {
-                ar->flip(false);
-            } else if (velocity.x < -.1){
                 ar->flip(true);
+            } else if (velocity.x < -.1){
+                ar->flip(false);
             }
             if (velocity.x < -.1 || velocity.x > .1) {
                 return "walk";
             }
             return "idle";
         }
-        enemy(){
-            name = "slimeGreen";
+        Enemy(std::string n){
+            name = n;
             PancakeEngine::Rigidbody& rb = addComponent<PancakeEngine::Rigidbody>();
             rb.setFreezeRotation(true);
             PancakeEngine::BoxCollider& bc = addComponent<PancakeEngine::BoxCollider>();
             bc.width = 57;
-            bc.height = 34;
-            bc.offset = sf::Vector2f(0, 0);
-
+            bc.height = 23;
+            bc.offset.y = 5;
+            PancakeEngine::BoxCollider& bc2  = addComponent<PancakeEngine::BoxCollider>();
+            bc2.width = 55;
+            bc2.height = 10;
+            bc2.offset.y = -10;
+            bc2.isTrigger = true;
             PancakeEngine::SpriteSheet& sprites = PancakeEngine::AssetsManager::getSpriteSheet(name);
 
             PancakeEngine::Animation& a_idle = PancakeEngine::AssetsManager::createAnimation(name + "r_idle", sprites);
@@ -48,13 +52,14 @@
             a_die.addFrame(0, 1, ANIMATION_SPEED);
             addComponent<EnemyScript>();
 
-            rb.setVelocity(sf::Vector2f(2,0));
-
             PancakeEngine::Animator& ar = addComponent<PancakeEngine::Animator>();
             ar.addAnimation("idle", a_idle, handler1);
             ar.addAnimation("walk", a_walk, handler1);
             ar.addAnimation("die", a_die, handler1);
         }
     };
+class Enemy1 : public Enemy { public: Enemy1() : Enemy("slimeGreen") {} };
+class Enemy2 : public Enemy { public: Enemy2() : Enemy("slimePink") {} };
+class Enemy3 : public Enemy { public: Enemy3() : Enemy("slimeBlue") {} };
 
 #endif //PANCAKE_ENNEMIES_HPP
