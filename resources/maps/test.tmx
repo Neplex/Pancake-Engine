@@ -98,6 +98,7 @@
   <object id="28" name="Coin" gid="599" x="5599" y="1892" width="70" height="70"/>
   <object id="29" name="Coin" gid="599" x="5662" y="1893" width="70" height="70"/>
   <object id="30" name="Player" x="123" y="1981" width="64" height="109"/>
+  <object id="83" name="CheckPoint1" x="123" y="1981" width="64" height="109"/>
   <object id="31" name="MapCollider" x="-0.640328" y="2101.33" width="1217.97" height="32"/>
   <object id="32" name="MapCollider" x="1330.67" y="1958.67" width="349.333" height="28"/>
   <object id="33" name="MapCollider" x="1329.33" y="1680" width="280" height="68"/>

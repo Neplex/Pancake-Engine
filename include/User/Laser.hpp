@@ -15,6 +15,7 @@ public:
         name = "Laser";
         addComponent<LaserScript>();
         addComponent<OnTriggerKill>();
+        addComponent<PancakeEngine::Rigidbody>().setType(PancakeEngine::Rigidbody::bodyType::kinematicBody);
     }
 };
 
