@@ -11,7 +11,7 @@
 #define ANIMATION_SPEED 150
 
 
-    class enemy : public PancakeEngine::GameObject{
+    class Enemy : public PancakeEngine::GameObject{
     public:
         static std::string handler1(PancakeEngine::GameObject& go) {
             sf::Vector2f velocity = go.getComponent<PancakeEngine::Rigidbody>()->getVelocity();
@@ -27,8 +27,8 @@
             }
             return "idle";
         }
-        enemy(){
-            name = "slimeGreen";
+        Enemy(std::string n){
+            name = n;
             PancakeEngine::Rigidbody& rb = addComponent<PancakeEngine::Rigidbody>();
             rb.setFreezeRotation(true);
             PancakeEngine::BoxCollider& bc = addComponent<PancakeEngine::BoxCollider>();
@@ -48,13 +48,14 @@
             a_die.addFrame(0, 1, ANIMATION_SPEED);
             addComponent<EnemyScript>();
 
-            rb.setVelocity(sf::Vector2f(2,0));
-
             PancakeEngine::Animator& ar = addComponent<PancakeEngine::Animator>();
             ar.addAnimation("idle", a_idle, handler1);
             ar.addAnimation("walk", a_walk, handler1);
             ar.addAnimation("die", a_die, handler1);
         }
     };
+class Enemy1 : public Enemy { public: Enemy1() : Enemy("slimeGreen") {} };
+class Enemy2 : public Enemy { public: Enemy2() : Enemy("slimePink") {} };
+class Enemy3 : public Enemy { public: Enemy3() : Enemy("slimeBlue") {} };
 
 #endif //PANCAKE_ENNEMIES_HPP
