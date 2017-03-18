@@ -8,6 +8,7 @@
 
 
 #include <vector>
+#include <Physics/PhysicsEngine.hpp>
 #include <GameLogic/Scene.hpp>
 
 namespace PancakeEngine {
@@ -54,6 +55,7 @@ namespace PancakeEngine {
 
         static void loadScene(Scene* scene){
             if (SceneManager::scene != NULL) delete SceneManager::scene;
+            //physicsEngine->resetWorld(); TODO call it before create the scene
             SceneManager::scene = scene;
             getCurrentScene()->awake();
             getCurrentScene()->start();
@@ -70,6 +72,8 @@ namespace PancakeEngine {
             }
             return nullptr;
         }
+
+        static PhysicsEngine* physicsEngine;
 
     private:
         friend class Engine; ///< the engine is the only one to call update and handleInputs

@@ -8,6 +8,7 @@ using namespace PancakeEngine;
 
 Scene* SceneManager::scene = nullptr;
 std::vector<Scene*> SceneManager::scenes = std::vector<Scene*>();
+PhysicsEngine* SceneManager::physicsEngine = nullptr;
 
 
 
