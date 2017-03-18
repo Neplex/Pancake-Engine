@@ -29,13 +29,11 @@
 #include <vector>
 #include <string>
 #include <iostream>
-#include <GameLogic/Components/Behavior.hpp>
 #include <GameLogic/Components/Transform.hpp>
+#include <GameLogic/Components/Behavior.hpp>
 
 namespace PancakeEngine {
 
-    class Transform;
-    class Collision;
     class Component;
 
     /**
@@ -129,64 +127,37 @@ namespace PancakeEngine {
          */
         void lateUpdate();
 
-        // TODO: Not better to take the nb of objects in scene ?
+        // TODO: Not better to take the nb of objects in current scene ?
         static int getNbGameObjects() { return numGameobjects; }
 
         /**
          * @brief Add child to the gameObject.
          * @param go the child.
          */
-        void addChild(GameObject& go) {
-            if (go.parent != NULL) go.removeParent();
-            go.parent = this;
-            childs.push_back(&go);
-        }
+        void addChild(GameObject& go);
 
         /**
          * @brief Set the new parent.
          * @param go the new parent.
          */
-        void setParent(GameObject& go) {
-            go.addChild(*this);
-        }
+        void setParent(GameObject& go);
 
         /**
          * @brief Remove a child;
          * @param go the child to remove.
          */
-        void removeChild(GameObject& go) {
-            for (int i = 0; i < childs.size(); ++i) {
-                if (childs.at(i) == &go) {
-                    childs.at(i)->parent = NULL;
-                    childs.erase(childs.begin() + i);
-                    return;
-                }
-            }
-            assert(false); ///< GameObject not in this
-        }
+        void removeChild(GameObject& go);
 
         /**
          * @brief Remove the current parent.
          */
-        void removeParent() {
-            if (parent != NULL) {
-                parent->removeChild(*this);
-            }
-        }
+        void removeParent();
 
         /**
          * @brief Get all sub childs.
          * @return All sub childs.
          */
-        std::vector<GameObject*> getChilds() const {
-            std::vector<GameObject*> cs;
-            for (int i = 0; i < childs.size(); ++i) {
-                std::vector<GameObject*> subChilds = childs.at(i)->getChilds();
-                cs.push_back(childs.at(i));
-                cs.insert(cs.end(), subChilds.begin(), subChilds.end());
-            }
-            return cs;
-        }
+        std::vector<GameObject*> getChilds() const;
 
     protected:
         friend class Scene; ///< The scene is the only one to create and destroy gameobjects
@@ -228,12 +199,7 @@ namespace PancakeEngine {
          * @param collision Info about the collision.
          * @todo Can be optimized by avoid using getComponents.
          */
-        void OnCollisionEnter(const Collision& collision) {
-            std::vector<Behavior*> v = getComponents<Behavior>();
-            for (Behavior* b : v) {
-                b->OnCollisionEnter(collision);
-            }
-        }
+        void OnCollisionEnter(const Collision& collision);
 
         /**
          * @brief Called by the physics listener when this gameObject non longer collides another.
@@ -241,12 +207,7 @@ namespace PancakeEngine {
          * @param collision Info about the collision.
          * @todo Can be optimized by avoid using getComponents.
          */
-        void OnCollisionExit(const Collision& collision) {
-            std::vector<Behavior*> v = getComponents<Behavior>();
-            for (Behavior* b : v) {
-                b->OnCollisionExit(collision);
-            }
-        }
+        void OnCollisionExit(const Collision& collision);
 
         /**
          * @brief Called by the physics listener when a gameobject enter one of this's triggers.
@@ -255,12 +216,7 @@ namespace PancakeEngine {
          * @param other The collider triggering
          * @todo Can be optimized by avoid using getComponents.
          */
-        void OnTriggerEnter(const Collider& triggered, const Collider& other) {
-            std::vector<Behavior*> v = getComponents<Behavior>();
-            for (Behavior* b : v) {
-                b->OnTriggerEnter(triggered, other);
-            }
-        }
+        void OnTriggerEnter(const Collider& triggered, const Collider& other);
 
         /**
          * @brief Called by the physics listener when a gameobject exit one of this's triggers.
@@ -269,12 +225,7 @@ namespace PancakeEngine {
          * @param other The collider triggering
          * @todo Can be optimized by avoid using getComponents.
          */
-        void OnTriggerExit(const Collider& triggered, const Collider& other) {
-            std::vector<Behavior*> v = getComponents<Behavior>();
-            for (Behavior* b : v) {
-                b->OnTriggerExit(triggered, other);
-            }
-        }
+        void OnTriggerExit(const Collider& triggered, const Collider& other);
     };
 }
 

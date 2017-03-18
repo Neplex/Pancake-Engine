@@ -29,13 +29,7 @@
 #include <vector>
 #include <string>
 #include <SFML/Window/Keyboard.hpp>
-#include <SFML/Graphics/RenderWindow.hpp>
-#include <SFML/Window/Event.hpp>
-#include <iostream>
-#include <cassert>
-#include "Button.hpp"
-#include "Input.hpp"
-#include "../Debug/Debug.hpp"
+#include <Inputs/Button.hpp>
 
 namespace PancakeEngine {
 
@@ -63,72 +57,25 @@ namespace PancakeEngine {
          * InputManager::createButton("Jump", std::vector<sf::Keyboard::Key> ({sf::Keyboard::Key::Space}));
          * @endcode
          */
-        static void createButton(const std::string& name, const std::vector<sf::Keyboard::Key>& keys,
-                void (* callback)() = nullptr)
-        {
-            for (unsigned i = 0; i<buttons.size(); ++i) {
-                assert(name != buttons[i]->name);
-            }
-            Button* b = new Button(name, keys);
-            b->pressedCallback = callback;
-            buttons.push_back(b);
-            Input::buttons[b->name] = b;
-            for (unsigned i = 0; i<keys.size(); ++i) {
-                keyToButtons[keys[i]].push_back(b);
-            }
-        }
+        static void createButton(const std::string& name, const std::vector<sf::Keyboard::Key>& keys, void (* callback)() = nullptr);
 
         /**
          * @brief Free all buttons.
          * @details Should becalled before the end of the program.
          */
-        static void destroyButtons() {
-            for (Button * b : buttons) {
-                delete b;
-            }
-        }
+        static void destroyButtons();
     private:
         /**
          * @brief Update the state of the buttons.
          * @details Should be called after all updates that need inputs data.
          */
-        static void update()
-        {
-            for (Button* bu : buttons) {
-                bu->update();
-            }
-        }
+        static void update();
 
         /**
          * @brief Handle all inputs events related to window.
          * @details Should be called by the engine to handle the inputs events.
          */
-        static void handleInputs()
-        {
-            sf::Event event;
-            while (window->pollEvent(event)) {
-                Debug::processEvent(event);
-                switch (event.type) {
-                case sf::Event::Closed:
-                    window->close();
-                    break;
-                case sf::Event::KeyPressed:
-                    if (event.key.code==sf::Keyboard::Key::Escape)
-                        window->close();
-                    else
-                        for (Button* b : keyToButtons[event.key.code]) {
-                            b->press();
-                        }
-                    break;
-                case sf::Event::KeyReleased:
-                    for (Button* b : keyToButtons[event.key.code]) {
-                        b->release();
-                    }
-                default:
-                    break;
-                }
-            }
-        }
+        static void handleInputs();
 
     private:
         friend class Engine; ///< the engine is the only one to call update and handleInputs
