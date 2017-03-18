@@ -70,6 +70,7 @@ public:
            Bullet& bo = PancakeEngine::SceneManager::getCurrentScene()->addGameObject<Bullet>(1);
            BulletScript* b = bo.getComponent<BulletScript>();
            b->direction = direction;
+           b->owner = gameObject->name;
 
            bo.transform.setPosition(sf::Vector2f(gameObject->transform.getWorldPosition().x + b->direction * 40, gameObject->transform.getWorldPosition().y));
        }

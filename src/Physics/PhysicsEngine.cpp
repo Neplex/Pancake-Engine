@@ -24,7 +24,7 @@ PhysicsEngine::~PhysicsEngine() {
 
 void PhysicsEngine::update(float dt) {
     // Update the body position if the engine changes it
-    for ( b2Body* b = world.GetBodyList(); b; b = b->GetNext())
+    /*for ( b2Body* b = world.GetBodyList(); b; b = b->GetNext())
     {
         if (b->GetUserData() != nullptr) {
             if (b->GetType()!=b2_staticBody) {
@@ -54,7 +54,7 @@ void PhysicsEngine::update(float dt) {
         } else {
             world.DestroyBody(b);
         }
-    }
+    }*/
     world.Step(dt, velocityIterations, positionIterations);
     for ( b2Body* b = world.GetBodyList(); b; b = b->GetNext())
     {

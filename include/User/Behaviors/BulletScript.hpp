@@ -11,6 +11,7 @@
 class BulletScript : public PancakeEngine::Behavior {
 public:
     int direction = 1;
+    std::string owner = "";
 
     void awake() override
     {
@@ -19,7 +20,7 @@ public:
 
     void OnTriggerEnter(const PancakeEngine::Collider& triggered, const PancakeEngine::Collider& other) override
     {
-        if (!exploded) {
+        if (!exploded && other.gameObject->name != owner) {
             Health* h = other.gameObject->getComponent<Health>();
             if (h) h->makeDamages(1);
             exploded = true;
@@ -29,7 +30,7 @@ public:
 
     void update() override
     {
-        rb->setVelocity(sf::Vector2f(9 * direction,0));
+        rb->setVelocity(sf::Vector2f(15 * direction,0));
         if(exploded) destroy(*gameObject);
     }
 
