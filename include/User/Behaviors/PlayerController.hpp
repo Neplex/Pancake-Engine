@@ -13,8 +13,17 @@ class PlayerController : public PancakeEngine::Behavior {
 public:
     bool climbing = false;
     bool swiming = false;
+    bool onGround = false;
     PancakeEngine::Collider* topCollider;
     int direction = 1;
+
+    void OnTriggerEnter(const PancakeEngine::Collider &triggered, const PancakeEngine::Collider &other) override {
+        onGround = true;
+    }
+
+    void OnTriggerExit(const PancakeEngine::Collider &triggered, const PancakeEngine::Collider &other) override {
+        onGround = false;
+    }
 
     void update() {
         topCollider->setSleep(false);
@@ -26,7 +35,7 @@ public:
                 velocityYDesired = -5;
             }
         }
-        if (rb->getVelocity().y < 0.1 && rb->getVelocity().y > -0.1 && PancakeEngine::Input::getButtonPressed(gameObject->name + "_jump")) {
+        if (onGround && PancakeEngine::Input::getButtonPressed(gameObject->name + "_jump")) {
             gameObject->getComponent<PancakeEngine::Rigidbody>()->applyLinearImpulse(sf::Vector2f(0, -11));
         }
         if (PancakeEngine::Input::getButtonHeld(gameObject->name + "_duck")) {
