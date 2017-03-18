@@ -55,7 +55,7 @@ namespace PancakeEngine {
 
         static void loadScene(Scene* scene){
             if (SceneManager::scene != NULL) delete SceneManager::scene;
-            //physicsEngine->resetWorld(); TODO call it before create the scene
+            physicsEngine->resetWorld();
             SceneManager::scene = scene;
             getCurrentScene()->awake();
             getCurrentScene()->start();

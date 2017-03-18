@@ -164,8 +164,12 @@ void PhysicsEngine::createFixtures(const GameObject& go, b2Body& body) {
 
 void PhysicsEngine::resetWorld()
 {
+    for ( b2Body* b = world.GetBodyList(); b; b = b->GetNext()) {
+        world.DestroyBody(b);
+    }
+    /*world.~b2World();
     world = b2World(b2Vec2(0, 10));
-    world.SetContactListener(&physicsListener);
+    world.SetContactListener(&physicsListener);*/
 }
 
 
