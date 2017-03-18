@@ -33,16 +33,19 @@ class PlayerGuiScript : public PancakeEngine::Behavior {
         }
     }
 
-    Health* playerHealth;
+    Health* playerHealth = NULL;
 
     void awake() override {
-        PancakeEngine::Behavior::awake();
-        playerHealth = PancakeEngine::SceneManager::findByName(std::string("player") + std::to_string(playerNumber))->getComponent<Health>();
+        PancakeEngine::GameObject* go = PancakeEngine::SceneManager::findByName(std::string("player") + std::to_string(playerNumber));
+        if (go == NULL) {
+            destroy(*gameObject);
+            return;
+        };
+        playerHealth = go->getComponent<Health>();
     }
 
     void update() override {
-        PancakeEngine::Behavior::update();
-        lifeToSprite(playerHealth->getHp());
+        if (playerHealth) lifeToSprite(playerHealth->getHp());
     }
 };
 

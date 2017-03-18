@@ -3,6 +3,7 @@
 //
 
 #include <User.hpp>
+#include <User/Items/CoinBox.hpp>
 
 void CreatePrefabAndSpriteAndInput() {
     PancakeEngine::AssetsManager::createSpriteSheet("player1", "../resources/players/player1.png", 70, 100);
@@ -46,6 +47,7 @@ void CreatePrefabAndSpriteAndInput() {
     PancakeEngine::SceneFactory::addPrefab<Enemy2>("slimePink");
     PancakeEngine::SceneFactory::addPrefab<Enemy3>("slimeBlue");
     PancakeEngine::SceneFactory::addPrefab<ExitNotice>("ExitNotice");
+    PancakeEngine::SceneFactory::addPrefab<CoinBox>("CoinBox");
 
     PancakeEngine::InputManager::createButton("player1_jump", std::vector<sf::Keyboard::Key> ({sf::Keyboard::Key::Z}));
     PancakeEngine::InputManager::createButton("player1_fire", std::vector<sf::Keyboard::Key> ({sf::Keyboard::Key::Space}));

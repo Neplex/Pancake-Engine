@@ -9,7 +9,7 @@ int main() {
     CreatePrefabAndSpriteAndInput();
     Engine * app = new Engine();
 
-    const char* filename = "../resources/maps/arena.tmx";
+    const char* filename = "../resources/maps/test.tmx";
     //app->sceneManager.loadScene(new Sandbox());
 
     SceneFactory sf;
@@ -23,6 +23,7 @@ int main() {
     sc->addGameObjectToGui<PlayerGUI2>().transform.setPosition(sf::Vector2f(width * 1 + 50, 50));
     sc->addGameObjectToGui<PlayerGUI3>().transform.setPosition(sf::Vector2f(width * 0 + 50, height));
     sc->addGameObjectToGui<PlayerGUI4>().transform.setPosition(sf::Vector2f(width * 1 + 50, height));
+    sc->addGameObjectToGui<CoinGui>().transform.setPosition(sf::Vector2f(50, height*2 - 150));
     sc->addGameObject<GameControllerSoloObject>(1);
 
     SceneManager::loadScene(sc);
