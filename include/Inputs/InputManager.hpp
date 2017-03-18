@@ -26,6 +26,7 @@
 #define PANCAKE_INPUTMANAGER_HPP
 
 #include <map>
+#include <utility>
 #include <vector>
 #include <string>
 #include <SFML/Window/Keyboard.hpp>
@@ -78,6 +79,35 @@ namespace PancakeEngine {
             }
         }
 
+        static void createButton(const std::string& name, int joystickNumber, int joystickButton,
+                void (* callback)() = nullptr)
+        {
+            for (unsigned i = 0; i<buttons.size(); ++i) {
+                assert(name != buttons[i]->name);
+            }
+            Button* b = new Button(name, joystickButton, joystickNumber);
+            b->pressedCallback = callback;
+            buttons.push_back(b);
+            Input::buttons[b->name] = b;
+            std::pair<int,int> pad (joystickNumber, joystickButton);
+            joystickToButton[pad] = b;
+        }
+
+        static void createButton(const std::string& name, int joystickNumber, int axisValue, int axis)
+        {
+            for (unsigned i = 0; i<buttons.size(); ++i) {
+                assert(name != buttons[i]->name);
+            }
+            Button* b = new Button(name, axisValue, joystickNumber);
+            buttons.push_back(b);
+            Input::buttons[b->name] = b;
+            std::pair<int,int> pad (joystickNumber, axisValue);
+            if (axis == -1)
+                YaxisToButton[pad] = b;
+            else
+                XaxisToButton[pad] = b;
+        }
+
         /**
          * @brief Free all buttons.
          * @details Should becalled before the end of the program.
@@ -124,6 +154,62 @@ namespace PancakeEngine {
                     for (Button* b : keyToButtons[event.key.code]) {
                         b->release();
                     }
+                    break;
+                case sf::Event::JoystickButtonPressed: {
+                    std::pair<int, int> pad(event.joystickButton.joystickId, event.joystickButton.button);
+                    if (joystickToButton.count(pad)) {
+                        joystickToButton[pad]->press();
+                    }
+                    break;
+                }
+                case sf::Event::JoystickButtonReleased: {
+                    std::pair<int, int> pad(event.joystickButton.joystickId, event.joystickButton.button);
+                    if (joystickToButton.count(pad)) {
+                        joystickToButton[pad]->release();
+                    }
+                    break;
+                }
+                case sf::Event::JoystickMoved: {
+                    std::cout << event.joystickButton.joystickId << std::endl;
+                    if (event.joystickMove.axis == sf::Joystick::X || event.joystickMove.axis == sf::Joystick::PovX)
+                    {
+                        if (event.joystickMove.position > 50) {
+                            std::pair<int, int> pad(event.joystickButton.joystickId, 1);
+                            if (XaxisToButton.count(pad))
+                                XaxisToButton[pad]->press();
+                        } else if (event.joystickMove.position < -50){
+                            std::pair<int, int> pad(event.joystickButton.joystickId, -1);
+                            if (XaxisToButton.count(pad))
+                                XaxisToButton[pad]->press();
+                        }  else {
+                            std::pair<int, int> pad(event.joystickButton.joystickId, 1);
+                            if (XaxisToButton.count(pad))
+                                XaxisToButton[pad]->release();
+                            std::pair<int, int> pad2(event.joystickButton.joystickId, -1);
+                            if (XaxisToButton.count(pad2))
+                                XaxisToButton[pad2]->release();
+                        }
+                    }
+                    if (event.joystickMove.axis == sf::Joystick::Y || event.joystickMove.axis == sf::Joystick::PovY)
+                    {
+                        if (event.joystickMove.position > 50) {
+                            std::pair<int, int> pad(event.joystickButton.joystickId, 1);
+                            if (YaxisToButton.count(pad))
+                                YaxisToButton[pad]->press();
+                        } else if (event.joystickMove.position < -50){
+                            std::pair<int, int> pad(event.joystickButton.joystickId, -1);
+                            if (YaxisToButton.count(pad))
+                                YaxisToButton[pad]->press();
+                        } else {
+                            std::pair<int, int> pad(event.joystickButton.joystickId, 1);
+                            if (YaxisToButton.count(pad))
+                                YaxisToButton[pad]->release();
+                            std::pair<int, int> pad2(event.joystickButton.joystickId, -1);
+                            if (YaxisToButton.count(pad2))
+                                YaxisToButton[pad2]->release();
+                        }
+                    }
+                }
                 default:
                     break;
                 }
@@ -135,6 +221,9 @@ namespace PancakeEngine {
 
         static sf::RenderWindow* window; ///< the window from where poll events
         static std::vector<Button*> buttons; ///< the buttons created
+        static std::map<std::pair<int, int>, Button*> joystickToButton; ///< mapping between joyticks buttons and buttons.
+        static std::map<std::pair<int, int>, Button*> XaxisToButton;
+        static std::map<std::pair<int, int>, Button*> YaxisToButton;
         static std::map<sf::Keyboard::Key, std::vector<Button*>> keyToButtons; ///< mapping between keys and buttons.
     };
 

@@ -88,6 +88,8 @@ namespace PancakeEngine {
          */
         Button(const std::string& name, const std::vector<sf::Keyboard::Key>& keys);
 
+        Button(const std::string& name, int numButton, int numJoystick);
+
         /**
          * \brief Notify the button that an in-game update has been made.
          * \details Update to change the state of isPressed and isReleased that should be true just during one update.
@@ -107,11 +109,14 @@ namespace PancakeEngine {
 
         std::string name; ///< Name of the button.
         std::vector<sf::Keyboard::Key> keys; ///< Keys associated with the button.
+        int numButton;
+        int numJoystick;
         bool isPressed; ///< True at the update the button is pressed
         bool isReleased; ///< True at the update the button is released
         bool isHeld; ///< True while the button is pressed
         bool isDown; ///< True while the button is down (pressed)
         bool isUp; ///< True while the button is up (released)
+        bool isJoystick = false;
         void (* pressedCallback)(); ///< Called when the button is pressed.
     };
 }

@@ -52,3 +52,11 @@ void Button::release()
     isUp = true;
     isReleased = true;
 }
+
+Button::Button(const std::string& name, int numButton, int numJoystick) : name(name), numButton(numButton), numJoystick(numJoystick),
+                                                         isPressed(false),
+                                                         isReleased(false), isHeld(false), isDown(false), isUp(true),
+                                                         pressedCallback(nullptr), isJoystick(true)
+{
+
+}
