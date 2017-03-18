@@ -9,7 +9,7 @@ int main() {
     CreatePrefabAndSpriteAndInput();
     Engine * app = new Engine();
 
-    const char* filename = "../resources/maps/test.tmx";
+    const char* filename = "../resources/maps/arena.tmx";
     //app->sceneManager.loadScene(new Sandbox());
 
     SceneFactory sf;

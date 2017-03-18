@@ -57,23 +57,17 @@ void CreatePrefabAndSpriteAndInput() {
     PancakeEngine::InputManager::createButton("player2_left", std::vector<sf::Keyboard::Key> ({sf::Keyboard::Key::Left}));
     PancakeEngine::InputManager::createButton("player2_duck", std::vector<sf::Keyboard::Key> ({sf::Keyboard::Key::Down}));
 
-    PancakeEngine::InputManager::createButton("player3_jump", std::vector<sf::Keyboard::Key> ({}));
-    PancakeEngine::InputManager::createButton("player3_fire", std::vector<sf::Keyboard::Key> ({}));
-    PancakeEngine::InputManager::createButton("player3_right", std::vector<sf::Keyboard::Key> ({}));
-    PancakeEngine::InputManager::createButton("player3_left", std::vector<sf::Keyboard::Key> ({}));
-    PancakeEngine::InputManager::createButton("player3_duck", std::vector<sf::Keyboard::Key> ({}));
+    PancakeEngine::InputManager::createButton("player3_jump", 0, -1, -1);
+    PancakeEngine::InputManager::createButton("player3_fire", 0, 0);
+    PancakeEngine::InputManager::createButton("player3_right", 0, 1, 1);
+    PancakeEngine::InputManager::createButton("player3_left", 0, -1, 1);
+    PancakeEngine::InputManager::createButton("player3_duck",0, 1, -1);
 
-    PancakeEngine::InputManager::createButton("player4_jump", std::vector<sf::Keyboard::Key> ({}));
-    PancakeEngine::InputManager::createButton("player4_fire", std::vector<sf::Keyboard::Key> ({}));
-    PancakeEngine::InputManager::createButton("player4_right", std::vector<sf::Keyboard::Key> ({}));
-    PancakeEngine::InputManager::createButton("player4_left", std::vector<sf::Keyboard::Key> ({}));
-    PancakeEngine::InputManager::createButton("player4_duck", std::vector<sf::Keyboard::Key> ({}));
-
-    PancakeEngine::InputManager::createButton("player5_jump", std::vector<sf::Keyboard::Key> ({}));
-    PancakeEngine::InputManager::createButton("player5_fire", std::vector<sf::Keyboard::Key> ({}));
-    PancakeEngine::InputManager::createButton("player5_right", std::vector<sf::Keyboard::Key> ({}));
-    PancakeEngine::InputManager::createButton("player5_left", std::vector<sf::Keyboard::Key> ({}));
-    PancakeEngine::InputManager::createButton("player5_duck", std::vector<sf::Keyboard::Key> ({}));
+    PancakeEngine::InputManager::createButton("player4_jump", 2, -1, -1);
+    PancakeEngine::InputManager::createButton("player4_fire", 2, 0);
+    PancakeEngine::InputManager::createButton("player4_right", 2, 1, 1);
+    PancakeEngine::InputManager::createButton("player4_left", 2, -1, 1);
+    PancakeEngine::InputManager::createButton("player4_duck",2, 1, -1);
 
     PancakeEngine::InputManager::createButton("ShowDebugInfo", std::vector<sf::Keyboard::Key> ({sf::Keyboard::Key::F1}), PancakeEngine::Debug::switchEnableDebugGUI);
 };
