@@ -47,7 +47,7 @@ void TileMapRenderer::setTileMap(TileMap &map) {
 
     textureGrid = new sf::RenderTexture** [nb_column];
     for (int i = 0; i < nb_column; ++i) {
-        textureGrid[i] = new sf::RenderTexture* [nb_column];
+        textureGrid[i] = new sf::RenderTexture* [nb_row];
         for (int j = 0; j < nb_row; ++j) {
             textureGrid[i][j] = new sf::RenderTexture();
             textureGrid[i][j]->create(chunk_width, chunk_height);

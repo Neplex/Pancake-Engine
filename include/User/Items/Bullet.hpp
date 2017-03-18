@@ -6,16 +6,16 @@
 #define PANCAKE_BULLETOBJECT_HPP
 
 #include <GameLogic.hpp>
-#include <User/Behaviors/Bullet.hpp>
+#include <User/Behaviors/BulletScript.hpp>
 
-class BulletObject : public PancakeEngine::GameObject {
+class Bullet : public PancakeEngine::GameObject {
 public:
-    BulletObject() { addComponent<PancakeEngine::Rigidbody>(); // todo problem if put after colliders
+    Bullet() { addComponent<PancakeEngine::Rigidbody>(); // todo problem if put after colliders
         PancakeEngine::CircleCollider& cc = addComponent<PancakeEngine::CircleCollider>();
         cc.radius = 4;
         cc.isTrigger = true;
 
-        addComponent<Bullet>();
+        addComponent<BulletScript>();
         addComponent<PancakeEngine::SpriteRenderer>().setSprite(
                 PancakeEngine::AssetsManager::getSpriteSheet("miscs"), 7, 0
         );

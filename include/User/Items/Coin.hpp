@@ -9,24 +9,22 @@
 #include <Graphics.hpp>
 #include <User/Behaviors/OnTriggerDestroy.hpp>
 
-namespace PancakeEngine {
 
-    class Coin : public GameObject {
+    class Coin : public PancakeEngine::GameObject {
     public:
         Coin() {
             name = "Coin";
-            addComponent<Rigidbody>().setType(Rigidbody::bodyType::kinematicBody);
-            CircleCollider& cc = addComponent<CircleCollider>();
+            addComponent<PancakeEngine::Rigidbody>().setType(PancakeEngine::Rigidbody::bodyType::kinematicBody);
+            PancakeEngine::CircleCollider& cc = addComponent<PancakeEngine::CircleCollider>();
 
             cc.radius = 20;
             cc.isTrigger = true;
             addComponent<OnTriggerDestroy>().target = "player1";
 
-            addComponent<SpriteRenderer>().setSprite(
-                    AssetsManager::getSpriteSheet("items"), 2, 3
+            addComponent<PancakeEngine::SpriteRenderer>().setSprite(
+                    PancakeEngine::AssetsManager::getSpriteSheet("items"), 2, 3
             );
         }
     };
-}
 
 #endif //PANCAKE_COIN_HPP

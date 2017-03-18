@@ -45,13 +45,7 @@ namespace PancakeEngine {
          * @param flip True if the sprite is flip.
          * @return The sprite.
          */
-        sf::Sprite getSprite(unsigned i, unsigned j, bool flip = false) {
-            sf::Sprite sprite;
-            sprite.setTexture(texture);
-            sprite.setTextureRect(getRect(i, j, flip));
-            sprite.setOrigin(tile_width / 2, tile_height / 2);
-            return sprite;
-        }
+        sf::Sprite getSprite(unsigned i, unsigned j, bool flip = false);
 
     private:
         friend class AssetsManager; ///< The only one can create spriteSheet
@@ -65,10 +59,7 @@ namespace PancakeEngine {
          * @param tile_w the tile width
          * @param tile_h the tile height
          */
-        SpriteSheet(std::string uri, unsigned int tile_w, unsigned int tile_h, unsigned int m = 0) : tile_width(tile_w), tile_height(tile_h), margin(m) {
-            if (!texture.loadFromFile(uri)) exit(EXIT_FAILURE);
-            texture.setSmooth(true);
-        }
+        SpriteSheet(std::string uri, unsigned int tile_w, unsigned int tile_h, unsigned int m = 0);
 
         /**
          * @brief Get the rectangle of sprite at column i, and row j in the
@@ -78,20 +69,7 @@ namespace PancakeEngine {
          * @param flip True if the sprite is flip.
          * @return The rectangle of sprite.
          */
-        sf::IntRect getRect(unsigned i, unsigned j, bool flip = false) {
-            if (!flip) return sf::IntRect(
-                        (tile_width  + margin) * i,
-                        (tile_height + margin) * j,
-                        tile_width,
-                        tile_height
-                );
-            else return sf::IntRect(
-                        (tile_width  + margin) * (i+1),
-                        (tile_height + margin) * j,
-                        -tile_width,
-                        tile_height
-                );
-        }
+        sf::IntRect getRect(unsigned i, unsigned j, bool flip = false);
     };
 }
 

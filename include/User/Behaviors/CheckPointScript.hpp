@@ -9,7 +9,7 @@
 #include "GameController.hpp"
 #include "PlayerController.hpp"
 
-class CheckPoint : public PancakeEngine::Behavior {
+class CheckPointScript : public PancakeEngine::Behavior {
 
 public:
     void awake() override {

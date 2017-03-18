@@ -28,21 +28,20 @@
 #include <GameLogic.hpp>
 #include <User/Behaviors/TrampolineScript.hpp>
 
-namespace PancakeEngine{
     /**
      * @class Transporter
      * @brief Create a prefab trampoline
      */
-    class Trampoline : public GameObject{
+    class Trampoline : public PancakeEngine::GameObject{
     public:
-        Trampoline() : GameObject(){
+        Trampoline(){
             name = "Trampoline";
-            BoxCollider& bcBottom = addComponent<BoxCollider>();
+                PancakeEngine::BoxCollider& bcBottom = addComponent<PancakeEngine::BoxCollider>();
             bcBottom.width = 70;
             bcBottom.height = 30;
             bcBottom.offset = sf::Vector2f(0,20);
             bcBottom.density = 15;
-            BoxCollider& bcTop = addComponent<BoxCollider>();
+                PancakeEngine::BoxCollider& bcTop = addComponent<PancakeEngine::BoxCollider>();
             bcTop.width = 60;
             bcTop.height = 10;
             bcTop.offset = sf::Vector2f(0,0);
@@ -51,11 +50,10 @@ namespace PancakeEngine{
             transform.setPosition(sf::Vector2f(100, -100));
             transform.setRotation(0);
 
-            addComponent<SpriteRenderer>().setSprite(
-                    AssetsManager::getSpriteSheet("items"), 0, 6
+            addComponent<PancakeEngine::SpriteRenderer>().setSprite(
+                    PancakeEngine::AssetsManager::getSpriteSheet("items"), 0, 6
             );
             addComponent<TrampolineScript>();
         }
     };
-}
 #endif //PANCAKE_TRAMPOLINE_HPP

@@ -27,6 +27,6 @@ private:
 
 };
 
-#include <User/Behaviors/CheckPoint.hpp>
+#include <User/Behaviors/CheckPointScript.hpp>
 
 #endif //PANCAKE_GAMECONTROLLER_HPP

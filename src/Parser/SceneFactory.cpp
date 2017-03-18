@@ -204,7 +204,7 @@ namespace PancakeEngine {
         unsigned width =(unsigned) layer->GetWidth();
         unsigned tileWidth = (unsigned) myParser->map->GetTileWidth();
         unsigned tileHeight = (unsigned) myParser->map->GetTileHeight();
-        TileMap &tileMap = AssetsManager::createTileMap(layer->GetName(), tileWidth,tileHeight, width,height);
+        TileMap &tileMap = AssetsManager::createTileMap(layer->GetName()+myParser->map->GetFilename(), tileWidth,tileHeight, width,height);
         GameObject &tmr = scene->addGameObject<GameObject>(Nblayer);
         sf::Vector2f v2f;
         v2f.x = (width*tileWidth)/2;
