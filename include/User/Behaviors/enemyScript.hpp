@@ -14,7 +14,6 @@ public:
         rb = gameObject->getComponent<PancakeEngine::Rigidbody>();
         vector2f.x = 2;
         vector2f.y = 0;
-        h = gameObject->getComponent<Health>();
     }
     void OnTriggerEnter(const PancakeEngine::Collider& triggered, const PancakeEngine::Collider& other) override
     {
@@ -45,7 +44,7 @@ public:
             rb->setVelocity(vector2f);
             clock1.restart();
         }
-        if(exploded || h->isDead()) destroy(*gameObject);
+        if(exploded) destroy(*gameObject);
     }
 private:
     bool exploded = false;

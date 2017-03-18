@@ -40,7 +40,6 @@
             bc2.height = 30;
             bc2.offset.y = -2;
             bc2.isTrigger = true;
-            addComponent<Health>();
             PancakeEngine::SpriteSheet& sprites = PancakeEngine::AssetsManager::getSpriteSheet(name);
 
             PancakeEngine::Animation& a_idle = PancakeEngine::AssetsManager::createAnimation(name + "r_idle", sprites);
