@@ -66,9 +66,7 @@ void GameObject::lateUpdate() {
 }
 
 void GameObject::destroyComponents() {
-    for (unsigned i = 0; i < componentsToDestroy.size(); ++i) {
-        delete componentsToDestroy[i];
-    }
+    for (auto c : componentsToDestroy) delete c;
     componentsToDestroy.clear();
 }
 

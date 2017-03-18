@@ -22,6 +22,8 @@ public:
         p->getComponent<Health>()->reSpawn();
     }
 
+    unsigned coins = 0;
+
 private:
     std::map<std::string, PancakeEngine::GameObject*> playerToLastCheckPoint;
 
