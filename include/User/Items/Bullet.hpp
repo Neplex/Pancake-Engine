@@ -10,11 +10,14 @@
 
 class Bullet : public PancakeEngine::GameObject {
 public:
-    Bullet() { addComponent<PancakeEngine::Rigidbody>(); // todo problem if put after colliders
+    Bullet() {
+        name = "Bullet";
+        addComponent<PancakeEngine::Rigidbody>(); // todo problem if put after colliders
         PancakeEngine::CircleCollider& cc = addComponent<PancakeEngine::CircleCollider>();
         cc.radius = 4;
         cc.isTrigger = true;
-
+        PancakeEngine::CircleCollider& cc1 = addComponent<PancakeEngine::CircleCollider>();
+        cc1.radius = 4;
         addComponent<BulletScript>();
         addComponent<PancakeEngine::SpriteRenderer>().setSprite(
                 PancakeEngine::AssetsManager::getSpriteSheet("miscs"), 7, 0

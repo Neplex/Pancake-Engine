@@ -33,13 +33,14 @@
             rb.setFreezeRotation(true);
             PancakeEngine::BoxCollider& bc = addComponent<PancakeEngine::BoxCollider>();
             bc.width = 57;
-            bc.height = 23;
-            bc.offset.y = 5;
+            bc.height = 2;
+            bc.offset.y = 14;
             PancakeEngine::BoxCollider& bc2  = addComponent<PancakeEngine::BoxCollider>();
             bc2.width = 55;
-            bc2.height = 10;
-            bc2.offset.y = -10;
+            bc2.height = 30;
+            bc2.offset.y = -2;
             bc2.isTrigger = true;
+            addComponent<Health>();
             PancakeEngine::SpriteSheet& sprites = PancakeEngine::AssetsManager::getSpriteSheet(name);
 
             PancakeEngine::Animation& a_idle = PancakeEngine::AssetsManager::createAnimation(name + "r_idle", sprites);

@@ -19,6 +19,7 @@
 #include <User/Items/Coin.hpp>
 #include <User/Player.hpp>
 #include <User/Items/Box.hpp>
+#include <User/Items/ExitNotice.hpp>
 
 /**
  * @defgroup User User

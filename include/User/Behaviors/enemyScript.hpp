@@ -14,12 +14,18 @@ public:
         rb = gameObject->getComponent<PancakeEngine::Rigidbody>();
         vector2f.x = 2;
         vector2f.y = 0;
+        h = gameObject->getComponent<Health>();
     }
     void OnTriggerEnter(const PancakeEngine::Collider& triggered, const PancakeEngine::Collider& other) override
     {
         PancakeEngine::GameObject* goTriggered = triggered.gameObject;
         PancakeEngine::GameObject* goOther = other.gameObject;
-        if(goOther->transform.getWorldPosition().y <= goTriggered->transform.getWorldPosition().y){
+        if(goOther->name == "Bullet"){
+            exploded = true;
+        }
+        bool y = goOther->transform.getWorldPosition().y < goTriggered->transform.getWorldPosition().y;
+        bool x = goOther->transform.getWorldPosition().x >= goTriggered->transform.getWorldPosition().x ;
+        if( y&&x){
             exploded = true;
         }
         else{
@@ -33,16 +39,19 @@ public:
         rb->setVelocity(vector2f);
         if(clock1.getElapsedTime().asSeconds() >= 2.0) {
             float velXChange = (rb->getVelocity().x) * -1;
+            float velYChange = (rb->getVelocity().y) +rb->getMass();
             vector2f.x = velXChange;
+            vector2f.y = velYChange;
             rb->setVelocity(vector2f);
             clock1.restart();
         }
-        if(exploded) destroy(*gameObject);
+        if(exploded || h->isDead()) destroy(*gameObject);
     }
 private:
     bool exploded = false;
     sf::Vector2f vector2f;
     sf::Clock clock1;
     PancakeEngine::Rigidbody* rb;
+    Health* h;
 };
 #endif //PANCAKE_ENNEMYSCRIPT_HPP
