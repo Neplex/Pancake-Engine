@@ -162,6 +162,12 @@ void PhysicsEngine::createFixtures(const GameObject& go, b2Body& body) {
     }
 }
 
+void PhysicsEngine::resetWorld()
+{
+    world = b2World(b2Vec2(0, 10));
+    world.SetContactListener(&physicsListener);
+}
+
 
 
 

@@ -76,6 +76,8 @@ namespace PancakeEngine {
 
         void setRotation(const float angle, b2Body& body);
 
+        void resetWorld();
+
     private:
         b2World world; ///< the physics world of box2D
         PhysicsListener physicsListener;
