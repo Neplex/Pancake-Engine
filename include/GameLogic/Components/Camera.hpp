@@ -39,6 +39,7 @@ namespace PancakeEngine {
     class Camera : public Component {
     public:
         Camera();
+        ~Camera();
 
         /**
          * @brief Zoom view with factor.

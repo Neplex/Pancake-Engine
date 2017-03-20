@@ -12,6 +12,10 @@ Camera::Camera() {
     view = sf::View(sf::FloatRect(0, 0, width, height));
 }
 
+Camera::~Camera() {
+    if (background != NULL) delete background;
+}
+
 void Camera::zoom(float factor) {
     view.zoom(factor);
 }

@@ -240,6 +240,8 @@ namespace PancakeEngine {
                 loadObject(objectList[i], myParser->map);
             }
         }
+        delete myParser;
+        myParser = NULL;
         return scene;
     }
 

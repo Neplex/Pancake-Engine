@@ -22,9 +22,9 @@ void TileMapRenderer::clearGrid() {
             for (int j = 0; j < nb_row; ++j) {
                 delete textureGrid[i][j];
             }
-            delete textureGrid[i];
+            delete[] textureGrid[i];
         }
-        delete textureGrid;
+        delete[] textureGrid;
 
         textureGrid = NULL;
         chunk_width = chunk_height = nb_column = nb_row = marge_x = marge_y = 0;
