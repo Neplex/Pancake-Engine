@@ -13,7 +13,7 @@ Camera::Camera() {
 }
 
 Camera::~Camera() {
-    if (background != NULL) delete background;
+    //if (background != NULL) delete background;
 }
 
 void Camera::zoom(float factor) {

@@ -24,7 +24,7 @@ public:
         bc.offset = sf::Vector2f(0, -2);
         bc.isTrigger = true;
         addComponent<PancakeEngine::SpriteRenderer>().setSprite(
-                PancakeEngine::AssetsManager::getSpriteSheet("tiles"), 4, 17
+                PancakeEngine::AssetsManager::getSpriteSheet("tiles"), 4, 16
         );
         addComponent<ExitNoticeScript>();
     }
