@@ -27,7 +27,7 @@
 
 #include <map>
 #include <Debug/Widgets/Console.hpp>
-#include "Imgui/imgui.h"
+#include "imgui.h"
 #include "Widgets/AppLog.hpp"
 
 namespace PancakeEngine {

@@ -25,7 +25,7 @@
 #ifndef PANCAKE_DEBUG_HPP
 #define PANCAKE_DEBUG_HPP
 
-#include <Imgui/imgui-SFML.h>
+#include <imgui-SFML.h>
 #include <Debug/FixedOverlayDebug.hpp>
 #include <Debug/MainDebugMenu.hpp>
 #include <Graphics/Window.hpp>

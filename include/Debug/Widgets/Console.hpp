@@ -28,7 +28,7 @@
 #include <vector>
 #include <string>
 #include <Debug/Commands/Command.hpp>
-#include <Imgui/imgui.h>
+#include <imgui.h>
 #include <map>
 
 namespace PancakeEngine {
@@ -54,14 +54,14 @@ namespace PancakeEngine {
          * @param fmt the format (look printf documentation)
          * @param ... additional arguments
          */
-        void print(const char *fmt, ...) IM_PRINTFARGS(2);
+        void print(const char *fmt, ...); //IM_PRINTFARGS(2);
 
         /**
          * @brief Print formatted data to the console (with error label)
          * @param fmt the format (look printf documentation)
          * @param ... additional arguments
          */
-        void printErr(const char *fmt, ...) IM_PRINTFARGS(2);
+        void printErr(const char *fmt, ...); //IM_PRINTFARGS(2);
 
         /**
          * @brief execute the command line from a string

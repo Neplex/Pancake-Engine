@@ -9,7 +9,7 @@
 #include <SFML/System/Vector2.hpp>
 #include "Component.hpp"
 #include "Rigidbody.hpp"
-#include <Box2D/Box2D.h>
+#include <box2d/box2d.h>
 
 namespace PancakeEngine {
 

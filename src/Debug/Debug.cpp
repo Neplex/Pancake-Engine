@@ -5,7 +5,7 @@
 #include <SFML/Window/Event.hpp>
 #include <Debug/Widgets/Console.hpp>
 #include "Debug/Debug.hpp"
-#include "Imgui/imgui_internal.h"
+#include "imgui_internal.h"
 
 using namespace PancakeEngine;
 

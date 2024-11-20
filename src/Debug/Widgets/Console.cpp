@@ -3,7 +3,7 @@
 //
 
 #include <Debug/Widgets/Console.hpp>
-#include <Imgui/imgui_internal.h>
+#include <imgui_internal.h>
 #include <Debug/Commands/CommandHelp.hpp>
 #include <Debug/Commands/CommandClear.hpp>
 #include <sstream>

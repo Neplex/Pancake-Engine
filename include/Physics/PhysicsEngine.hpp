@@ -25,7 +25,7 @@
 #ifndef PANCAKE_PHYSICSENGINE_HPP
 #define PANCAKE_PHYSICSENGINE_HPP
 
-#include <Box2D/Box2D.h>
+#include <box2d/box2d.h>
 #include "../GameLogic/GameObject.hpp"
 #include "../GameLogic/Components/BoxCollider.hpp"
 #include "PhysicsListener.hpp"

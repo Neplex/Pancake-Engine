@@ -5,7 +5,7 @@
 #ifndef PANCAKE_APPLOG_HPP
 #define PANCAKE_APPLOG_HPP
 
-#include "Imgui/imgui.h"
+#include <imgui.h>
 
 /**
  * @struct AppLog Represents a logger used in debug.
@@ -42,12 +42,12 @@ struct AppLog
      * @param fmt The message formated.
      * @param ... Args
      */
-    void AddLog(const char* fmt, ...) IM_PRINTFARGS(2)
+    void AddLog(const char* fmt, ...) //IM_PRINTFARGS(2)
     {
         int old_size = Buf.size();
         va_list args;
         va_start(args, fmt);
-        Buf.appendv(fmt, args);
+        Buf.appendf(fmt, args);
         va_end(args);
         for (int new_size = Buf.size(); old_size < new_size; old_size++)
             if (Buf[old_size] == '\n')

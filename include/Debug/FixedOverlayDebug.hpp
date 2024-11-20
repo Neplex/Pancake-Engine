@@ -26,7 +26,7 @@
 #define PANCAKE_FIXEDOVERLAY_HPP
 
 #include <GameLogic/GameObject.hpp>
-#include "Imgui/imgui.h"
+#include "imgui.h"
 
 namespace PancakeEngine {
 

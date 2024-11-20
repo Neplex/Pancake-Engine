@@ -7,7 +7,7 @@
 
 
 #include <SFML/System.hpp>
-#include <Box2D/Dynamics/b2Body.h>
+#include <box2d/b2_body.h>
 #include "Component.hpp"
 
 // Tutorial here : http://www.iforce2d.net/b2dtut/introduction

@@ -25,8 +25,8 @@
 #ifndef PANCAKE_PHYSICSLISTENER_HPP
 #define PANCAKE_PHYSICSLISTENER_HPP
 
-#include <Box2D/Dynamics/b2WorldCallbacks.h>
-#include <Box2D/Dynamics/Contacts/b2Contact.h>
+#include <box2d/b2_world_callbacks.h>
+#include <box2d/b2_contact.h>
 #include "../GameLogic/Components/Collider.hpp"
 #include "GameLogic/GameObject.hpp"
 #include "Collision.hpp"
