@@ -22,22 +22,4 @@
  * \author      Darenn Keller - keller.darenn@gmail.com
  */
 
-
-#include <GameLogic/Components/Animator.hpp>
-#include <Graphics/AssetsManager.hpp>
-#include "User/Behaviors/PlayerController.hpp"
-#include <string>
-
-/*std:::string PlayerController::walkingTransition(GameObject& go)
-{
-    if (go.getComponent<PancakeEngine::Rigidbody>()) {
-
-    }
-}*/
-/*
-void PlayerController::awake()
-{
-    animator = gameObject->getComponent<PancakeEngine::Animator>();
-
-    animator->addAnimation("Walking", PancakeEngine::AssetsManager::getDefaultAnimation(), walkingTransition);
-}*/
+#include <User/Behaviors/PlayerController.hpp>

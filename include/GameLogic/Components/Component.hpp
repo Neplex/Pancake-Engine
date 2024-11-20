@@ -26,41 +26,39 @@
 #define PANCAKE_COMPONENT_HPP
 
 namespace PancakeEngine {
-    class GameObject;
-    class Component {
-    public:
-        GameObject* gameObject;
+class GameObject;
+class Component {
+ public:
+  GameObject *gameObject{};
 
+  /**
+   * Called at GameObject creation.
+   */
+  virtual void awake() {};
 
-        /**
-         * Called at GameObject creation.
-         */
-        virtual void awake() { };
+  /**
+   * Called just before the first update call.
+   */
+  virtual void start() {};
 
-        /**
-         * Called just before the first update call.
-         */
-        virtual void start() { };
+  /**
+   * Called at each frame before physics.
+   */
+  virtual void update() {};
 
-        /**
-         * Called at each frame before physics.
-         */
-        virtual void update() { };
+  /**
+   * Called at each frame update.
+   */
+  virtual void lateUpdate() {};
 
-        /**
-         * Called at each frame update.
-         */
-        virtual void lateUpdate() { };
+ protected:
+  virtual ~Component() = default;
 
-    protected:
-        virtual ~Component() {};
+ private:
+  friend class Behavior;    ///< To allow to modify toDestroy flag
+  friend class GameObject;  ///< to destroy the component
+  bool toDestroy = false;
+};
+}  // namespace PancakeEngine
 
-
-    private:
-        friend class Behavior; ///< To allow modify toDestroy flag
-        friend class GameObject; ///< to destroy the component
-        bool toDestroy = false;
-    };
-}
-
-#endif //PANCAKE_COMPONENT_HPP
+#endif  // PANCAKE_COMPONENT_HPP

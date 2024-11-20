@@ -25,121 +25,112 @@
 #ifndef PANCAKE_SCENEFACTORY_HPP
 #define PANCAKE_SCENEFACTORY_HPP
 
-#include <GameLogic.hpp>
 #include <Tmx.h>
-#include "TmxParser.hpp"
+
+#include <GameLogic.hpp>
+#include <Parser/TmxParser.hpp>
 
 namespace PancakeEngine {
-    /**
-     * @class GOFactory
-     * @brief Interface to create GameObjectFactory
-     */
-    class GOFactory
-    {
-    public:
-        virtual GameObject* CreateNew(Scene* scene, unsigned layer) const = 0;
-    };
+/**
+ * @class GOFactory
+ * @brief Interface to create GameObjectFactory
+ */
+class GOFactory {
+ public:
+  virtual ~GOFactory() = default;
 
-    template <typename T>
-    class Factory : public GOFactory
-    {
-    public:
-        T* CreateNew(Scene* scene, unsigned layer) const { return &(scene->addGameObject<T>(layer)); }
-    };
-    /**
-     * @class GameObjectFactory
-     * @brief Use to create prefab map
-     */
-    class GameObjectFactory
-    {
-    private:
-        typedef std::map<std::string, GOFactory*> FactoryMap;
+  virtual GameObject *CreateNew(Scene *scene, unsigned layer) const = 0;
+};
 
-        FactoryMap factoryMap; // Map which contains all prefabs
+template <typename T>
+class Factory : public GOFactory {
+ public:
+  T *CreateNew(Scene *scene, unsigned layer) const override { return &(scene->addGameObject<T>(layer)); }
+};
+/**
+ * @class GameObjectFactory
+ * @brief Use to create prefab map
+ */
+class GameObjectFactory {
+  using FactoryMap = std::map<std::string, GOFactory *>;
 
-    public:
-        /**!
-         * @brief Destroy a GameObjectFactory object
-         * Clear factoryMap objects
-         */
-        ~GameObjectFactory()
-        {
-            FactoryMap::const_iterator map_item = factoryMap.begin();
-            for (; map_item != factoryMap.end(); ++map_item) delete map_item->second;
-            factoryMap.clear();
-        }
-        /**!
-         * @brief Add a prefab to the factoryMap
-         * @param string name of the prefab object
-         */
-        template <typename T>
-        void AddFactory(const std::string& name)
-        {
-            delete factoryMap[name];
-            factoryMap[name] = new Factory<T>();
-        }
-        /**!
-         * @brief find a prefab in the map
-         * @param string name of the prefab object
-         */
-        bool find(std::string name){
-            auto search = factoryMap.find(name);
-            return search != factoryMap.end();
-        }
-        /**!
-         * @brief Create a new prefab in the map
-         * @param Scene where to create the prefab
-         * @param layer which layer is the object
-         * @param name of the prefab
-         */
-        GameObject* CreateNew(Scene* scene, unsigned layer,const std::string& name) const
-        {
-            FactoryMap::const_iterator found = factoryMap.find(name);
-            if (found != factoryMap.end())
-                return found->second->CreateNew(scene,layer);
-            else
-                return NULL;
-        }
-    };
-    /**
-     * @class SceneFactory
-     * @brief Use to create a scene from a file.
-     */
-    class SceneFactory {
-    public:
-        template <class T>
-        static void addPrefab(std::string param){
-            SceneFactory::factorySystem.AddFactory<T>(param);
-        };
-        /**!
-         * @brief Create a SceneFactory object
-         * @param filename file to be parse
-         */
-        SceneFactory(){};
-        /**!
-         * @brief load all objects of a TMX file
-         * @param filename file to parse
-         * @return scene of the file
-         */
-        Scene *loadAllSceneObject(const char* filename);
-        /**!
-         * @brief load a GameObject
-         * @param Tmx::Object object parse from tmx file
-         * @param Tmx::Map map being parse
-         */
-        void loadObject(Tmx::Object object, Tmx::Map *map);
-        /**!
-         * @brief load a TileMap layer
-         * @param Tmx::TileLayer layer parse from tmx file
-         */
-        void loadLayer(Tmx::TileLayer *layer);
-        static GameObjectFactory factorySystem; ///< the factory for prefab objects
+  FactoryMap factoryMap;  // Map which contains all prefabs
 
-    private:
-        Scene* scene=NULL; ///< the scene being created
-        Parser *myParser = NULL; ///< the parser to parse the file
+ public:
+  /**!
+   * @brief Destroy a GameObjectFactory object
+   * Clear factoryMap objects
+   */
+  ~GameObjectFactory() {
+    for (FactoryMap::const_iterator map_item = factoryMap.begin(); map_item != factoryMap.end(); ++map_item) {
+      delete map_item->second;
+    }
+    factoryMap.clear();
+  }
+  /**!
+   * @brief Add a prefab to the factoryMap
+   * @param name of the prefab object
+   */
+  template <typename T>
+  void AddFactory(const std::string &name) {
+    delete factoryMap[name];
+    factoryMap[name] = new Factory<T>();
+  }
+  /**!
+   * @brief find a prefab in the map
+   * @param name of the prefab object
+   */
+  bool find(std::string const &name) {
+    auto search = factoryMap.find(name);
+    return search != factoryMap.end();
+  }
+  /**!
+   * @brief Create a new prefab in the map
+   * @param scene where to create the prefab
+   * @param layer which layer is the object
+   * @param name of the prefab
+   */
+  GameObject *CreateNew(Scene *scene, const unsigned layer, const std::string &name) const {
+    auto found = factoryMap.find(name);
+    return found != factoryMap.end() ? found->second->CreateNew(scene, layer) : nullptr;
+  }
+};
 
-    };
+/**
+ * @class SceneFactory
+ * @brief Use to create a scene from a file.
+ */
+class SceneFactory {
+ public:
+  template <class T>
 
-}
-#endif //PANCAKE_SCENEFACTORY_HPP
+  static void addPrefab(const std::string &param) {
+    factorySystem.AddFactory<T>(param);
+  }
+
+  /**!
+   * @brief load all objects of a TMX file
+   * @param filename file to parse
+   * @return scene of the file
+   */
+  Scene *loadAllSceneObject(const char *filename);
+  /**!
+   * @brief load a GameObject
+   * @param object parse from tmx file
+   * @param map being parse
+   */
+  void loadObject(const Tmx::Object &object, const Tmx::Map *map) const;
+  /**!
+   * @brief load a TileMap layer
+   * @param layer parse from tmx file
+   */
+  void loadLayer(const Tmx::TileLayer *layer) const;
+  static GameObjectFactory factorySystem;  ///< the factory for prefab objects
+
+ private:
+  Scene *scene = nullptr;      ///< the scene being created
+  Parser *myParser = nullptr;  ///< the parser to parse the file
+};
+
+}  // namespace PancakeEngine
+#endif  // PANCAKE_SCENEFACTORY_HPP

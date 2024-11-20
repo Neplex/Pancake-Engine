@@ -5,19 +5,20 @@
 #ifndef PANCAKE_LASER_HPP
 #define PANCAKE_LASER_HPP
 
+#include <GameLogic/GameObject.hpp>
 #include <User/Behaviors/LaserScript.hpp>
 #include <User/Behaviors/OnTriggerKill.hpp>
-#include <GameLogic/GameObject.hpp>
 
 class Laser : public PancakeEngine::GameObject {
-public:
-    Laser() {
-        name = "Laser";
-        addComponent<LaserScript>();
-        addComponent<OnTriggerKill>();
-        addComponent<PancakeEngine::Rigidbody>().setType(PancakeEngine::Rigidbody::bodyType::kinematicBody);
-    }
+ public:
+  virtual ~Laser() = default;
+
+  Laser() {
+    name = "Laser";
+    addComponent<LaserScript>();
+    addComponent<OnTriggerKill>();
+    addComponent<PancakeEngine::Rigidbody>().setType(PancakeEngine::Rigidbody::bodyType::kinematicBody);
+  }
 };
 
-
-#endif //PANCAKE_LASER_HPP
+#endif  // PANCAKE_LASER_HPP

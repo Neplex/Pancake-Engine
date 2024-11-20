@@ -5,18 +5,18 @@
 #ifndef PANCAKE_DEATHZONE_HPP
 #define PANCAKE_DEATHZONE_HPP
 
-
 #include <GameLogic/GameObject.hpp>
 #include <User/Behaviors/OnAwakeSetBoxCollider.hpp>
 #include <User/Behaviors/OnTriggerKill.hpp>
 
 class DeathZone : public PancakeEngine::GameObject {
-public:
-    DeathZone() {
-        addComponent<OnAwakeSetBoxCollider>();
-        addComponent<OnTriggerKill>();
-    }
+ public:
+  virtual ~DeathZone() = default;
+
+  DeathZone() {
+    addComponent<OnAwakeSetBoxCollider>();
+    addComponent<OnTriggerKill>();
+  }
 };
 
-
-#endif //PANCAKE_DEATHZONE_HPP
+#endif  // PANCAKE_DEATHZONE_HPP

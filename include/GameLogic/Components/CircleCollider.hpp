@@ -5,14 +5,13 @@
 #ifndef PANCAKE_CIRCLECOLLIDER_HPP
 #define PANCAKE_CIRCLECOLLIDER_HPP
 
-#include "Collider.hpp"
+#include <GameLogic/Components/Collider.hpp>
 
 namespace PancakeEngine {
-    class CircleCollider : public Collider {
+class CircleCollider : public Collider {
+ public:
+  float radius;
+};
+}  // namespace PancakeEngine
 
-    public:
-        float radius;
-    };
-}
-
-#endif //PANCAKE_CIRCLECOLLIDER_HPP
+#endif  // PANCAKE_CIRCLECOLLIDER_HPP

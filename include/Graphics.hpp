@@ -24,15 +24,15 @@
 #ifndef PANCAKE_GRAPHICS_HPP
 #define PANCAKE_GRAPHICS_HPP
 
-#include "Graphics/Window.hpp"
 #include "Graphics/Animation.hpp"
-#include "Graphics/TileMap.hpp"
-#include "Graphics/SpriteSheet.hpp"
 #include "Graphics/AssetsManager.hpp"
+#include "Graphics/SpriteSheet.hpp"
+#include "Graphics/TileMap.hpp"
+#include "Graphics/Window.hpp"
 
 /**
  * @defgroup Graphics Graphics
  * Contains all classes concerning the graphics in the engine.
  */
 
-#endif //PANCAKE_GRAPHICS_HPP
+#endif  // PANCAKE_GRAPHICS_HPP

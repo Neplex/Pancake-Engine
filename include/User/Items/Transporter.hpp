@@ -28,26 +28,38 @@
 #include <GameLogic.hpp>
 #include <User/Behaviors/TransporterScript.hpp>
 
-    /**
-     * @class Transporter
-     * @brief Create a prefab transporter
-     */
-    class Transporter : public PancakeEngine::GameObject{
-    public:
-        Transporter(std::string n){
-            name = n;
-            PancakeEngine::BoxCollider& bc = addComponent<PancakeEngine::BoxCollider>();
-            bc.width = 35;
-            bc.height = 35;
-            bc.offset = sf::Vector2f(0,30);
-            addComponent<PancakeEngine::SpriteRenderer>().setSprite(
-                    PancakeEngine::AssetsManager::getSpriteSheet("items"), 1, 3
-            );
-            addComponent<TransporterScript>();
-        };
-    };
-    class Transporter1 : public Transporter { public: Transporter1() : Transporter("Transporter1") {} };
-    class Transporter2 : public Transporter { public: Transporter2() : Transporter("Transporter2") {} };
-    class Transporter3 : public Transporter { public: Transporter3() : Transporter("Transporter3") {} };
+/**
+ * @class Transporter
+ * @brief Create a prefab transporter
+ */
+class Transporter : public PancakeEngine::GameObject {
+ public:
+  virtual ~Transporter() = default;
 
-#endif //PANCAKE_TRANSPORTER_HPP
+  explicit Transporter(const std::string &n) {
+    name = n;
+    auto &bc = addComponent<PancakeEngine::BoxCollider>();
+    bc.width = 35;
+    bc.height = 35;
+    bc.offset = sf::Vector2f(0, 30);
+
+    auto &sr = addComponent<PancakeEngine::SpriteRenderer>();
+    sr.setSprite(PancakeEngine::AssetsManager::getSpriteSheet("items"), 1, 3);
+
+    addComponent<TransporterScript>();
+  };
+};
+class Transporter1 final : public Transporter {
+ public:
+  Transporter1() : Transporter("Transporter1") {}
+};
+class Transporter2 final : public Transporter {
+ public:
+  Transporter2() : Transporter("Transporter2") {}
+};
+class Transporter3 final : public Transporter {
+ public:
+  Transporter3() : Transporter("Transporter3") {}
+};
+
+#endif  // PANCAKE_TRANSPORTER_HPP

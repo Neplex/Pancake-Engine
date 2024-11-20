@@ -25,27 +25,27 @@
 #ifndef PANCAKE_GAMELOGIC_HPP
 #define PANCAKE_GAMELOGIC_HPP
 
-#include "GameLogic/GameObject.hpp"
-#include "GameLogic/Scene.hpp"
-#include "GameLogic/Components/Component.hpp"
-#include "GameLogic/Components/Collider.hpp"
 #include "GameLogic/Components/AnimationRenderer.hpp"
 #include "GameLogic/Components/Animator.hpp"
 #include "GameLogic/Components/Behavior.hpp"
 #include "GameLogic/Components/BoxCollider.hpp"
 #include "GameLogic/Components/Camera.hpp"
 #include "GameLogic/Components/CircleCollider.hpp"
+#include "GameLogic/Components/Collider.hpp"
+#include "GameLogic/Components/Component.hpp"
+#include "GameLogic/Components/DataStorage.hpp"
 #include "GameLogic/Components/LuaScript.hpp"
 #include "GameLogic/Components/Rigidbody.hpp"
 #include "GameLogic/Components/SpriteRenderer.hpp"
-#include "GameLogic/Components/Transform.hpp"
 #include "GameLogic/Components/TileMapRenderer.hpp"
-#include "GameLogic/Components/DataStorage.hpp"
-
+#include "GameLogic/Components/Transform.hpp"
+#include "GameLogic/GameObject.hpp"
+#include "GameLogic/Scene.hpp"
 
 /**
  * @defgroup GameLogic GameLogic
- * Contains all classes concerning the Game Logic (components, gameobject, scene).
+ * Contains all classes concerning the Game Logic (components, gameobject,
+ * scene).
  */
 
-#endif //PANCAKE_GAMELOGIC_HPP
+#endif  // PANCAKE_GAMELOGIC_HPP

@@ -25,54 +25,58 @@
 #ifndef PANCAKE_TILEMAPRENDERER_HPP
 #define PANCAKE_TILEMAPRENDERER_HPP
 
-#include <Graphics/TileMap.hpp>
 #include <GameLogic/Components/Component.hpp>
+#include <Graphics/TileMap.hpp>
 
-#define CHUNK_SIZE 512
+constexpr unsigned int CHUNK_SIZE = 512;
 
 namespace PancakeEngine {
 
-    /**
-     * @class TileMapRenderer
-     * @brief Component that can render a TileMap.
-     * @sa TileMap Component
-     */
-    class TileMapRenderer : public Component {
-    public:
+/**
+ * @class TileMapRenderer
+ * @brief Component that can render a TileMap.
+ * @sa TileMap Component
+ */
+class TileMapRenderer : public Component {
+ public:
+  /**
+   * @brief Construct an TileMapRenderer with a default TileMap.
+   * @sa AssetsManager
+   */
+  TileMapRenderer();
+  ~TileMapRenderer() override;
 
-        /**
-         * @brief Construct an TileMapRenderer with a default TileMap.
-         * @sa AssetsManager
-         */
-        TileMapRenderer();
-        ~TileMapRenderer();
+  /**
+   * @brief Clear the chunks grid.
+   * @details Call this method to remove TileMap from the renderer.
+   */
+  void clearGrid();
 
-        /**
-         * @brief Clear the chunks grid.
-         * @details Call this method to remove TileMap from the renderer.
-         */
-        void clearGrid();
+  /**
+   * @brief Set the tileMap.
+   * @param map the new tileMap.
+   */
+  void setTileMap(const TileMap &map);
 
-        /**
-         * @brief Set the tileMap.
-         * @param map the new tileMap.
-         */
-        void setTileMap(TileMap& map);
+ protected:
+  friend class Window;
+  /**
+   * @brief Get the vector of sprites (chunks).
+   * @details Only used by the window.
+   * @return A list of sprites (chunks).
+   */
+  std::vector<sf::Sprite> getChunksSprites() const;
 
-    protected:
-        friend class Window;
-        /**
-         * @brief Get the vector of sprites (chunks).
-         * @details Only used by the window.
-         * @return A list of sprites (chunks).
-         */
-        std::vector<sf::Sprite> getChunksSprites();
+ private:
+  sf::RenderTexture ***textureGrid = nullptr;  ///< Matrix of chunks
+  unsigned chunk_width;
+  unsigned chunk_height;
+  unsigned nb_column;
+  unsigned nb_row;
+  unsigned marge_x;
+  unsigned marge_y;
+};
 
-    private:
-        sf::RenderTexture*** textureGrid = NULL; ///< Matrix of chunks
-        unsigned chunk_width, chunk_height, nb_column, nb_row, marge_x, marge_y;
-    };
+}  // namespace PancakeEngine
 
-}
-
-#endif //PANCAKE_TILEMAPRENDERER_HPP
+#endif  // PANCAKE_TILEMAPRENDERER_HPP

@@ -25,39 +25,38 @@
 #ifndef PANCAKE_CAMERA_HPP
 #define PANCAKE_CAMERA_HPP
 
+#include <GameLogic/Components/Component.hpp>
+#include <Graphics/Window.hpp>
 #include <SFML/Graphics/View.hpp>
-#include "Component.hpp"
-#include "../../Graphics/Window.hpp"
 
 namespace PancakeEngine {
 
-    /**
-     * @class Camera
-     * @brief Attach a camera on a GameObject.
-     * @sa Component Window
-     */
-    class Camera : public Component {
-    public:
-        Camera();
-        ~Camera();
+/**
+ * @class Camera
+ * @brief Attach a camera on a GameObject.
+ * @sa Component Window
+ */
+class Camera : public Component {
+ public:
+  Camera();
+  ~Camera() override;
 
-        /**
-         * @brief Zoom view with factor.
-         * @param factor
-         */
-        void zoom(float factor);
+  /**
+   * @brief Zoom view with factor.
+   * @param factor
+   */
+  void zoom(float factor);
 
-        /**
-         * @brief Set background image.
-         * @param file the new background path.
-         */
-        void setBackground(std::string file);
+  /**
+   * @brief Set background image.
+   * @param file the new background path.
+   */
+  void setBackground(const std::string &file);
 
-    private:
-        friend class Window; ///< Use the camera to draw.
-        sf::View view;
-        sf::Texture* background = NULL;
-
-    };
-}
-#endif //PANCAKE_CAMERA_HPP
+ private:
+  friend class Window;  ///< Use the camera to draw.
+  sf::View view;
+  sf::Texture *background = nullptr;
+};
+}  // namespace PancakeEngine
+#endif  // PANCAKE_CAMERA_HPP

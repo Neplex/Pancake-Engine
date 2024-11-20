@@ -25,41 +25,40 @@
 #ifndef PANCAKE_PHYSICSLISTENER_HPP
 #define PANCAKE_PHYSICSLISTENER_HPP
 
-#include <Box2D/Dynamics/b2WorldCallbacks.h>
-#include <Box2D/Dynamics/Contacts/b2Contact.h>
-#include "../GameLogic/Components/Collider.hpp"
-#include "GameLogic/GameObject.hpp"
-#include "Collision.hpp"
+#include <box2d/b2_world_callbacks.h>
+
+#include <GameLogic/Components/Collider.hpp>
+#include <GameLogic/GameObject.hpp>
+#include <Physics/Collision.hpp>
 
 namespace PancakeEngine {
 
-    class PhysicsListener : public b2ContactListener {
+class PhysicsListener : public b2ContactListener {
+  /**
+   * @details If only one of them is a sensor call OnTrigger on the sensor
+   * GameObject. If none of them is a sensor, call OnCollision on both ot them.
+   * Else if both are sensor do nothing.
+   * @param contact
+   */
+  void BeginContact(b2Contact *contact) override {
+    onContact(contact, &GameObject::OnTriggerEnter, &GameObject::OnCollisionEnter, false);
+  }
 
-        /**
-         * @details If only one of them is a sensor call OnTrigger on the sensor GameObject.
-         * If none of them is a sensor, call OnCollision on both ot them.
-         * Else if both are sensor do nothing.
-         * @param contact
-         */
-        void BeginContact(b2Contact* contact) {
-            onContact(contact, &GameObject::OnTriggerEnter, &GameObject::OnCollisionEnter, false);
-        }
+  /**
+   * @details If only one of them is a sensor call OnTrigger on the sensor
+   * GameObject. If none of them is a sensor, call OnCollision on both ot them.
+   * Else if both are sensor do nothing.
+   * @param contact
+   */
+  void EndContact(b2Contact *contact) override {
+    onContact(contact, &GameObject::OnTriggerExit, &GameObject::OnCollisionExit, true);
+  }
 
-        /**
-         * @details If only one of them is a sensor call OnTrigger on the sensor GameObject.
-         * If none of them is a sensor, call OnCollision on both ot them.
-         * Else if both are sensor do nothing.
-         * @param contact
-         */
-        void EndContact(b2Contact* contact) {
-            onContact(contact, &GameObject::OnTriggerExit, &GameObject::OnCollisionExit, true);
-        }
+  // Helper functions
+  void onContact(b2Contact *contact, void (GameObject::*triggerFunction)(const Collider &, const Collider &),
+                 void (GameObject::*collisionFunction)(const Collision &), bool exiting);
+};
 
-        // Helper functions
-        void onContact(b2Contact* contact, void (GameObject::*triggerFunction)(const Collider&, const Collider&), void (GameObject::*collisionFunction)(const Collision&), bool exiting);
-    };
+}  // namespace PancakeEngine
 
-}
-
-
-#endif //PANCAKE_PHYSICSLISTENER_HPP
+#endif  // PANCAKE_PHYSICSLISTENER_HPP

@@ -5,42 +5,43 @@
 #ifndef PANCAKE_ROCK_HPP
 #define PANCAKE_ROCK_HPP
 
-#include <GameLogic/GameObject.hpp>
 #include <GameLogic/Components/CircleCollider.hpp>
 #include <GameLogic/Components/SpriteRenderer.hpp>
+#include <GameLogic/GameObject.hpp>
 #include <Graphics/AssetsManager.hpp>
 #include <User/Behaviors/CheckPointScript.hpp>
 
-    class Rock : public PancakeEngine::GameObject {
-    public:
-        Rock() {
-            name = "Rock";
+class Rock : public PancakeEngine::GameObject {
+ public:
+  virtual ~Rock() = default;
 
-            PancakeEngine::Rigidbody& rb = addComponent<PancakeEngine::Rigidbody>();
-            PancakeEngine::CircleCollider& cc = addComponent<PancakeEngine::CircleCollider>();
-            cc.radius = 35;
+  Rock() {
+    name = "Rock";
 
-            addComponent<PancakeEngine::SpriteRenderer>().setSprite(
-                    PancakeEngine::AssetsManager::getSpriteSheet("miscs"), 13, 3
-            );
-        }
-    };
+    addComponent<PancakeEngine::Rigidbody>();
+    auto &cc = addComponent<PancakeEngine::CircleCollider>();
+    cc.radius = 35;
 
-    class SmallRock : public PancakeEngine::GameObject {
-    public:
-        SmallRock() {
-            name = "Rock";
+    addComponent<PancakeEngine::SpriteRenderer>().setSprite(PancakeEngine::AssetsManager::getSpriteSheet("miscs"), 13,
+                                                            3);
+  }
+};
 
-            PancakeEngine::Rigidbody& rb = addComponent<PancakeEngine::Rigidbody>();
-            PancakeEngine::CircleCollider& cc = addComponent<PancakeEngine::CircleCollider>();
-            cc.radius = 15;
-            addComponent<CheckPointScript>();
+class SmallRock : public PancakeEngine::GameObject {
+ public:
+  virtual ~SmallRock() = default;
 
-            addComponent<PancakeEngine::SpriteRenderer>().setSprite(
-                    PancakeEngine::AssetsManager::getSpriteSheet("miscs"), 13, 4
-            );
-        }
-    };
+  SmallRock() {
+    name = "Rock";
 
+    addComponent<PancakeEngine::Rigidbody>();
+    auto &cc = addComponent<PancakeEngine::CircleCollider>();
+    cc.radius = 15;
+    addComponent<CheckPointScript>();
 
-#endif //PANCAKE_ROCK_HPP
+    addComponent<PancakeEngine::SpriteRenderer>().setSprite(PancakeEngine::AssetsManager::getSpriteSheet("miscs"), 13,
+                                                            4);
+  }
+};
+
+#endif  // PANCAKE_ROCK_HPP

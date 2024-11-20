@@ -25,34 +25,37 @@
 #ifndef PANCAKE_INPUT_HPP
 #define PANCAKE_INPUT_HPP
 
-#include <string>
+#include <Inputs/Button.hpp>
 #include <map>
-#include "Button.hpp"
+#include <string>
 
 namespace PancakeEngine {
 
-    /**
-     * @class Input
-     * @ingroup Inputs
-     * @brief Class used by the user to get inputs buttons states.
-     * @details The buttons must be created with the InputManager.
-     * @sa InputManager
-     */
-    class Input {
-    public:
-        /**
-         * @brief Returns true during the frame the user pressed down the virtual button identified by buttonName.
-         * @param buttonName The name of the virtual button created with InputManager.
-         * @return true during the frame the user pressed down the virtual button identified by buttonName.
-         */
-        static bool getButtonPressed(const std::string& buttonName);
+/**
+ * @class Input
+ * @ingroup Inputs
+ * @brief Class used by the user to get inputs buttons states.
+ * @details The buttons must be created with the InputManager.
+ * @sa InputManager
+ */
+class Input {
+ public:
+  /**
+   * @brief Returns true during the frame the user pressed down the virtual
+   * button identified by buttonName.
+   * @param buttonName The name of the virtual button created with
+   * InputManager.
+   * @return true during the frame the user pressed down the virtual button
+   * identified by buttonName.
+   */
+  static bool getButtonPressed(const std::string &buttonName);
 
-        static bool getButtonHeld(const std::string& buttonName);
+  static bool getButtonHeld(const std::string &buttonName);
 
-    private:
-        friend class InputManager; ///< The input manager update #buttons.
-        static std::map<std::string, Button*> buttons; ///< Associate a name with a button.
-    };
-}
+ private:
+  friend class InputManager;                       ///< The input manager update #buttons.
+  static std::map<std::string, Button *> buttons;  ///< Associate a name with a button.
+};
+}  // namespace PancakeEngine
 
-#endif //PANCAKE_INPUT_HPP
+#endif  // PANCAKE_INPUT_HPP

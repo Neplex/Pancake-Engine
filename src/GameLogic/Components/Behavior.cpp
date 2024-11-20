@@ -22,16 +22,12 @@
  * @author      Darenn Keller - keller.darenn@gmail.com
  */
 
-#include "GameLogic/Components/Behavior.hpp"
-#include "GameLogic/GameObject.hpp"
+#include <GameLogic/Components/Behavior.hpp>
+#include <GameLogic/GameObject.hpp>
 
 namespace PancakeEngine {
 
-    void Behavior::destroy(PancakeEngine::GameObject &go) {
-        go.toDestroy = true;
-    }
+void Behavior::destroy(PancakeEngine::GameObject &go) { go.toDestroy = true; }
 
-    void Behavior::destroy(Component &c) {
-        c.toDestroy = true;
-    }
-}
+void Behavior::destroy(Component &c) { c.toDestroy = true; }
+}  // namespace PancakeEngine

@@ -25,7 +25,7 @@
 #ifndef PANCAKE_COLLISION_HPP
 #define PANCAKE_COLLISION_HPP
 
-#include "../GameLogic/Components/Collider.hpp"
+#include <GameLogic/Components/Collider.hpp>
 
 namespace PancakeEngine {
 
@@ -33,23 +33,17 @@ namespace PancakeEngine {
  * @class Collision
  * @brief Describes a collision.
  */
-    class Collision {
+class Collision {
+ public:
+  Collision(Collider const &collided, Collider const &other, float rest, float fric, float ts)
+      : collidedCollider(collided), otherCollider(other), restitution(rest), friction(fric), tangentSpeed(ts) {}
 
-    public:
+  const Collider &collidedCollider;  ///< The collider of the game object.
+  const Collider &otherCollider;     ///< The collider of the other game object.
+  const float restitution;           ///< The restitution of the collision
+  const float friction;              ///< The friction of the collision
+  const float tangentSpeed;          ///< The tangentSpeed of the collision
+};
+}  // namespace PancakeEngine
 
-        Collision(Collider& collided, Collider& other, float rest, float fric, float ts) : collidedCollider(collided),
-                                                                                           otherCollider(other),
-                                                                                           restitution(rest),
-                                                                                           friction(fric),
-                                                                                           tangentSpeed(ts) {}
-
-        const Collider& collidedCollider; ///< The collider of the gameobject.
-        const Collider& otherCollider; ///< The collider of the other gameobject.
-        const float restitution; ///< The restitution of the collision
-        const float friction; ///< The friction of the collision
-        const float tangentSpeed; ///< The tangentSpeed of the collision
-    };
-}
-
-
-#endif //PANCAKE_COLLISION_HPP
+#endif  // PANCAKE_COLLISION_HPP

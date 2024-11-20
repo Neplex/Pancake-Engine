@@ -25,11 +25,11 @@
 #ifndef PANCAKE_INPUTS_HPP
 #define PANCAKE_INPUTS_HPP
 
-#include "Inputs/Input.hpp"
-#include "Inputs/InputManager.hpp"
-#include "Inputs/Button.hpp"
+#include <Inputs/Button.hpp>
+#include <Inputs/Input.hpp>
+#include <Inputs/InputManager.hpp>
 
-#endif //PANCAKE_INPUTS_HPP
+#endif  // PANCAKE_INPUTS_HPP
 
 /**
  * @defgroup Inputs Inputs

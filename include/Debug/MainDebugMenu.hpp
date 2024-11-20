@@ -25,91 +25,89 @@
 #ifndef PANCAKE_MAINDEBUGMENU_HPP
 #define PANCAKE_MAINDEBUGMENU_HPP
 
-#include <map>
 #include <Debug/Widgets/Console.hpp>
-#include "Imgui/imgui.h"
+#include <map>
+
 #include "Widgets/AppLog.hpp"
+#include "imgui.h"
 
 namespace PancakeEngine {
 
-    /**
-     * @class MainDebugMenu
-     * @brief Display the debug menu bar in top of the screen and all other widgets.
-     */
-    class MainDebugMenu {
-    public:
-        MainDebugMenu() {
+/**
+ * @class MainDebugMenu
+ * @brief Display the debug menu bar in top of the screen and all other
+ * widgets.
+ */
+class MainDebugMenu {
+ public:
+  MainDebugMenu() = default;
+
+  ~MainDebugMenu() {
+    for (const auto& p : loggers) {
+      delete p.second;
+    }
+  }
+  /**
+   * @brief Draw the main debug menu.
+   */
+  void draw() {
+    // Draw the main bar
+    if (ImGui::BeginMainMenuBar()) {
+      if (ImGui::BeginMenu("Console")) {
+        ImGui::MenuItem("Console", nullptr, &consoleToggled);
+        ImGui::EndMenu();
+      }
+
+      if (ImGui::BeginMenu("Loggers")) {
+        for (auto const& logger : loggers) {
+          ImGui::MenuItem(logger.first.c_str(), nullptr, &loggersToggled[logger.first]);
         }
+        ImGui::EndMenu();
+      }
+      ImGui::EndMainMenuBar();
+    }
 
-        ~MainDebugMenu() {
-            for (auto p : loggers) {
-                delete p.second;
-            }
-        }
-        /**
-         * @brief Draw the main debug menu.
-         */
-        void draw()
-        {
-            // Draw the main bar
-            if (ImGui::BeginMainMenuBar()) {
-                if (ImGui::BeginMenu("Console")) {
-                    ImGui::MenuItem("Console", NULL, &consoleToggled);
-                    ImGui::EndMenu();
-                }
-                if (ImGui::BeginMenu("Loggers")) {
-                    auto it = loggers.begin();
-                    for (; it!=loggers.end(); ++it) {
-                        ImGui::MenuItem(it->first.c_str(), NULL, &loggersToggled[it->first]);
-                    }
-                    ImGui::EndMenu();
-                }
-                ImGui::EndMainMenuBar();
-            }
+    // If a menu button is toggled, draw logger
+    auto it = loggersToggled.begin();
+    for (; it != loggersToggled.end(); ++it) {
+      if (it->second) {
+        loggers[it->first]->Draw(it->first.c_str());
+      }
+    }
 
-            // If a menu button is toggled, draw logger
-            auto it = loggersToggled.begin();
-            for (; it!=loggersToggled.end(); ++it) {
-                if (it->second) {
-                    loggers[it->first]->Draw(it->first.c_str());
-                }
-            }
+    // if console is toggled
+    static Console c;
+    console = &c;
+    if (consoleToggled) {
+      console->draw("Console", &consoleToggled);
+    }
+  }
 
-            // if console is toggled
-            static Console c;
-            console = &c;
-            if (consoleToggled) {
-                console->draw("Console", &consoleToggled);
-            }
-        }
+  /**
+   * @brief Add the message to the given logger.
+   * @param name The name of the logger.
+   * @param message The log.
+   */
+  void logLogger(std::string const& name, std::string const& message) { loggers[name]->AddLog("%s", message.c_str()); }
 
-        /**
-         * @brief Add the message to the given logger.
-         * @param name The name of the logger.
-         * @param message The log.
-         */
-        void logLogger(std::string name, std::string message)
-        {
-            loggers[name]->AddLog("%s", message.c_str());
-        }
+  /**
+   * @brief Add an AppLog logger to the menu.
+   * @param name The title of the AppLog and its identifier in #loggers.
+   */
+  void addLogger(const std::string& name) {
+    auto* logger = new AppLog();
+    loggers.emplace(name, logger);
+    loggersToggled.emplace(name, false);
+  }
 
-        /**
-         * @brief Add an AppLog logger to the menu.
-         * @param name The title of the AppLog and its identifier in #loggers.
-         */
-        void addLogger(const std::string& name)
-        {
-            AppLog* logger = new AppLog();
-            loggers.emplace(name, logger);
-            loggersToggled.emplace(name, false);
-        }
+ private:
+  Console* console{};
+  bool consoleToggled = false;
+  std::map<const std::string, AppLog*> loggers;      ///< The name of the logger associated to the logger
+  std::map<const std::string, bool> loggersToggled;  ///< Associate a bool to each logger, if the menu item of
+                                                     ///< a logger is toggled, set the associated bool to
+                                                     ///< true;
+};
+}  // namespace PancakeEngine
 
-    private:
-        Console* console;
-        bool consoleToggled = false;
-        std::map<const std::string, AppLog*> loggers; ///< The name of the logger associated to the logger
-        std::map<const std::string, bool> loggersToggled; ///< Associate a bool to each logger, if the menu item  of a logger is toggled, set the associated bool to true;
-    };
-}
-
-#endif //PANCAKE_MAINDEBUGMENU_HPP
+#endif  // PANCAKE_MAINDEBUGMENU_HPP

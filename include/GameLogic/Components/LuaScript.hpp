@@ -30,40 +30,41 @@
 
 namespace PancakeEngine {
 
-    /**
-     * @class LuaScript
-     * @brief Component that can run a lua script.
-     * @details All component methods will call the lua function with the same name in the current script.
-     * @sa Component Behavior
-     */
-    class LuaScript : public Behavior {
-    public:
-        /**
-         * @brief Set and run a new script
-         * @param uri the uri of the script
-         */
-        void setScript(std::string uri);
+/**
+ * @class LuaScript
+ * @brief Component that can run a lua script.
+ * @details All component methods will call the lua function with the same name
+ * in the current script.
+ * @sa Component Behavior
+ */
+class LuaScript : public Behavior {
+ public:
+  /**
+   * @brief Set and run a new script
+   * @param uri the uri of the script
+   */
+  void setScript(const std::string &uri) const;
 
-        void awake();
-        void start();
-        void update();
-        void lateUpdate();
+  void awake() override;
+  void start() override;
+  void update() override;
+  void lateUpdate() override;
 
-        void OnCollisionEnter(const Collision& collision);
-        void OnCollisionExit(const Collision& collision);
-        void OnTriggerEnter(const Collider& triggered, const Collider& other);
-        void OnTriggerExit(const Collider& triggered, const Collider& other);
+  void OnCollisionEnter(const Collision &collision) override;
+  void OnCollisionExit(const Collision &collision) override;
+  void OnTriggerEnter(const Collider &triggered, const Collider &other) override;
+  void OnTriggerExit(const Collider &triggered, const Collider &other) override;
 
-    private:
-        friend class GameObject;
+ private:
+  friend class GameObject;
 
-        lua_State *L; ///< Lua state machine.
+  lua_State *L;  ///< Lua state machine.
 
-        LuaScript();
-        ~LuaScript();
+  LuaScript();
+  ~LuaScript() override;
 
-        void bindFunctions();
-    };
-}
+  void bindFunctions() const;
+};
+}  // namespace PancakeEngine
 
-#endif // PANCAKE_LUASCRIPT_HPP
+#endif  // PANCAKE_LUASCRIPT_HPP

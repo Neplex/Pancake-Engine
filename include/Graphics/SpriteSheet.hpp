@@ -25,52 +25,54 @@
 #ifndef PANCAKE_SPRITESHEET_HPP
 #define PANCAKE_SPRITESHEET_HPP
 
-
 #include <SFML/Graphics.hpp>
 
 namespace PancakeEngine {
 
-    /**
-     * @class SpriteSheet
-     * @brief Use to create and store a spriteSheet.
-     * @details Can only construct with AssetsManager.
-     * @sa Animation AssetsManager SpriteRenderer
-     */
-    class SpriteSheet {
-    public:
-        /**
-         * @brief Get the sprite at column i, and row j in the spriteSheet.
-         * @param i the column index.
-         * @param j the row index.
-         * @param flip True if the sprite is flip.
-         * @return The sprite.
-         */
-        sf::Sprite getSprite(unsigned i, unsigned j, bool flip = false);
+/**
+ * @class SpriteSheet
+ * @brief Use to create and store a spriteSheet.
+ * @details Can only construct with AssetsManager.
+ * @sa Animation AssetsManager SpriteRenderer
+ */
+class SpriteSheet {
+ public:
+  /**
+   * @brief Get the sprite at column i, and row j in the spriteSheet.
+   * @param i the column index.
+   * @param j the row index.
+   * @param flip True if the sprite is flip.
+   * @return The sprite.
+   */
+  sf::Sprite getSprite(unsigned i, unsigned j, bool flip = false) const;
 
-    private:
-        friend class AssetsManager; ///< The only one can create spriteSheet
+ private:
+  friend class AssetsManager;  ///< The only one can create spriteSheet
 
-        sf::Texture texture;
-        unsigned tile_width, tile_height, margin;
+  sf::Texture texture;
+  unsigned tile_width;
+  unsigned tile_height;
+  unsigned margin;
 
-        /**
-         * @brief Create a SpriteSheet from image 'uri'
-         * @param uri the link to the image
-         * @param tile_w the tile width
-         * @param tile_h the tile height
-         */
-        SpriteSheet(std::string uri, unsigned int tile_w, unsigned int tile_h, unsigned int m = 0);
+  /**
+   * @brief Create a SpriteSheet from image 'uri'
+   * @param uri the link to the image
+   * @param tile_w the tile width
+   * @param tile_h the tile height
+   * @param m
+   */
+  SpriteSheet(const std::string &uri, unsigned int tile_w, unsigned int tile_h, unsigned int m = 0);
 
-        /**
-         * @brief Get the rectangle of sprite at column i, and row j in the
-         * spriteSheet.
-         * @param i the column index.
-         * @param j the row index.
-         * @param flip True if the sprite is flip.
-         * @return The rectangle of sprite.
-         */
-        sf::IntRect getRect(unsigned i, unsigned j, bool flip = false);
-    };
-}
+  /**
+   * @brief Get the rectangle of sprite at column i, and row j in the
+   * spriteSheet.
+   * @param i the column index.
+   * @param j the row index.
+   * @param flip True if the sprite is flip.
+   * @return The rectangle of sprite.
+   */
+  sf::IntRect getRect(unsigned i, unsigned j, bool flip = false) const;
+};
+}  // namespace PancakeEngine
 
-#endif //PANCAKE_SPRITESHEET_HPP
+#endif  // PANCAKE_SPRITESHEET_HPP

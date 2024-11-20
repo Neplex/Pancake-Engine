@@ -27,53 +27,54 @@
 
 #include <GameLogic.hpp>
 
-    /**
-     * @class TransporterScript
-     * @brief Create a component for transporter object
-     */
+/**
+ * @class TransporterScript
+ * @brief Create a component for transporter object
+ */
 class TransporterScript : public PancakeEngine::Behavior {
-public:
-    bool isMoved = false;
-    PancakeEngine::GameObject* gameObjectCollided;
-    /**!
-     * @brief Get collision between two game objects
-     * @param Collision component collide
-     */
-    void OnCollisionEnter(const PancakeEngine::Collision &collision) override {
-        isMoved = true;
-        gameObjectCollided = collision.otherCollider.gameObject;
-    };
-    /**!
-     * @brief Change gameObjectCollided position after physics
-     */
-    void update() override {
-        if(isMoved){
-            if(gameObject->name == "Transporter1") {
-                PancakeEngine::GameObject* go = PancakeEngine::SceneManager::findByName("Transporter2");
-                if(go != NULL) {
-                    sf::Vector2f v2f = go->transform.getWorldPosition();
-                    v2f.x += 70;
-                    gameObjectCollided->transform.setPosition(v2f);
-                }
-            }else if(gameObject->name == "Transporter2"){
-                PancakeEngine::GameObject* go = PancakeEngine::SceneManager::findByName("Transporter3");
-                if(go != NULL) {
-                    sf::Vector2f v2f = go->transform.getWorldPosition();
-                    v2f.x += 70;
-                    gameObjectCollided->transform.setPosition(v2f);
-                }
-            }
-            else if(gameObject->name == "Transporter3"){
-                PancakeEngine::GameObject* go = PancakeEngine::SceneManager::findByName("Transporter1");
-                if(go != NULL) {
-                    sf::Vector2f v2f = go->transform.getWorldPosition();
-                    v2f.x += 70;
-                    gameObjectCollided->transform.setPosition(v2f);
-                }
-            }
-            isMoved=false;
+ public:
+  bool isMoved = false;
+  PancakeEngine::GameObject *gameObjectCollided{};
+  /**!
+   * @brief Get collision between two game objects
+   * @param collision component collide
+   */
+  void OnCollisionEnter(const PancakeEngine::Collision &collision) override {
+    isMoved = true;
+    gameObjectCollided = collision.otherCollider.gameObject;
+  };
+  /**!
+   * @brief Change gameObjectCollided position after physics
+   */
+  void update() override {
+    if (isMoved) {
+      if (gameObject->name == "Transporter1") {
+        PancakeEngine::GameObject const *go = PancakeEngine::SceneManager::findByName("Transporter2");
+        if (go != nullptr) {
+          sf::Vector2f v2f = go->transform.getWorldPosition();
+          v2f.x += 70;
+          gameObjectCollided->transform.setPosition(v2f);
         }
-    };
+
+      } else if (gameObject->name == "Transporter2") {
+        PancakeEngine::GameObject const *go = PancakeEngine::SceneManager::findByName("Transporter3");
+        if (go != nullptr) {
+          sf::Vector2f v2f = go->transform.getWorldPosition();
+          v2f.x += 70;
+          gameObjectCollided->transform.setPosition(v2f);
+        }
+
+      } else if (gameObject->name == "Transporter3") {
+        const PancakeEngine::GameObject *go = PancakeEngine::SceneManager::findByName("Transporter1");
+        if (go != nullptr) {
+          sf::Vector2f v2f = go->transform.getWorldPosition();
+          v2f.x += 70;
+          gameObjectCollided->transform.setPosition(v2f);
+        }
+      }
+      isMoved = false;
+    }
+  };
 };
 
-#endif //PANCAKE_TRANSPORTERSCRIPT_HPP
+#endif  // PANCAKE_TRANSPORTERSCRIPT_HPP

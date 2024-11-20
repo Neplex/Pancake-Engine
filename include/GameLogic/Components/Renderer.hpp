@@ -9,10 +9,10 @@
 #include <SFML/Graphics/Sprite.hpp>
 
 namespace PancakeEngine {
-    class Renderer : public Component {
-    public:
-        virtual const sf::Sprite getSprite() const = 0;
-    };
-}
+class Renderer : public Component {
+ public:
+  virtual sf::Sprite getSprite() const = 0;
+};
+}  // namespace PancakeEngine
 
-#endif //PANCAKE_RENDERER_HPP
+#endif  // PANCAKE_RENDERER_HPP

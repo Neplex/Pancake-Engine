@@ -26,57 +26,56 @@
 #define PANCAKE_DATASTORAGE_HPP
 
 #include <GameLogic/Components/Component.hpp>
-#include <cassert>
 #include <map>
 
-#define SET_DATA(T)                                                            \
-    void set(std::string name, T data) {                                       \
-        datas[name] = new T();                                                 \
-        *((T *)datas[name]) = data;                                            \
-    }
+#define SET_DATA(T)                           \
+  void set(std::string const &name, T data) { \
+    data_map[name] = new T();                 \
+    *((T *)data_map[name]) = data;            \
+  }
 
 namespace PancakeEngine {
-    /**
-     * @class DataStorage
-     * @brief Component made for store some datas in gameObject.
-     * @sa Component
-     */
-    class DataStorage : public Component {
-    public:
-        SET_DATA(int)
+/**
+ * @class DataStorage
+ * @brief Component made for store some data in gameObject.
+ * @sa Component
+ */
+class DataStorage : public Component {
+ public:
+  SET_DATA(int)
 
-        SET_DATA(float)
+  SET_DATA(float)
 
-        SET_DATA(unsigned)
+  SET_DATA(unsigned)
 
-        SET_DATA(long)
+  SET_DATA(long)
 
-        SET_DATA(double)
+  SET_DATA(double)
 
-        SET_DATA(bool)
+  SET_DATA(bool)
 
-        SET_DATA(char)
+  SET_DATA(char)
 
-        SET_DATA(char*)
+  SET_DATA(char *)
 
-        SET_DATA(std::string)
+  SET_DATA(std::string)
 
-        SET_DATA(void *)
+  SET_DATA(void *)
 
-        /**
-         * @brief Get a data by name.
-         * @tparam T the type you want to get.
-         * @param name the name of the data.
-         * @return the data with the name of type T.
-         */
-        template<typename T>
-        T get(std::string name) {
-            return *((T *) datas[name]);
-        }
+  /**
+   * @brief Get a data by name.
+   * @tparam T the type you want to get.
+   * @param name the name of the data.
+   * @return the data with the name of type T.
+   */
+  template <typename T>
+  T get(std::string const &name) {
+    return *static_cast<T *>(data_map[name]);
+  }
 
-    private:
-        std::map<std::string, void *> datas;
-    };
-}
+ private:
+  std::map<std::string, void *> data_map;
+};
+}  // namespace PancakeEngine
 
-#endif // PANCAKE_DATASTORAGE_HPP
+#endif  // PANCAKE_DATASTORAGE_HPP
