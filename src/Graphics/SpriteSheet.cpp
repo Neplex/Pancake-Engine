@@ -17,12 +17,23 @@ sf::Sprite SpriteSheet::getSprite(const unsigned i, const unsigned j, const bool
   sf::Sprite sprite;
   sprite.setTexture(texture);
   sprite.setTextureRect(getRect(i, j, flip));
-  sprite.setOrigin(tile_width / 2, tile_height / 2);
+  sprite.setOrigin(static_cast<float>(tile_width) / 2, static_cast<float>(tile_height) / 2);
   return sprite;
 }
 
 sf::IntRect SpriteSheet::getRect(const unsigned i, const unsigned j, const bool flip) const {
-  if (flip) return {(tile_width + margin) * (i + 1), (tile_height + margin) * j, -tile_width, tile_height};
+  if (flip)
+    return {
+        static_cast<int>((tile_width + margin) * (i + 1)),
+        static_cast<int>((tile_height + margin) * j),
+        -static_cast<int>(tile_width),
+        static_cast<int>(tile_height),
+    };
 
-  return {(tile_width + margin) * i, (tile_height + margin) * j, tile_width, tile_height};
+  return {
+      static_cast<int>((tile_width + margin) * i),
+      static_cast<int>((tile_height + margin) * j),
+      static_cast<int>(tile_width),
+      static_cast<int>(tile_height),
+  };
 }
