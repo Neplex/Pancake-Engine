@@ -30,33 +30,29 @@
 
 namespace PancakeEngine {
 
-    /**
-     * @class Behavior
-     * @brief Behavior is the base class from which every scripts should derives.
-     */
-    class Behavior : public Component {
+/**
+ * @class Behavior
+ * @brief Behavior is the base class from which every script should derive.
+ */
+class Behavior : public Component {
+ public:
+  virtual void OnCollisionEnter(const Collision &collision) {};
+  virtual void OnCollisionExit(const Collision &collision) {};
+  virtual void OnTriggerEnter(const Collider &triggered, const Collider &other) {};
+  virtual void OnTriggerExit(const Collider &triggered, const Collider &other) {};
+  /**
+   * Destroy the game object after all updates or after all late update.
+   * @param go The game object to destroy
+   */
+  void destroy(GameObject &go);
 
-    public:
+  /**
+   * Destroy the component after all updates or after all late update.
+   * @param c The component to destroy.
+   */
+  void destroy(Component &c);
+};
 
-        virtual void OnCollisionEnter(const Collision& collision) {};
-        virtual void OnCollisionExit(const Collision& collision) {};
-        virtual void OnTriggerEnter(const Collider& triggered, const Collider& other) {};
-        virtual void OnTriggerExit(const Collider& triggered, const Collider& other) {};
-        /**
-         * Destroy the game object after all updates or after all late update.
-         * @param go The game object to destroy
-         */
-        void destroy(GameObject& go);
+}  // namespace PancakeEngine
 
-        /**
-         * Destroy the component after all updates or after all late update.
-         * @param c The component to destroy.
-         */
-        void destroy(Component& c);
-
-    };
-
-
-}
-
-#endif //PANCAKE_BEHAVIOR_HPP
+#endif  // PANCAKE_BEHAVIOR_HPP

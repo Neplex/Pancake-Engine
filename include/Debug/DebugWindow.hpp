@@ -5,8 +5,8 @@
 #ifndef PANCAKE_DEBUGWINDOW_HPP
 #define PANCAKE_DEBUGWINDOW_HPP
 
-
-// Demonstrate the various window flags. Typically you would just use the default.
+// Demonstrate the various window flags. Typically you would just use the
+// default.
 /*ImGuiWindowFlags window_flags = 0;
 if (no_titlebar)  window_flags |= ImGuiWindowFlags_NoTitleBar;
 if (!no_border)   window_flags |= ImGuiWindowFlags_ShowBorders;
@@ -20,12 +20,11 @@ if (!no_menu)     window_flags |= ImGuiWindowFlags_MenuBar;
 
     ImGuiWindowFlags window_flags = 0;
     window_flags |= ImGuiWindowFlags_MenuBar;
-    ImGui::Begin("Loggers", nullptr, window_flags);     // Right align, keep 140 pixels for labels
+    ImGui::Begin("Loggers", nullptr, window_flags);     // Right align, keep
+140 pixels for labels
 
  */
 
-class DebugWindow {
+class DebugWindow {};
 
-};
-
-#endif //PANCAKE_DEBUGWINDOW_HPP
+#endif  // PANCAKE_DEBUGWINDOW_HPP

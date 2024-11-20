@@ -7,62 +7,65 @@
 using namespace PancakeEngine;
 
 void Scene::awake() {
-    //for (GameObject* l : layers) l->awake();
-    gui->awake();
+  // for (GameObject* l : layers) l->awake();
+  gui->awake();
 }
 
 void Scene::start() {
-    //for (GameObject* l : layers) l->start();
-    gui->start();
+  // for (GameObject* l : layers) l->start();
+  gui->start();
 }
 
 void Scene::update() {
-    for (GameObject* go : toAwake) {
-        go->awake();
+  for (GameObject *go : toAwake) {
+    go->awake();
+  }
+  for (GameObject *go : toAwake) {
+    go->start();
+  }
+
+  toAwake.clear();
+
+  for (const GameObject *layer : layers) {
+    for (GameObject *go : layer->getChilds()) {
+      go->update();
+      if (go->toDestroy) {
+        toDestroy.push_back(go);
+      }
     }
-    for (GameObject* go : toAwake) {
-        go->start();
+  }
+
+  for (GameObject *go : gui->getChilds()) {
+    go->update();
+    if (go->toDestroy) {
+      toDestroy.push_back(go);
     }
-    toAwake.clear();
-    for (GameObject* layer : layers) {
-        for (GameObject* go : layer->getChilds()) {
-            go->update();
-            if (go->toDestroy) {
-                toDestroy.push_back(go);
-            }
-        }
-    }
-    for (GameObject* go : gui->getChilds()) {
-        go->update();
-        if (go->toDestroy) {
-            toDestroy.push_back(go);
-        }
-    }
-    destroyGameObjects();
+  }
+  destroyGameObjects();
 }
 
 void Scene::lateUpdate() {
-    for (GameObject* layer : layers) {
-        for (GameObject* go : layer->getChilds()) {
-            go->lateUpdate();
-            if (go->toDestroy) {
-                toDestroy.push_back(go);
-            }
-        }
+  for (const GameObject *layer : layers) {
+    for (GameObject *go : layer->getChilds()) {
+      go->lateUpdate();
+      if (go->toDestroy) {
+        toDestroy.push_back(go);
+      }
     }
-    for (GameObject* go : gui->getChilds()) {
-        go->lateUpdate();
-        if (go->toDestroy) {
-            toDestroy.push_back(go);
-        }
+  }
+
+  for (GameObject *go : gui->getChilds()) {
+    go->lateUpdate();
+    if (go->toDestroy) {
+      toDestroy.push_back(go);
     }
-    destroyGameObjects();
+  }
+  destroyGameObjects();
 }
 
 void Scene::destroyGameObjects() {
-    for (unsigned i = 0; i < toDestroy.size(); ++i) {
-        delete toDestroy[i];
-    }
-    toDestroy.clear();
+  for (const auto &i : toDestroy) {
+    delete i;
+  }
+  toDestroy.clear();
 }
-

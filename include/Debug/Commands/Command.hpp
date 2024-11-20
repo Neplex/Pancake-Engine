@@ -5,24 +5,24 @@
 #ifndef PANCAKE_COMMAND_HPP
 #define PANCAKE_COMMAND_HPP
 
-#include <iostream>
-#include <Debug/Widgets/Console.hpp>
+#include <string>
+#include <vector>
 
 namespace PancakeEngine {
-    class Console;
-    class Command {
-    public:
-        std::string description;
-        std::string help;
+class Console;
+class Command {
+ public:
+  std::string description;
+  std::string help;
 
-        virtual void execute(std::vector<std::string>& args) = 0;
+  virtual void execute(std::vector<std::string> &args) = 0;
 
-        Command(Console& c) : console(c) {}
-        virtual ~Command() {}
+  explicit Command(Console &c) : console(c) {}
+  virtual ~Command() = default;
 
-    protected:
-        Console& console;
-    };
-}
+ protected:
+  Console &console;
+};
+}  // namespace PancakeEngine
 
-#endif // PANCAKE_COMMAND_HPP
+#endif  // PANCAKE_COMMAND_HPP

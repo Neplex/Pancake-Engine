@@ -7,13 +7,16 @@
 
 using namespace PancakeEngine;
 
-TileMap::TileMap(unsigned tile_w, unsigned tile_h, unsigned w, unsigned h) : tile_width(tile_w), tile_height(tile_h), width(w), height(h), map() {}
+TileMap::TileMap(const unsigned tile_width, const unsigned tile_height, const unsigned width, const unsigned height)
+    : tile_width(tile_width), tile_height(tile_height), width(width), height(height) {}
 
-void TileMap::addTile(SpriteSheet &sheet, unsigned i, unsigned j, unsigned x, unsigned y) {
-    assert(x < width && y < height); ///< The position is out of the map
-    Tile tile;
-    tile.sheet = &sheet;
-    tile.i = i; tile.j = j;
-    tile.x = x; tile.y = y;
-    map.push_back(tile);
+void TileMap::addTile(SpriteSheet &sheet, const unsigned i, const unsigned j, const unsigned x, const unsigned y) {
+  assert(x < width && y < height);  ///< The position is out of the map
+  Tile tile{};
+  tile.sheet = &sheet;
+  tile.i = i;
+  tile.j = j;
+  tile.x = x;
+  tile.y = y;
+  map.push_back(tile);
 }

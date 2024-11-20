@@ -24,47 +24,47 @@
 
 #ifndef PANCAKE_TMXPARSER_HPP
 #define PANCAKE_TMXPARSER_HPP
-#include <string>
-#include <vector>
-#include <utility>
-#include <map>
-#include <Tmx.h>
-#include "iostream"
-/**
-     * @class Parser
-     * @brief Use to parse a file and retrieve all file data
-     */
-class Parser
-{
-public:
-    /**!
-     * @brief Create a Parse object and load the file
-     * @param filename file to parse
-    */
-    Parser( const char* filename ){load( filename );};
-    virtual ~Parser(){delete map;};
-    /**!
-     * @brief Parse the file in param
-     * @param filename file to parse
-     * @return boolean true if there is no error
-    */
-    bool load( const char* filename );
-    /**!
-     * @brief load all the layer
-     * @return vector of layer
-    */
-    std::vector<Tmx::TileLayer*> loadLayer();
-    /**!
-     * @brief Contains all the map data
-    */
-    Tmx::Map * map;
-    /**!
-     * @brief load all the layer
-     * @return vector of object
-    */
-    std::vector<Tmx::Object> loadObjectGroups();
 
+#include <Tmx.h>
+
+#include <vector>
+
+/**
+ * @class Parser
+ * @brief Use to parse a file and retrieve all file data
+ */
+class Parser {
+ public:
+  /**!
+   * @brief Create a Parse object and load the file
+   * @param filename file to parse
+   */
+  explicit Parser(const char *filename) { load(filename); };
+  virtual ~Parser() { delete map; };
+
+  /**!
+   * @brief Parse the file in param
+   * @param filename file to parse
+   * @return boolean true if there is no error
+   */
+  bool load(const char *filename);
+
+  /**!
+   * @brief load all the layer
+   * @return vector of layer
+   */
+  std::vector<Tmx::TileLayer *> loadLayer() const;
+
+  /**!
+   * @brief Contains all the map data
+   */
+  Tmx::Map *map{};
+
+  /**!
+   * @brief load all the layer
+   * @return vector of object
+   */
+  std::vector<Tmx::Object> loadObjectGroups() const;
 };
 
-
-#endif //PANCAKE_TMXPARSER_HPP
+#endif  // PANCAKE_TMXPARSER_HPP

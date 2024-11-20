@@ -8,29 +8,34 @@
 #include <GameLogic.hpp>
 #include <Graphics.hpp>
 
-#define SIZE 70
-#define WIDTH 60
-#define HEIGHT 6
+constexpr unsigned int SIZE = 70;
+constexpr unsigned int WIDTH = 60;
+constexpr unsigned int HEIGHT = 6;
 
-    class Ground : public PancakeEngine::GameObject {
-    public:
-        Ground() : GameObject() {
-            name = "Ground";
+class Ground : public PancakeEngine::GameObject {
+ public:
+  virtual ~Ground() = default;
 
-            PancakeEngine::BoxCollider& collider = addComponent<PancakeEngine::BoxCollider>();
-            collider.height = HEIGHT * SIZE;
-            collider.width = SIZE * WIDTH;
+  Ground() {
+    name = "Ground";
 
-            PancakeEngine::SpriteSheet& sheet = PancakeEngine::AssetsManager::getSpriteSheet("tiles");
+    auto &collider = addComponent<PancakeEngine::BoxCollider>();
+    collider.height = HEIGHT * SIZE;
+    collider.width = SIZE * WIDTH;
 
-            PancakeEngine::TileMap& tileMap = PancakeEngine::AssetsManager::createTileMap("ground", SIZE, SIZE, WIDTH, HEIGHT);
-            for (unsigned x = 0; x < WIDTH; ++x) tileMap.addTile(sheet, 2, 6, x, 0);
-            for (unsigned x = 0; x < WIDTH; ++x)
-                for (unsigned y = 1; y < HEIGHT; ++y) tileMap.addTile(sheet, 4, 7, x, y);
+    PancakeEngine::SpriteSheet &sheet = PancakeEngine::AssetsManager::getSpriteSheet("tiles");
 
-            addComponent<PancakeEngine::TileMapRenderer>().setTileMap(tileMap);
-        }
+    PancakeEngine::TileMap &tileMap = PancakeEngine::AssetsManager::createTileMap("ground", SIZE, SIZE, WIDTH, HEIGHT);
+    for (unsigned x = 0; x < WIDTH; ++x) {
+      tileMap.addTile(sheet, 2, 6, x, 0);
 
-    };
+      for (unsigned y = 1; y < HEIGHT; ++y) {
+        tileMap.addTile(sheet, 4, 7, x, y);
+      }
+    }
 
-#endif //PANCAKE_GROUND_HPP
+    addComponent<PancakeEngine::TileMapRenderer>().setTileMap(tileMap);
+  }
+};
+
+#endif  // PANCAKE_GROUND_HPP

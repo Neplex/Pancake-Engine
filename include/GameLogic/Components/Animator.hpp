@@ -25,56 +25,59 @@
 #ifndef PANCAKE_ANIMATOR_HPP
 #define PANCAKE_ANIMATOR_HPP
 
+#include <functional>
 #include <map>
+
 #include "AnimationRenderer.hpp"
 
 namespace PancakeEngine {
 
-    /**
-     * @class Animator
-     * @brief An animator display a list of animations and switch between.
-     * @sa Component Animation
-     */
-    class Animator : public Renderer {
-    public:
-        ~Animator();
+/**
+ * @class Animator
+ * @brief An animator display a list of animations and switch between.
+ * @sa Component Animation
+ */
+class Animator : public Renderer {
+ public:
+  ~Animator() override;
 
-        /**
-         * @brief Add animation
-         * @param name the name of the state
-         * @param animation the animation of the state
-         * @param handler the handler of the state
-         */
-        void addAnimation(std::string name, Animation& animation, std::string (*handler)(GameObject&));
+  /**
+   * @brief Add animation
+   * @param name the name of the state
+   * @param animation the animation of the state
+   * @param handler the handler of the state
+   */
+  void addAnimation(const std::string &name, Animation &animation,
+                    const std::function<std::string(GameObject &)> &handler);
 
-        /**
-         * @brief Flip the animation
-         * @param b True to flip animation
-         */
-        void flip(bool b = true);
+  /**
+   * @brief Flip the animation
+   * @param b True to flip animation
+   */
+  void flip(bool b = true);
 
-        /**
-         * @brief Get the animation associate with the current GameObject state
-         * @return the current animation
-         */
-        const AnimationRenderer* getCurrentAnimation() const;
+  /**
+   * @brief Get the animation associate with the current GameObject state
+   * @return the current animation
+   */
+  const AnimationRenderer *getCurrentAnimation() const;
 
-        void update() override;
+  void update() override;
 
-        const sf::Sprite getSprite() const override;
+  sf::Sprite getSprite() const override;
 
-    private:
-        /**
-         * @brief Structure use to store an animator state
-         */
-        struct State {
-            AnimationRenderer * animation;
-            std::string (*handler)(GameObject&);
-        };
-        std::map<std::string, State> states; ///< The list of states
-        std::string currentState = ""; ///< Name of the current state
-        bool isFlip = false;
-    };
-}
+ private:
+  /**
+   * @brief Structure use to store an animator state
+   */
+  struct State {
+    AnimationRenderer *animation;
+    std::function<std::string(GameObject &)> handler;
+  };
+  std::map<std::string, State> states;  ///< The list of states
+  std::string currentState;             ///< Name of the current state
+  bool isFlip = false;
+};
+}  // namespace PancakeEngine
 
-#endif //PANCAKE_ANIMATOR_HPP
+#endif  // PANCAKE_ANIMATOR_HPP

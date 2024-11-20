@@ -25,54 +25,52 @@
 #ifndef PANCAKE_ENGINE_HPP
 #define PANCAKE_ENGINE_HPP
 
-
-#include "SceneManager.hpp"
-#include "Graphics/Window.hpp"
-#include "Physics/PhysicsEngine.hpp"
-#include "Time.hpp"
-#include "Inputs/InputManager.hpp"
+#include <Graphics/Window.hpp>
+#include <Inputs/InputManager.hpp>
+#include <Physics/PhysicsEngine.hpp>
+#include <SceneManager.hpp>
+#include <Time.hpp>
 
 namespace PancakeEngine {
 
-    /**
-     * @class Engine
-     * @brief It is the engine itself.
-     * @details Build an instance to init the engine.
-     * You can after that run the engine.
-     * Engine is a friend of many classes.
-     * The engine handle inputs at full speed, call the engine render at full speed, but update with a fixed timestep.
-     */
-    class Engine {
+/**
+ * @class Engine
+ * @brief It is the engine itself.
+ * @details Build an instance to init the engine.
+ * You can after that run the engine.
+ * Engine is a friend of many classes.
+ * The engine handle inputs at full speed, call the engine render at full
+ * speed, but update with a fixed time step.
+ */
+class Engine {
+ public:
+  const double SECONDS_PER_UPDATE = 1.0 / 100.0;  ///< Time between two updates
 
-    public:
-        const double SECONDS_PER_UPDATE = 1.0/100.0; ///< Time between two updates
+  /**
+   * @brief Init the engine.
+   */
+  Engine();
+  ~Engine() {
+    InputManager::destroyButtons();
+    delete SceneManager::getCurrentScene();
+  }
 
-        /**
-         * @brief Init the engine.
-         */
-        Engine();
-        ~Engine() {
-            InputManager::destroyButtons();
-            delete SceneManager::getCurrentScene();
-        }
+  /**
+   * @brief Run the game loop of the engine.
+   */
+  void run();
 
-        /**
-         * @brief Run the game loop of the engine.
-         */
-        void run();
+  Window window;
+  PhysicsEngine physicsEngine;
+  Time time;
 
-        Window window;
-        PhysicsEngine physicsEngine;
-        Time time;
+ private:
+  /**
+   * @brief Update the engine (physics and logic) with a fixed timestep.
+   */
+  void update();
+};
 
-    private:
+}  // namespace PancakeEngine
 
-        /**
-         * @brief Update the engine (physics and logic) with a fixed timestep.
-         */
-        void update();
-    };
-
-}
-
-#endif //PANCAKE_ENGINE_HPP
+#endif  // PANCAKE_ENGINE_HPP

@@ -27,24 +27,21 @@
 
 namespace PancakeEngine {
 
-    /**
-     * @brief Provide some useful information about time and allow to rescale it.
-     */
-    class Time {
-    public:
-        /**
-         * @brief The time in seconds it took to complete the last frame.
-         * @return The time in seconds it took to complete the last frame.
-         */
-        static float getDeltaTime()
-        {
-            return Time::deltaTime;
-        }
+/**
+ * @brief Provide some useful information about time and allow to rescale it.
+ */
+class Time {
+ public:
+  /**
+   * @brief The time in seconds it took to complete the last frame.
+   * @return The time in seconds it took to complete the last frame.
+   */
+  static double getDeltaTime() { return Time::deltaTime; }
 
-    private:
-        friend class Engine; ///< The engine is the only one to change the deltatime.
+ private:
+  friend class Engine;  ///< The engine is the only one to change the deltatime.
 
-        static double deltaTime; ///< Time between two udpates.
-    };
-}
-#endif //PANCAKE_TIME_HPP
+  static double deltaTime;  ///< Time between two udpates.
+};
+}  // namespace PancakeEngine
+#endif  // PANCAKE_TIME_HPP

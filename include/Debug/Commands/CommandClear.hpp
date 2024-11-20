@@ -5,19 +5,18 @@
 #ifndef PANCAKE_COMMANDCLEAR_HPP
 #define PANCAKE_COMMANDCLEAR_HPP
 
-#include "Command.hpp"
+#include <Debug/Commands/Command.hpp>
+#include <Debug/Widgets/Console.hpp>
+#include <string>
+#include <vector>
 
 namespace PancakeEngine {
-    class CommandClear : public Command {
-    public:
-        CommandClear(Console& c) : Command(c) {
-            description = help = "Clear screen";
-        }
+class CommandClear : public Command {
+ public:
+  explicit CommandClear(Console &c) : Command(c) { description = help = "Clear screen"; }
 
-        void execute(std::vector<std::string> &args) override {
-            console.clear();
-        }
-    };
-}
+  void execute(std::vector<std::string> &args) override { console.clear(); }
+};
+}  // namespace PancakeEngine
 
-#endif //PANCAKE_COMMANDCLEAR_HPP
+#endif  // PANCAKE_COMMANDCLEAR_HPP

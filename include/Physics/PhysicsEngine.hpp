@@ -26,64 +26,65 @@
 #define PANCAKE_PHYSICSENGINE_HPP
 
 #include <box2d/box2d.h>
-#include "../GameLogic/GameObject.hpp"
-#include "../GameLogic/Components/BoxCollider.hpp"
-#include "PhysicsListener.hpp"
+
+#include <GameLogic/GameObject.hpp>
+#include <Physics/PhysicsListener.hpp>
 
 namespace PancakeEngine {
 
-    class Collider;
-    class Rigidbody;
+class Collider;
+class Rigidbody;
 
-    /**
-    * @brief Provide an interface to interact with the box2D physics engine.
-    */
-    class PhysicsEngine {
+/**
+ * @brief Provide an interface to interact with the box2D physics engine.
+ */
+class PhysicsEngine {
+ public:
+  static constexpr int velocityIterations = 8;  ///< how strongly to correct velocity.
+  static constexpr int positionIterations = 3;  ///< how strongly to correct position.
+  static int numberPixelsPerMeter;              ///< how to rescale gameObjects positions
+                                                ///< and sizes to look good in the engine.
 
-    public:
-        static const int velocityIterations = 8; ///< how strongly to correct velocity.
-        static const int positionIterations = 3; ///< how strongly to correct position.
-        static int numberPixelsPerMeter; ///< how to rescale gameObjects positions and sizes to look good in the engine.
+  PhysicsEngine();
 
-        PhysicsEngine();
+  ~PhysicsEngine();
 
-        ~PhysicsEngine();
+  /**
+   * @brief Simulate physics for the given time.
+   * @param dt The length of time passed to simulate (seconds).
+   */
+  void update(float dt);
 
-        /**
-         * @brief Simulate physics for the given time.
-         * @param dt The length of time passed to simulate (seconds).
-         */
-        void update(float dt);
+  /**
+   * @brief Add a static body to the physics world according to a given
+   * collider.
+   * @details That allows to have other game object with rigid body to collide
+   * this object. Add all colliders of the game object on the same body.
+   * @param c The collider of the object to create in the world.
+   */
+  void addStaticBodyToPhysicsWorld(Collider &c);
 
-        /**
-         * @brief Add a static body to the physics world according to a given collider.
-         * @details That allows to have other gameobject with rigidbody to collide this object.
-         * Add all colliders of the gameobject on the same body.
-         * @param c The collider of the object to create in the world.
-         */
-        void addStaticBodyToPhysicsWorld(Collider& c);
+  /**
+   * @brief Add a rigid body to the physics world.
+   * It can be dynamic, static or kinematic.
+   * @param rb The rigid body of the game object.
+   */
+  void addRigidBodyToPhysicsWorld(Rigidbody &rb);
 
-        /**
-         * @brief Add a rigidbody to the physics world.
-         * It can be dynamic, static or kinematic.
-         * @param rb The rigibody of the gameobject.
-         */
-        void addRigidBodyToPhysicsWorld(Rigidbody& rb);
+  void removeBody(b2Body *body);
 
-        void removeBody(b2Body* body);
+  void setPosition(const sf::Vector2f &pos, b2Body &body);
 
-        void setPosition(const sf::Vector2f& pos, b2Body& body);
+  void setRotation(float angle, b2Body &body);
 
-        void setRotation(const float angle, b2Body& body);
+  void resetWorld();
 
-        void resetWorld();
+ private:
+  b2World world;  ///< the physics world of box2D
+  PhysicsListener physicsListener;
 
-    private:
-        b2World world; ///< the physics world of box2D
-        PhysicsListener physicsListener;
+  static void createFixtures(const GameObject &go, b2Body &body);
+};
+}  // namespace PancakeEngine
 
-        void createFixtures(const GameObject& go, b2Body& body);
-    };
-}
-
-#endif //PANCAKE_PHYSICSENGINE_HPP
+#endif  // PANCAKE_PHYSICSENGINE_HPP

@@ -30,59 +30,59 @@
 
 namespace PancakeEngine {
 
-    /**
-     * @class SpriteRenderer
-     * @brief Attach a sprite on a GameObject.
-     * @sa Component Renderer SpriteSheet
-     */
-    class SpriteRenderer : public Renderer {
-    public:
-        /**
-         * @brief Construct an SpriteRenderer with a default SpriteSheet and
-         * a default size (32, 32)
-         * @sa AssetsManager
-         */
-        SpriteRenderer();
+/**
+ * @class SpriteRenderer
+ * @brief Attach a sprite on a GameObject.
+ * @sa Component Renderer SpriteSheet
+ */
+class SpriteRenderer : public Renderer {
+ public:
+  /**
+   * @brief Construct an SpriteRenderer with a default SpriteSheet and
+   * a default size (32, 32)
+   * @sa AssetsManager
+   */
+  SpriteRenderer();
 
-        /**
-         * @brief Set sprite from a SpriteSheet 'sheet'.
-         * Take the sprite at the column i and row j.
-         * @param sheet the SpriteSheet
-         * @param i the column index
-         * @param j the row index
-         */
-        void setSprite(SpriteSheet& sheet, unsigned i, unsigned j);
+  /**
+   * @brief Set sprite from a SpriteSheet 'sheet'.
+   * Take the sprite at the column i and row j.
+   * @param sheet the SpriteSheet
+   * @param i the column index
+   * @param j the row index
+   */
+  void setSprite(SpriteSheet &sheet, unsigned i, unsigned j);
 
-        /**
-         * @brief Flip the sprite.
-         * @param b True to flip sprite
-         */
-        void flip(bool b = true);
+  /**
+   * @brief Flip the sprite.
+   * @param b True to flip sprite
+   */
+  void flip(bool b = true);
 
-        /**
-         * @brief Set the position of the sprite relative to the parent
-         * @param position the position relative to the parent
-         */
-        void setPosition(sf::Vector2f position);
+  /**
+   * @brief Set the position of the sprite relative to the parent
+   * @param position the position relative to the parent
+   */
+  void setPosition(sf::Vector2f position);
 
-        /**
-         * @brief Set the rotation of the sprite relative to the parent
-         * @param r the rotation relative to the parent
-         */
-        void setRotation(float r);
+  /**
+   * @brief Set the rotation of the sprite relative to the parent
+   * @param r the rotation relative to the parent
+   */
+  void setRotation(float r);
 
-        /**
-         * @brief Set the scale of the sprite
-         * @param scale the scale factor
-         */
-        void setScale(sf::Vector2f scale);
+  /**
+   * @brief Set the scale of the sprite
+   * @param scale the scale factor
+   */
+  void setScale(sf::Vector2f scale);
 
-        const sf::Sprite getSprite() const override;
+  sf::Sprite getSprite() const override;
 
-    private:
-        bool isFlip;
-        sf::Sprite sprite;
-    };
-}
+ private:
+  bool isFlip;
+  sf::Sprite sprite;
+};
+}  // namespace PancakeEngine
 
-#endif //PANCAKE_SPRITERENDERER_HPP
+#endif  // PANCAKE_SPRITERENDERER_HPP

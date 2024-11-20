@@ -7,48 +7,38 @@
 
 #include <GameLogic.hpp>
 
-class Health : public PancakeEngine::Behavior  {
+class Health : public PancakeEngine::Behavior {
+ public:
+  Health() : Behavior() { this->hp = this->maxHp = 6; }
 
-public:
+  void start() override {}
 
-    Health() : PancakeEngine::Behavior(), maxHp(6), hp(6) {
+  bool isDead() const { return dead; }
 
+  unsigned getHp() const { return hp; }
+
+  void kill() {
+    dead = true;
+    hp = 0;
+  }
+
+  void reSpawn() {
+    hp = maxHp;
+    dead = false;
+  }
+
+  void makeDamages(int amount) {
+    hp -= amount;
+    if (hp <= 0) {
+      hp = 0;
+      dead = true;
     }
+  }
 
-    void start() override {
-
-    }
-
-    bool isDead() {
-        return dead;
-    }
-
-    unsigned getHp() {
-        return hp;
-    }
-
-    void kill() {
-        dead = true;
-        hp = 0;
-    }
-
-    void reSpawn() {
-        hp = maxHp;
-        dead = false;
-    }
-
-    void makeDamages(int amount) {
-        hp -= amount;
-        if (hp <= 0) {
-            hp = 0;
-            dead = true;
-        }
-    }
-
-private:
-    unsigned int maxHp;
-    unsigned int hp;
-    bool dead = false;
+ private:
+  unsigned int maxHp;
+  unsigned int hp;
+  bool dead = false;
 };
 
-#endif //PANCAKE_HEALTH_HPP
+#endif  // PANCAKE_HEALTH_HPP

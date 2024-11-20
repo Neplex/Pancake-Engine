@@ -28,32 +28,35 @@
 #include <GameLogic.hpp>
 #include <User/Behaviors/TrampolineScript.hpp>
 
-    /**
-     * @class Transporter
-     * @brief Create a prefab trampoline
-     */
-    class Trampoline : public PancakeEngine::GameObject{
-    public:
-        Trampoline(){
-            name = "Trampoline";
-                PancakeEngine::BoxCollider& bcBottom = addComponent<PancakeEngine::BoxCollider>();
-            bcBottom.width = 70;
-            bcBottom.height = 30;
-            bcBottom.offset = sf::Vector2f(0,20);
-            bcBottom.density = 15;
-                PancakeEngine::BoxCollider& bcTop = addComponent<PancakeEngine::BoxCollider>();
-            bcTop.width = 60;
-            bcTop.height = 10;
-            bcTop.offset = sf::Vector2f(0,0);
-            bcTop.density = 15;
-            bcTop.bounciness = 1.1;
-            transform.setPosition(sf::Vector2f(100, -100));
-            transform.setRotation(0);
+/**
+ * @class Transporter
+ * @brief Create a prefab trampoline
+ */
+class Trampoline : public PancakeEngine::GameObject {
+ public:
+  virtual ~Trampoline() = default;
 
-            addComponent<PancakeEngine::SpriteRenderer>().setSprite(
-                    PancakeEngine::AssetsManager::getSpriteSheet("items"), 0, 6
-            );
-            addComponent<TrampolineScript>();
-        }
-    };
-#endif //PANCAKE_TRAMPOLINE_HPP
+  Trampoline() {
+    name = "Trampoline";
+    auto &bcBottom = addComponent<PancakeEngine::BoxCollider>();
+    bcBottom.width = 70;
+    bcBottom.height = 30;
+    bcBottom.offset = sf::Vector2f(0, 20);
+    bcBottom.density = 15;
+
+    auto &bcTop = addComponent<PancakeEngine::BoxCollider>();
+    bcTop.width = 60;
+    bcTop.height = 10;
+    bcTop.offset = sf::Vector2f(0, 0);
+    bcTop.density = 15;
+    bcTop.bounciness = 1.1;
+    transform.setPosition(sf::Vector2f(100, -100));
+    transform.setRotation(0);
+
+    auto &sr = addComponent<PancakeEngine::SpriteRenderer>();
+    sr.setSprite(PancakeEngine::AssetsManager::getSpriteSheet("items"), 0, 6);
+
+    addComponent<TrampolineScript>();
+  }
+};
+#endif  // PANCAKE_TRAMPOLINE_HPP

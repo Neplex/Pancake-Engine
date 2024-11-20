@@ -25,72 +25,72 @@
 #ifndef PANCAKE_WINDOW_HPP
 #define PANCAKE_WINDOW_HPP
 
-#include <SFML/Graphics/RenderWindow.hpp>
-#include <SceneManager.hpp>
 #include <GameLogic/Components/BoxCollider.hpp>
 #include <GameLogic/Components/CircleCollider.hpp>
 #include <GameLogic/Components/Renderer.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SceneManager.hpp>
 
 namespace PancakeEngine {
 
-    /**
-     * @class Window
-     * @brief The game window.
-     */
-    class Window {
-    public:
-        /**
-         * @brief Construct a window.
-         * @param s a scene manager.
-         * @sa SceneManager
-         */
-        Window();
+/**
+ * @class Window
+ * @brief The game window.
+ */
+class Window {
+ public:
+  /**
+   * @brief Construct a window.
+   * @param s a scene manager.
+   * @sa SceneManager
+   */
+  Window();
 
-        /**
-         * @brief Return the state of the window (open/close)
-         * @return True if the window is closed, else return False
-         */
-        bool isClosed() { return !window.isOpen(); }
+  /**
+   * @brief Return the state of the window (open/close)
+   * @return True if the window is closed, else return False
+   */
+  bool isClosed() const { return !window.isOpen(); }
 
-        /**
-         * @brief Render one frame
-         */
-        void render();
+  /**
+   * @brief Render one frame
+   */
+  void render();
 
-        /**
-         * @brief Set debug display to True or False
-         * Display colider
-         * @param val
-         */
-        void setDebug(bool val = true);
+  /**
+   * @brief Set debug display to True or False
+   * Display colider
+   * @param val
+   */
+  void setDebug(bool val = true);
 
-        /**
-         * @brief Set the framerate. (FPS: frames per second)
-         * @param framerate The new framerate in FPS.
-         */
-        void setFrameRate(float framerate);
+  /**
+   * @brief Set the framerate. (FPS: frames per second)
+   * @param framerate The new framerate in FPS.
+   */
+  void setFrameRate(float framerate);
 
-    private:
-        friend class Engine;
+ private:
+  friend class Engine;
 
-        sf::RenderWindow window;
-        bool debug;
-        float FPS;
-        sf::Time timeBetweenTwoFrames;
-        sf::Clock clock; ///< Used to limit the FPS
+  sf::RenderWindow window;
+  bool debug;
+  float FPS;
+  sf::Time timeBetweenTwoFrames;
+  sf::Clock clock;  ///< Used to limit the FPS
 
-        /**
-         * @brief Draw all elements (Renderer) of the current scene
-         */
-        void drawScene();
+  /**
+   * @brief Draw all elements (Renderer) of the current scene
+   */
+  void drawScene();
 
-        void draw(const GameObject* gameObject);
-        // Debug
-        void draw(const BoxCollider* collider, sf::RenderStates renderStates);
-        void draw(const CircleCollider* collider, sf::RenderStates renderStates);
+  void draw(const GameObject *gameObject);
+  // Debug
+  void draw(const BoxCollider *collider, sf::RenderStates renderStates);
+  void draw(const CircleCollider *collider, sf::RenderStates renderStates);
 
-        sf::Color getColor(const Collider* collider);
-    };
-}
+  sf::Color getColor(const Collider *collider) const;
+};
+}  // namespace PancakeEngine
 
-#endif //PANCAKE_WINDOW_HPP
+#endif  // PANCAKE_WINDOW_HPP
