@@ -1,63 +1,96 @@
-//
-// Created by nicolas on 22/01/17.
-//
+/*
+     Copyright (C) 2016-2017 Nicolas Hiot - nicolashiot@hotmail.com
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License along
+    with this program; if not, write to the Free Software Foundation, Inc.,
+    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+
+*/
+
+/**
+ * \file        Window.hpp
+ * \author      Nicolas Hiot - nicolashiot@hotmail.com
+ */
 
 #ifndef PANCAKE_WINDOW_HPP
 #define PANCAKE_WINDOW_HPP
 
+#include <GameLogic/Components/BoxCollider.hpp>
+#include <GameLogic/Components/CircleCollider.hpp>
+#include <GameLogic/Components/Renderer.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
-#include "../SceneManager.hpp"
-#include "../GameLogic/Components/BoxCollider.hpp"
+#include <SceneManager.hpp>
 
 namespace PancakeEngine {
 
 /**
- * Window and render loop
+ * @class Window
+ * @brief The game window.
  */
-    class Window {
-    public:
-        Window(SceneManager& s);
+class Window {
+ public:
+  /**
+   * @brief Construct a window.
+   * @param s a scene manager.
+   * @sa SceneManager
+   */
+  Window();
 
-        bool isClosed() { return !window.isOpen(); }
+  /**
+   * @brief Return the state of the window (open/close)
+   * @return True if the window is closed, else return False
+   */
+  bool isClosed() const { return !window.isOpen(); }
 
-        /**
-         * Render one frame
-         */
-        void render();
+  /**
+   * @brief Render one frame
+   */
+  void render();
 
-        /**
-         * Set debug display to True or False
-         * Display colider
-         * @param val
-         */
-        void setDebug(bool val = true);
+  /**
+   * @brief Set debug display to True or False
+   * Display colider
+   * @param val
+   */
+  void setDebug(bool val = true);
 
-        /**
-         * Set the framerate. (FPS: frames per second)
-         * @param framerate The new framerate in FPS.
-         */
-        void setFrameRate(float framerate);
+  /**
+   * @brief Set the framerate. (FPS: frames per second)
+   * @param framerate The new framerate in FPS.
+   */
+  void setFrameRate(float framerate);
 
-    private:
-        friend class Engine;
+ private:
+  friend class Engine;
 
-        SceneManager& scenes;
-        sf::RenderWindow window;
-        bool debug;
-        float FPS;
-        sf::Time timeBetweenTwoFrames;
-        sf::Clock clock; ///< Used to limit the FPS
+  sf::RenderWindow window;
+  bool debug;
+  float FPS;
+  sf::Time timeBetweenTwoFrames;
+  sf::Clock clock;  ///< Used to limit the FPS
 
-        /**
-         * Draw all elements (SpriteRenderer, AnimationRenderer) of the current scene
-         */
-        void drawScene();
+  /**
+   * @brief Draw all elements (Renderer) of the current scene
+   */
+  void drawScene();
 
-        // Debug
-        void draw(const BoxCollider* boxCollider);
+  void draw(const GameObject *gameObject);
+  // Debug
+  void draw(const BoxCollider *collider, sf::RenderStates renderStates);
+  void draw(const CircleCollider *collider, sf::RenderStates renderStates);
 
-        sf::Color getColor(const Collider* collider);
-    };
-}
+  sf::Color getColor(const Collider *collider) const;
+};
+}  // namespace PancakeEngine
 
-#endif //PANCAKE_WINDOW_HPP
+#endif  // PANCAKE_WINDOW_HPP

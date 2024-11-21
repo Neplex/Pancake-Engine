@@ -25,105 +25,84 @@
 #ifndef PANCAKE_INPUTMANAGER_HPP
 #define PANCAKE_INPUTMANAGER_HPP
 
-#include <map>
-#include <vector>
-#include <string>
-#include <SFML/Window/Keyboard.hpp>
+#include <Debug/Debug.hpp>
+#include <Inputs/Button.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
-#include <SFML/Window/Event.hpp>
+#include <SFML/Window/Keyboard.hpp>
 #include <iostream>
-#include <cassert>
-#include "Button.hpp"
-#include "Input.hpp"
-#include "../Debug/Debug.hpp"
+#include <map>
+#include <string>
+#include <utility>
+#include <vector>
 
 namespace PancakeEngine {
 
-    /**
-     * \class InputManager
-     * \brief Handle all inputs. Should be used to create buttons.
-     * \details This class is used by the engine to handle inputs events.
-     * The engine user should only use it to create buttons.
-     * \ingroup Inputs
-     */
-    class InputManager {
-        //TODO make a InputHandler that will handle inputs. Input Manager will only create and update buttons.
-    public:
-        /**
-         * @brief Create a virtual Button that will be pressed or released when the given keys are.
-         * @param name The name of the button.
-         * @param keys The keys that will be pressed or released.
-         * @param callback A callback function that will be called when the button is pressed, you should use Input class instead.
-         * @see Input
-         * @pre The name of the button should be unique.
-         * @post The button is associated with the keys.
-         * @example If you want to create a button called "Jump" that will be pressed if Space key is pressed.
-         * @code
-         * InputManager::createButton("Jump", std::vector<sf::Keyboard::Key> ({sf::Keyboard::Key::Space}));
-         * @endcode
-         */
-        static void createButton(const std::string& name, const std::vector<sf::Keyboard::Key>& keys,
-                void (* callback)() = nullptr)
-        {
-            // TODO assert that the button is not here already
-            Button* b = new Button(name, keys);
-            b->pressedCallback = callback;
-            buttons.push_back(b);
-            Input::buttons[b->name] = b;
-            for (unsigned i = 0; i<keys.size(); ++i) {
-                keyToButtons[keys[i]].push_back(b);
-            }
-        }
-    private:
-        /**
-         * @brief Update the state of the buttons.
-         * @details Should be called after all updates that need inputs data.
-         */
-        static void update()
-        {
-            for (Button* bu : buttons) {
-                bu->update();
-            }
-        }
+/**
+ * \class InputManager
+ * \brief Handle all inputs. Should be used to create and destroy buttons.
+ * \details This class is used by the engine to handle inputs events.
+ * The engine user should only use it to create buttons.
+ * \ingroup Inputs
+ */
+class InputManager {
+  // TODO make a InputHandler that will handle inputs. Input Manager will only
+  // create and update buttons.
+ public:
+  /**
+   * @brief Create a virtual Button that will be pressed or released when the
+   * given keys are.
+   * @param name The name of the button.
+   * @param keys The keys that will be pressed or released.
+   * @param callback A callback function that will be called when the button is
+   * pressed, you should use Input class instead.
+   * @see Input
+   * @pre The name of the button should be unique.
+   * @post The button is associated with the keys.
+   * @example If you want to create a button called "Jump" that will be pressed
+   * if Space key is pressed.
+   * @code
+   * InputManager::createButton("Jump", std::vector<sf::Keyboard::Key>
+   * ({sf::Keyboard::Key::Space}));
+   * @endcode
+   */
+  static void createButton(const std::string &name, const std::vector<sf::Keyboard::Key> &keys,
+                           const std::function<void()> &callback = nullptr);
 
-        /**
-         * @brief Handle all inputs events related to window.
-         * @details Should be called by the engine to handle the inputs events.
-         */
-        static void handleInputs()
-        {
-            sf::Event event;
-            while (window->pollEvent(event)) {
-                Debug::processEvent(event);
-                switch (event.type) {
-                case sf::Event::Closed:
-                    window->close();
-                    break;
-                case sf::Event::KeyPressed:
-                    if (event.key.code==sf::Keyboard::Key::Escape)
-                        window->close();
-                    else
-                        for (Button* b : keyToButtons[event.key.code]) {
-                            b->press();
-                        }
-                    break;
-                case sf::Event::KeyReleased:
-                    for (Button* b : keyToButtons[event.key.code]) {
-                        b->release();
-                    }
-                default:
-                    break;
-                }
-            }
-        }
+  static void createButton(const std::string &name, int joystickNumber, int joystickButton,
+                           const std::function<void()> &callback = nullptr);
 
-    private:
-        friend class Engine; ///< the engine is the only to call update and handleInputs
+  static void createButton(const std::string &name, int joystickNumber, int axisValue, int axis);
 
-        static sf::RenderWindow* window; ///< the window from where poll events
-        static std::vector<Button*> buttons; ///< the buttons created
-        static std::map<sf::Keyboard::Key, std::vector<Button*>> keyToButtons; ///< mapping between keys and buttons.
-    };
+  /**
+   * @brief Free all buttons.
+   * @details Should becalled before the end of the program.
+   */
+  static void destroyButtons();
 
-}
-#endif //PANCAKE_INPUTMANAGER_HPP
+ private:
+  /**
+   * @brief Update the state of the buttons.
+   * @details Should be called after all updates that need inputs data.
+   */
+  static void update();
+
+  /**
+   * @brief Handle all inputs events related to window.
+   * @details Should be called by the engine to handle the inputs events.
+   */
+  static void handleInputs();
+
+ private:
+  friend class Engine;  ///< the engine is the only one to call update and
+                        ///< handleInputs
+
+  static sf::RenderWindow *window;                                  ///< the window from where poll events
+  static std::vector<Button *> buttons;                             ///< the buttons created
+  static std::map<std::pair<int, int>, Button *> joystickToButton;  ///< mapping between joyticks buttons and buttons.
+  static std::map<std::pair<int, int>, Button *> XaxisToButton;
+  static std::map<std::pair<int, int>, Button *> YaxisToButton;
+  static std::map<sf::Keyboard::Key, std::vector<Button *> > keyToButtons;  ///< mapping between keys and buttons.
+};
+
+}  // namespace PancakeEngine
+#endif  // PANCAKE_INPUTMANAGER_HPP

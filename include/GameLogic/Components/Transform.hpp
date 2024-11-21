@@ -5,64 +5,65 @@
 #ifndef PANCAKE_TRANSFORM_HPP
 #define PANCAKE_TRANSFORM_HPP
 
-#include "Component.hpp"
+#include <GameLogic/Components/Component.hpp>
 #include <SFML/Graphics.hpp>
-#include <cassert>
 
 namespace PancakeEngine {
+class Transform : public Component {
+ public:
+  Transform();
 
-    class Transform : public Component {
-    public:
-        Transform();
+  /**
+   * Get the world position of the transform.
+   * @return The world position of the transform.
+   */
+  sf::Vector2f getWorldPosition() const;
 
-        /**
-         * Get the position of the transform.
-         * @return The position of the transform.
-         */
-        sf::Vector2f getPosition() const
-        {
-            return transform.getPosition();
-        }
+  /**
+   * Get the local position of the transform.
+   * @return The local position of the transform.
+   */
+  sf::Vector2f getLocalPosition() const;
 
-        /**
-         * Set the position of the transform.
-         * @param newPos The new position.
-         */
-        void setPosition(const sf::Vector2f newPos)
-        {
-            transform.setPosition(newPos);
-        }
+  /**
+   * Set the position of the transform.
+   * @param newPos The new position.
+   */
+  void setPosition(const sf::Vector2f &newPos);
 
-        /**
-         * Apply rotation with angle 'angle'
-         * @param angle
-         */
-        void setRotation(float angle)
-        {
-            transform.setRotation(angle);
-        }
+  /**
+   * Apply rotation with angle 'angle'
+   * @param angle
+   */
+  void setRotation(float angle);
 
-        /**
-         * Get current rotation
-         * @return current rotation
-         */
-        float getRotation()
-        {
-            return transform.getRotation();
-        }
+  /**
+   * Get world rotation
+   * @return world rotation
+   */
+  float getWorldRotation() const;
 
-        /**
-         * Get the transform matrix
-         * @return the transform matrix
-         */
-        sf::Transform getTransformMatrix()
-        {
-            return transform.getTransform();
-        }
+  /**
+   * Get local rotation
+   * @return local rotation
+   */
+  float getLocalRotation() const;
 
-    private:
-        sf::Transformable transform;
-    };
-}
+  /**
+   * Get the world transform matrix
+   * @return the world transform matrix
+   */
+  sf::Transform getWorldTransformMatrix() const;
 
-#endif //PANCAKE_TRANSFORM_HPP
+  /**
+   * Get the local transform matrix
+   * @return the local transform matrix
+   */
+  sf::Transform getLocalTransformMatrix() const;
+
+ private:
+  sf::Transformable transform;
+};
+}  // namespace PancakeEngine
+
+#endif  // PANCAKE_TRANSFORM_HPP

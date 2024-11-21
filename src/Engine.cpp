@@ -2,61 +2,56 @@
 // Created by Darenn on 24/01/2017.
 //
 
-#include <vector>
-#include "../include/Engine.hpp"
-#include "../include/Inputs/InputManager.hpp"
-#include "../include/imgui/imgui-SFML.h"
-#include "../include/Debug/Debug.hpp"
+#include <Engine.hpp>
 
 using namespace PancakeEngine;
 
-Engine::Engine() : sceneManager(), window(sceneManager), physicsEngine(), time() {
-
-    Collider::physicsEngine = &physicsEngine;
-    Rigidbody::physicsEngine = &physicsEngine;
-    Time::deltaTime = SECONDS_PER_UPDATE;
-    InputManager::window = &window.window;
+Engine::Engine() {
+  Collider::physicsEngine = &physicsEngine;
+  Rigidbody::physicsEngine = &physicsEngine;
+  Time::deltaTime = SECONDS_PER_UPDATE;
+  InputManager::window = &window.window;
+  SceneManager::physicsEngine = &physicsEngine;
 #ifdef PANCAKE_DEBUG
-   Debug::init(window.window);
-    Debug::setEnableDebugGUI(true);
+  Debug::init(window.window, window);
 
-    // Add some loggers
-    Debug::addLogger("Inputs");
+  // Add some loggers
+  Debug::addLogger("Foo");
+  Debug::addLogger("Inputs");
+  Debug::addLogger("Lua");
 
-    // Add some keyshorcuts for debug
-//
+  // Add some shortcuts for debug
 
 #endif
 }
 
 void Engine::update() {
-    physicsEngine.update(SECONDS_PER_UPDATE);
-    sceneManager.getCurrentScene()->update();
-    sceneManager.getCurrentScene()->lateUpdate();
-    InputManager::update();
+  physicsEngine.update(SECONDS_PER_UPDATE);
+  SceneManager::getCurrentScene()->update();
+  SceneManager::getCurrentScene()->lateUpdate();
+  InputManager::update();
 }
 
 void Engine::run() {
-    sf::Clock clock;
-    double lag = 0.0;
-    double previous = clock.getElapsedTime().asSeconds();
+  const sf::Clock clock;
+  double lag = 0.0;
+  double previous = clock.getElapsedTime().asSeconds();
 
-    while(!window.isClosed())
-    {
-        double current = clock.getElapsedTime().asSeconds();
-        double elapsed = current - previous;
-        previous = current;
+  while (!window.isClosed()) {
+    const double current = clock.getElapsedTime().asSeconds();
+    const double elapsed = current - previous;
+    previous = current;
 
-        lag += elapsed;
+    lag += elapsed;
 
-        InputManager::handleInputs();
+    InputManager::handleInputs();
 
-        while(lag >= SECONDS_PER_UPDATE)
-        {
-            update();
-            lag -= SECONDS_PER_UPDATE;
-        }
-        window.render();
+    while (lag >= SECONDS_PER_UPDATE) {
+      update();
+      lag -= SECONDS_PER_UPDATE;
     }
-    Debug::shutDown();
+    window.render();
+  }
+
+  Debug::shutDown();
 }

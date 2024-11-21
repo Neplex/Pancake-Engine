@@ -1,32 +1,34 @@
-#include "../include/Engine.hpp"
-#include "../include/User/Ground.hpp"
-#include "../include/User/Box.hpp"
-#include "../include/User/MainCamera.hpp"
-#include "../include/Inputs/InputManager.hpp"
+#include <Engine.hpp>
+#include <Parser/SceneFactory.hpp>
+#include <User.hpp>
+#include <User/GameControllerSoloObject.hpp>
+#include <User/Sandbox.hpp>
 
 using namespace PancakeEngine;
 
 int main() {
-    Engine * engine = new Engine();
-    Ground * ground = new Ground("Ground");
-    MainCamera * mainCamera = new MainCamera("MainCamera");
-    Scene* scene = new Scene("TestScene");
-    scene->addGameObject(ground);
-    scene->addGameObject(mainCamera);
+  CreatePrefabAndSpriteAndInput();
+  auto *app = new Engine();
+  auto filename = "../resources/maps/arena.tmx";
 
-    for (int i = 0; i < 40; ++i) {
-        Box * box = new Box("Box");
-        scene->addGameObject(box);
-    }
+  SceneFactory sf;
+  Scene *sc = sf.loadAllSceneObject(filename);
 
-    engine->sceneManager.loadScene(scene);
-    engine->window.setDebug();
+  // Add GUI
+  const unsigned height = sf::VideoMode::getDesktopMode().height / 2 + 50;
+  const unsigned width = sf::VideoMode::getDesktopMode().width / 2;
 
-    InputManager::createButton("Jump", std::vector<sf::Keyboard::Key> ({sf::Keyboard::Key::Space}));
+  sc->addGameObjectToGui<PlayerGUI1>().transform.setPosition(sf::Vector2f(width * 0 + 50, 50));
+  sc->addGameObjectToGui<PlayerGUI2>().transform.setPosition(sf::Vector2f(width * 1 + 50, 50));
+  sc->addGameObjectToGui<PlayerGUI3>().transform.setPosition(sf::Vector2f(width * 0 + 50, height));
+  sc->addGameObjectToGui<PlayerGUI4>().transform.setPosition(sf::Vector2f(width * 1 + 50, height));
+  sc->addGameObjectToGui<CoinGui>().transform.setPosition(sf::Vector2f(50, height * 2 - 150));
+  sc->addGameObject<GameControllerSoloObject>(1);
 
-    InputManager::createButton("ShowDebugInfo", std::vector<sf::Keyboard::Key> ({sf::Keyboard::Key::F1}), Debug::switchEnableDebugGUI);
+  SceneManager::loadScene(sc);
 
-    engine->run();
-    delete engine;
-    return EXIT_SUCCESS;
+  app->run();
+  delete app;
+
+  return EXIT_SUCCESS;
 }

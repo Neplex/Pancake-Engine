@@ -2,17 +2,24 @@
 // Created by nicolas on 24/01/17.
 //
 
-#include "../../../include/GameLogic/Components/Camera.hpp"
+#include <GameLogic/Components/Camera.hpp>
 
 using namespace PancakeEngine;
 
-Camera * Camera::mainCamera = NULL;
-
 Camera::Camera() {
-    view = sf::View(sf::FloatRect(0, 0, sf::VideoMode::getDesktopMode().width, sf::VideoMode::getDesktopMode().height));
-    if (Camera::mainCamera == NULL) mainCamera = this;
+  const unsigned int width = sf::VideoMode::getDesktopMode().width;
+  const unsigned int height = sf::VideoMode::getDesktopMode().height;
+  view = sf::View(sf::FloatRect(0, 0, width, height));
 }
 
-void Camera::zoom(float factor) {
-    view.zoom(factor);
+Camera::~Camera() { delete background; }
+
+void Camera::zoom(const float factor) { view.zoom(factor); }
+
+void Camera::setBackground(const std::string &file) {
+  delete background;
+  background = new sf::Texture();
+  assert(background->loadFromFile(file));
+  background->setRepeated(true);
+  background->setSmooth(true);
 }

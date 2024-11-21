@@ -2,30 +2,34 @@
 // Created by nicolas on 19/01/17.
 //
 
-#include "../../../include/GameLogic/Components/SpriteRenderer.hpp"
-
+#include <GameLogic/Components/SpriteRenderer.hpp>
+#include <Graphics/AssetsManager.hpp>
 
 using namespace PancakeEngine;
 
-SpriteRenderer::SpriteRenderer(unsigned int width, unsigned int height) {
-    sf::Texture* texture = new sf::Texture();
-    if (!texture->loadFromFile("../resources/default.png")) {
-        exit(EXIT_FAILURE);
-    }
-    texture->setRepeated(true);
-    texture->setSmooth(true);
-    sprite.setTexture(*texture);
-    sprite.setTextureRect(sf::IntRect(0, 0, width, height));
-    sprite.setOrigin(width/2, height/2);
+SpriteRenderer::SpriteRenderer() : isFlip(false) { setSprite(AssetsManager::getDefaultSpriteSheet(), 0, 0); }
+
+void SpriteRenderer::setSprite(SpriteSheet &sheet, const unsigned i, const unsigned j) {
+  const sf::Vector2f pos = sprite.getPosition();
+  const float rotation = sprite.getRotation();
+  sprite = sheet.getSprite(i, j);
+  sprite.setPosition(pos);
+  sprite.setRotation(rotation);
 }
 
-SpriteRenderer::SpriteRenderer(SpriteSheet& sheet, unsigned int i, unsigned int j) {
-    sprite.setTexture(sheet.texture);
-    sprite.setTextureRect(sf::IntRect(
-            sheet.tile_width  * i,
-            sheet.tile_height * j,
-            sheet.tile_width,
-            sheet.tile_height
-    ));
-    sprite.setOrigin(sheet.tile_width/2, sheet.tile_height/2);
+void SpriteRenderer::flip(const bool b) {
+  isFlip = b;
+  if (isFlip) {
+    sprite.setScale(-1, 1);
+  } else {
+    sprite.setScale(1, 1);
+  }
 }
+
+void SpriteRenderer::setPosition(const sf::Vector2f position) { sprite.move(position); }
+
+sf::Sprite SpriteRenderer::getSprite() const { return sprite; }
+
+void SpriteRenderer::setRotation(const float r) { sprite.setRotation(r); }
+
+void SpriteRenderer::setScale(const sf::Vector2f scale) { sprite.setScale(scale); }

@@ -2,35 +2,70 @@
 // Created by Darenn on 17/01/2017.
 //
 
-#include "../../include/GameLogic/Scene.hpp"
+#include <GameLogic.hpp>
 
 using namespace PancakeEngine;
 
 void Scene::awake() {
-    for (unsigned i = 0; i < gameObjects.size(); ++i) {
-        gameObjects[i]->awake();
-    }
+  // for (GameObject* l : layers) l->awake();
+  gui->awake();
 }
 
 void Scene::start() {
-    for (unsigned i = 0; i < gameObjects.size(); ++i) {
-        gameObjects[i]->start();
-    }
+  // for (GameObject* l : layers) l->start();
+  gui->start();
 }
 
 void Scene::update() {
-    for (unsigned i = 0; i < gameObjects.size(); ++i) {
-        gameObjects[i]->update();
+  for (GameObject *go : toAwake) {
+    go->awake();
+  }
+  for (GameObject *go : toAwake) {
+    go->start();
+  }
+
+  toAwake.clear();
+
+  for (const GameObject *layer : layers) {
+    for (GameObject *go : layer->getChilds()) {
+      go->update();
+      if (go->toDestroy) {
+        toDestroy.push_back(go);
+      }
     }
+  }
+
+  for (GameObject *go : gui->getChilds()) {
+    go->update();
+    if (go->toDestroy) {
+      toDestroy.push_back(go);
+    }
+  }
+  destroyGameObjects();
 }
 
 void Scene::lateUpdate() {
-    for (unsigned i = 0; i < gameObjects.size(); ++i) {
-        gameObjects[i]->lateUpdate();
+  for (const GameObject *layer : layers) {
+    for (GameObject *go : layer->getChilds()) {
+      go->lateUpdate();
+      if (go->toDestroy) {
+        toDestroy.push_back(go);
+      }
     }
+  }
+
+  for (GameObject *go : gui->getChilds()) {
+    go->lateUpdate();
+    if (go->toDestroy) {
+      toDestroy.push_back(go);
+    }
+  }
+  destroyGameObjects();
 }
 
-// TODO should create game object only with this method
-void Scene::addGameObject(GameObject * go) {
-    gameObjects.push_back(go);
+void Scene::destroyGameObjects() {
+  for (const auto &i : toDestroy) {
+    delete i;
+  }
+  toDestroy.clear();
 }
